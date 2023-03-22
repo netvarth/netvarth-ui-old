@@ -128,7 +128,8 @@
 }
 .icons {
   width: 100%;
-  position: absolute;
+  /* position: absolute; */
+  position: sticky;
   bottom: 0px;
   text-align: center;
   font-size: 1.30rem;
@@ -161,10 +162,49 @@ header {
 
 .rem-video {
   width: 100% !important;
-  height: 100% !important;
+  height: calc(100% - 35px) !important;
+  /* height: 100% !important; */
 }
-
+.signal-1 {
+  content: url(../../../../assets/images/teleservice/signal-1.PNG);
+  top: 10px;
+  position: relative;
+  padding-right: 1px;
+  width: 30px; 
+}
+.signal-2 {
+  content: url(../../../../assets/images/teleservice/signal-2.PNG);
+  top: 10px;
+  position: relative;
+  padding-right: 1px;
+  width: 30px; 
+}
+.signal-3 {
+  content: url(../../../../assets/images/teleservice/signal-3.PNG);
+  top: 10px;
+  position: relative;
+  padding-right: 1px;
+  width: 30px; 
+}
+.signal-4 {
+  content: url(../../../../assets/images/teleservice/signal-4.PNG);
+  top: 10px;
+  position: relative;
+  padding-right: 1px;
+  width: 30px; 
+}
+.signal-5 {
+  content: url(../../../../assets/images/teleservice/signal-5.PNG);
+  top: 10px;
+  position: relative;
+  padding-right: 1px;
+  width: 30px; 
+}
 .record {
   padding:22px 15px 14px 18px;
+}
+.record-text {
+  font-size: 10px;
+  margin: 25px;
 }
 .bold {font-weight: bold !important;}

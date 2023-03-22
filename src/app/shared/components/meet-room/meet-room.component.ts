@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, ElementRef, OnDestroy, OnInit, Renderer2, RendererFactory2, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, ElementRef, HostListener, OnDestroy, OnInit, Renderer2, RendererFactory2, ViewChild } from "@angular/core";
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TwilioService } from "../../services/twilio-service";
@@ -56,12 +56,19 @@ export class MeetRoomComponent implements OnInit, AfterViewInit, OnDestroy {
     reqDialogRef: any;
     media: any;
     timerSub: Subscription;
+    errorSub: Subscription;
     exitFromMeeting = false;
     timer;
     audioTrack;
     videoTrack;
     previewTracks = [];
     previewTracksClone = [];
+    twilioMainClass = TwilioService;
+    @HostListener('window:beforeunload', ['$event'])
+    public doSomething($event) {
+       this.ngOnDestroy();
+        return false;
+    }
     constructor(private activateroute: ActivatedRoute,
         public twilioService: TwilioService,
         public rendererFactory: RendererFactory2,
@@ -210,6 +217,51 @@ export class MeetRoomComponent implements OnInit, AfterViewInit, OnDestroy {
         const _this = this;
         console.log("ngAfterViewInit");
         _this.cd.detectChanges();
+        _this.errorSub = this.twilioService.getError().subscribe(
+            (error) => {
+                if (error) {
+                    if (error.code === 53001) {
+                        console.log('Reconnecting your signaling connection!', error.message);
+                    } else if (error.code === 53405) {
+                        console.log('Reconnecting your media connection!', error.message);
+                    } else if (error.code === 20104) {
+                        console.log('Signaling reconnection failed due to expired AccessToken!');
+                    } else if (error.code === 53000) {
+                        console.log('Signaling reconnection attempts exhausted!');
+                    } else if (error.code === 53002) {
+                        console.log('Signaling reconnection took too long!');
+                    } else {
+                        console.log("ErrorCode: ",error.code);
+                    }
+                }
+            }
+        )
+        // _this.actionSub = _this.twilioService.getMessage().subscribe(
+        //     (action) => {
+        //         console.log("ActionSub", action);
+        //         // switch(action.ttype) {
+        //         //     case 'networkQuality': 
+        //         //     switch(action.value) {
+        //         //         case 1:
+        //         //             this.signalStrength = '▃';
+            
+        //         //             break;
+        //         //         case 2:
+        //         //             this.signalStrength = '▃▄';
+        //         //             break;
+        //         //         case 3:
+        //         //             this.signalStrength = '▃▄▅';
+        //         //             break;                
+        //         //         case 4:
+        //         //             this.signalStrength = '▃▄▅▆';
+        //         //             break;                
+        //         //         case 5:
+        //         //             this.signalStrength = '▃▄▅▆▇';
+        //         //             break;                
+        //         //     }
+        //         // }
+        //     }
+        // )
         this.timerSub = this.twilioService.getTimer().subscribe(
             (timerStatus) => {
                 if (timerStatus) {
@@ -284,6 +336,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit, OnDestroy {
         const _this = this;
         _this.subs.unsubscribe();
         _this.timerSub.unsubscribe();
+        _this.errorSub.unsubscribe();
         _this.disconnect();
         // _this.previewTracks.forEach(track => {
         //     _this.removePreviewTrackToDom(track, track.kind);
@@ -482,6 +535,8 @@ export class MeetRoomComponent implements OnInit, AfterViewInit, OnDestroy {
         _this.twilioService.connectToRoom(tokenObj.tokenId, {
             name: tokenObj.roomName,
             audio: true,
+            emptyRoomTimeout: 1,
+            unusedRoomTimeout: 1,
             video: { height: '100%', frameRate: 24, width: '100%', facingMode: 'user' },
             bandwidthProfile: {
                 video: {
@@ -498,7 +553,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit, OnDestroy {
             dominantSpeaker: true,
             maxAudioBitrate: 16000,
             preferredVideoCodecs: [{ codec: 'VP8', simulcast: true }],
-            networkQuality: { local: 1, remote: 1 }
+            networkQuality: { local: 1, remote: 2 }
         }, [_this.audioTrack,_this.videoTrack]);
     }
     unmuteVideo() {

@@ -19,7 +19,9 @@ export class TwilioService {
     private renderer: Renderer2;
     cameraMode: string;
     previewTracks;
-    timerSubject =  new Subject<any>();
+    timerSubject = new Subject<any>();
+    errorSubject = new Subject<any>();
+    public static signalStrength: any;
     selectedVideoId: string;
     activeCamIndex;
     cam1Device: string;
@@ -31,13 +33,23 @@ export class TwilioService {
     constructor(public rendererFactory: RendererFactory2) {
         this.renderer = rendererFactory.createRenderer(null, null);
     }
+
     activateTimer(timer: any) {
         this.timerSubject.next(timer);
     }
     getTimer(): Observable<any> {
         return this.timerSubject.asObservable();
     }
-    
+
+    sendError(error: any) {
+        this.errorSubject.next(error);
+    }
+    getError(): Observable<any> {
+        return this.errorSubject.asObservable();
+    }
+    // private static getSignalStrength () {
+    //     return TwilioService.signalStrength;
+    // }
     unmuteVideo() {
         const _this = this;
         _this.previewTracks.forEach(localTrack => {
@@ -185,8 +197,12 @@ export class TwilioService {
         console.log(_this.previewTracks);
         Video.connect(accessToken, options).then(
             (room: any) => {
+                room.localParticipant.setNetworkQualityConfiguration({
+                    local: 2,
+                    remote: 1
+                });
                 _this.preview = false;
-                this.loading= false;
+                _this.loading= false;
                 _this.activeRoom = room;
                 if (options['video']) {
                     if (!_this.localVideo.nativeElement.querySelector('video')) {
@@ -201,6 +217,22 @@ export class TwilioService {
             }
         );
         // });
+    }
+    networkQualityChanged(networkQualityLevel, networkQualityStats) {
+        TwilioService.signalStrength = networkQualityLevel;
+        console.log({
+            1: '▃',
+            2: '▃▄',
+            3: '▃▄▅',
+            4: '▃▄▅▆',
+            5: '▃▄▅▆▇'
+          }[networkQualityLevel] || '');
+          if (networkQualityStats) {
+            // Print in console the networkQualityStats, which is non-null only if Network Quality
+            // verbosity is 2 (moderate) or greater
+            console.log('Network Quality statistics:', networkQualityStats);
+            
+         }
     }
     // Attach the Tracks to the DOM.
     attachTracks(tracks, container, room) {
@@ -266,7 +298,9 @@ export class TwilioService {
         if (!_this.microphone) {
             _this.mute();
         }
+        room.localParticipant.on('networkQualityLevelChanged', this.networkQualityChanged);
         room.participants.forEach((participant) => {
+            console.log("Participant:", participant);
             console.log("Already in Room: '" + participant.identity + "'");
             _this.attachParticipantTracks(participant, _this.remoteVideo.nativeElement, room);
             _this.participantsCount = room.participants.size;
@@ -275,6 +309,7 @@ export class TwilioService {
 
         // When a Participant joins the Room, log the event.
         room.on('participantConnected', function (participant) {
+            console.log("Participant:", participant);
             console.log("Joining: '" + participant.identity + "'");
             _this.participantsCount = room.participants.size;
             console.log("connected - Participants:" + room.participants.size);
@@ -287,6 +322,8 @@ export class TwilioService {
 
         // When a Participant adds a Track, attach it to the DOM.
         room.on('trackSubscribed', function (track, trackPublication, participant) {
+            console.log("Local Participant:", room.localParticipant);
+            console.log("Remote Participant:", room.remoteParticipant);
             console.log(participant.identity + ' added track: ' + track.kind);
             _this.participantsCount = room.participants.size;
             console.log("Participants:" +_this.participantsCount);
@@ -312,7 +349,16 @@ export class TwilioService {
                 _this.addRemoteParticipantDetails(_this.remoteVideo.nativeElement, participant);
             }
         });
-
+        room.on('participantReconnecting', remoteParticipant => {
+            console.log(remoteParticipant.state, 'reconnecting');
+            console.log(`${remoteParticipant.identity} is reconnecting the signaling connection to the Room!`);
+            /* Update the RemoteParticipant UI here */
+          });
+          room.on('participantReconnected', remoteParticipant => {
+            console.log(remoteParticipant.state, 'connected');
+            console.log(`${remoteParticipant.identity} has reconnected the signaling connection to the Room!`);
+            /* Update the RemoteParticipant UI here */
+          });
         // When a Participant leaves the Room, detach its Tracks.
         room.on('participantDisconnected', function (participant) {
             console.log("Participant '" + participant.identity + "' left the room");
@@ -322,12 +368,25 @@ export class TwilioService {
             _this.removeRemoteParticipantDetails(_this.remoteVideo.nativeElement);
             _this.activateTimer(true);
         });
-
+        
+        room.on('reconnecting', error => {
+            console.log(room.state, 'reconnecting');
+            _this.sendError(error);
+            /* Update the application UI here */
+          });
+          room.on('reconnected', () => {
+            console.log(room.state, 'connected');
+            console.log('Reconnected your signaling and media connections!');
+            /* Update the application UI here */
+          });
+          
         // Once the LocalParticipant leaves the room, detach the Tracks
         // of all Participants, including that of the LocalParticipant.
-        room.on('disconnected', function () {
+        room.on('disconnected', function (room, error) {
             console.log('Left');
-
+            console.log(room.state, 'disconnected');
+            console.log("Error:", error);
+            _this.sendError(error);            
             room.localParticipant.tracks.forEach(publication => {
                 publication.track.stop();
                 publication.unpublish();

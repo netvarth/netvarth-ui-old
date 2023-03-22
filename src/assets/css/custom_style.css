@@ -13017,7 +13017,8 @@ input[type=number]::-webkit-outer-spin-button {
 
 .rem-video {
   width: 100% !important;
-  height: 100% !important;
+  height: calc(100% - 35px) !important;
+  /* height: 100% !important; */
 }
 
 .video-container,

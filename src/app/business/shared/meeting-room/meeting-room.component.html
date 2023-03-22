@@ -147,9 +147,33 @@
                 <!-- <i title="Chat" class="fa fa-comments-o round stop pull-right" style="opacity: 1;cursor: pointer;"
                     (click)="openChat()"></i> -->
                 <!-- <span class="pull-right fa-stack" style="vertical-align: top;" *ngIf="recordingFlag"> -->
-                    <!-- <i class="fa fa-square fa-stack-2x"></i> -->
-                    <i class="fa fa-circle record red blink pull-right" *ngIf="recordingFlag"></i>
+                    <!-- <i class="fa fa-square fa-stack-2x"></i> -->                    
                 <!-- </span> -->
+                <span  class="pull-right" *ngIf="twilioMainClass.signalStrength==0">
+                    <i class="fa fa-spinner"></i>
+                    <br/><span class="record-text">Reconnecting...</span>
+                </span>
+                <span  class="pull-right" *ngIf="twilioMainClass.signalStrength==1">
+                    <i class="fa-solid fa-signal-weak signal-1"></i>
+                    <br/><span class="record-text">Bad network</span>
+                </span>
+                <span  class="pull-right" *ngIf="twilioMainClass.signalStrength==2">
+                    <i class="fa-solid fa-signal-fair signal-2" ></i>
+                    <br/><span class="record-text">Below average</span>
+                </span>
+                <span class="pull-right" *ngIf="twilioMainClass.signalStrength==3">
+                    <i class="fa-solid fa-signal-good signal-3"></i>
+                    <br/><span class="record-text">Average</span>
+                </span>
+                <span  class="pull-right" *ngIf="twilioMainClass.signalStrength==4">
+                    <i class="fa-solid fa-signal-strong signal-4" ></i>
+                    <br/><span class="record-text">Good</span>
+                </span>
+                <span  class="pull-right" *ngIf="twilioMainClass.signalStrength==5">
+                    <i class="fa-solid fa-signal signal-5" ></i>
+                    <br/><span class="record-text">Excellent</span>
+                </span>
+                <i class="fa fa-circle record red blink pull-right" *ngIf="recordingFlag"></i>
             </div>
         </div>
         <select id="video-devices" hidden></select>

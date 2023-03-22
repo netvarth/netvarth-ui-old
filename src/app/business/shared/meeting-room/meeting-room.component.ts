@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, ElementRef, OnDestroy, OnInit, Renderer2, RendererFactory2, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, ElementRef, HostListener, OnDestroy, OnInit, Renderer2, RendererFactory2, ViewChild } from "@angular/core";
 import { Component } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { TwilioService } from "../../../shared/services/twilio-service";
@@ -52,8 +52,15 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
     videocredits: any;
     videocreditShow = true;
     timerSub: Subscription;
+    errorSub: Subscription;
     exitFromMeeting = false;
     timer;
+    twilioMainClass = TwilioService;
+    @HostListener('window:beforeunload', ['$event'])
+    public doSomething($event) {
+       this.ngOnDestroy();
+        return false;
+    }
     constructor(private activateroute: ActivatedRoute,
         public twilioService: TwilioService,
         public rendererFactory: RendererFactory2,
@@ -66,8 +73,8 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
         private teleService: TeleBookingService,
         private mediaService: MediaService,
         private provider_services: ProviderServices
-       // private sharedServices: SharedServices
-        ) {
+        // private sharedServices: SharedServices
+    ) {
         const _this = this;
         console.log("In Meeting Room Component");
         _this.twilioService.loading = false;
@@ -89,6 +96,10 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         );
     }
+    // @HostListener('window:beforeunload')
+    // pageRefreshed() {
+    //     this.ngOnDestroy();
+    // }
     updateRecordingFlag(event) {
         this.isConsumerReady();
     }
@@ -192,12 +203,12 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     getJaldeeVideoCredits() {
         this.provider_services.getJaldeeVideoRecording()
-        .subscribe(
-          (data) => {
-            console.log(data)
-           this.videocredits = data;
-          }
-        );
+            .subscribe(
+                (data) => {
+                    console.log(data)
+                    this.videocredits = data;
+                }
+            );
     }
 
     /**
@@ -207,20 +218,37 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
         const _this = this;
         console.log("ngAfterViewInit");
         _this.cd.detectChanges();
-        this.timerSub = this.twilioService.getTimer().subscribe(
+        _this.errorSub = _this.twilioService.getError().subscribe(
+            (error) => {
+                if (error) {
+                    if (error.code === 53001) {
+                        console.log('Reconnecting your signaling connection!', error.message);
+                    } else if (error.code === 53405) {
+                        console.log('Reconnecting your media connection!', error.message);
+                    } else if (error.code === 20104) {
+                        console.log('Signaling reconnection failed due to expired AccessToken!');
+                    } else if (error.code === 53000) {
+                        console.log('Signaling reconnection attempts exhausted!');
+                    } else if (error.code === 53002) {
+                        console.log('Signaling reconnection took too long!');
+                    } else {
+                        console.log("ErrorCode: ", error.code);
+                    }
+                }
+            }
+        )
+        _this.timerSub = _this.twilioService.getTimer().subscribe(
             (timerStatus) => {
                 if (timerStatus) {
                     console.log("Timer Status: true");
                     _this.exitFromMeeting = true;
-                    clearTimeout(this.timer);
-                    this.timer = setTimeout(() => {
+                    clearTimeout(_this.timer);
+                    _this.timer = setTimeout(() => {
                         _this.exitMeeting();
                     }, 60000);
                 } else {
                     _this.exitFromMeeting = false;
                 }
-
-
             }
         )
         _this.subs.sink = observableInterval(_this.refreshTime * 500).subscribe(() => {
@@ -232,22 +260,22 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
             (media: any) => {
                 _this.media = media;
                 // if (media['videoDevices'].length > 0) {
-                    // _this.twilioService.camDeviceCount = media['videoDevices'].length;
-                    // if (media['videoDevices'].length > 1) {
-                    //     for(let i=0; i<media['videoDevices'].length; i++) {
-                    //         console.log(media['videoDevices'][i].label);
-                    //         if (media['videoDevices'][i].label && media['videoDevices'][i].label.indexOf('back')!=-1) {
-                    //             _this.twilioService.cam2Device = media['videoDevices'][i].deviceId;
-                    //             break;
-                    //         }
-                    //     }
-                    //     // if (!_this.twilioService.cam2Device && media['videoDevices'].length > 1) {
-                    //     //     _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
-                    //     // }
-                    // }
-                    // _this.twilioService.cam1Device = media['videoDevices'][0].deviceId;
-                    // _this.twilioService.activeCamIndex = 0;
-                    // _this.twilioService.selectedVideoId = media['videoDevices'][0].deviceId;  
+                // _this.twilioService.camDeviceCount = media['videoDevices'].length;
+                // if (media['videoDevices'].length > 1) {
+                //     for(let i=0; i<media['videoDevices'].length; i++) {
+                //         console.log(media['videoDevices'][i].label);
+                //         if (media['videoDevices'][i].label && media['videoDevices'][i].label.indexOf('back')!=-1) {
+                //             _this.twilioService.cam2Device = media['videoDevices'][i].deviceId;
+                //             break;
+                //         }
+                //     }
+                //     // if (!_this.twilioService.cam2Device && media['videoDevices'].length > 1) {
+                //     //     _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
+                //     // }
+                // }
+                // _this.twilioService.cam1Device = media['videoDevices'][0].deviceId;
+                // _this.twilioService.activeCamIndex = 0;
+                // _this.twilioService.selectedVideoId = media['videoDevices'][0].deviceId;  
                 // }
                 console.log("System Media Devices");
                 console.log(media);
@@ -265,8 +293,8 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
                 )
             }
         ).catch(error => {
-           // _this.sharedServices.callHealth(error.stack).subscribe();
-            console.log("error"+error);
+            // _this.sharedServices.callHealth(error.stack).subscribe();
+            console.log("error" + error);
             _this.openRequestDialog('b-both');
         });
 
@@ -406,6 +434,8 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
         const _this = this;
         _this.subs.unsubscribe();
         _this.disconnect();
+        _this.timerSub.unsubscribe();
+        _this.errorSub.unsubscribe();
         // _this.previewTracks.forEach(track => {
         //     _this.removePreviewTrackToDom(track, track.kind);
         // })
@@ -484,12 +514,14 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
      * @param tokenObj Token object which hold the key and room name
      */
     connect(tokenObj) {
-        const _this =this;
+        const _this = this;
 
         console.log("Token Id:" + tokenObj.tokenId);
         _this.twilioService.connectToRoom(tokenObj.tokenId, {
             name: tokenObj.roomName,
             audio: true,
+            emptyRoomTimeout: 1,
+            unusedRoomTimeout: 1,
             video: { height: '100%', frameRate: 24, width: '100%', facingMode: 'user' },
             bandwidthProfile: {
                 video: {
@@ -506,7 +538,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
             dominantSpeaker: true,
             maxAudioBitrate: 16000,
             preferredVideoCodecs: [{ codec: 'VP8', simulcast: true }],
-            networkQuality: { local: 1, remote: 1 }
+            networkQuality: { local: 1, remote: 2 }
         }, [_this.audioTrack, _this.videoTrack])
         // .then(
         //     () => {
@@ -526,13 +558,13 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log("unmuteVideo");
         // this.twilioService.unmuteVideo();
         _this.getVideoStatus().then(
-            (videoStatus) => {                
+            (videoStatus) => {
                 if (!videoStatus) {
                     _this.openRequestDialog('b-cam');
                 } else {
                     _this.twilioService.video = true;
-                }     
-                _this.btnClicked = false;           
+                }
+                _this.btnClicked = false;
             }
         );
     }
@@ -561,7 +593,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
         _this.btnClicked = true;
         console.log("unmuteAudio");
         _this.getAudioStatus().then(
-            (audioStatus) => {                
+            (audioStatus) => {
                 if (!audioStatus) {
                     _this.twilioService.microphone = false;
                     _this.openRequestDialog('b-mic');
@@ -601,5 +633,8 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
      */
     switchCamera(videoDevices) {
         this.twilioService.switchCamera(videoDevices);
+    }
+    handleError(error) {
+
     }
 }

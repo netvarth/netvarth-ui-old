@@ -1,4 +1,4 @@
-import { ViewChild, OnInit, OnDestroy, ElementRef, Component, AfterViewInit, Renderer2, RendererFactory2, ChangeDetectorRef } from '@angular/core';
+import { ViewChild, OnInit, OnDestroy, ElementRef, Component, AfterViewInit, Renderer2, RendererFactory2, ChangeDetectorRef, HostListener } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { TwilioService } from '../../services/twilio-service';
 import { Location } from '@angular/common';
@@ -50,6 +50,8 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     reqDialogRef: any;
     media: any;
     timerSub: Subscription;
+    errorSub: Subscription;
+    twilioMainClass = TwilioService;
     exitFromMeeting = false;
     audioTrack;
     videoTrack;
@@ -57,6 +59,11 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     previewTracksClone = [];
     theme: any;
     timer;
+    @HostListener('window:beforeunload', ['$event'])
+    public doSomething($event) {
+       this.ngOnDestroy();
+        return false;
+    }
     constructor(
         private location: Location,
         private activateroute: ActivatedRoute,
@@ -255,6 +262,25 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         const _this = this;
         // this.twilioService.previewContainer = this.previewContainer;
         // this.twilioService.previewMedia();
+        _this.errorSub = this.twilioService.getError().subscribe(
+            (error) => {
+                if (error) {
+                    if (error.code === 53001) {
+                        console.log('Reconnecting your signaling connection!', error.message);
+                    } else if (error.code === 53405) {
+                        console.log('Reconnecting your media connection!', error.message);
+                    } else if (error.code === 20104) {
+                        console.log('Signaling reconnection failed due to expired AccessToken!');
+                    } else if (error.code === 53000) {
+                        console.log('Signaling reconnection attempts exhausted!');
+                    } else if (error.code === 53002) {
+                        console.log('Signaling reconnection took too long!');
+                    } else {
+                        console.log("ErrorCode: ",error.code);
+                    }
+                }
+            }
+        )
         this.timerSub = this.twilioService.getTimer().subscribe(
             (timerStatus) => {
                 if (timerStatus) {
@@ -438,7 +464,8 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             name: tokenObj.roomName,
             audio: true,
             video: { height: '100%', frameRate: 24, width: '100%', facingMode: 'user' },
-
+            emptyRoomTimeout: 1,
+            unusedRoomTimeout: 1,
             bandwidthProfile: {
                 video: {
                     mode: 'collaboration',
@@ -454,7 +481,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             dominantSpeaker: true,
             maxAudioBitrate: 16000,
             preferredVideoCodecs: [{ codec: 'VP8', simulcast: true }],
-            networkQuality: { local: 1, remote: 1 }
+            networkQuality: { local: 1, remote: 2 }
         }, [_this.audioTrack, _this.videoTrack]);
     }
     /**
@@ -571,6 +598,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         _this.subs.unsubscribe();
         _this.timerSub.unsubscribe();
+        _this.errorSub.unsubscribe();
         _this.disconnect();
         // _this.previewTracks.forEach(track=>{
         //     _this.removePreviewTrackToDom(track, track.kind);
