@@ -548,7 +548,7 @@
                                 <div class="card-heading mgn-up-10"></div>
                                 <div class="disp-flex width-100 amount-details to-pay mgn-up-10">
                                   <div class="bill-labels">TOTAL BILL AMOUNT</div>
-                                  <div class="price rupee-font">{{getNetTotal() | currency:'&#8377;'}}
+                                  <div class="price rupee-font">{{netTotal | currency:'&#8377;'}}
                                   </div>
                                 </div>
                                 <div class="width-100 amount-details text-danger mgn-up-10 font-weight-bold"
@@ -1812,7 +1812,7 @@
 
                         <div class="ml-3">
                           <span class="font-weight-bold item-name-mobile"
-                            *ngIf="item && item.item && item.item.displayName">{{item.item.displayName}}</span><br>
+                            *ngIf="item && item.item && item.item.displayName">{{item.item.displayName}}r</span><br>
                           <span class="text-red item-name-mobile" *ngIf="item"><i
                               class=" fa fa-inr"></i>&nbsp;{{getItemPrice(item,item.itemOptionsIndex)}}</span><br>
                           <span class="item-pad bodr-lft bodr-btm-up item-qty pointer-cursor item-padding pointer-none">
@@ -2216,7 +2216,7 @@
                                 <div class="card-heading mgn-up-10"></div>
                                 <div class="disp-flex width-100 amount-details to-pay mgn-up-10">
                                   <div class="bill-labels">TO PAY</div>
-                                  <div class="price rupee-font">{{getNetTotal() | currency:'&#8377;'}}
+                                  <div class="price rupee-font">{{netTotal | currency:'&#8377;'}}
                                   </div>
                                 </div>
                                   <span *ngIf="cartDetails.advanceAmount >0" style="font-size: small;color: red;"><i

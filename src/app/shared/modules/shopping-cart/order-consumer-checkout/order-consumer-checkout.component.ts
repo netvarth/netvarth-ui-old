@@ -169,6 +169,8 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   selected_coupon;
   showCouponWB: boolean;
   cartDetails: any = [];
+  carttDetails: any = [];
+  details: any = [];
   listDetails: any = [];
   store_availables: any;
   home_availables: any;
@@ -231,6 +233,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   itemOptionsData: any;
   newOrderList: any = [];
   itemsListWithItemOptions: any;
+  netTotal = 0;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -612,6 +615,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     }
   }
   getlisttDetails() {
+    this.cartDetails = [];
     let delivery = false;
     if (this.delivery_type === 'home') {
       delivery = true;
@@ -642,24 +646,30 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       );
   }
 
-  getNetTotal() {
-    let netTotal = 0;
-    if (this.cartDetails) {
-      if (this.cartDetails.itemTotal) {
-        netTotal = netTotal + this.cartDetails.itemTotal;
+  getNetTotal(details) {
+    this.details = details;
+    this.netTotal = 0;
+    if (this.details) {
+      console.log(this.details)
+      if (this.details.itemTotal) {
+        console.log('1')
+        this.netTotal = this.netTotal + this.details.itemTotal;
       }
-      if (this.cartDetails.taxAmount) {
-        netTotal = netTotal + this.cartDetails.taxAmount;
+      if (this.details.taxAmount) {
+        console.log('2')
+        this.netTotal = this.netTotal + this.details.taxAmount;
       }
-      if (this.cartDetails.deliveryCharge) {
-        netTotal = netTotal + this.cartDetails.deliveryCharge;
+      if (this.details.deliveryCharge) {
+        console.log('3')
+        this.netTotal = this.netTotal + this.details.deliveryCharge;
       }
-      if (this.cartDetails.totalDiscount) {
-        netTotal = netTotal - this.cartDetails.totalDiscount;
+      if (this.details.totalDiscount) {
+        console.log('4')
+        this.netTotal = this.netTotal - this.details.totalDiscount;
       }
     }
-    this.cartDetails['netTotal'] = netTotal;
-    return netTotal;
+    // this.cartDetails['netTotal'] = netTotal;
+    // return netTotal;
   }
 
   getitemTotalPrice() {
@@ -746,6 +756,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   }
 
   getCartDetails() {
+    this.carttDetails = [];
     let delivery = false;
     if (this.delivery_type === 'home') {
       delivery = true;
@@ -765,28 +776,30 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     this.shared_services.getCartdetails(this.account_id, passdata)
       .subscribe(
         data => {
-          this.cartDetails = data;
+          this.carttDetails = data;
+
           this.couponlist = [];
           this.pcouponlist = [];
-          if (this.cartDetails.jCouponList) {
-            for (const [key, value] of Object.entries(this.cartDetails.jCouponList)) {
+          if (this.carttDetails.jCouponList) {
+            for (const [key, value] of Object.entries(this.carttDetails.jCouponList)) {
               if (value['value'] !== '0.0') {
                 this.couponlist.push(key);
               }
             }
           }
-          if (this.cartDetails.proCouponList) {
-            for (const [key, value] of Object.entries(this.cartDetails.proCouponList)) {
+          if (this.carttDetails.proCouponList) {
+            for (const [key, value] of Object.entries(this.carttDetails.proCouponList)) {
               if (value['value'] !== '0.0') {
                 this.pcouponlist.push(key);
               }
             }
           }
-          if (this.cartDetails.eligibleJcashAmt) {
+          if (this.carttDetails.eligibleJcashAmt) {
             this.checkJcash = true
-            this.jcashamount = this.cartDetails.eligibleJcashAmt.jCashAmt;
-            this.jcreditamount = this.cartDetails.eligibleJcashAmt.creditAmt;
+            this.jcashamount = this.carttDetails.eligibleJcashAmt.jCashAmt;
+            this.jcreditamount = this.carttDetails.eligibleJcashAmt.creditAmt;
           }
+          this.getNetTotal(this.carttDetails)
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1771,7 +1784,10 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         }
       }
     }
-    else {
+    else if(item.item.promotionalPrice) {
+      return item.item.promotionalPrice * this.getItemQty(item);
+    }
+    else{
       return item.item.price * this.getItemQty(item);
     }
   }
