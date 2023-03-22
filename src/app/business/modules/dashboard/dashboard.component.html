@@ -80,7 +80,7 @@
                         <p-card>
                             <div>
                                 <div>
-                                    <div class="dashboard-stats-card-small-title">250</div>
+                                    <div class="dashboard-stats-card-small-title" *ngIf="totalBookings">{{totalBookings}}</div>
                                 </div>
                                 <div>
                                     <span class="font-weight-400 text-grey">Total Bookings this Week</span>
@@ -130,7 +130,7 @@
                         <p-card>
                             <div>
                                 <div>
-                                    <div class="dashboard-stats-card-small-title">500</div>
+                                    <div class="dashboard-stats-card-small-title">{{totalCustomers}}</div>
                                 </div>
                                 <div>
                                     <span class="font-weight-400 text-grey">Total Customers</span>
@@ -138,7 +138,7 @@
                             </div>
                             <div class="mt-5">
                                 <div>
-                                    <div class="dashboard-stats-card-small-title">25</div>
+                                    <div class="dashboard-stats-card-small-title">{{totalUsers}}</div>
                                 </div>
                                 <div>
                                     <span class="font-weight-400 text-grey">Total Users</span>
@@ -208,7 +208,7 @@
         <div class="row">
             <div class="col-md-8 no-padding-small mt-4">
                 <div>
-                    <app-booking-snippet [type]="'token'" [title]="'Upcoming Tokens'"
+                    <app-booking-snippet [type]="'tokens'" [title]="'Upcoming Tokens'"
                         [bookings]="bookings"></app-booking-snippet>
                 </div>
                 <div class="mt-3">

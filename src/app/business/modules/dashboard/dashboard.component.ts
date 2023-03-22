@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { DashboardService } from './dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,17 +31,34 @@ export class DashboardComponent implements OnInit {
       time: "11:00 -11:30"
     }
   ]
+  totalUsers: any = 0;
+  totalCustomers: any = 0;
+  totalBookings: any = 0;
+  appointmentsInweek: any;
+  checkinsInweek: any;
+  ordersInweek: any;
 
   constructor(
     private groupService: GroupStorageService,
-    private router: Router
+    private router: Router,
+    private dashboardService: DashboardService,
+    private snackbarService: SnackbarService
   ) { }
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
-    this.getDoughnutChartData();
+    this.getBookingsCount().then((totalBookings) => {
+      this.totalBookings = totalBookings;
+      this.getOrdersCount().then((totalOrders) => {
+        this.ordersInweek = totalOrders;
+        this.getDoughnutChartData();
+      })
+    });
     this.getBarChartData();
     this.getLineChartData();
+    this.getUsersCount();
+    this.getCustomersCount();
+
   }
 
   gotoAppointments() {
@@ -59,7 +78,7 @@ export class DashboardComponent implements OnInit {
       labels: ['Appointments', 'Tokens', 'Orders'],
       datasets: [
         {
-          data: [300, 50, 100],
+          data: [this.appointmentsInweek, this.checkinsInweek, this.ordersInweek],
           backgroundColor: [
             "#5A6ACF",
             "#F1416C",
@@ -171,4 +190,86 @@ export class DashboardComponent implements OnInit {
     };
   }
 
+
+
+  getUsersCount() {
+    this.dashboardService.getUsersCount().subscribe((data: any) => {
+      if (data) {
+        this.totalUsers = data;
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      })
+  }
+
+
+  getCustomersCount() {
+    this.dashboardService.getCustomersCount().subscribe((data: any) => {
+      if (data) {
+        this.totalCustomers = data;
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      })
+  }
+
+
+  getBookingsCount() {
+    return new Promise((resolve, reject) => {
+      const now = new Date();
+      const lastWeekDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+      let finalDate = lastWeekDate.getFullYear() + '-' + lastWeekDate.getMonth() + '-' + lastWeekDate.getDate()
+      let api_filter = {};
+      api_filter['date-ge'] = finalDate;
+      let totalBookings = 0
+      this.dashboardService.getTodayAppointmentsCount().subscribe((todayAppointmentsCount: any) => {
+        totalBookings += todayAppointmentsCount
+        this.dashboardService.getFutureAppointmentsCount().subscribe((futureAppointmentsCount: any) => {
+          totalBookings += futureAppointmentsCount
+          this.dashboardService.getHistoryAppointmentsCount(api_filter).subscribe((historyAppointmentsCount: any) => {
+            totalBookings += historyAppointmentsCount;
+            this.appointmentsInweek = totalBookings;
+            this.dashboardService.getTodayCheckinCount().subscribe((todayCheckinCount: any) => {
+              totalBookings += todayCheckinCount
+              this.dashboardService.getFutureCheckinCount().subscribe((futureCheckinCount: any) => {
+                totalBookings += futureCheckinCount
+                this.dashboardService.getHistoryCheckinCount(api_filter).subscribe((historyCheckinCount: any) => {
+                  totalBookings += historyCheckinCount
+                  this.checkinsInweek = totalBookings;
+                  resolve(totalBookings);
+                })
+              })
+            })
+          })
+        })
+      })
+    })
+  }
+
+
+  getOrdersCount() {
+    return new Promise((resolve, reject) => {
+      const now = new Date();
+      const lastWeekDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+      let finalDate = lastWeekDate.getFullYear() + '-' + lastWeekDate.getMonth() + '-' + lastWeekDate.getDate()
+      console.log("finalDate", finalDate)
+      let api_filter = {};
+      api_filter['orderDate-ge'] = finalDate;
+
+      let totalOrders = 0
+
+      this.dashboardService.getTodayOrdersCount().subscribe((todayOrdersCount: any) => {
+        totalOrders += todayOrdersCount
+        this.dashboardService.getFutureOrdersCount().subscribe((futureOrdersCount: any) => {
+          totalOrders += futureOrdersCount
+          this.dashboardService.getHistoryOrdersCount(api_filter).subscribe((historyOrdersCount: any) => {
+            totalOrders += historyOrdersCount;
+            resolve(totalOrders);
+          })
+        })
+      })
+    })
+  }
 }

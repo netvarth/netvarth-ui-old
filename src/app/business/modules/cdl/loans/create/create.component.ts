@@ -2103,9 +2103,9 @@ export class CreateComponent implements OnInit {
     this.loanApplication = {
       "uid": this.loanId,
       "loanProducts": this.loanProductsSelected,
-      "category": {
-        "id": this.createLoan.controls.category.value
-      },
+      // "category": {
+      //   "id": this.createLoan.controls.category.value
+      // },
       "type": {
         "id": this.createLoan.controls.loantype.value
       },
