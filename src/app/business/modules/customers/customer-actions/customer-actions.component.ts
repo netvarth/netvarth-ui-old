@@ -78,7 +78,7 @@ export class CustomerActionsComponent implements OnInit {
       }
   }
   ngOnInit() {
-    this.getLabel();
+    this.getServices();
     // const getData ={
     //     'groupName':this.data.groupName,
     //     'proConId': this.customerId
@@ -86,13 +86,14 @@ export class CustomerActionsComponent implements OnInit {
     if (this.data.type && this.data.type === "label" && this.from === 'serv') {
      
       this.action = "label_service";
-      this.getServices();
+     
     }
     if (this.data.type && this.data.type === "label" && this.from !== 'serv') {
      
       this.action = "label";
     
     }
+   
     if(this.data && this.data.customer){
       this.customerDetails = this.data.customer;
       if(this.customerDetails){
@@ -484,14 +485,19 @@ export class CustomerActionsComponent implements OnInit {
     }
   }
   labelSelection() {
+   
     if(this.action === "label_service"){
       const values = [];
       const servArray= [];
+    
       for(let m =0; m<this.service_list.length; m++){
+      
         if(this.service_list[m].id === this.serviceid){
           servArray.push(this.service_list[m])
         }
+
       }
+     
       for (let i = 0; i < servArray.length; i++) {
         if (servArray[i].label) {
           Object.keys(servArray[i].label).forEach(key => {
@@ -593,13 +599,15 @@ this.labelMap[selectedArray[p].id]=true;
     //console.log("Enter in create Member :")
   }
   getServices(pgefilter?) {
+  
     this.api_loading = true;
     //  const filter = { 'scope-eq': 'account' };
     this.provider_services.getProviderServices(pgefilter)
         .subscribe(
             data => {
                 this.service_list = data;
-              
+          
+              this.getLabel();
                 this.api_loading = false;
             },
             error => {
