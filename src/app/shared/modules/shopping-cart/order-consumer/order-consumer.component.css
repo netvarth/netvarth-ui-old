@@ -495,3 +495,11 @@ input[type='search'] {
   border-bottom: 0px solid !important;
   /* border-radius: 20px !important; */
 }
+.out-qty {
+  font-size: 10px !important;
+  font-weight: bold !important;
+  line-height: 23px !important;
+  letter-spacing: 0em !important;
+  text-align: center !important;
+  color: red !important;
+}

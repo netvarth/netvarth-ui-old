@@ -153,6 +153,7 @@
           <app-payment-mode [paymentProfile]="selectedPaymentProfile[0]"></app-payment-mode>
         </div>
       </div>
+     
       <div class="btm-ctrl">
         <div class="ctrl enable-disable">
           <span *ngIf="!is_donation" class="ttle">{{serv_status}}</span>
@@ -165,8 +166,18 @@
           <span class='disabled' *ngIf="service_data.status=='INACTIVE' || !service_data.status">{{disbale_cap}}</span>
         </div>
       </div>
+      <div *ngIf="!is_donation">
+        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 mgn-bt-10 no-padding setings">Service Labels</div>
+        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 no-padding ">
+          <span *ngFor="let label of service_data.label | keyvalue"
+          [class.appliedLabel]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
+        </div>
+      </div>
+     
+      
     </div>
   </div>
+
   <div class="cop-r" *ngIf="action=='show' && !is_donation" style="margin-bottom: 10px;margin-top: 10px;">
     <ul class="info-lst serviceadd-info">
       <li *ngIf="source === 'appt'">Please add this service to the relevant

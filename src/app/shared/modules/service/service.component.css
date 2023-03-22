@@ -147,3 +147,10 @@
     padding-top: 10px!important;
   }
 }
+.appliedLabel {
+  background: white;
+  padding: 2px;
+  margin-top: 5px;
+  font-size: smaller;
+  margin-left: 5px;
+}

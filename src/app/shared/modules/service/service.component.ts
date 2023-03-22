@@ -183,6 +183,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
     selectedPaymentProfile: any;
     selectedReqMode: boolean = false;
     is_change: boolean = false;
+    providerLabels: any;
+    allLabels: any = [];
     // show_internationalmode = false;
 
     constructor(private fb: UntypedFormBuilder,
@@ -705,6 +707,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.getUsers();
         this.getUsersTeam();
         this.getQuestionnaire();
+        this.getLabel();
         if (this.donationservice) {
             this.is_donation = true;
         }
@@ -1439,5 +1442,20 @@ export class ServiceComponent implements OnInit, OnDestroy {
     isNumericWithoutdot(evt){
         return this.sharedFunctons.isNumericwithoutdot(evt);
 
+        
     }
+    getLabel() {
+        this.providerLabels = [];
+        this.provider_services.getLabelList().subscribe((data: any) => {
+          this.allLabels = data;
+          this.providerLabels = data.filter(label => label.status === 'ENABLED');
+        });
+      }
+      getDisplayname(label) {
+        for (let i = 0; i < this.allLabels.length; i++) {
+          if (this.allLabels[i].label === label) {
+            return this.allLabels[i].displayName;
+          }
+        }
+      }
 }

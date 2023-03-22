@@ -771,7 +771,7 @@ export class OrderConsumerComponent implements OnInit {
   if(!itemObj.item.isStockAvailable){
     this.snackbarService.openSnackBar('Out of stock', { 'panelClass': 'snackbarerror' });
    }
-   if(itemObj.item.isStockAvailable){
+   else{
     this.orderList.push(itemObj);
    }
       this.orderList.push(itemObj);
@@ -789,7 +789,7 @@ export class OrderConsumerComponent implements OnInit {
            if(!itemObj.item.isStockAvailable){
             this.snackbarService.openSnackBar('Out of stock', { 'panelClass': 'snackbarerror' });
            }
-           if(itemObj.item.isStockAvailable){
+           else{
             this.orderList.push(itemObj);
            }
           this.lStorageService.setitemonLocalStorage('order', this.orderList);
@@ -802,7 +802,7 @@ export class OrderConsumerComponent implements OnInit {
          if(!itemObj.item.isStockAvailable){
           this.snackbarService.openSnackBar('Out of stock', { 'panelClass': 'snackbarerror' });
          }
-         if(itemObj.item.isStockAvailable){
+         else{
           this.orderList.push(itemObj);
          }
         this.lStorageService.setitemonLocalStorage('order', this.orderList);
