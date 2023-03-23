@@ -13,7 +13,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Dealer Shop Name</div>
+                <div class="form-title">Dealer Shop <span class="text-danger">*</span></div>
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
@@ -28,7 +28,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Dealer Owner First Name</div>
+                <div class="form-title">Dealer Owner First Name <span class="text-danger">*</span></div>
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
@@ -43,7 +43,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Dealer Owner Last Name</div>
+                <div class="form-title">Dealer Owner Last Name <span class="text-danger">*</span></div>
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
@@ -59,7 +59,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Phone Number</div>
+                <div class="form-title">Phone Number <span class="text-danger">*</span></div>
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
@@ -209,7 +209,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Aadhar Number</div>
+                <div class="form-title">Aadhar Number <span class="text-danger">*</span></div>
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
@@ -274,7 +274,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Pan Number</div>
+                <div class="form-title">Pan Number <span class="text-danger">*</span></div>
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
@@ -335,7 +335,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Cheque/Passbook Front</div>
+                <div class="form-title">Cheque/Passbook Front <span class="text-danger">*</span></div>
               </div>
               <div class="fieldPadding photo-border">
                 <div class='file file--upload'>
@@ -376,7 +376,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Address 1</div>
+                <div class="form-title">Address 1 <span class="text-danger">*</span></div>
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
@@ -392,7 +392,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Address 2</div>
+                <div class="form-title">Address 2 <span class="text-danger">*</span></div>
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
@@ -407,7 +407,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">District</div>
+                <div class="form-title">District <span class="text-danger">*</span></div>
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" formControlName="city"
@@ -435,7 +435,7 @@
         <div class="bggrey my-2" *ngIf="stateList">
           <div>
             <div class="d-flex">
-              <div class="form-title">State</div>
+              <div class="form-title">State <span class="text-danger">*</span></div>
             </div>
             <div class="fieldPadding">
               <mat-select class="form-control widthWebKit" #partnerstate formControlName="state">
@@ -451,7 +451,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Pincode</div>
+                <div class="form-title">Pincode <span class="text-danger">*</span></div>
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" formControlName="pincode"
@@ -483,7 +483,7 @@
         <div class="bggrey my-2" *ngIf="branches">
           <div>
             <div class="d-flex">
-              <div class="form-title">Nearest Mafil Branch</div>
+              <div class="form-title">Nearest Mafil Branch <span class="text-danger">*</span></div>
             </div>
             <div class="fieldPadding">
               <mat-select class="form-control widthWebKit" #branch formControlName="branch">
@@ -601,7 +601,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">GST Number</div>
+                <div class="form-title">GST Number <span class="text-danger">*</span></div>
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
@@ -621,7 +621,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">GST Attachment</div>
+                <div class="form-title">GST Attachment <span class="text-danger">*</span></div>
               </div>
               <div class="fieldPadding photo-border">
                 <div class='file file--upload'>
