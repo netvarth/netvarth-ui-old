@@ -372,11 +372,25 @@ export class TwilioService {
         room.on('reconnecting', error => {
             console.log(room.state, 'reconnecting');
             _this.sendError(error);
+            _this.participantsCount = room.participants.size;
+            console.log("connected - Participants:" + room.participants.size);
+            if (_this.participantsCount === 0) {
+                _this.activateTimer(true);
+            } else {
+                _this.activateTimer(false);
+            }
             /* Update the application UI here */
           });
           room.on('reconnected', () => {
             console.log(room.state, 'connected');
             console.log('Reconnected your signaling and media connections!');
+            _this.participantsCount = room.participants.size;
+            console.log("connected - Participants:" + room.participants.size);
+            if (_this.participantsCount === 0) {
+                _this.activateTimer(true);
+            } else {
+                _this.activateTimer(false);
+            }
             /* Update the application UI here */
           });
           
