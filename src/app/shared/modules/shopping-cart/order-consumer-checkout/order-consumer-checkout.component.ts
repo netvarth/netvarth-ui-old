@@ -756,7 +756,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   }
 
   getCartDetails() {
-    this.carttDetails = [];
+    this.cartDetails = [];
     let delivery = false;
     if (this.delivery_type === 'home') {
       delivery = true;
@@ -776,30 +776,30 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     this.shared_services.getCartdetails(this.account_id, passdata)
       .subscribe(
         data => {
-          this.carttDetails = data;
+          this.cartDetails = data;
 
           this.couponlist = [];
           this.pcouponlist = [];
-          if (this.carttDetails.jCouponList) {
-            for (const [key, value] of Object.entries(this.carttDetails.jCouponList)) {
+          if (this.cartDetails.jCouponList) {
+            for (const [key, value] of Object.entries(this.cartDetails.jCouponList)) {
               if (value['value'] !== '0.0') {
                 this.couponlist.push(key);
               }
             }
           }
-          if (this.carttDetails.proCouponList) {
-            for (const [key, value] of Object.entries(this.carttDetails.proCouponList)) {
+          if (this.cartDetails.proCouponList) {
+            for (const [key, value] of Object.entries(this.cartDetails.proCouponList)) {
               if (value['value'] !== '0.0') {
                 this.pcouponlist.push(key);
               }
             }
           }
-          if (this.carttDetails.eligibleJcashAmt) {
+          if (this.cartDetails.eligibleJcashAmt) {
             this.checkJcash = true
-            this.jcashamount = this.carttDetails.eligibleJcashAmt.jCashAmt;
-            this.jcreditamount = this.carttDetails.eligibleJcashAmt.creditAmt;
+            this.jcashamount = this.cartDetails.eligibleJcashAmt.jCashAmt;
+            this.jcreditamount = this.cartDetails.eligibleJcashAmt.creditAmt;
           }
-          this.getNetTotal(this.carttDetails)
+          this.getNetTotal(this.cartDetails)
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
