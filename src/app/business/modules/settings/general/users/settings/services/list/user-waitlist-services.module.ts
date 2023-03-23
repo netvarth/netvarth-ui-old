@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { FormMessageDisplayModule } from '../../../../../../../../shared/modules/form-message-display/form-message-display.module';
+import { CommunicationService } from '../../../../../../../../../../src/app/business/services/communication-service';
 const routes: Routes = [
     { path: '', component: UserWaitlistServicesComponent },
     { path: ':sid', loadChildren: ()=> import('../details/user-waitlistservice-detail.module').then(m=>m.UserWaitlistserviceDetailModule)}
@@ -39,7 +40,8 @@ const routes: Routes = [
         UserWaitlistServicesComponent 
     ],
     providers: [
-        ServicesService
+        ServicesService,
+        CommunicationService
     ]
 })
 export class UserWaitlistServicesModule { }

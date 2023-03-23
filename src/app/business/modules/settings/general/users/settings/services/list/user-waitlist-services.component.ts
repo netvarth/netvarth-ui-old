@@ -14,6 +14,7 @@ import { WordProcessor } from '../../../../../../../../shared/services/word-proc
 import { DateTimeProcessor } from '../../../../../../../../shared/services/datetime-processor.service';
 import { ProviderDataStorageService } from '../../../../../../../services/provider-datastorage.service';
 import { ServiceQRCodeGeneratordetailComponent } from '../../../../../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.component';
+import { CustomerActionsComponent } from '../../../../../../../../../../src/app/business/modules/customers/customer-actions/customer-actions.component';
 
 @Component({
     selector: 'app-user-services',
@@ -52,6 +53,10 @@ export class UserWaitlistServicesComponent implements OnInit, OnDestroy {
     bprofile: any = [];
     qrdialogRef: any;
     wndw_path = projectConstantsLocal.PATH;
+    type: any;
+    providerLabels: any = [];
+    loading = false;
+    showApply = false;
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         private activated_route: ActivatedRoute,
@@ -261,4 +266,32 @@ export class UserWaitlistServicesComponent implements OnInit, OnDestroy {
         this.qrdialogRef.afterClosed().subscribe(result => {
         });
     }
+    showLabelPopup(serv, service) {
+        this.type = serv;
+          const notedialogRef = this.dialog.open(CustomerActionsComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+              serviceid: service.id,
+              type: 'label',
+              from : this.type
+            }
+          });
+          notedialogRef.afterClosed().subscribe(result => {
+            this.getLabel();
+           
+          });
+        }
+        getLabel() {
+            this.loading = true;
+            this.providerLabels = [];
+            this.provider_services.getLabelList().subscribe((data: any) => {
+                console.log(data)
+              this.providerLabels = data.filter(label => label.status === "ENABLED");
+              this.loading = false;
+              
+                // this.labelselection();
+            });
+          }
 }

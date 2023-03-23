@@ -76,6 +76,10 @@
                                             *ngIf="service.status=='ACTIVE'">
                                             <i class="fa fa-qrcode"></i>Share link
                                         </button>
+                                        <button mat-menu-item  *ngIf="service.status=='ACTIVE'"
+                                        (click)="showLabelPopup('serv',service)">
+                                        <i class="fa fa-tag"></i>Assign Label
+                                        </button>
                                         <button mat-menu-item (click)="changeServiceStatus(service)">
                                             <i *ngIf="service.status=='INACTIVE' || !service.status"
                                                 class="icon-enable phone-in-icon" [matTooltip]="'Enable Service'"></i>
