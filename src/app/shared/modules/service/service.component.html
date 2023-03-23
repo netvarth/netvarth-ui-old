@@ -44,6 +44,11 @@
           <span class="icon-time"> {{getAppxTime(service_data.serviceDuration)}}
           </span>
         </div>
+        <div class="item" *ngIf="service_data.leadTime">
+          <span class="ttle">Lead Time</span>
+          <span class="icon-time"> {{service_data.leadTime}} Mins
+          </span>
+        </div>
         <div class="item" *ngIf="service_data.totalAmount!=0">
           <span class="ttle">{{price_cap}}</span>
           <span class="rupee-font">{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
@@ -380,7 +385,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           </div>
         </div>
         <div class="form-group service-options d-lg-flex justify-content-between">
-          <div class="example-full-width">
+          <div class="example-full-width" *ngIf="!is_donation">
             <label class="label">Appointment Type</label>
             <!-- <mat-radio-button [value]="profile.profileId" readonly
                 [checked]="service && profile.profileId === service.paymentProfileId">
@@ -519,6 +524,20 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 <input matInput type="text" class="form-control" id="resources" (keypress)="isNumeric($event)"
                   placeholder="Number of resources" formControlName="resoucesRequired" autocomplete="off">
               </div>
+            </div>
+          </section>
+        </div>
+        <div class="row mx-1 mgn-up-20" *ngIf="!is_donation">
+          <section class="mgn-bt-30">
+            <label style="margin-bottom: 0 !important" class="col-form-label">Lead Time (In minutes)</label>
+            <!-- <div class="settings_info">
+              Maximum no. of bookings allowed for a {{customer_label}} for the same service, same schedule and same day.
+            </div> -->
+
+            <div class="no-padding">
+              <input matInput type="number" class="form-control number-ip-sm" 
+                (keypress)="isNumeric($event)" placeholder="Maximum bookings allowed"
+                formControlName="leadTime" autocomplete="off" min="0">
             </div>
           </section>
         </div>
