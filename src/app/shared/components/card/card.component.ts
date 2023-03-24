@@ -73,11 +73,11 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.todayDate = this.datePipe.transformTofilterDate(new Date());
         switch (this.item.type) {
-            case 'appointment-dashboard': 
-                    this.appointment = this.item;
-                    this.appointment['displayTime'] = this.getSingleTime(this.appointment.appmtFor[0].apptTime);
+            case 'appointment-dashboard':
+                this.appointment = this.item;
+                this.appointment['displayTime'] = this.getSingleTime(this.appointment.appmtFor[0].apptTime);
                 this.appointment['delay'] = this.getTimeMinute(this.appointment.apptDelay);
-                    break;
+                break;
             case 'waitlist':
                 this.service = this.item.item;
                 if (this.service.serviceAvailability['personAhead'] >= 0) {
@@ -100,21 +100,21 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 break;
             case 'appt':
                 this.service = this.item.item;
-                console.log("Appointment Info :",this.service)
+                console.log("Appointment Info :", this.service)
                 this.timingCaption = 'Next Available Time';
-                this.timings = this.getAvailabilityforAppt(this.service.serviceAvailability.nextAvailableDate, this.service.serviceAvailability.nextAvailable);                                
+                this.timings = this.getAvailabilityforAppt(this.service.serviceAvailability.nextAvailableDate, this.service.serviceAvailability.nextAvailable);
                 // if (this.config) {                   
                 // }               
-                if(this.service.serviceBookingType === 'request'){
+                if (this.service.serviceBookingType === 'request') {
                     return this.buttonCaption = 'Request';
-                } 
-                else{
+                }
+                else {
                     let buttonTitle = this.getTerminologyFromConfig('get_appointment');
                     console.log("Button Caption:", buttonTitle);
-                    this.buttonCaption = ((buttonTitle!==null) ? buttonTitle: 'Get Appointment');
+                    this.buttonCaption = ((buttonTitle !== null) ? buttonTitle : 'Get Appointment');
                 }
-                
-                               
+
+
                 break;
             case 'donation':
                 this.service = this.item.item;
@@ -153,14 +153,14 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
 
 
     ngAfterViewInit() {
-            if(this.source == 'paper') {
-                console.log("Came from paper");
-                let element: HTMLElement = document.getElementsByClassName('add-to-cart')[0] as HTMLElement;
-                element.click();
-                this.IsAuthordemy = true
-                this.IsPaper.emit(this.IsAuthordemy);
-            }
+        if (this.source == 'paper') {
+            console.log("Came from paper");
+            let element: HTMLElement = document.getElementsByClassName('add-to-cart')[0] as HTMLElement;
+            element.click();
+            this.IsAuthordemy = true
+            this.IsPaper.emit(this.IsAuthordemy);
         }
+    }
     getServiceName(serviceName) {
         let name = '';
         if (serviceName.length > 12) {
@@ -226,7 +226,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             actionObj['userId'] = userId;
         }
         //if (item)
-        
+
         this.actionPerformed.emit(actionObj);
     }
     showConsumerNote(item) {
@@ -243,12 +243,12 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     }
 
     getTerminologyFromConfig(term) {
-        if(this.config && this.config.terminologies && this.config.terminologies[term]) {
+        if (this.config && this.config.terminologies && this.config.terminologies[term]) {
             return this.config.terminologies[term];
         }
-        return null; 
+        return null;
     }
-    
+
     getTimeToDisplay(min) {
         return this.dateTimeProcessor.convertMinutesToHourMinute(min);
     }
@@ -377,5 +377,9 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     getUsersList(teamid) {
         const userObject = this.teams.filter(user => parseInt(user.id) === teamid);
         return userObject[0].name;
+    }
+    getServiceLabels(labelsList) {
+        let labels = labelsList.map(label => label.displayName);
+        return labels.toString();
     }
 }

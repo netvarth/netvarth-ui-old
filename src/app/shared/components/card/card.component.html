@@ -546,6 +546,9 @@
                         *ngIf="item.service.serviceType === 'virtualService' && item.service.virtualCallingModes[0].callingMode === 'WhatsApp' && item.service.virtualServiceType === 'videoService'"></i>
                     {{item.service.name}}
                 </div>
+                <div class="bold user-txt-clr" *ngIf="item.serviceData && item.serviceData.labels && item.serviceData.labels.length>0">
+                    {{getServiceLabels(item.serviceData.labels)}}
+                </div>
                 <div>
                     <div class="col-xs-12 col-sm-12 no-padding view-details"
                         *ngIf="time_type!=1 && item.type=='checkin-dashboard'">
@@ -659,6 +662,9 @@
                     <i class="fa wtsapvid-icon"
                         *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appointment.service.virtualServiceType === 'videoService'"></i>
                     {{appointment.service.name}}
+                </div>
+                <div class="bold user-txt-clr" *ngIf="appointment.serviceData && appointment.serviceData.labels && appointment.serviceData.labels.length>0">
+                    {{getServiceLabels(appointment.serviceData.labels)}}
                 </div>
                 <div>
                     <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="getLabels(appointment)">

@@ -640,6 +640,9 @@
                   <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>{{appt.service.name}}
                 </div>
+                <div class="bold user-txt-clr" *ngIf="appt.serviceData && appt.serviceData.labels && appt.serviceData.labels.length>0">
+                  {{getServiceLabels(appt.serviceData.labels)}}
+                </div>
                 <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
                   {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName
                   + ' ' + appt.provider.lastName}}
@@ -909,6 +912,9 @@
                         <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                           *ngIf="apptByTimeSlot[appt.time][0].service.serviceType === 'virtualService' && apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'WhatsApp' && apptByTimeSlot[appt.time][0].service.virtualServiceType === 'videoService'"></i>{{apptByTimeSlot[appt.time][0].service.name}}
                       </div>
+                      <div class="bold user-txt-clr" *ngIf="appt.serviceData && appt.serviceData.labels && appt.serviceData.labels.length>0">
+                        {{getServiceLabels(appt.serviceData.labels)}}
+                      </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
                         <span class="mgn-rt-10" *ngFor="let label of apptByTimeSlot[appt.time][0].label | keyvalue"
@@ -1120,6 +1126,9 @@
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
                   <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>{{appt.service.name}}
+                </div>
+                <div class="bold user-txt-clr" *ngIf="appt.serviceData && appt.serviceData.labels && appt.serviceData.labels.length>0">
+                  {{getServiceLabels(appt.serviceData.labels)}}
                 </div>
                 <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
                   {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName
@@ -1708,6 +1717,9 @@
                   *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
                 <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                   *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>{{appt.service.name}}
+              </div>
+              <div class="bold user-txt-clr" *ngIf="appt.serviceData && appt.serviceData.labels && appt.serviceData.labels.length>0">
+                {{getServiceLabels(appt.serviceData.labels)}}
               </div>
               <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
                 {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName
@@ -2503,6 +2515,9 @@
                   *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
                 <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                   *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>{{appt.service.name}}
+              </div>
+              <div class="bold user-txt-clr" *ngIf="appt.serviceData && appt.serviceData.labels && appt.serviceData.labels.length>0">
+                {{getServiceLabels(appt.serviceData.labels)}}
               </div>
               <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
                 {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName

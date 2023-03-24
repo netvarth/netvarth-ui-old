@@ -3452,4 +3452,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         
       })
     }
+    getServiceLabels(labelsList) {
+      let labels = labelsList.map(label => label.displayName);
+      return labels.toString();
+    }
 }

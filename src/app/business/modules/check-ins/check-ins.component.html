@@ -747,6 +747,9 @@
                       *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                     {{checkin.service.name}}
                   </div>
+                  <div class="bold user-txt-clr" *ngIf="checkin.serviceData && checkin.serviceData.labels && checkin.serviceData.labels.length>0">
+                    {{getServiceLabels(checkin.serviceData.labels)}}
+                  </div>
                   <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                     {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
                     + ' ' + checkin.provider.lastName}}
@@ -996,6 +999,9 @@
                     <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                       *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                     {{checkin.service.name}}
+                  </div>
+                  <div class="bold user-txt-clr" *ngIf="checkin.serviceData && checkin.serviceData.labels && checkin.serviceData.labels.length>0">
+                    {{getServiceLabels(checkin.serviceData.labels)}}
                   </div>
                   <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                     {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
@@ -1716,6 +1722,9 @@
                     *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                   {{checkin.service.name}}
 
+                </div>
+                <div class="bold user-txt-clr" *ngIf="checkin.serviceData && checkin.serviceData.labels && checkin.serviceData.labels.length>0">
+                  {{getServiceLabels(checkin.serviceData.labels)}}
                 </div>
                 <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                   {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
@@ -2542,6 +2551,9 @@
                   <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                     *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                   {{checkin.service.name}}
+                </div>
+                <div class="bold user-txt-clr" *ngIf="checkin.serviceData && checkin.serviceData.labels && checkin.serviceData.labels.length>0">
+                  {{getServiceLabels(checkin.serviceData.labels)}}
                 </div>
                 <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                   {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
