@@ -623,6 +623,10 @@
 
           <div class="row mt-2"
             *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0]">
+            <div class="col-md-12 no-padding-small font-weight-bold my-2">
+              <span *ngIf="loanData && loanData.isAccountAggregated">Statement Aggregated by Account Aggreator</span>
+              <span *ngIf="loanData && !loanData.isAccountAggregated">Statement Uploaded Manually</span>
+            </div>
             <div class="col-md-4 no-padding-small">
               <a [href]="bankData.bankStatementAttachments[0].s3path" target="_blank" class="btn btn-primary">
                 <span>View Statements</span>
