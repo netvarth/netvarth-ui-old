@@ -32,7 +32,7 @@ import * as moment from 'moment';
   styleUrls: ['./consumer-appointment.component.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
-
+  coupon_notes = projectConstantsLocal.COUPON_NOTES;  
   private subs = new SubSink();
 
   scheduledAppmtId  // scheduled appointment id for reschedule
@@ -196,6 +196,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
   advPostData: any;
   accountConfig: any;
   selectedDay: string;
+  jCouponMsg: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private lStorageService: LocalStorageService,
@@ -1739,7 +1740,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     post_Data['schedule'] = { 'id': this.selectedSlots[0]['scheduleId'] };
     if (this.serviceOptionApptt) {
       console.log(JSON.stringify(this.advPostData))
-      alert('2')
       post_Data['srvAnswers'] = this.advPostData;
     }
 
@@ -1750,6 +1750,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     console.log(JSON.stringify(post_Data))
     this.subs.sink = this.sharedServices.addApptAdvancePayment(param, post_Data).subscribe(data => {
       this.paymentDetails = data;
+      
       if (this.paymentDetails && this.paymentDetails.netTotal && this.serviceOptionApptt) {
         this.serviceTotalPrice = this.lStorageService.getitemfromLocalStorage('serviceTotalPrice');
 
@@ -1901,6 +1902,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     this.subs.sink = this.sharedServices.addApptAdvancePayment(param, post_Data)
       .subscribe(data => {
         this.paymentDetails = data;
+        // this.jCouponMsg = this.paymentDetails.jCouponList.value.systemNote;
         console.log("PaymentDetailss:", this.paymentDetails);
         if (this.paymentDetails && this.paymentDetails.netTotal && this.serviceOptionApptt) {
           this.serviceTotalPrice = this.lStorageService.getitemfromLocalStorage('serviceTotalPrice');

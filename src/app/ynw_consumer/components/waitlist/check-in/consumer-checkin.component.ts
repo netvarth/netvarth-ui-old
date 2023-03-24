@@ -35,6 +35,7 @@ import { DomainConfigGenerator } from '../../../../shared/services/domain-config
     styleUrls: ['./consumer-checkin.component.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css'],
 })
 export class ConsumerCheckinComponent implements OnInit, OnDestroy {
+    coupon_notes = projectConstantsLocal.COUPON_NOTES;  
     // paymentBtnDisabled = false;
     isClickedOnce = false;
     shownonIndianModes = false;

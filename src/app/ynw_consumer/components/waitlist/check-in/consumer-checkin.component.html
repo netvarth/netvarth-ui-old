@@ -698,15 +698,18 @@
                                                                 (click)="applyPromocode()" data-toggle="modal"
                                                                 data-target="#exampleModalCenter">Apply
                                                                 Coupon Code</a>
-                                                            <a class="lnk pointer-cursor action"
+                                                           
+                                                        </div>
+                                                        <div *ngFor="let coupon of paymentDetails.jCouponList | keyvalue"
+                                                            style="text-align: initial;">
+                                                            <span *ngIf="coupon.value.value !== '0.0'">
+                                                                <a class="lnk pointer-cursor action"
                                                                 *ngIf="selected_coupons.length > 0"
                                                                 (click)="applyPromocode()" data-toggle="modal"
                                                                 data-target="#exampleModalCenter">
                                                                 Coupon code added</a>
                                                             {{selected_coupons.toString()}}
-                                                        </div>
-                                                        <div *ngFor="let coupon of paymentDetails.jCouponList | keyvalue"
-                                                            style="text-align: initial;">
+                                                              </span><br>
                                                             <small class="black rupee-font"
                                                                 *ngIf="coupon.value.value !== '0.0'">You
                                                                 saved
@@ -715,29 +718,35 @@
                                                                 {{coupon.key}}
                                                             </small>
                                                             <small class="black"
-                                                                *ngIf="coupon.value.value === '0.0'">{{coupon.key}}
-                                                                will be honored if all the rules are met
-                                                                &nbsp;<small *ngIf="coupon.value.value === '0.0'"
-                                                                    class="blue custId-cursor"
-                                                                    (click)="showJCCouponNote(coupon)"
-                                                                    aria-hidden="true">Know
-                                                                    more</small></small>
+                                                            *ngIf="coupon.value.value === '0.0'">
+                                                            <div style="margin-bottom: 10px; color: red"> Sorry!! This coupon is rejected because it doesn't meet the following
+                                                                requirements: </div>
+                                                            <ul *ngFor="let msg of coupon.value.systemNote">
+                                                                <li *ngIf="msg !== 'COUPON_APPLIED'"> {{coupon_notes[msg]}}</li>
+                                                            </ul>
+                                                        </small>
                                                         </div>
                                                         <div
                                                             *ngFor="let coupon of paymentDetails.proCouponList | keyvalue">
+                                                            <span *ngIf="coupon.value.value !== '0.0'">
+                                                                <a class="lnk pointer-cursor action" *ngIf="selected_coupons.length > 0" (click)="applyPromocode()"
+                                                                  data-toggle="modal" data-target="#exampleModalCenter">
+                                                                  Coupon code added</a>
+                                                                {{selected_coupons.toString()}}
+                                                              </span><br>
                                                             <small class="black rupee-font"
                                                                 *ngIf="coupon.value.value !== '0.0'">You saved
                                                                 {{coupon.value.value | currency:'&#8377;'}}
                                                                 on {{coupon.key}}
                                                             </small>
                                                             <small class="black"
-                                                                *ngIf="coupon.value.value === '0.0'">{{coupon.key}}
-                                                                will be honored if all the rules are met
-                                                                &nbsp;<small *ngIf="coupon.value.value === '0.0'"
-                                                                    class="blue custId-cursor"
-                                                                    (click)="showJCCouponNote(coupon)"
-                                                                    aria-hidden="true">Know
-                                                                    more</small></small>
+                                                            *ngIf="coupon.value.value === '0.0'">
+                                                            <div style="margin-bottom: 10px; color: red"> Sorry!! This coupon is rejected because it doesn't meet the following
+                                                                requirements: </div>
+                                                            <ul *ngFor="let msg of coupon.value.systemNote">
+                                                                <li *ngIf="msg !== 'COUPON_APPLIED'"> {{coupon_notes[msg]}}</li>
+                                                            </ul>
+                                                        </small>
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div>
