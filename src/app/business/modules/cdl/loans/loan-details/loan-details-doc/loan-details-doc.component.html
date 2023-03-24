@@ -777,7 +777,7 @@
             </td>
         </tr>
 
-        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].coApplicantType">
+        <tr style="width: 100%;" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].coApplicantType">
             <td style="width: 50%;">
                 <div class="text-normal mx-1">
                     <b>Relation With Applicant</b>
@@ -790,7 +790,7 @@
             </td>
         </tr>
 
-        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].customerFirstName">
+        <tr style="width: 100%;" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerFirstName">
             <td style="width: 50%;">
                 <div class="text-normal mx-1">
                     <b>Co-Applicant Name</b>
@@ -798,18 +798,18 @@
             </td>
             <td style=" width: 50%;">
                 <div class="text-normal mx-1">
-                    <span *ngIf="loanData.loanApplicationKycList[1].customerFirstName">
+                    <span *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerFirstName">
                         {{loanData.loanApplicationKycList[1].customerFirstName}}
                     </span>
 
-                    <span *ngIf="loanData.loanApplicationKycList[1].customerLastName">
+                    <span *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerLastName">
                         {{loanData.loanApplicationKycList[1].customerLastName}}
                     </span>
                 </div>
             </td>
         </tr>
 
-        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].customerPhone">
+        <tr style="width: 100%;" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerPhone">
             <td style="width: 50%;">
                 <div class="text-normal mx-1">
                     <b>Phone Number</b>
@@ -822,7 +822,7 @@
             </td>
         </tr>
 
-        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].customerEmail">
+        <tr style="width: 100%;" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerEmail">
             <td style="width: 50%;">
                 <div class="text-normal mx-1">
                     <b>Email</b>
@@ -835,7 +835,7 @@
             </td>
         </tr>
 
-        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].gender">
+        <tr style="width: 100%;" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].gender">
             <td style="width: 50%;">
                 <div class="text-normal mx-1">
                     <b>Gender</b>
@@ -848,7 +848,7 @@
             </td>
         </tr>
 
-        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].dob">
+        <tr style="width: 100%;" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].dob">
             <td style="width: 50%;">
                 <div class="text-normal mx-1">
                     <b>Date of Birth</b>
@@ -859,7 +859,7 @@
             </td>
         </tr>
 
-        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].permanentAddress1">
+        <tr style="width: 100%;" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].permanentAddress1">
             <td style="width: 50%;">
                 <div class="text-normal mx-1">
                     <b>Address</b>
@@ -881,7 +881,7 @@
             </td>
         </tr>
 
-        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].aadhaar">
+        <tr style="width: 100%;" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].aadhaar">
             <td style="width: 50%;">
                 <div class="text-normal mx-1">
                     <b>Aadhaar</b>
@@ -894,7 +894,7 @@
             </td>
         </tr>
 
-        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].aadhaar">
+        <tr style="width: 100%;" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].aadhaar">
             <td style="width: 50%;">
                 <div class="text-normal mx-1">
                     <b>Aadhaar Attachments</b>
@@ -918,7 +918,7 @@
             </td>
         </tr>
 
-        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].pan">
+        <tr style="width: 100%;" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].pan">
             <td style="width: 50%;">
                 <div class="text-normal mx-1">
                     <b>Pan</b>
@@ -931,7 +931,7 @@
             </td>
         </tr>
 
-        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].pan">
+        <tr style="width: 100%;" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].pan">
             <td style="width: 50%;">
                 <div class="text-normal mx-1">
                     <b>Pan Attachments</b>
@@ -955,7 +955,7 @@
             </td>
         </tr>
 
-        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].bankName">
+        <tr style="width: 100%;" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankName">
             <td style="width: 50%;">
                 <div class="text-normal mx-1">
                     <b>Bank Name</b>
@@ -968,7 +968,7 @@
             </td>
         </tr>
 
-        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].bankAccountNo">
+        <tr style="width: 100%;" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankAccountNo">
             <td style="width: 50%;">
                 <div class="text-normal mx-1">
                     <b>Bank AccountNo</b>
@@ -981,7 +981,7 @@
             </td>
         </tr>
 
-        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].bankIfsc">
+        <tr style="width: 100%;" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankIfsc">
             <td style="width: 50%;">
                 <div class="text-normal mx-1">
                     <b>Bank IFSC</b>
@@ -994,7 +994,7 @@
             </td>
         </tr>
 
-        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].bankBranchName">
+        <tr style="width: 100%;" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankBranchName">
             <td style="width: 50%;">
                 <div class="text-normal mx-1">
                     <b>Bank Branch Name</b>
