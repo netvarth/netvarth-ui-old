@@ -183,6 +183,11 @@ export class OtpVerifyComponent implements OnInit {
         "partnerMobile": this.phoneNumber
       }
     }
+
+    if (this.from == "equifax") {
+      credentials = this.data.data
+    }
+
     console.log("coming here", credentials)
     // if (!loginId.startsWith('555')) {
     this.subs.sink = this.cdlservice.sendPhoneOTP(credentials, this.from).subscribe(
@@ -306,12 +311,15 @@ export class OtpVerifyComponent implements OnInit {
 
       if (this.data && this.data.phoneNumber) {
         console.log("Data", this.data)
-        if (!this.data.from || (this.data.from && this.data.from != 'partner')) {
+        if (!this.data.from || (this.data.from && this.data.from != 'partner' && this.data.from != 'equifax')) {
           const filter = { 'phoneNo-eq': this.phoneNumber };
           this.getCustomerDetails(filter);
         }
         else if (this.from && this.from == 'partner') {
           this.partnerOtpVerify()
+        }
+        else if (this.from && this.from == 'equifax') {
+          this.equifaxOtpVerify()
         }
 
       }
@@ -507,6 +515,31 @@ export class OtpVerifyComponent implements OnInit {
                 type: this.type,
                 msg: "success",
                 uid: response.uid
+              }
+              this.dialogRef.close(data);
+            }
+            console.log("Response", response)
+          },
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+        );
+    }
+  }
+
+
+  equifaxOtpVerify() {
+
+
+    if (this.data) {
+      this.subs.sink = this.cdlservice.verifyEquifaxOtp(this.otpEntered, this.data.data)
+        .subscribe(
+          (response: any) => {
+            if (response) {
+              this.snackbarService.openSnackBar("Mobile Number Verification Successful");
+              const data = {
+                response: response,
+                msg: "success"
               }
               this.dialogRef.close(data);
             }

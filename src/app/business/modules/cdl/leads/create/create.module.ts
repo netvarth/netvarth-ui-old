@@ -12,7 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 // import { SelectSchemeModule } from '../select-scheme/select-scheme.module';
-// import { OtpVerifyModule } from '../otp-verify/otp-verify.module';
+import { OtpVerifyModule } from '../../loans/otp-verify/otp-verify.module';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CalendarModule } from 'primeng/calendar';
 
@@ -38,7 +38,7 @@ const routes: Routes = [
     MatButtonModule,
     FormsModule,
     MatExpansionModule,
-    // OtpVerifyModule,
+    OtpVerifyModule,
     // SelectSchemeModule,
     MultiSelectModule,
     CalendarModule,

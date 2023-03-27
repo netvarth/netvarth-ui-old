@@ -8,6 +8,7 @@ import { CdlService } from '../../cdl.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { ConfirmBoxComponent } from '../../loans/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { OtpVerifyComponent } from '../../loans/otp-verify/otp-verify.component';
 
 @Component({
   selector: 'app-create',
@@ -228,36 +229,51 @@ export class CreateComponent implements OnInit {
 
     }
 
-    this.cdlService.getEquifax(equifaxData).subscribe((data: any) => {
-      if (data) {
-        if (data.id) {
-          this.cdlService.getEquifaxReport(data.id).subscribe((reportData) => {
-            if (reportData) {
-              const dialogRef = this.dialog.open(ConfirmBoxComponent, {
-                width: '50%',
-                panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-                disableClose: true,
-                data: {
-                  from: "equifax",
-                  equifaxData: reportData,
-                  equifaxFormData: equifaxFormData,
-                  equifaxId: data.id
-                }
-              });
-              dialogRef.afterClosed().subscribe(
-                (id) => {
+    const dialogRef = this.dialog.open(OtpVerifyComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        type: 'Mobile Number',
+        from: 'equifax',
+        data: equifaxData,
+        phoneNumber: this.createLead.controls.phone.value
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result.msg == "success") {
+          this.cdlService.getEquifax(equifaxData).subscribe((data: any) => {
+            if (data) {
+              if (data.id) {
+                this.cdlService.getEquifaxReport(data.id).subscribe((reportData) => {
+                  if (reportData) {
+                    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+                      width: '50%',
+                      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+                      disableClose: true,
+                      data: {
+                        from: "equifax",
+                        equifaxData: reportData,
+                        equifaxFormData: equifaxFormData,
+                        equifaxId: data.id
+                      }
+                    });
+                    dialogRef.afterClosed().subscribe(
+                      (id) => {
 
+                      });
+                  }
                 });
+              }
             }
+          }, (error) => {
+            console.log('error', error)
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
         }
       }
-    }, (error) => {
-      console.log('error', error)
-      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     });
-
-
   }
 
   convertToLoan() {

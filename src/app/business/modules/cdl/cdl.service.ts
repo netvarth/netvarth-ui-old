@@ -310,6 +310,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  generateOtpForEquifax() {
+    const url = 'provider/equifax/generateotp';
+    return this.servicemeta.httpPost(url, null);
+  }
+
   getLoanEmiDetails(id) {
     const url = 'provider/loanapplication/' + id + '/loanemi';
     return this.servicemeta.httpGet(url, null);
@@ -486,6 +491,9 @@ export class CdlService {
     else if (from == 'partner') {
       var url = 'provider/partner/generate/phone';
     }
+    else if (from == 'equifax') {
+      var url = 'provider/equifax/generateotp';
+    }
     return this.servicemeta.httpPost(url, data);
   }
 
@@ -533,6 +541,14 @@ export class CdlService {
     else if (from == 'coapplicant') {
       url = 'provider/loanapplication/verify/coapplicant/' + otp + '/phoneotp';
     }
+    else if (from == 'equifax') {
+      url = 'provider/equifax/verifyotp/' + otp;
+    }
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  verifyEquifaxOtp(otp, data) {
+    const url = 'provider/equifax/verifyotp/' + otp;
     return this.servicemeta.httpPost(url, data);
   }
 
