@@ -1202,7 +1202,7 @@ export const projectConstantsLocal = {
   ],
   LOAN_STATUS: [
     { name: 'All', displayName: 'All Loans' },
-    { name: 'Draft', displayName: 'Leads' },
+    { name: 'Draft', displayName: 'Drafts' },
     { name: 'SchemeConfirmed', displayName: 'Scheme Confirmed' },
     { name: 'LoanRequest', displayName: 'Loan Request' },
     // { name: 'ApprovalPending', displayName: 'Approval Pending' },
@@ -1218,7 +1218,7 @@ export const projectConstantsLocal = {
     // { name: 'Sanctioned', displayName: 'Sanctioned' }
   ],
   TIMELINE_STATUS: [
-    { index: 1, name: 'Draft', displayName: 'Lead' },
+    { index: 1, name: 'Draft', displayName: 'Draft' },
     { index: 2, name: 'LoanRequest', displayName: 'Loan Request' },
     { index: 3, name: 'ApprovalRequired', displayName: 'Approval Required' },
     { index: 4, name: 'CreditApproved', displayName: 'Credit Verified' },
