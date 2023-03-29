@@ -28,38 +28,39 @@
                 <div class="col-md-12 no-padding px-1">
                     <div class="card text-center p-2">
                         <span class="font-weight-bold card-title">
-                            <div class="px-2 d-flex justify-content-between">
+                            <div class="px-2 d-flex justify-content-between" *ngIf="onGoingCall && onGoingCall.length>0">
                                 <div>
-                                    <span class="table-column-data">+91 9704315643</span>
+                                    <span class="table-column-data">
+                                      <span *ngIf="onGoingCall[0] && onGoingCall[0].consumerPhone && onGoingCall[0].consumerPhone.countryCode">{{onGoingCall[0].consumerPhone.countryCode}}</span>
+                                      <span
+                                          *ngIf="onGoingCall[0] && onGoingCall[0].consumerPhone && onGoingCall[0].consumerPhone.number">{{onGoingCall[0].consumerPhone.number}}
+                                      </span>
+                                  </span>
                                 </div>
                                 <div>
                                     <span class="table-column-data text-capitalize status-ongoing"><i
                                             class="fa fa-circle pt-1" aria-hidden="true"></i>&nbsp;Ongoing</span>
                                 </div>
                                 <div>
-                                    <span class="table-column-data">English</span>
+                                    <span class="table-column-data" *ngIf="onGoingCall[0] && onGoingCall[0].language">{{onGoingCall[0].language}}</span>
                                 </div>
                             </div>
-                            <!-- <td>
-                                <div class="d-flex text-center">
-                                    <button pButton pRipple type="button"
-                                        class="p-button-primary btn-primary">View
-                                    </button>
-                                </div>
-                            </td> -->
+                            <div class="px-2 text-center" *ngIf="onGoingCall && onGoingCall.length==0">
+                              <span class="font-weight-bold">No Ongoing Call</span>
+                            </div>
                         </span>
                     </div>
                 </div>
             </div>
 
             <div class="row mx-0 p-0 mt-2">
-                <div class="col-md-4 col-sm-4 col-xs-4 px-1 pointer-cursor" (click)="createToken()">
+                <div class="col-md-4 col-sm-4 col-xs-4 px-1 pointer-cursor" (click)="createPatient()">
                     <div class="card text-center dashboard-card">
                         <div>
                             <img width="60" height="60" src="./assets/images/ivr/create_token.png">
                         </div>
                         <span class="font-weight-bold card-title mt-2">
-                            Create Token
+                            Create Patient
                         </span>
                     </div>
                 </div>
@@ -146,82 +147,133 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-8 col-md-7 mt-4">
+    <div class="col-lg-12 col-md-12 mt-4">
         <div class="card">
             <div>
                 <span class="font-weight-bold">Calls</span>
             </div>
             <div class="mt-3">
-                <p-table #callsTable [value]="calls" dataKey="id" [showCurrentPageReport]="true"
-                    [rowsPerPageOptions]="[5,15,25,50]" [paginator]="true" [rows]="5" [totalRecords]="totalCallsCount"
-                    responsiveLayout="stack" scrollHeight="flex"
-                    styleClass="p-datatable-customers p-datatable-gridlines"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Calls">
-                    <ng-template pTemplate="caption">
-                        <div class="container-fluid no-padding">
-                            <div class="row mt-2">
-                                <div class="col-md-4 no-padding">
-                                    <span>
-                                        <input pInputText type="text" [style]="{'width':'100%'}" class="search-field"
-                                            (input)="callsTable.filterGlobal($event.target.value, 'contains')"
-                                            placeholder="Search keyword" style="width:100%" />
-                                    </span>
-                                </div>
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4 text-right no-padding">
-                                    <p-dropdown styleClass="text-left" [style]="{'width':'100%'}"
-                                        [options]="ivrCallsStatus" (onChange)="statusChange($event)"
-                                        optionLabel="displayName" dataKey="name">
-                                    </p-dropdown>
-                                </div>
-                            </div>
+                <p-table #callsTable [value]="calls" [lazy]="true" (onLazyLoad)="loadCalls($event)" dataKey="id"
+                  [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [rows]="5"
+                  [totalRecords]="totalCallsCount" responsiveLayout="scroll"
+                  [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']"
+                  styleClass="p-datatable-customers p-datatable-gridlines"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th pSortableColumn="consumerPhone">Phone Number <p-sortIcon field="consumerPhone"></p-sortIcon>
+                      </th>
+                      <th pSortableColumn="callStatus">Status <p-sortIcon field="callStatus"></p-sortIcon></th>
+                      <th pSortableColumn="language">Language <p-sortIcon field="language"></p-sortIcon></th>
+                      <th>More Actions</th>
+                    </tr>
+                    <tr>
+                      <th>
+                        <p-columnFilter type="text" field="consumerPhone"></p-columnFilter>
+                      </th>
+                      <th>
+                        <p-columnFilter type="text" field="callStatus"></p-columnFilter>
+                      </th>
+                      <th>
+                        <p-columnFilter type="text" field="language"></p-columnFilter>
+                      </th>
+                      <th></th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-call>
+                    <tr class="mobile-card">
+                      <td>
+                        <span class="d-lg-none d-md-none">Phone Number : </span><span
+                          class="table-column-data">{{call.consumerPhone.number}}</span>
+                      </td>
+                      <td>
+                        <span class="d-lg-none d-md-none">Status : </span><span class="table-column-data text-capitalize"
+                          [class]="'status-' + call.callStatus">{{call.callStatus}}</span>
+                      </td>
+                      <td>
+                        <span class="d-lg-none d-md-none d-sm-block">Language : </span><span class="table-column-data"
+                          *ngIf="call && call.language">{{call.language}}</span>
+                      </td>
+                      <td>
+                        <span class="d-lg-none d-md-none d-sm-block">More Actions : </span>
+                        <div class="d-flex text-center">
+                          <button pButton pRipple type="button" class="p-button-warning btn-warning mr-2 font-weight-600"
+                            (click)="openUsersPopup(call.uid)" *ngIf="call && !call.userId">Assign
+                          </button>
+                          <button pButton pRipple type="button" class="p-button-warning btn-warning mr-2 font-weight-600"
+                            (click)="unassignToCall(call.uid)" *ngIf="call && call.userId">Unassign
+                          </button>
+
+                          <button pButton pRipple type="button" class="p-button-info btn-info mr-2 font-weight-600"
+                            (click)="getCallBack(call.uid)" *ngIf="call && call.userId">Callback
+                          </button>
+
+                          <button pButton pRipple type="button" class="p-button-primary btn-primary font-weight-600"
+                            (click)="viewCall(call.uid)">View
+                          </button>
                         </div>
-                    </ng-template>
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>Phone Number</th>
-                            <th>Status</th>
-                            <th>Language</th>
-                            <th>More Actions</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-call>
-                        <tr class="mobile-card">
-                            <td>
-                                <span class="d-lg-none d-md-none">Phone Number : </span><span
-                                    class="table-column-data">{{call.consumerPhone.number}}</span>
-                            </td>
-                            <td>
-                                <span class="d-lg-none d-md-none">Status : </span><span
-                                    class="table-column-data text-capitalize"
-                                    [class]="'status-' + call.callStatus">{{call.callStatus}}</span>
-                            </td>
-                            <td>
-                                <span class="d-lg-none d-md-none d-sm-block">Language : </span><span
-                                    class="table-column-data" *ngIf="call && call.language">{{call.language}}</span>
-                            </td>
-                            <td>
-                                <span class="d-lg-none d-md-none d-sm-block">More Actions : </span>
-                                <div class="d-flex text-center">
-                                    <button pButton pRipple type="button" class="p-button-primary btn-primary"
-                                        (click)="gotoCustomersPage(call.consumerId,call.uid)">View
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <br class="d-lg-none d-md-none">
-                    </ng-template>
-                    <ng-template pTemplate="emptymessage">
-                        <tr>
-                            <td colspan="7">No Calls found.</td>
-                        </tr>
-                    </ng-template>
+                      </td>
+                    </tr>
+                    <br class="d-lg-none d-md-none">
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage">
+                    <tr>
+                      <td colspan="7">No Calls found.</td>
+                    </tr>
+                  </ng-template>
                 </p-table>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-4 col-md-5 mt-4">
+
+    <!-- <div class="col-md-8 mt-4">
+      <div class="card mt-2 min-height-card">
+        <span class="font-weight-bold px-0">Tokens</span>
+        <div class="row mt-2" *ngIf="tokens">
+          <table class="table table-responsive">
+            <thead>
+              <tr class="bg-blue px-2">
+                <th>Token No</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>User</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let token of tokens" class="px-2 my-auto">
+                <td *ngIf="token.waitlist && token.waitlist.token"> {{token.waitlist.token}}
+                </td>
+                <td>
+                  <ng-container
+                    *ngIf="token.waitlist && token.waitlist.consumer.firstName || token.waitlist.consumer.lastName">
+                    {{token.waitlist.consumer.firstName}}
+                    {{token.waitlist.consumer.lastName}}
+                  </ng-container>
+                </td>
+                <td *ngIf="token.waitlist && token.waitlist.waitlistStatus" class="text-capitalize">
+                  {{token.waitlist.waitlistStatus}}
+                </td>
+                <td *ngIf="token.waitlist && token.waitlist.date" class="text-capitalize"> {{token.waitlist.date}}
+                </td>
+                <td *ngIf="token.waitlist && token.waitlist.providerAccount && token.waitlist.providerAccount.businessName"
+                  class="text-capitalize"> {{token.waitlist.providerAccount.businessName}}
+                </td>
+                <td *ngIf="token.waitlist && token.waitlist.ynwUuid" class="text-capitalize">
+                  <a class="btn btn-primary" (click)="viewToken(token.waitlist.ynwUuid)">View
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="col-lg-6 col-md-6 mt-4">
         <div class="card">
             <div>
                 <span class="font-weight-bold text-capitalize">{{customer_label}}s</span>

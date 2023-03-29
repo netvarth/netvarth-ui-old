@@ -4,6 +4,9 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { IvrService } from '../ivr.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupComponent } from '../popup/popup.component';
+import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-calls',
@@ -21,13 +24,16 @@ export class CallsComponent implements OnInit {
   ivrCallsStatus = projectConstantsLocal.IVR_CALL_STATUS;
   statusType: any;
   user: any;
-
+  usersDialogRef: any;
+  users: any;
+  confirmBoxRef: any;
   constructor(
     private router: Router,
     private ivrService: IvrService,
     private snackbarService: SnackbarService,
     private activatedRoute: ActivatedRoute,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private dialog: MatDialog
   ) {
     this.activatedRoute.queryParams.subscribe((params: any) => {
       if (params && params.type) {
@@ -43,6 +49,8 @@ export class CallsComponent implements OnInit {
     if (!this.statusType) {
       this.getIvrCalls();
     }
+
+    this.getUsers();
   }
 
   loadCalls(event) {
@@ -136,16 +144,37 @@ export class CallsComponent implements OnInit {
       "userId": this.user.id
     }
 
-    this.ivrService.unassignToCall(data).subscribe((response: any) => {
-      if (response) {
-        this.ngOnInit();
-        this.snackbarService.openSnackBar("You are Unassigned to this Call Successfully")
+    this.confirmBoxRef = this.dialog.open(ConfirmBoxComponent, {
+      width: "30%",
+      panelClass: ["popup-class", "commonpopupmainclass"],
+      disableClose: true,
+      data: {
+        message: "Do you really want to Unassign User for this call ? "
       }
-    },
-      (error) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-      })
+    });
+    this.confirmBoxRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result === 1) {
+          this.ivrService.unassignToCall(data).subscribe((response: any) => {
+            if (response) {
+              this.ngOnInit();
+              this.snackbarService.openSnackBar("You are Unassigned to this Call Successfully")
+            }
+          },
+            (error) => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+            })
+        }
+      }
+    });
+
+
   }
+
+  viewCall(uid) {
+    this.router.navigate(['provider', 'ivr', 'call', uid]);
+  }
+
 
   gotoCustomersPage(id, uid) {
     const navigationExtras: NavigationExtras = {
@@ -170,4 +199,66 @@ export class CallsComponent implements OnInit {
     this.router.navigate(['provider', 'ivr']);
   }
 
+  getUsers() {
+    this.ivrService.getUsers().subscribe((data: any) => {
+      this.users = data;
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
+
+  openUsersPopup(uid) {
+    this.usersDialogRef = this.dialog.open(PopupComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        type: 'users',
+        users: this.users
+      }
+    });
+    this.usersDialogRef.afterClosed().subscribe(userData => {
+      if (userData) {
+        let data = {
+          "uid": uid,
+          "userType": "PROVIDER"
+        }
+        let msg = "User Assigned to this Call Successfully";
+
+        if (userData && userData.id) {
+          data['userId'] = userData.id;
+        }
+
+        if (userData && userData.assignMyself) {
+          data['userId'] = this.user.id;
+          msg = "You are Assigned to this Call Successfully";
+        }
+
+
+        this.ivrService.assignToCall(data).subscribe((response: any) => {
+          if (response) {
+            this.snackbarService.openSnackBar(msg)
+            this.ngOnInit();
+          }
+        },
+          (error) => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+          })
+      }
+    });
+  }
+
+  getCallBack(uid) {
+    this.ivrService.createCallBack(uid).subscribe((response: any) => {
+      if (response) {
+        this.snackbarService.openSnackBar("Callback Created Successfully")
+        this.ngOnInit();
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      })
+  }
 }

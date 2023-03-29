@@ -10,6 +10,8 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PopupModule } from '../popup/popup.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const routes: Routes = [
   { path: '', component: CallsComponent }
@@ -31,6 +33,8 @@ const routes: Routes = [
     InputTextModule,
     FormsModule,
     ReactiveFormsModule,
+    PopupModule,
+    MatDialogModule,
     [RouterModule.forChild(routes)]
   ]
 })

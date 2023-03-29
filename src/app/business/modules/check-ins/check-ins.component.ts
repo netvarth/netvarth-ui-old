@@ -153,6 +153,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   filter_dob_end_min = null;
   filter_dob_end_max = null;
 
+  SelectedView: any = "calendar";
+  viewOptions: any = [
+    {
+      name: "list",
+      displayName: "List View"
+    },
+    {
+      name: "calendar",
+      displayName: "Calendar View"
+    }
+
+  ]
+
   customer_label = '';
   provider_label = '';
   arrived_label = '';
@@ -3421,7 +3434,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.filter.first_name= filterValue['firstname'];
       }
     }
-    
+
   }
   bisinessProfile(){
     // this.searchForm.controls.search_input.setValue('');
@@ -3429,7 +3442,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         console.log('BProfileRes',res);
         if(res){
             if(res['id']){
-                this.tempAcId= res['id'];  
+                this.tempAcId= res['id'];
             }
         }
     })
@@ -3449,7 +3462,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             this.customerList = res;
           }
         }
-        
+
       })
     }
     getServiceLabels(labelsList) {

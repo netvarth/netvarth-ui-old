@@ -5,8 +5,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { DashboardService } from '../dashboard.service';
-import { AppointmentActionsComponent } from '../../appointments/appointment-actions/appointment-actions.component';
-import { MatDialog } from '@angular/material/dialog';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-full-view-calendar',
@@ -65,7 +64,8 @@ export class FullViewCalendarComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
-    private dialog: MatDialog
+    // private dialog: MatDialog,
+    private router: Router
   ) {
 
   }
@@ -118,6 +118,19 @@ export class FullViewCalendarComponent implements OnInit {
         this.setTotalBookings()
       });
     }
+    else if (this.type == 'tokens') {
+      this.handleTokens(filter, history_filter).then((data: any) => {
+        this.totalBookings = [];
+        console.log("data", data)
+        if (data && data.length > 0) {
+          for (let i = 0; i < data.length; i++) {
+            this.totalBookings = data[i] instanceof Array ? this.totalBookings = this.totalBookings.concat(data[i]) : this.totalBookings.push(data[i]);
+          }
+        }
+        console.log("this.totalBookings", this.totalBookings)
+        this.setTotalBookings()
+      });
+    }
 
   }
 
@@ -140,6 +153,25 @@ export class FullViewCalendarComponent implements OnInit {
     })
   }
 
+  handleTokens(filter, history_filter) {
+    const _this = this;
+    return new Promise((resolve, reject) => {
+      _this.dashboardService.getTodayTokens().subscribe((todayData: any) => {
+        _this.dashboardService.getFutureTokens().subscribe((futureData: any) => {
+          if (history_filter) {
+            _this.dashboardService.getHistoryTokens(filter).subscribe((historyData: any) => {
+              resolve([todayData, futureData, historyData]);
+            })
+          }
+          else {
+            resolve([todayData, futureData]);
+          }
+
+        })
+      })
+    })
+  }
+
   ngOnInit(): void {
 
   }
@@ -149,15 +181,31 @@ export class FullViewCalendarComponent implements OnInit {
       this.bookingsForCalendar = [];
       for (let i = 0; i < this.totalBookings.length; i++) {
         const randomColor = this.backgroundColors[this.randomIntFromInterval(0, this.backgroundColors.length - 1)];
-        this.bookingsForCalendar.push(
-          {
-            title: this.totalBookings[i].appointmentEncId,
-            date: this.totalBookings[i].appmtDate,
-            bookingData: this.totalBookings[i],
-            time: this.totalBookings[i].appmtTime,
-            backgroundColor: randomColor,
-            borderColor: randomColor
-          })
+        if (this.type == 'appointments') {
+          this.bookingsForCalendar.push(
+            {
+              title: this.totalBookings[i].appointmentEncId,
+              date: this.totalBookings[i].appmtDate,
+              bookingData: this.totalBookings[i],
+              time: this.totalBookings[i].appmtTime,
+              status: this.totalBookings[i].apptStatus,
+              backgroundColor: randomColor,
+              borderColor: randomColor
+            })
+        }
+        else if (this.type == 'tokens') {
+          this.bookingsForCalendar.push(
+            {
+              title: this.totalBookings[i].checkinEncId,
+              date: this.totalBookings[i].date,
+              bookingData: this.totalBookings[i],
+              time: this.totalBookings[i].checkInTime,
+              status: this.totalBookings[i].waitlistStatus,
+              backgroundColor: randomColor,
+              borderColor: randomColor
+            })
+        }
+
       }
     }
     console.table(this.bookingsForCalendar)
@@ -176,25 +224,41 @@ export class FullViewCalendarComponent implements OnInit {
   }
 
   bookingClicked(event) {
-    let checkin = event.event.extendedProps.bookingData;
-    console.log("checkin data", checkin)
-    let waitlist = [];
-    if (checkin) {
-      waitlist = checkin;
-      console.log("Appointment action clicked :", waitlist);
+    console.log("event", event.event.extendedProps)
+    let checkin;
+    let type;
+    if (this.type == "appointments") {
+      type = "appointments";
+      checkin = event.event.extendedProps.bookingData.uid;
     }
-    const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
-      disableClose: true,
-      data: {
-        checkinData: waitlist
+    else if (this.type == "tokens") {
+      type = "check-ins";
+      checkin = event.event.extendedProps.bookingData.ynwUuid;
+    }
+    // console.log("checkin data", checkin)
+    // let waitlist = [];
+    // if (checkin) {
+    //   waitlist = checkin;
+    //   console.log("Appointment action clicked :", waitlist);
+    // }
+    // const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+    //   disableClose: true,
+    //   data: {
+    //     checkinData: waitlist
+    //   }
+    // });
+    // actiondialogRef.afterClosed().subscribe(data => {
+    //   console.log("data", data)
+    //   this.ngAfterViewInit();
+    // });
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        timetype: 2
       }
-    });
-    actiondialogRef.afterClosed().subscribe(data => {
-      console.log("data", data)
-      this.ngAfterViewInit();
-    });
+    };
+    this.router.navigate(['provider', type, checkin], navigationExtras)
   }
 
   randomIntFromInterval(min, max) {

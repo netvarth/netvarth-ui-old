@@ -1,31 +1,32 @@
 ::ng-deep .full-calendar-week-toggle-button .p-togglebutton.p-button.p-highlight {
-    background-color: #1E4079 !important;
+  background-color: #1E4079 !important;
 }
 
-.Completed {
-    color: rgb(18, 104, 18) !important;
+.Completed,
+.done {
+  color: rgb(18, 104, 18) !important;
 }
 
 
 .Cancelled {
-    color: rgb(172, 30, 30) !important;
+  color: rgb(172, 30, 30) !important;
 }
 
 .Confirmed {
-    color: rgb(80, 28, 80) !important;
+  color: rgb(80, 28, 80) !important;
 }
 
 .Started {
-    color: rgb(124, 124, 40) !important;
+  color: rgb(124, 124, 40) !important;
 }
 
 @media (max-width: 576px) {
-    ::ng-deep .full-view-calendar .fc .fc-toolbar {
-        display: block !important;
-    }
+  ::ng-deep .full-view-calendar .fc .fc-toolbar {
+    display: block !important;
+  }
 
-    ::ng-deep .full-view-calendar .fc .fc-toolbar-title {
-        margin-top: 10px !important;
-        margin-bottom: 10px !important;
-    }
+  ::ng-deep .full-view-calendar .fc .fc-toolbar-title {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+  }
 }

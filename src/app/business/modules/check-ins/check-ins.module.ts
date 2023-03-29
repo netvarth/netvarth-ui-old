@@ -26,69 +26,73 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { OwlModule } from 'ngx-owl-carousel';
 import { FormsModule } from '@angular/forms';
 import { ApplyLabelModule } from './apply-label/apply-label.module';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { BookingHistoryModule } from '../../shared/booking-history/booking-history.module';
 import { TeleBookingService } from '../../../shared/services/tele-bookings-service';
 // import {NgbCarousel} from '@ng-bootstrap/ng-bootstrap';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FullViewCalendarModule } from '../dashboard/full-view-calendar/full-view-calendar.module';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 const routes: Routes = [
-    { path: '', component: CheckInsComponent },
-    { 
-        path: '',
-        children: [
-            { path: 'add', loadChildren: ()=> import('./check-in/provider-checkin.module').then(m=>m.ProviderCheckinModule)},
-            { path: 'adjustdelay', loadChildren:()=> import('./adjustqueue-delay/adjustqueue-delay.module').then(m=>m.AdjustqueueDelayModule)},
-            { path: 'questionnaires', loadChildren: () => import('../questionnaire-list-popup/questionnaire-list-popup.module').then(m => m.QuestionnaireListPopupModule) },            
-            { path: ':id', loadChildren: ()=> import('./provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.module').then(m=>m.ProviderWaitlistCheckInDetailModule)},
-            { path: ':id/add-label', loadChildren: ()=> import('./apply-label/apply-label.module').then(m=>m.ApplyLabelModule)},
-            { path: ':id/user', loadChildren: () => import('../../../shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
-            { path: ':id/team', loadChildren: () => import('../../../shared/modules/assign-team/assign-team.module').then(m => m.AssignTeamModule) },
-            { path: ':id/updateloc', loadChildren: ()=> import('./location-update/location-update.module').then(m=>m.LocationUpdateModule)},
-            { path: ':id/print', loadChildren: ()=> import('../../shared/print-booking-details/print-booking-detail.module').then(m=>m.PrintBookingDetailModule)}           
-        ]
-    }
+  { path: '', component: CheckInsComponent },
+  {
+    path: '',
+    children: [
+      { path: 'add', loadChildren: () => import('./check-in/provider-checkin.module').then(m => m.ProviderCheckinModule) },
+      { path: 'adjustdelay', loadChildren: () => import('./adjustqueue-delay/adjustqueue-delay.module').then(m => m.AdjustqueueDelayModule) },
+      { path: 'questionnaires', loadChildren: () => import('../questionnaire-list-popup/questionnaire-list-popup.module').then(m => m.QuestionnaireListPopupModule) },
+      { path: ':id', loadChildren: () => import('./provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.module').then(m => m.ProviderWaitlistCheckInDetailModule) },
+      { path: ':id/add-label', loadChildren: () => import('./apply-label/apply-label.module').then(m => m.ApplyLabelModule) },
+      { path: ':id/user', loadChildren: () => import('../../../shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
+      { path: ':id/team', loadChildren: () => import('../../../shared/modules/assign-team/assign-team.module').then(m => m.AssignTeamModule) },
+      { path: ':id/updateloc', loadChildren: () => import('./location-update/location-update.module').then(m => m.LocationUpdateModule) },
+      { path: ':id/print', loadChildren: () => import('../../shared/print-booking-details/print-booking-detail.module').then(m => m.PrintBookingDetailModule) }
+    ]
+  }
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        NgbModule,
-        NgbCarouselModule,
-        FormsModule,
-        MatTabsModule,
-        MatTooltipModule,
-        MatCheckboxModule,
-        MatMenuModule,
-        MatIconModule,
-        MatButtonModule,
-        MatDatepickerModule,
-        ProviderWaitlistCheckInConsumerNoteModule,
-        CheckinDetailsSendModule,
-        LocateCustomerModule,
-        AddProviderWaitlistCheckInProviderNoteModule,
-        InstantQueueModule,
-        ConfirmBoxModule,
-        AttachmentPopupModule,
-        VoicecallDetailsModule,
-        CheckinsActionsModule,
-        ApplyLabelModule,
-        LoadingSpinnerModule,
-        CardModule,
-        PagerModule,
-        CapitalizeFirstPipeModule,
-        OwlModule,
-        BookingHistoryModule,
-        MatAutocompleteModule,
-        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
-        [RouterModule.forChild(routes)]
-    ],
-    declarations: [
-        CheckInsComponent,
-    ],
-    providers: [TeleBookingService],
-    exports: [CheckInsComponent]
+  imports: [
+    CommonModule,
+    NgbModule,
+    NgbCarouselModule,
+    FormsModule,
+    MatTabsModule,
+    MatTooltipModule,
+    MatCheckboxModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    ProviderWaitlistCheckInConsumerNoteModule,
+    CheckinDetailsSendModule,
+    LocateCustomerModule,
+    AddProviderWaitlistCheckInProviderNoteModule,
+    InstantQueueModule,
+    ConfirmBoxModule,
+    AttachmentPopupModule,
+    VoicecallDetailsModule,
+    CheckinsActionsModule,
+    ApplyLabelModule,
+    LoadingSpinnerModule,
+    CardModule,
+    PagerModule,
+    CapitalizeFirstPipeModule,
+    OwlModule,
+    BookingHistoryModule,
+    MatAutocompleteModule,
+    FullViewCalendarModule,
+    DropdownModule,
+    ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
+    [RouterModule.forChild(routes)]
+  ],
+  declarations: [
+    CheckInsComponent,
+  ],
+  providers: [TeleBookingService],
+  exports: [CheckInsComponent]
 })
 export class CheckinsModule { }

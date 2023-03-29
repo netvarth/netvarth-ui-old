@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { DashboardService } from './dashboard.service';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-dashboard',
@@ -37,13 +38,49 @@ export class DashboardComponent implements OnInit {
   appointmentsInweek: any;
   checkinsInweek: any;
   ordersInweek: any;
+  shareLink: any;
+  appointmentsCount: number = 0;
+  appointmentsCountStop: any;
+  tokensCount: number = 0;
+  tokensCountStop: any;
+  ordersCount: number = 0;
+  ordersCountStop: any;
+  remindersCount: number = 0;
+  remindersCountStop: any;
 
+  windowPath = projectConstantsLocal.PATH;
+  greet: any;
   constructor(
     private groupService: GroupStorageService,
     private router: Router,
     private dashboardService: DashboardService,
     private snackbarService: SnackbarService
-  ) { }
+  ) {
+    this.getBusinessProfile();
+
+
+    this.getTotalAppointmentsCount().then((totalAppointments) => {
+      this.appointmentsCountStop = setInterval(() => {
+        this.appointmentsCount++;
+        this.appointmentsCount == totalAppointments ? clearInterval(this.appointmentsCountStop) : null;
+      }, 10);
+    });
+
+    this.getTotalTokensCount().then((totalTokens) => {
+      this.tokensCountStop = setInterval(() => {
+        this.tokensCount++;
+        this.tokensCount == totalTokens ? clearInterval(this.tokensCountStop) : null;
+      }, 10);
+    });
+
+    this.getTotalOrdersCount().then((totalOrders) => {
+      this.ordersCountStop = setInterval(() => {
+        this.ordersCount++;
+        this.ordersCount == totalOrders ? clearInterval(this.ordersCountStop) : null;
+      }, 10);
+    });
+
+  }
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -58,7 +95,26 @@ export class DashboardComponent implements OnInit {
     this.getLineChartData();
     this.getUsersCount();
     this.getCustomersCount();
+    this.greet = this.getGreetings();
 
+  }
+
+  getBusinessProfile() {
+    this.dashboardService.getBussinessProfile().subscribe((bProfile: any) => {
+      if (bProfile) {
+        console.log("Business Profile Data", bProfile);
+        if (bProfile.customId) {
+          this.shareLink = this.windowPath + bProfile.customId + '/';
+        } else {
+          this.shareLink = this.windowPath + bProfile.accEncUid + '/';
+        }
+
+        console.log("this.shareLink", this.shareLink);
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      })
   }
 
   gotoAppointments() {
@@ -81,7 +137,7 @@ export class DashboardComponent implements OnInit {
           data: [this.appointmentsInweek, this.checkinsInweek, this.ordersInweek],
           backgroundColor: [
             "#5A6ACF",
-            "#F1416C",
+            "#2E37A4",
             "#E4E6EF"
           ],
           hoverBackgroundColor: [
@@ -111,7 +167,7 @@ export class DashboardComponent implements OnInit {
       datasets: [
         {
           label: 'Earnings',
-          backgroundColor: '#5BA6FF',
+          backgroundColor: '#5A6ACF',
           data: [65, 59, 80, 81, 56, 55, 40]
         }
       ]
@@ -137,6 +193,19 @@ export class DashboardComponent implements OnInit {
     };
   }
 
+  getGreetings() {
+    var myDate = new Date();
+    var hrs = myDate.getHours();
+    var greet;
+    if (hrs < 12)
+      greet = 'Good Morning';
+    else if (hrs >= 12 && hrs <= 17)
+      greet = 'Good Afternoon';
+    else if (hrs >= 17 && hrs <= 24)
+      greet = 'Good Evening';
+    return greet;
+  }
+
   getLineChartData() {
     this.lineChartData = {
       labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -146,15 +215,15 @@ export class DashboardComponent implements OnInit {
           data: [65, 59, 80, 81, 56, 55, 40],
           fill: false,
           tension: .4,
-          borderColor: '#42A5F5'
+          borderColor: '#2E37A4'
         },
         {
           label: 'Customers',
           data: [12, 51, 62, 33, 21, 62, 45],
           fill: true,
-          borderColor: '#FFA726',
+          borderColor: '#5A6ACF',
           tension: .4,
-          backgroundColor: 'rgba(255,167,38,0.2)'
+          backgroundColor: '#E4E6EF'
         }
       ]
     }
@@ -242,6 +311,55 @@ export class DashboardComponent implements OnInit {
                 })
               })
             })
+          })
+        })
+      })
+    })
+  }
+
+
+  getTotalAppointmentsCount() {
+    return new Promise((resolve, reject) => {
+      let totalAppointments = 0
+      this.dashboardService.getTodayAppointmentsCount().subscribe((todayAppointmentsCount: any) => {
+        totalAppointments += todayAppointmentsCount
+        this.dashboardService.getFutureAppointmentsCount().subscribe((futureAppointmentsCount: any) => {
+          totalAppointments += futureAppointmentsCount
+          this.dashboardService.getHistoryAppointmentsCount().subscribe((historyAppointmentsCount: any) => {
+            totalAppointments += historyAppointmentsCount;
+            resolve(totalAppointments);
+          })
+        })
+      })
+    })
+  }
+
+  getTotalTokensCount() {
+    return new Promise((resolve, reject) => {
+      let totalTokens = 0
+      this.dashboardService.getTodayCheckinCount().subscribe((todayCheckinCount: any) => {
+        totalTokens += todayCheckinCount
+        this.dashboardService.getFutureCheckinCount().subscribe((futureCheckinCount: any) => {
+          totalTokens += futureCheckinCount
+          this.dashboardService.getHistoryCheckinCount().subscribe((historyCheckinCount: any) => {
+            totalTokens += historyCheckinCount;
+            resolve(totalTokens);
+          })
+        })
+      })
+    })
+  }
+
+  getTotalOrdersCount() {
+    return new Promise((resolve, reject) => {
+      let totalOrders = 0
+      this.dashboardService.getTodayOrdersCount().subscribe((todayOrdersCount: any) => {
+        totalOrders += todayOrdersCount
+        this.dashboardService.getFutureOrdersCount().subscribe((futureOrdersCount: any) => {
+          totalOrders += futureOrdersCount
+          this.dashboardService.getHistoryOrdersCount().subscribe((historyOrdersCount: any) => {
+            totalOrders += historyOrdersCount;
+            resolve(totalOrders);
           })
         })
       })

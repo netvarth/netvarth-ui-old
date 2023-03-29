@@ -2,6 +2,7 @@
   <div class="pull-left pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
     <div class="dash-head">Appointments </div>
   </div>
+
   <div class="pull-right">
     <!-- *ngIf="time_type !==3" -->
     <nav class="navbar navbar-static-top no-margin" role="navigation" [class.index-zero]="filter_sidebar">
@@ -36,13 +37,12 @@
     </nav>
   </div>
 </section>
+<div class="clearfix"></div>
+<div class="pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
+  <p-dropdown [dropdownIcon]="'fa fa-caret-down '" [options]="viewOptions" [(ngModel)]="SelectedView" optionLabel="displayName"></p-dropdown>
+</div>
 
 <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
-<br><br>
-
-<!-- <div class="card appointments-dashboard-card">
-  <p-tabView>
-    <p-tabPanel header="List View" leftIcon="pi pi-list" tooltip="List View"> -->
       <section *ngIf="!showDashbard && !apiloading">
         <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
           <div class="token-appt" *ngIf="message">
@@ -53,7 +53,7 @@
           </div>
         </div>
       </section>
-      <section class="app-appointments-component dashboard content pro-dash" *ngIf="showDashbard && !apiloading">
+      <section class="app-appointments-component dashboard content pro-dash" *ngIf="showDashbard && !apiloading && SelectedView && SelectedView.name == 'list'">
         <div class="col-md-12 no-padding-small">
           <div class="row">
             <div class="card p0 w-dta">
@@ -2680,13 +2680,8 @@
   </button>
 </div>
 </section>
-<!-- </p-tabPanel>
-<p-tabPanel header="Calendar View" leftIcon="pi pi-calendar" tooltip="Calendar View">
-  <section class="app-appointments-component dashboard content pro-dash" *ngIf="showDashbard && !apiloading">
-    <div class="card">
-      <app-full-view-calendar [type]="'appointments'"></app-full-view-calendar>
-    </div>
-  </section>
-</p-tabPanel>
-</p-tabView>
-</div> -->
+<section class="app-appointments-component dashboard content pro-dash" *ngIf="showDashbard && !apiloading && SelectedView && SelectedView.name == 'calendar'">
+  <div class="card">
+    <app-full-view-calendar [type]="'appointments'"></app-full-view-calendar>
+  </div>
+</section>

@@ -82,18 +82,21 @@
                         <div class="d-flex text-center">
                             <button pButton pRipple type="button"
                                 class="p-button-warning btn-warning mr-2 font-weight-600"
-                                (click)="assignToCall(call.uid)"
-                                *ngIf="call && call.callStatus && call.callStatus == 'voicemail' && !call.userId">Assign
-
+                                (click)="openUsersPopup(call.uid)"
+                                *ngIf="call && !call.userId">Assign
                             </button>
                             <button pButton pRipple type="button"
                                 class="p-button-warning btn-warning mr-2 font-weight-600"
                                 (click)="unassignToCall(call.uid)"
-                                *ngIf="call && call.callStatus && call.callStatus == 'voicemail' && call.userId">Unassign
+                                *ngIf="call && call.userId">Unassign
+                            </button>
+
+                            <button pButton pRipple type="button" class="p-button-info btn-info mr-2 font-weight-600"
+                              (click)="getCallBack(call.uid)" *ngIf="call && call.userId">Callback
                             </button>
 
                             <button pButton pRipple type="button" class="p-button-primary btn-primary font-weight-600"
-                                (click)="gotoCustomersPage(call.consumerId,call.uid)">View
+                                (click)="viewCall(call.uid)">View
                             </button>
                         </div>
                     </td>
@@ -102,7 +105,7 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="7">No Loans found.</td>
+                    <td colspan="7">No Calls found.</td>
                 </tr>
             </ng-template>
         </p-table>

@@ -1,74 +1,104 @@
 <div class="provider-dashboard">
-    <div class="title-card">
-        <p-card>
-            <div>
-                <span class="font-weight-bold">Welcome back,
-                    <span *ngIf="user && user.firstName">{{user.firstName}}</span>&nbsp;
-                    <span *ngIf="user && user.lastName">{{user.lastName}}</span>
+    <div class="container-fluid title-card mt-3">
+      <div class="row">
+        <div class="col-lg-12 no-padding-small">
+          <p-card [styleClass]="'p-0'">
+            <div class="d-lg-flex d-md-flex justify-content-between">
+              <div class="d-lg-flex d-md-flex align-items-center">
+                <div>
+                  <span class="greeting-text" *ngIf="greet">{{greet}},
+                    <span class="text-capitalize text-blue" *ngIf="user && user.firstName">{{user.firstName}}</span>&nbsp;
+                    <span class="text-capitalize text-blue" *ngIf="user && user.lastName">{{user.lastName}}</span>
                     <span class="waving-hand-icon">👋</span>
-                </span><br>
-                <span class="sub-title" *ngIf="user && user.roles && user.roles[0] && user.roles[0].roleName"><i
-                        class="fa fa-stop-circle" aria-hidden="true"></i>&nbsp;{{user.roles[0].roleName}}</span>
+                  </span><br>
+                  <span class="text-grey font-medium">Have a nice day</span>
+                </div>
+              </div>
+              <div>
+                <img src="../../../../assets/images/dashboard/dashboard.png" class="img-fluid pb-0">
+              </div>
             </div>
-        </p-card>
+          </p-card>
+        </div>
+      </div>
     </div>
-    <div class="container-fluid dashboard-heading">
+    <!-- <div class="container-fluid dashboard-heading">
         <p-card>
             <div>
                 <span class="font-weight-bold">Dashboard Overview</span>
             </div>
         </p-card>
-    </div>
-    <div class="container-fluid">
+    </div> -->
+    <div class="container-fluid no-padding-small">
         <div class="dashboard-heading-cards">
-            <p-card>
+            <!-- <p-card> -->
                 <div class="row">
-                    <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6 mr-2 mr-xs-0 mt-2 pointer-cursor text-center dashboard-heading-card"
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 mt-2 pointer-cursor"
                         (click)="gotoAppointments()">
                         <p-card>
-                            <div>
-                                <img src="../../../../assets/images/dashboard/appointments.png" width="50" height="50">
+                            <div class="d-flex">
+                              <div class="mr-2 d-flex align-items-center">
+                                <img src="../../../../assets/images/dashboard/appointments.png" width="40" height="40">
+                              </div>
+                              <div class="d-flex align-items-center">
+                                <span class="font-large text-blue font-weight-bold" *ngIf="appointmentsCount">{{appointmentsCount}}</span>
+                              </div>
                             </div>
-                            <div>
-                                <span class="font-weight-400">Appointments</span>
+                            <div class="my-1">
+                                <span class="font-small">Appointments</span>
                             </div>
                         </p-card>
                     </div>
-                    <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6 mr-2 mr-xs-0 mt-2 pointer-cursor text-center dashboard-heading-card"
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 mt-2 pointer-cursor"
                         (click)="gotoTokens()">
                         <p-card>
-                            <div>
-                                <img src="../../../../assets/images/dashboard/tokens.png" width="50" height="50">
+                          <div class="d-flex">
+                            <div class="mr-2 d-flex align-items-center">
+                              <img src="../../../../assets/images/dashboard/tokens.png" width="40" height="40">
                             </div>
-                            <div>
-                                <span class="font-weight-400">Tokens</span>
+                            <div class="d-flex align-items-center">
+                              <span class="font-large text-blue font-weight-bold" *ngIf="tokensCount">{{tokensCount}}</span>
                             </div>
+                          </div>
+                          <div class="my-1">
+                            <span class="font-small">Tokens</span>
+                          </div>
                         </p-card>
                     </div>
-                    <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6 mr-2 mr-xs-0 mt-2 pointer-cursor text-center dashboard-heading-card"
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 mt-2 pointer-cursor"
                         (click)="gotoOrders()">
                         <p-card>
-                            <div>
-                                <img src="../../../../assets/images/dashboard/orders.png" width="50" height="50">
+                          <div class="d-flex">
+                            <div class="mr-2 d-flex align-items-center">
+                              <img src="../../../../assets/images/dashboard/orders.png" width="40" height="40">
                             </div>
-                            <div>
-                                <span class="font-weight-400">Orders</span>
+                            <div class="d-flex align-items-center">
+                              <span class="font-large text-blue font-weight-bold" *ngIf="ordersCount">{{ordersCount}}</span>
                             </div>
+                          </div>
+                          <div class="my-1">
+                            <span class="font-small">Orders</span>
+                          </div>
                         </p-card>
                     </div>
                     <div
-                        class="col-lg-2 col-md-3 col-sm-6 col-xs-6 mr-2 mr-xs-0 mt-2 pointer-cursor text-center dashboard-heading-card">
+                        class="col-lg-3 col-md-3 col-sm-6 col-xs-6 mt-2 pointer-cursor">
                         <p-card>
-                            <div>
-                                <img src="../../../../assets/images/dashboard/reminders.png" width="50" height="50">
+                          <div class="d-flex">
+                            <div class="mr-2 d-flex align-items-center">
+                              <img src="../../../../assets/images/dashboard/reminders.png" width="40" height="40">
                             </div>
-                            <div>
-                                <span class="font-weight-400">Reminders</span>
+                            <div class="d-flex align-items-center">
+                              <span class="font-large text-blue font-weight-bold" *ngIf="remindersCount">{{remindersCount}}</span>
                             </div>
+                          </div>
+                          <div class="my-1">
+                            <span class="font-small">Reminders</span>
+                          </div>
                         </p-card>
                     </div>
                 </div>
-            </p-card>
+            <!-- </p-card> -->
         </div>
     </div>
     <div class="clearfix"></div>
@@ -80,7 +110,7 @@
                         <p-card>
                             <div>
                                 <div>
-                                    <div class="dashboard-stats-card-small-title" *ngIf="totalBookings">{{totalBookings}}</div>
+                                    <div class="dashboard-stats-card-small-title text-blue" *ngIf="totalBookings">{{totalBookings}}</div>
                                 </div>
                                 <div>
                                     <span class="font-weight-400 text-grey">Total Bookings this Week</span>
@@ -96,7 +126,7 @@
                                         <div class="font-weight-400 d-flex align-items-center"><i class="fa fa-circle"
                                                 style="color:#5A6ACF"></i>&nbsp;Appointments</div>
                                         <div class="font-weight-400 d-flex align-items-center"><i class="fa fa-circle"
-                                                style="color:#F1416C"></i>&nbsp;Tokens</div>
+                                                style="color:#2E37A4"></i>&nbsp;Tokens</div>
                                         <div class="font-weight-400 d-flex align-items-center"><i class="fa fa-circle"
                                                 style="color:#E4E6EF"></i>&nbsp;Orders</div>
                                     </div>
@@ -108,7 +138,7 @@
                         <p-card>
                             <div>
                                 <div>
-                                    <div class="dashboard-stats-card-small-title"><sup><i
+                                    <div class="dashboard-stats-card-small-title text-blue"><sup><i
                                                 class="fa fa-inr small-icon text-grey"></i></sup>&nbsp;9000</div>
                                 </div>
                                 <div>
@@ -117,7 +147,7 @@
                             </div>
                             <div class="mt-2">
                                 <div class="font-weight-400 text-center"><i class="fa fa-circle"
-                                        style="color:#5BA6FF"></i>&nbsp;Earnings
+                                        style="color:#5A6ACF"></i>&nbsp;Earnings
                                 </div>
                                 <div>
                                     <p-chart type="bar" [data]="barChartData" [options]="barChartOptions"
@@ -130,7 +160,7 @@
                         <p-card>
                             <div>
                                 <div>
-                                    <div class="dashboard-stats-card-small-title">{{totalCustomers}}</div>
+                                    <div class="dashboard-stats-card-small-title text-blue">{{totalCustomers}}</div>
                                 </div>
                                 <div>
                                     <span class="font-weight-400 text-grey">Total Customers</span>
@@ -138,7 +168,7 @@
                             </div>
                             <div class="mt-5">
                                 <div>
-                                    <div class="dashboard-stats-card-small-title">{{totalUsers}}</div>
+                                    <div class="dashboard-stats-card-small-title text-blue">{{totalUsers}}</div>
                                 </div>
                                 <div>
                                     <span class="font-weight-400 text-grey">Total Users</span>
@@ -150,7 +180,7 @@
                         <p-card>
                             <div>
                                 <div>
-                                    <div class="dashboard-stats-card-small-title">02</div>
+                                    <div class="dashboard-stats-card-small-title text-blue">02</div>
                                 </div>
                                 <div>
                                     <span class="font-weight-400 text-grey">Top Services</span>
@@ -183,12 +213,12 @@
             <div class="col-md-6 no-padding-small">
                 <div class="mt-2 dashboard-stats-card-large">
                     <p-card>
-                        <div class="mt-0">
-                            <div class="dashboard-stats-card-large-title">Statistics</div>
-                        </div>
-                        <div class="mt-2">
-                            <div>
-                                <span class="font-medium"><i class="fa fa-inr"></i>&nbsp;40000</span>
+                        <!-- <div class="mt-0">
+                            <div class="dashboard-stats-card-large-title text-blue">Statistics</div>
+                        </div> -->
+                        <div>
+                            <div class="text-blue">
+                                <span class="font-medium font-weight-bold"><i class="fa fa-inr"></i>&nbsp;40000</span>
                             </div>
                             <div>
                                 <span class="font-weight-400 text-grey">Total Revenue</span>
@@ -235,17 +265,11 @@
                     <div class="font-weight-bold text-center my-3">
                         <button pButton type="button"
                             class="p-button-raised p-button-light p-button-rounded  p-button-rounded-white">
-                            <span class="mr-4"><img src="../../../../assets/images/dashboard/phone.png" width="15"
-                                    height="15"></span>
-                            <span class="mr-4"><img src="../../../../assets/images/dashboard/message.png" width="15"
-                                    height="15"></span>
-                            <span class="mr-4"><img src="../../../../assets/images/dashboard/voicemail.png" width="15"
-                                    height="15"></span>
-                            <span class="mr-4"><img src="../../../../assets/images/dashboard/telegram.png" width="15"
-                                    height="15"></span>
-                            <span><img src="../../../../assets/images/dashboard/whatsapp.png" width="15"
-                                    height="15"></span>
+                            <share-buttons [theme]="'circles-dark'" [include]="['facebook','whatsapp','email','telegram','copy']" [url]="shareLink"
+                              [showIcon]="true" [size]="-7">
+                            </share-buttons>
                         </button>
+
                     </div>
                 </p-card>
             </div>

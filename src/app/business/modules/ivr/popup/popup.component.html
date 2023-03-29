@@ -1,0 +1,55 @@
+<div class="text-center" *ngIf="data && data.type && data.type == 'users'">
+  <div class="p-1 pt-0">
+    <div>
+      <div class="card">
+        <div class="text-center">
+          <button pButton pRipple type="button" class="p-button-warning btn-warning mr-2 font-weight-600"
+            (click)="assignMyself()">Assign Myself
+          </button>
+        </div><br>
+        <p-table #callsTable [value]="users" dataKey="id"
+          [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [rows]="10"
+          responsiveLayout="scroll"
+          [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']"
+          styleClass="p-datatable-customers p-datatable-gridlines"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Actions</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-user>
+            <tr class="mobile-card">
+              <td>
+                <span class="table-column-data">
+                  <span *ngIf="user.firstName">{{user.firstName}}</span>&nbsp;
+                  <span *ngIf="user.lastName">{{user.lastName}}</span>
+                </span>
+              </td>
+              <td>
+                <span class="table-column-data">
+                  {{user.mobileNo}}
+                </span>
+              </td>
+              <td>
+                <div class="d-flex text-center">
+                  <button pButton pRipple type="button" class="p-button-warning btn-warning mr-2 font-weight-600"
+                    (click)="assignCall(user.id)">Assign
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <br class="d-lg-none d-md-none">
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="7">No Users found.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { BookingSnippetModule } from './booking-snippet/booking-snippet.module';
 import { ButtonModule } from 'primeng/button';
-
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 const routes: Routes = [
   { path: '', component: DashboardComponent }
 ]
@@ -26,6 +27,8 @@ const routes: Routes = [
     ProgressBarModule,
     BookingSnippetModule,
     ButtonModule,
+    ShareButtonsModule,
+    ShareIconsModule,
     [RouterModule.forChild(routes)]
   ]
 })

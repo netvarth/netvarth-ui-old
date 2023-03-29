@@ -36,6 +36,16 @@ export class IvrService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  getCustomerById(id) {
+    const url = 'provider/customers/' + id;
+    return this.servicemeta.httpGet(url, null);
+  }
+
+  getUsers() {
+    const url = 'provider/user';
+    return this.servicemeta.httpGet(url, null);
+  }
+
   getChartData(data) {
     const url = 'provider/ivr/graph';
     return this.servicemeta.httpPut(url, data);
@@ -46,9 +56,28 @@ export class IvrService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  createCallBack(uid) {
+    const url = 'provider/ivr/callback/' + uid;
+    return this.servicemeta.httpPost(url, null);
+  }
+
   unassignToCall(data) {
     const url = 'provider/ivr/unassign';
     return this.servicemeta.httpPut(url, data);
+  }
+
+
+  getCustomerTodayVisit(id) {
+    const url = 'provider/customers/bookings/today/' + id;
+    return this.servicemeta.httpGet(url);
+  }
+  getCustomerFutureVisit(id) {
+    const url = 'provider/customers/bookings/future/' + id;
+    return this.servicemeta.httpGet(url);
+  }
+  getCustomerHistoryVisit(id) {
+    const url = 'provider/customers/bookings/history/' + id;
+    return this.servicemeta.httpGet(url);
   }
 
   setFiltersFromPrimeTable(event) {

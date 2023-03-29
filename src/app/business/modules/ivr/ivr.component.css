@@ -1,157 +1,171 @@
 .sub-title {
-    font-size: 15px !important;
-    color: #64748B !important;
-    font-weight: bold !important;
+  font-size: 15px !important;
+  color: #64748B !important;
+  font-weight: bold !important;
 }
 
 .welcome-text {
-    font-size: 20px !important;
-    font-weight: bold !important;
-    color: #1E293B !important;
+  font-size: 20px !important;
+  font-weight: bold !important;
+  color: #1E293B !important;
 }
 
+
+
 .row {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 
 .card-title {
-    font-size: 13px !important;
+  font-size: 13px !important;
 }
 
 .calls-count {
-    color: #000 !important;
-    font-size: 35px !important;
-    font-weight: bolder !important;
+  color: #000 !important;
+  font-size: 35px !important;
+  font-weight: bolder !important;
 }
 
 .all-calls {
-    color: #FF6384 !important;
-    font-size: 18px !important;
+  color: #FF6384 !important;
+  font-size: 18px !important;
 }
 
 .missed-calls {
-    color: #FA5252 !important;
-    font-size: 18px !important;
+  color: #FA5252 !important;
+  font-size: 18px !important;
 }
 
 .answered-calls {
-    color: #40C057 !important;
-    font-size: 18px !important;
+  color: #40C057 !important;
+  font-size: 18px !important;
 }
 
 .status-connected {
-    background-color: #cce6c8 !important;
-    color: #052407 !important;
-    font-weight: bold !important;
-    padding: 5px !important;
-    border-radius: 8px !important;
+  background-color: #cce6c8 !important;
+  color: #052407 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
 }
 
 .status-missed {
-    background-color: #FFCDD2 !important;
-    color: #C63737 !important;
-    font-weight: bold !important;
-    padding: 5px !important;
-    border-radius: 8px !important;
+  background-color: #FFCDD2 !important;
+  color: #C63737 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
 }
 
 .status-voicemail {
-    background-color: #d9e3ff !important;
-    color: #10359c !important;
-    font-weight: bold !important;
-    padding: 5px !important;
-    border-radius: 8px !important;
+  background-color: #d9e3ff !important;
+  color: #10359c !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
 }
 
 .status-ongoing {
-    background-color: #ebd6ff !important;
-    color: #52267b !important;
-    font-weight: bold !important;
-    padding: 5px 10px !important;
-    border-radius: 15px !important;
+  background-color: #ebd6ff !important;
+  color: #52267b !important;
+  font-weight: bold !important;
+  padding: 5px 10px !important;
+  border-radius: 15px !important;
 }
 
 .btn-primary {
-    background-color: #1e4079 !important;
-    border-color: #1e4070 !important;
-    color: #fff !important;
-    font-weight: 300 !important;
-    border-radius: 3px !important;
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 300 !important;
+  border-radius: 3px !important;
 }
 
 .profile-pic {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #1E4079;
-    font-size: 18px;
-    color: #fff !important;
-    text-align: center;
-    line-height: 40px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #1E4079;
+  font-size: 18px;
+  color: #fff !important;
+  text-align: center;
+  line-height: 40px;
 }
 
 
 .semi-progress-bar {
-    top: auto;
-    bottom: 0%;
-    left: 30%;
-    position: absolute;
-    font-weight: 100;
-    line-height: 1;
+  top: auto;
+  bottom: 0%;
+  left: 30%;
+  position: absolute;
+  font-weight: 100;
+  line-height: 1;
 }
 
 
 .progress-wrapper {
-    position: relative;
-    margin: 20px auto;
-    font-size: 40px;
+  position: relative;
+  margin: 20px auto;
+  font-size: 40px;
 }
 
 .table-column-data {
-    font-weight: bolder !important;
+  font-weight: bolder !important;
+}
+
+.btn-warning {
+  background-color: #EFA855 !important;
+  border-color: #EFA855 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 4px !important;
+}
+
+.font-weight-600 {
+  font-weight: 600 !important;
 }
 
 
 /* Mobile Only Styles */
 
 @media screen and (max-width: 576px) and (min-width: 0px) {
-    .desktop-only {
-        display: none;
-    }
+  .desktop-only {
+    display: none;
+  }
 
-    .company-logo {
-        display: none !important;
-    }
+  .company-logo {
+    display: none !important;
+  }
 
-    .head-card-title {
-        font-size: 13px !important;
-    }
+  .head-card-title {
+    font-size: 13px !important;
+  }
 
-    .welcome-text {
-        font-size: 15px !important;
-        font-weight: bold !important;
-    }
+  .welcome-text {
+    font-size: 15px !important;
+    font-weight: bold !important;
+  }
 
-    .sub-title {
-        font-size: 13px !important;
-    }
+  .sub-title {
+    font-size: 13px !important;
+  }
 
-    .card-title {
-        font-size: 13px !important;
-    }
+  .card-title {
+    font-size: 13px !important;
+  }
 
-    .dashboard-card {
-        min-height: 140px !important;
-    }
+  .dashboard-card {
+    min-height: 140px !important;
+  }
 
-    .progress-wrapper {
-        font-size: 30px !important;
-    }
+  .progress-wrapper {
+    font-size: 30px !important;
+  }
 
-    .semi-progress-bar {
-        left: 32% !important;
-    }
+  .semi-progress-bar {
+    left: 32% !important;
+  }
 }
 
 
@@ -159,75 +173,75 @@
 /* Normal Desktop Styles or Tab Styles  */
 
 @media (min-width: 768px) and (max-width: 1024px) {
-    .mobile-only {
-        display: none;
-    }
+  .mobile-only {
+    display: none;
+  }
 
-    .desktop-only {
-        display: none;
-    }
+  .desktop-only {
+    display: none;
+  }
 
-    .progress-wrapper {
-        font-size: 40px !important;
-    }
+  .progress-wrapper {
+    font-size: 40px !important;
+  }
 
-    .semi-progress-bar {
-        left: 30% !important;
-    }
+  .semi-progress-bar {
+    left: 30% !important;
+  }
 
-    .dashboard-card {
-        min-height: 145px !important;
-    }
+  .dashboard-card {
+    min-height: 145px !important;
+  }
 
-    .d-md-none {
-        display: block !important;
-    }
+  .d-md-none {
+    display: block !important;
+  }
 
-    .mt-sm-5 {
-        margin-top: 60px !important;
-    }
+  .mt-sm-5 {
+    margin-top: 60px !important;
+  }
 }
 
 
 @media (min-width: 1024px) {
-    .d-md-none {
-        display: none !important;
-    }
+  .d-md-none {
+    display: none !important;
+  }
 
-    .mt-sm-5 {
-        margin-top: 0px !important;
-    }
+  .mt-sm-5 {
+    margin-top: 0px !important;
+  }
 
-    .progress-wrapper {
-        font-size: 20px !important;
-    }
+  .progress-wrapper {
+    font-size: 20px !important;
+  }
 }
 
 
 /* Large Desktop Styles */
 
 @media (min-width: 1025px) {
-    .mobile-only {
-        display: none;
-    }
+  .mobile-only {
+    display: none;
+  }
 
-    .dashboard-card {
-        min-height: 145px !important;
-    }
+  .dashboard-card {
+    min-height: 145px !important;
+  }
 
-    .progress-wrapper {
-        font-size: 25px !important;
-    }
+  .progress-wrapper {
+    font-size: 25px !important;
+  }
 
-    .semi-progress-bar {
-        left: 27% !important;
-    }
+  .semi-progress-bar {
+    left: 27% !important;
+  }
 
-    .semi-progress-bar-title {
-        font-size: 20px !important;
-    }
+  .semi-progress-bar-title {
+    font-size: 20px !important;
+  }
 
-    .mt-sm-5 {
-        margin-top: 20px !important;
-    }
+  .mt-sm-5 {
+    margin-top: 20px !important;
+  }
 }

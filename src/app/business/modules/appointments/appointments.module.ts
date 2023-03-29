@@ -30,65 +30,67 @@ import { TeleBookingService } from '../../../shared/services/tele-bookings-servi
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FullViewCalendarModule } from '../dashboard/full-view-calendar/full-view-calendar.module';
 import { TabViewModule } from 'primeng/tabview';
+import { DropdownModule } from 'primeng/dropdown';
 
 const routes: Routes = [
-    { path: '', component: AppointmentsComponent },
-    {
-        path: '',
-        children: [
-            { path: 'adjustdelay', loadChildren: () => import('./schedule-delay/adjust-schedule-delay.module').then(m => m.AdjustScheduleDelayModule) },
-            { path: 'appointment', loadChildren: () => import('./appointment/appointment.module').then(m => m.AppointmentModule) },
-            { path: 'questionnaires', loadChildren: () => import('../questionnaire-list-popup/questionnaire-list-popup.module').then(m => m.QuestionnaireListPopupModule) },
-            { path: ':id', loadChildren: () => import('./provider-appointment-detail/provider-appointment-detail.module').then(m => m.ProviderAppointmentDetailModule) },
-            { path: ':id/user', loadChildren: () => import('../../../shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
-            { path: ':id/team', loadChildren: () => import('../../../shared/modules/assign-team/assign-team.module').then(m => m.AssignTeamModule) },
-            { path: ':id/print', loadChildren: () => import('../../shared/print-booking-details/print-booking-detail.module').then(m => m.PrintBookingDetailModule) }
+  { path: '', component: AppointmentsComponent },
+  {
+    path: '',
+    children: [
+      { path: 'adjustdelay', loadChildren: () => import('./schedule-delay/adjust-schedule-delay.module').then(m => m.AdjustScheduleDelayModule) },
+      { path: 'appointment', loadChildren: () => import('./appointment/appointment.module').then(m => m.AppointmentModule) },
+      { path: 'questionnaires', loadChildren: () => import('../questionnaire-list-popup/questionnaire-list-popup.module').then(m => m.QuestionnaireListPopupModule) },
+      { path: ':id', loadChildren: () => import('./provider-appointment-detail/provider-appointment-detail.module').then(m => m.ProviderAppointmentDetailModule) },
+      { path: ':id/user', loadChildren: () => import('../../../shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
+      { path: ':id/team', loadChildren: () => import('../../../shared/modules/assign-team/assign-team.module').then(m => m.AssignTeamModule) },
+      { path: ':id/print', loadChildren: () => import('../../shared/print-booking-details/print-booking-detail.module').then(m => m.PrintBookingDetailModule) }
 
-        ]
-    }
+    ]
+  }
 ];
 @NgModule({
-    imports: [
-        CommonModule,
-        CapitalizeFirstPipeModule,
-        PagerModule,
-        OwlModule,
-        FormsModule,
-        LoadingSpinnerModule,
-        ProviderWaitlistCheckInConsumerNoteModule,
-        ProviderWaitlistCheckInCancelModule,
-        GalleryModule,
-        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
-        CardModule,
-        MatTableModule,
-        MatCheckboxModule,
-        MatTabsModule,
-        MatTooltipModule,
-        MatCheckboxModule,
-        MatIconModule,
-        MatMenuModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatChipsModule,
-        MatDatepickerModule,
-        AttachmentPopupModule,
-        VoicecallDetailsSendModule,
-        AppointmentActionsModule,
-        FormsModule,
-        BookingHistoryModule,
-        MatAutocompleteModule,
-        FullViewCalendarModule,
-        TabViewModule,
-        [RouterModule.forChild(routes)]
-    ],
-    declarations: [
-        AppointmentsComponent
-    ],
-    exports: [AppointmentsComponent],
-    schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
-    ],
-    providers: [TeleBookingService]
+  imports: [
+    CommonModule,
+    CapitalizeFirstPipeModule,
+    PagerModule,
+    OwlModule,
+    FormsModule,
+    LoadingSpinnerModule,
+    ProviderWaitlistCheckInConsumerNoteModule,
+    ProviderWaitlistCheckInCancelModule,
+    GalleryModule,
+    ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
+    CardModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatTabsModule,
+    MatTooltipModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    AttachmentPopupModule,
+    VoicecallDetailsSendModule,
+    AppointmentActionsModule,
+    FormsModule,
+    BookingHistoryModule,
+    MatAutocompleteModule,
+    FullViewCalendarModule,
+    TabViewModule,
+    DropdownModule,
+    [RouterModule.forChild(routes)]
+  ],
+  declarations: [
+    AppointmentsComponent
+  ],
+  exports: [AppointmentsComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
+  ],
+  providers: [TeleBookingService]
 })
 export class AppointmentsModule { }

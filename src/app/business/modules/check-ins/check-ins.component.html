@@ -1,6 +1,6 @@
 <section #chekinSection *ngIf="!apiloading && showDashbard">
   <div class="pull-left pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
-    <div class="dash-head">{{(showToken) ? 'Tokens' : 'Check-ins'}} </div>
+    <div class="dash-head">{{(showToken) ? 'Tokens' : 'Check-ins'}}</div>
   </div>
   <div class="pull-right">
     <nav class="navbar navbar-static-top no-margin" role="navigation" [class.index-zero]="filter_sidebar">
@@ -47,6 +47,13 @@
   </div>
 </section>
 
+
+<div class="clearfix"></div>
+<div class="pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
+  <p-dropdown [dropdownIcon]="'fa fa-caret-down '" [options]="viewOptions" [(ngModel)]="SelectedView"
+    optionLabel="displayName"></p-dropdown>
+</div>
+
 <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
 <section *ngIf="!showDashbard && !apiloading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12" id="bcrumbHeader">
@@ -58,7 +65,7 @@
     </div>
   </div>
 </section>
-<section class="app-check-ins-component dashboard content pro-dash" *ngIf="showDashbard">
+<section class="app-check-ins-component dashboard content pro-dash" *ngIf="showDashbard && SelectedView && SelectedView.name == 'list'">
   <div class="col-md-12 no-padding-small" *ngIf="!apiloading">
     <div class="row">
       <div class="card p0 w-dta">
@@ -953,7 +960,7 @@
                     (click)="gotoCustomerDetails(checkin)" [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
                     [class.pointer-auto]="checkin.waitlistStatus=='blocked'">
                     {{checkin.waitlistingFor[0].firstName}}
-                    {{checkin.waitlistingFor[0].lastName}}                   
+                    {{checkin.waitlistingFor[0].lastName}}
                     <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                     <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                       <span
@@ -1670,7 +1677,7 @@
                   [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                   (click)="gotoCustomerDetails(checkin)" [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
                   [class.pointer-auto]="checkin.waitlistStatus=='blocked'">{{checkin.waitlistingFor[0].firstName}}
-                  {{checkin.waitlistingFor[0].lastName}}                  
+                  {{checkin.waitlistingFor[0].lastName}}
                   <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                   <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                     <span
@@ -2057,7 +2064,7 @@
                     <div id="collapseLocations3" class="collapse in" data-parent="#accordion3">
                       <div class="card-body">
                         <div class="filter-checkbox-input" *ngIf="locations.length > 0 && time_type === 3">
-                        
+
                           <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                           </li>
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -2526,7 +2533,7 @@
                     <span
                       *ngIf="checkin.waitlistingFor[0].preferredLanguage">{{checkin.waitlistingFor[0].preferredLanguage}}</span>
                   </div>
-                </div>                 
+                </div>
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                   class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                   *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
@@ -2715,5 +2722,12 @@
     <button (click)="scrollToTop()">
       <i class="fa fa-chevron-up"></i>
     </button>
+  </div>
+</section>
+
+
+<section class="app-check-ins-component dashboard content pro-dash" *ngIf="showDashbard && !apiloading && SelectedView && SelectedView.name == 'calendar'">
+  <div class="card">
+    <app-full-view-calendar [type]="'tokens'"></app-full-view-calendar>
   </div>
 </section>

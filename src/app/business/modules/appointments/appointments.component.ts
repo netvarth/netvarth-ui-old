@@ -147,6 +147,18 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     totalCnt: 0,
     perPage: this.filter.page_count
   };
+
+  SelectedView: any = "calendar";
+  viewOptions: any = [
+    {
+      name: "list",
+      displayName: "List View"
+    },
+    {
+      name: "calendar",
+      displayName: "Calendar View"
+    }
+  ]
   availableSlotDetails: any = [];
   selQIds: any = [];
   selUser;

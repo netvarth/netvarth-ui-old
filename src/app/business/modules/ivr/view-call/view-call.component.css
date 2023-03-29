@@ -1,0 +1,100 @@
+.fa-arrow-left {
+  color: #1E4070 !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+
+.heading {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
+
+.back-btn {
+  color: #1E4070 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+}
+
+th {
+  font-size: 14px !important;
+}
+
+
+td {
+  font-size: 14px !important;
+}
+
+
+.status-connected {
+  background-color: #cce6c8 !important;
+  color: #052407 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-missed {
+  background-color: #FFCDD2 !important;
+  color: #C63737 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-voicemail {
+  background-color: #d9e3ff !important;
+  color: #10359c !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+
+.font-medium {
+  font-size: 15px !important;
+}
+
+.text-grey {
+  color: #757575 !important;
+}
+
+.bg-blue {
+  background-color: rgb(251, 251, 251) !important;
+  color: #000 !important;
+}
+
+.table-responsive,
+tr,
+td,
+th {
+  border: 0 !important;
+}
+
+
+
+.btn-primary {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 4px !important;
+}
+
+.btn-warning {
+  background-color: #EFA855 !important;
+  border-color: #EFA855 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 4px !important;
+}
+
+
+.font-weight-600 {
+  font-weight: 600 !important;
+}
+
+
+.min-height-card
+{
+  min-height: 300px!important;
+}

@@ -10,6 +10,12 @@ export class DashboardService {
     private serviceMeta: ServiceMeta
   ) { }
 
+
+  getBussinessProfile() {
+    let url = "provider/bProfile"
+    return this.serviceMeta.httpGet(url, null);
+  }
+
   getTodayAppointments(filter = {}) {
     let url = "provider/appointment/today"
     return this.serviceMeta.httpGet(url, null, filter);

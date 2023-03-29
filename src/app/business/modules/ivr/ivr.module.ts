@@ -16,7 +16,7 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
 const routes: Routes = [
   { path: '', component: IvrComponent },
   { path: 'calls', loadChildren: () => import('./calls/calls.module').then(m => m.CallsModule) },
-
+  { path: 'call/:id', loadChildren: () => import('./view-call/view-call.module').then(m => m.ViewCallModule) }
 ]
 
 @NgModule({
