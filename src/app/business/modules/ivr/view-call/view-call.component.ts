@@ -32,8 +32,9 @@ export class ViewCallComponent implements OnInit {
             }
             if (this.callData && this.callData.consumerId) {
               this.getCustomerDetails(this.callData.consumerId);
-              // this.getCustomerTokens(this.callData.consumerId);
-              this.getCustomerTokens(34609);
+              this.getCustomerDetails(this.callData.consumerId);
+              this.getCustomerTokens(this.callData.consumerId);
+              // this.getCustomerTokens(34609);
             }
           });
 

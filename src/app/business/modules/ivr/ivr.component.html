@@ -44,6 +44,11 @@
                                 <div>
                                     <span class="table-column-data" *ngIf="onGoingCall[0] && onGoingCall[0].language">{{onGoingCall[0].language}}</span>
                                 </div>
+                                <div>
+                                  <button pButton pRipple type="button" class="p-button-primary btn-primary font-weight-600"
+                                    (click)="viewCall(onGoingCall[0].uid)">View
+                                  </button>
+                                </div>
                             </div>
                             <div class="px-2 text-center" *ngIf="onGoingCall && onGoingCall.length==0">
                               <span class="font-weight-bold">No Ongoing Call</span>
@@ -166,6 +171,7 @@
                       </th>
                       <th pSortableColumn="callStatus">Status <p-sortIcon field="callStatus"></p-sortIcon></th>
                       <th pSortableColumn="language">Language <p-sortIcon field="language"></p-sortIcon></th>
+                    <th>User</th>
                       <th>More Actions</th>
                     </tr>
                     <tr>
@@ -179,24 +185,28 @@
                         <p-columnFilter type="text" field="language"></p-columnFilter>
                       </th>
                       <th></th>
+                      <th></th>
                     </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-call>
                     <tr class="mobile-card">
                       <td>
-                        <span class="d-lg-none d-md-none">Phone Number : </span><span
+                        <span
                           class="table-column-data">{{call.consumerPhone.number}}</span>
                       </td>
                       <td>
-                        <span class="d-lg-none d-md-none">Status : </span><span class="table-column-data text-capitalize"
+                        <span class="table-column-data text-capitalize"
                           [class]="'status-' + call.callStatus">{{call.callStatus}}</span>
                       </td>
                       <td>
-                        <span class="d-lg-none d-md-none d-sm-block">Language : </span><span class="table-column-data"
+                        <span class="table-column-data"
                           *ngIf="call && call.language">{{call.language}}</span>
                       </td>
                       <td>
-                        <span class="d-lg-none d-md-none d-sm-block">More Actions : </span>
+                        <span class="table-column-data"
+                          *ngIf="call && call.userName">{{call.userName}}</span>
+                      </td>
+                      <td>
                         <div class="d-flex text-center">
                           <button pButton pRipple type="button" class="p-button-warning btn-warning mr-2 font-weight-600"
                             (click)="openUsersPopup(call.uid)" *ngIf="call && !call.userId">Assign

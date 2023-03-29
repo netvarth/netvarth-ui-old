@@ -97,4 +97,6 @@ th {
 .min-height-card
 {
   min-height: 300px!important;
+  height: 300px!important;
+  overflow-y: scroll!important;
 }

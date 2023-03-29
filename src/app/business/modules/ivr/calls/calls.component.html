@@ -47,6 +47,7 @@
                     </th>
                     <th pSortableColumn="callStatus">Status <p-sortIcon field="callStatus"></p-sortIcon></th>
                     <th pSortableColumn="language">Language <p-sortIcon field="language"></p-sortIcon></th>
+                    <th>User</th>
                     <th>More Actions</th>
                 </tr>
                 <tr>
@@ -59,6 +60,7 @@
                     <th>
                         <p-columnFilter type="text" field="language"></p-columnFilter>
                     </th>
+                    <th></th>
                     <th></th>
                 </tr>
             </ng-template>
@@ -76,6 +78,10 @@
                     <td>
                         <span class="d-lg-none d-md-none d-sm-block">Language : </span><span class="table-column-data"
                             *ngIf="call && call.language">{{call.language}}</span>
+                    </td>
+                    <td>
+                      <span class="d-lg-none d-md-none d-sm-block">User : </span><span class="table-column-data"
+                        *ngIf="call && call.userName">{{call.userName}}</span>
                     </td>
                     <td>
                         <span class="d-lg-none d-md-none d-sm-block">More Actions : </span>

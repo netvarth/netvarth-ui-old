@@ -66,7 +66,7 @@
       </div>
     </div>
 
-    <div class="col-md-8 mt-4">
+    <!-- <div class="col-md-8 mt-4">
       <span class="font-weight-bold">Call History</span>
       <div class="card mt-2 min-height-card">
         <div class="row">
@@ -97,7 +97,53 @@
           </table>
         </div>
       </div>
+    </div> -->
+
+    <div class="col-md-8 mt-4">
+      <span class="font-weight-bold px-0">Call History</span>
+      <div class="card mt-2 min-height-card">
+        <div class="row" *ngIf="tokens">
+          <table class="table table-responsive">
+            <thead>
+              <tr class="bg-blue px-2">
+                <th>Token No</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>User</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let token of tokens" class="px-2 my-auto">
+                <td *ngIf="token.waitlist && token.waitlist.token"> {{token.waitlist.token}}
+                </td>
+                <td>
+                  <ng-container
+                    *ngIf="token.waitlist && token.waitlist.consumer.firstName || token.waitlist.consumer.lastName">
+                    {{token.waitlist.consumer.firstName}}
+                    {{token.waitlist.consumer.lastName}}
+                  </ng-container>
+                </td>
+                <td *ngIf="token.waitlist && token.waitlist.waitlistStatus" class="text-capitalize">
+                  {{token.waitlist.waitlistStatus}}
+                </td>
+                <td *ngIf="token.waitlist && token.waitlist.date" class="text-capitalize"> {{token.waitlist.date}}
+                </td>
+                <td *ngIf="token.waitlist && token.waitlist.providerAccount && token.waitlist.providerAccount.businessName"
+                  class="text-capitalize"> {{token.waitlist.providerAccount.businessName}}
+                </td>
+                <td *ngIf="token.waitlist && token.waitlist.ynwUuid" class="text-capitalize">
+                  <a class="btn btn-primary" (click)="viewToken(token.waitlist.ynwUuid)">View
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>
 
@@ -117,7 +163,7 @@
       </div>
     </div>
 
-    <div class="col-md-8 mt-4">
+    <!-- <div class="col-md-8 mt-4">
       <div class="card mt-2 min-height-card">
         <span class="font-weight-bold px-0">Tokens</span>
         <div class="row mt-2" *ngIf="tokens">
@@ -159,6 +205,6 @@
           </table>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
