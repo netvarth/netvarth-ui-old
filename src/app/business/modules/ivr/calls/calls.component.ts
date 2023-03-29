@@ -211,7 +211,8 @@ export class CallsComponent implements OnInit {
   markAsComplete(uid) {
     this.ivrService.markAsComplete(uid).subscribe((data: any) => {
       if (data) {
-        this.snackbarService.openSnackBar("Call Marked As Completed Successfully")
+        this.snackbarService.openSnackBar("Call Marked As Completed Successfully");
+        this.ngOnInit();
       }
     },
       (error) => {

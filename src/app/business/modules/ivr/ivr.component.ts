@@ -251,6 +251,17 @@ export class IvrComponent implements OnInit {
     this.router.navigate(['provider', 'customers', id], navigationExtras)
   }
 
+  markAsComplete(uid) {
+    this.ivrService.markAsComplete(uid).subscribe((data: any) => {
+      if (data) {
+        this.snackbarService.openSnackBar("Call Marked As Completed Successfully");
+        this.ngOnInit();
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
 
   viewCall(uid) {
     this.router.navigate(['provider', 'ivr', 'call', uid]);

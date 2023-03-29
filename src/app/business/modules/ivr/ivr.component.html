@@ -219,6 +219,10 @@
                             (click)="getCallBack(call.uid)" *ngIf="call && call.userId">Callback
                           </button>
 
+                          <button pButton pRipple type="button" class="p-button-success btn-success mr-2 font-weight-600"
+                            (click)="markAsComplete(call.uid)">Complete
+                          </button>
+
                           <button pButton pRipple type="button" class="p-button-primary btn-primary font-weight-600"
                             (click)="viewCall(call.uid)">View
                           </button>
