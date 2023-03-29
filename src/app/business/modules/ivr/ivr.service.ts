@@ -80,6 +80,11 @@ export class IvrService {
     return this.servicemeta.httpGet(url);
   }
 
+  markAsComplete(id) {
+    const url = 'provider/ivr/status/' + id + '/callCompleted';
+    return this.servicemeta.httpPut(url);
+  }
+
   setFiltersFromPrimeTable(event) {
     let api_filter = {}
     if ((event && event.first) || (event && event.first == 0)) {

@@ -208,6 +208,17 @@ export class CallsComponent implements OnInit {
       });
   }
 
+  markAsComplete(uid) {
+    this.ivrService.markAsComplete(uid).subscribe((data: any) => {
+      if (data) {
+        this.snackbarService.openSnackBar("Call Marked As Completed Successfully")
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
+
   openUsersPopup(uid) {
     this.usersDialogRef = this.dialog.open(PopupComponent, {
       width: '50%',
