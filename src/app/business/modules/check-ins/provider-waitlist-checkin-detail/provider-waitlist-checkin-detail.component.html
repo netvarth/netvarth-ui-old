@@ -211,6 +211,17 @@
                   *ngIf=" !waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
                   +{{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
               </div>
+
+              <div class=" customerDetails" *ngIf="waitlist_data.waitlistingFor[0].phoneNo">
+                <!-- <div class="float-left"> -->
+                <div>
+                  <img width="20px" src="/assets/images/tokenDetailsIcon/contactNoIcon.png" />
+                </div>
+                <!-- </div> -->
+                <span class="cusHead">&nbsp;{{ waitlist_data.waitlistingFor[0].phoneNo}}</span>
+              </div>
+
+
               <div class=" customerDetails" *ngIf="waitlist_data.waitlistingFor[0].email">
                 <!-- <div class="float-left"> -->
                 <div>
@@ -219,6 +230,7 @@
                 <!-- </div> -->
                 <span class="cusHead">&nbsp;{{ waitlist_data.waitlistingFor[0].email}}</span>
               </div>
+
               <div class="gender-and-dob">
                 <div *ngIf="waitlist_data.waitlistingFor[0].gender" class="gender customerDetails">
                   <!-- <i *ngIf="waitlist_data.waitlistingFor[0].gender === 'male'" class="fa fa-mars icon"></i>
@@ -306,7 +318,6 @@
   </div>
 </section>
 <div>
-
   <div class="content checkin-details" *ngIf="waitlist_data">
     <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small px-1 py-0 my-0"
       *ngIf="waitlist_data.waitlistingFor && (waitlist_data.providerAccount.serviceSector.domain === 'healthCare' || waitlist_data.providerAccount.serviceSector.domain === 'veterinaryPetcare') && waitlist_data.providerAccount.serviceSubSector.subDomain !=='laboratory' && waitlist_data.providerAccount.serviceSubSector.subDomain !=='pharmacy'">
