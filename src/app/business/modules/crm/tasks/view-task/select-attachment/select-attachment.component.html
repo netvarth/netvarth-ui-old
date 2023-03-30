@@ -31,7 +31,7 @@
             </label> -->
             <label for="choose_file" (click)="imagefile.click()">
               <input #imagefile type="file" accept="/*;capture=camera" style="display:none;"
-                (change)="selectFile($event)">
+                (change)="tempSelectedFile($event)">
               <i class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>
               <span>Choose Files</span>
             </label>

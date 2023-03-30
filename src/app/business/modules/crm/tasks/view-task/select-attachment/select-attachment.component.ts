@@ -4,11 +4,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 // import { CrmService } from "../../../crm.service";
 import { Observable } from "rxjs";
 // import { HttpEventType, HttpResponse } from "@angular/common/http";
-import { SnackbarService } from "../../../../../../shared/services/snackbar.service";
+// import { SnackbarService } from "../../../../../../shared/services/snackbar.service";
 import { SharedServices } from "../../../../../../shared/services/shared-services";
 import { FileService } from "../../../../../../shared/services/file-service";
-import { projectConstantsLocal } from "../../../../../../shared/constants/project-constants";
-import { NgxImageCompressService } from "ngx-image-compress";
+// import { projectConstantsLocal } from "../../../../../../shared/constants/project-constants";
+// import { NgxImageCompressService } from "ngx-image-compress";
 
 @Component({
   selector: "app-select-attachment",
@@ -47,10 +47,10 @@ export class SelectAttachmentComponent implements OnInit {
     public dialogRef: MatDialogRef<SelectAttachmentComponent>,
     // private uploadService: CrmService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private snackbarService: SnackbarService,
+    // private snackbarService: SnackbarService,
     public shared_services: SharedServices,
     private fileService: FileService,
-    private imageCompress: NgxImageCompressService,
+    // private imageCompress: NgxImageCompressService,
   ) {
     this.source = this.data.source
   }
@@ -88,50 +88,50 @@ export class SelectAttachmentComponent implements OnInit {
   //   );
   // }
 
-  filesSelected(event, type?) {
-    const input = event.target.files;
-    this.fileInput = input;
-    if (input.length === 1) {
-      for (const file of input) {
-        if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
-          this.snackbarService.openSnackBar(
-            "Please upload images with size < 10mb",
-            { panelClass: "snackbarerror" }
-          );
-          return;
-        } else {
-          this.selectedMessage.files.push(file);
-          const reader = new FileReader();
-          reader.onload = e => {
-            this.selectedMessage.base64.push(e.target["result"]);
-          };
-          console.log(' this.selectedMessage', this.selectedMessage.files)
+  // filesSelected(event, type?) {
+  //   const input = event.target.files;
+  //   this.fileInput = input;
+  //   if (input.length === 1) {
+  //     for (const file of input) {
+  //       if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
+  //         this.snackbarService.openSnackBar(
+  //           "Please upload images with size < 10mb",
+  //           { panelClass: "snackbarerror" }
+  //         );
+  //         return;
+  //       } else {
+  //         this.selectedMessage.files.push(file);
+  //         const reader = new FileReader();
+  //         reader.onload = e => {
+  //           this.selectedMessage.base64.push(e.target["result"]);
+  //         };
+  //         console.log(' this.selectedMessage', this.selectedMessage.files)
 
-          reader.readAsDataURL(file);
-          this.action = "attachment";
+  //         reader.readAsDataURL(file);
+  //         this.action = "attachment";
 
-          if (this.selectedMessage.caption) {
-            return this.imgCaptions;
-          } else {
-            return (this.imgCaptions = "");
-          }
-        }
-      }
-    }
-    else {
-      if (event && event.target && event.target.files && event.target.files.length) {
-        for (let i = 0; i < event.target.files.length; i++) {
-          this.selectedMessage.files.push(event.target.files[i]);
-          const reader = new FileReader();
-          reader.onload = e => {
-            this.selectedMessage.base64.push(e.target["result"]);
-          };
-          reader.readAsDataURL(event.target.files[i]);
-          this.action = "attachment";
-        }
-      }
-    }
-  }
+  //         if (this.selectedMessage.caption) {
+  //           return this.imgCaptions;
+  //         } else {
+  //           return (this.imgCaptions = "");
+  //         }
+  //       }
+  //     }
+  //   }
+  //   else {
+  //     if (event && event.target && event.target.files && event.target.files.length) {
+  //       for (let i = 0; i < event.target.files.length; i++) {
+  //         this.selectedMessage.files.push(event.target.files[i]);
+  //         const reader = new FileReader();
+  //         reader.onload = e => {
+  //           this.selectedMessage.base64.push(e.target["result"]);
+  //         };
+  //         reader.readAsDataURL(event.target.files[i]);
+  //         this.action = "attachment";
+  //       }
+  //     }
+  //   }
+  // }
 
   saveFile(fileDes: any) {
     const _this = this;
@@ -165,6 +165,7 @@ export class SelectAttachmentComponent implements OnInit {
         //   type: "application/json"
         // });
         // dataToSend.append("captions", blobPropdata);
+        console.log('_this.selectedMessage',_this.selectedMessage)
         this.sendInput.emit(_this.selectedMessage);
         // _this.sendWLAttachment(id, dataToSend).then(() => {
         //   // _this.api_loading1=false;
@@ -264,82 +265,117 @@ export class SelectAttachmentComponent implements OnInit {
   goBack() {
     this._location.back();
   }
-  selectFile(event: any) {
-    const _this = this;
-    let input;
-    if (event.target.files) {
-      input = event.target.files;
-    }
-    console.log('input', input);
-    if (input) {
-      for (const file of input) {
-        console.log('file', file)
-        if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
-          _this.snackbarService.openSnackBar("Please upload images with size < 10mb", { panelClass: "snackbarerror" });
-          // return;
-        }
-        else {
-          _this.file = file;
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            _this.localUrl = e.target.result;
-            if (file && file['type'] === 'application/pdf') {
-              _this.selectedMessage.files.push(file);
-              _this.selectedMessage.base64.push(e.target["result"]);
-              _this.snackbarService.openSnackBar('You uploded' + ' ' + file['name']);
-            }
-            else {
-              if (file && file['type'] && file['type'].includes('image')) {
-                if (file && file['type'] && file['type'].includes('webp')) {
-                  _this.selectedMessage.files = [];
-                  _this.selectedMessage.base64 = [];
-                  _this.selectedMessage.caption = [];
-                  _this.snackbarService.openSnackBar("File type not supported", { panelClass: "snackbarerror" });
-                }
-                else {
-                  _this.compressFile(_this.localUrl, file['name'], _this.file);
-                  _this.snackbarService.openSnackBar('You uploded' + ' ' + file['name']);
-                  // _this.selectedMessage.files.push(_this.file);
-                }
-
-              }
-              else {
-                _this.selectedMessage.files = [];
-                _this.selectedMessage.base64 = [];
-                _this.selectedMessage.caption = [];
-                _this.snackbarService.openSnackBar("File type not supported", { panelClass: "snackbarerror" });
-              }
-            }
-          }
-          reader.readAsDataURL(file);
-          _this.action = "attachment";
-          console.log('_this.selectedMessage', _this.selectedMessage);
-          if (_this.selectedMessage.caption) {
-            return _this.imgCaptions;
-          } else {
-            return (_this.imgCaptions = "");
-          }
+  tempSelectedFile($event){
+    // let selectedFiles :any=this.selectedFiles
+    const _this=this;
+    _this.fileService.selectFile($event,_this.selectedMessage).then((res)=>{
+      console.log('tempSelectedFile',res);
+      // _this.selectedMessage.files.push()
+      if(res && res['file'] && res['file']['type'] &&  res['file']['type']==='application/pdf'){
+        _this.selectedMessage.base64.push(res['base64']);
+        _this.selectedMessage.files.push(res['file']);
+        if (_this.selectedMessage.caption) {
+          return _this.imgCaptions;
+        } else {
+          return (_this.imgCaptions = "");
         }
       }
-    }
-  }
-  compressFile(image, fileName,fileInfo) {
-    const _this=this;
-    console.log('fileInfo',fileInfo)
-    const orientation = -1;
-    _this.sizeOfOriginalImage = _this.imageCompress.byteCount(image) / (1024 * 1024);
-    console.warn('Size in bytes is now:', _this.sizeOfOriginalImage);
-    _this.imageCompress.compressFile(image, orientation, 50, 50).then(
-      result => {
-        if(result){
-          _this.imgResultAfterCompress = result;
-          _this.selectedMessage.base64.push(result);
-          _this.selectedMessage.files.push(fileInfo);
-          _this.localCompressedURl = result;
-          _this.sizeOFCompressedImage = _this.imageCompress.byteCount(result) / (1024 * 1024)
-          console.warn('Size in bytes after compression:', _this.sizeOFCompressedImage);
-          // fileInfo['size']=this.sizeOFCompressedImage;
+      else if(res ===false){
+        _this.selectedMessage.files=[];
+        _this.selectedMessage.base64=[];
+        _this.selectedMessage.caption=[];
+      }
+      else{
+        _this.selectedMessage.base64.push(res['base64']);
+        _this.selectedMessage.files.push(res['file']);
+        if (_this.selectedMessage.caption) {
+          return _this.imgCaptions;
+        } else {
+          return (_this.imgCaptions = "");
         }
-      });
+      }
+       _this.action = "attachment";
+    console.log('_this.selectedMessage',_this.selectedMessage);
+    })
+    console.log('this.selectedMessage::::::',this.selectedMessage)
+    return this.selectedMessage;
   }
+  // selectFile(event: any) {
+  //   const _this = this;
+  //   let input;
+  //   if (event.target.files) {
+  //     input = event.target.files;
+  //   }
+  //   console.log('input', input);
+  //   if (input) {
+  //     for (const file of input) {
+  //       console.log('file', file)
+  //       if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
+  //         _this.snackbarService.openSnackBar("Please upload images with size < 10mb", { panelClass: "snackbarerror" });
+  //         // return;
+  //       }
+  //       else {
+  //         _this.file = file;
+  //         const reader = new FileReader();
+  //         reader.onload = (e: any) => {
+  //           _this.localUrl = e.target.result;
+  //           if (file && file['type'] === 'application/pdf') {
+  //             _this.selectedMessage.files.push(file);
+  //             _this.selectedMessage.base64.push(e.target["result"]);
+  //             _this.snackbarService.openSnackBar('You uploded' + ' ' + file['name']);
+  //           }
+  //           else {
+  //             if (file && file['type'] && file['type'].includes('image')) {
+  //               if (file && file['type'] && file['type'].includes('webp')) {
+  //                 _this.selectedMessage.files = [];
+  //                 _this.selectedMessage.base64 = [];
+  //                 _this.selectedMessage.caption = [];
+  //                 _this.snackbarService.openSnackBar("File type not supported", { panelClass: "snackbarerror" });
+  //               }
+  //               else {
+  //                 _this.compressFile(_this.localUrl, file['name'], _this.file);
+  //                 _this.snackbarService.openSnackBar('You uploded' + ' ' + file['name']);
+  //                 // _this.selectedMessage.files.push(_this.file);
+  //               }
+
+  //             }
+  //             else {
+  //               _this.selectedMessage.files = [];
+  //               _this.selectedMessage.base64 = [];
+  //               _this.selectedMessage.caption = [];
+  //               _this.snackbarService.openSnackBar("File type not supported", { panelClass: "snackbarerror" });
+  //             }
+  //           }
+  //         }
+  //         reader.readAsDataURL(file);
+  //         _this.action = "attachment";
+  //         console.log('_this.selectedMessage', _this.selectedMessage);
+  //         if (_this.selectedMessage.caption) {
+  //           return _this.imgCaptions;
+  //         } else {
+  //           return (_this.imgCaptions = "");
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+  // compressFile(image, fileName,fileInfo) {
+  //   const _this=this;
+  //   console.log('fileInfo',fileInfo)
+  //   const orientation = -1;
+  //   _this.sizeOfOriginalImage = _this.imageCompress.byteCount(image) / (1024 * 1024);
+  //   console.warn('Size in bytes is now:', _this.sizeOfOriginalImage);
+  //   _this.imageCompress.compressFile(image, orientation, 50, 50).then(
+  //     result => {
+  //       if(result){
+  //         _this.imgResultAfterCompress = result;
+  //         _this.selectedMessage.base64.push(result);
+  //         _this.selectedMessage.files.push(fileInfo);
+  //         _this.localCompressedURl = result;
+  //         _this.sizeOFCompressedImage = _this.imageCompress.byteCount(result) / (1024 * 1024)
+  //         console.warn('Size in bytes after compression:', _this.sizeOFCompressedImage);
+  //         // fileInfo['size']=this.sizeOFCompressedImage;
+  //       }
+  //     });
+  // }
 }
