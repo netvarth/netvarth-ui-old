@@ -153,7 +153,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   filter_dob_end_min = null;
   filter_dob_end_max = null;
 
-  SelectedView: any = "calendar";
+  SelectedView: any = {
+    name: "list",
+    displayName: "List View"
+  };
   viewOptions: any = [
     {
       name: "list",
@@ -839,7 +842,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
 
         if (event.checked) {
           for (const multi of this.users) {
-             console.log("Users :",this.users);
+            console.log("Users :", this.users);
 
             // console.log(this.multiUserFilter.indexOf(multi.id))
             if (this.multiUserFilter.indexOf(multi.id) === -1) {
@@ -3405,68 +3408,68 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       return userObject[0].name;
     }
   }
-  handleFormField(formField,context){
+  handleFormField(formField, context) {
     console.log(formField)
     console.log(context);
-    if(context==='phoneNumber'){
-      let tempContext='phoneNumber'
-      this.getCustomerList(formField,tempContext);
+    if (context === 'phoneNumber') {
+      let tempContext = 'phoneNumber'
+      this.getCustomerList(formField, tempContext);
     }
-    else if(context==='firstName'){
-      let tempContext='name'
-      this.getCustomerList(formField,tempContext);
+    else if (context === 'firstName') {
+      let tempContext = 'name'
+      this.getCustomerList(formField, tempContext);
     }
     // else if(){
 
     // }
     // this.getCustomerList(formField)
   }
-  handleSearchSelect(filterValue,nameInfo){
-    console.log('filterValue',filterValue)
+  handleSearchSelect(filterValue, nameInfo) {
+    console.log('filterValue', filterValue)
     console.log(nameInfo);
-    if(filterValue['firstName']){
-      this.filterapplied=true;
+    if (filterValue['firstName']) {
+      this.filterapplied = true;
       // this.doSearch()
-      if(filterValue && filterValue['lastName']){
-        this.filter.last_name= filterValue['lastName'];
+      if (filterValue && filterValue['lastName']) {
+        this.filter.last_name = filterValue['lastName'];
       }
-      if(filterValue && filterValue['firstname']){
-        this.filter.first_name= filterValue['firstname'];
+      if (filterValue && filterValue['firstname']) {
+        this.filter.first_name = filterValue['firstname'];
       }
     }
 
   }
-  bisinessProfile(){
+  bisinessProfile() {
     // this.searchForm.controls.search_input.setValue('');
-    this.provider_services.getBussinessProfile().subscribe((res:any)=>{
-        console.log('BProfileRes',res);
-        if(res){
-            if(res['id']){
-                this.tempAcId= res['id'];
-            }
+    this.provider_services.getBussinessProfile().subscribe((res: any) => {
+      console.log('BProfileRes', res);
+      if (res) {
+        if (res['id']) {
+          this.tempAcId = res['id'];
         }
+      }
     })
   }
-    getCustomerList(tempPhoneNum,tempCatValue) {
-      // let tempCatValue: any;
-      // tempCatValue = 'name';
-      this.provider_services.getSearchCustomer(this.tempAcId, tempCatValue, tempPhoneNum).subscribe((res:any) => {
-        console.log(res);
-        if(res.length===0){
-          this.filter.last_name='';
-          this.filter.first_name='';
-          this.clearFilter()
+  getCustomerList(tempPhoneNum, tempCatValue) {
+    // let tempCatValue: any;
+    // tempCatValue = 'name';
+    this.provider_services.getSearchCustomer(this.tempAcId, tempCatValue, tempPhoneNum).subscribe((res: any) => {
+      console.log(res);
+      if (res.length === 0) {
+        this.filter.last_name = '';
+        this.filter.first_name = '';
+        this.clearFilter()
+      }
+      else {
+        if (res) {
+          this.customerList = res;
         }
-        else{
-          if (res) {
-            this.customerList = res;
-          }
-        }
+      }
 
-      })
-    }
-    getServiceLabels(labelsList) {
-      let labels = labelsList.map(label => label.displayName);
-      return labels.toString();
-    }
+    })
+  }
+  getServiceLabels(labelsList) {
+    let labels = labelsList.map(label => label.displayName);
+    return labels.toString();
+  }
 }
