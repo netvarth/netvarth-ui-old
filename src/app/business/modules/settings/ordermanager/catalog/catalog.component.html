@@ -13,6 +13,7 @@
         <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card">
+                    <div class="div-only-mobile"><span *ngIf="showAddbt" class="div-only-mobile addbt" (click)="addCatalog()"></span></div>
                     <p class="form-level-settings">{{frm_items_cap}}</p>
                     <div class="no-dta" *ngIf="catalog_list.length ==0 && query_executed == true">
                         <p>{{emptyMsg}}</p>
@@ -89,7 +90,7 @@
                                                         </mat-menu>
                                                     </span>
                                                     <span class="mbt-mobile-show">
-                                                       
+                                                      
                                                         <button class="editcls" type="button"
                                                             (click)="editCatalog(catalog)">{{edit_btn}}</button>
                                                             <!-- <button type="button"  (click)="catalogqrCodegeneraterOnlineID(catalog)" style="margin-right:5px;border-radius:10px;">
@@ -122,7 +123,7 @@
                                                                   :'Enable'}}
                                                               </button> -->
                                                               <button type="button" mat-menu-item *ngIf="catalog.catalogStatus=='ACTIVE'" (click)="dochangeStatus(catalog)">
-                                                                <i class="icon-disable"></i>Disable
+                                                                <i class="icon-disable"></i>Disablemob
                                                               </button>
                                                               <button type="button" mat-menu-item *ngIf="catalog.catalogStatus=='ACTIVE'" (click)="catalogqrCodegeneraterOnlineID(catalog)">
                                                                   <i class="fa fa-share-alt"></i>Share catalog
