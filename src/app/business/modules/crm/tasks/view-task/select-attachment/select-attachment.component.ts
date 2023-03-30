@@ -8,6 +8,7 @@ import { SnackbarService } from "../../../../../../shared/services/snackbar.serv
 import { SharedServices } from "../../../../../../shared/services/shared-services";
 import { FileService } from "../../../../../../shared/services/file-service";
 import { projectConstantsLocal } from "../../../../../../shared/constants/project-constants";
+import { NgxImageCompressService } from "ngx-image-compress";
 
 @Component({
   selector: "app-select-attachment",
@@ -34,6 +35,12 @@ export class SelectAttachmentComponent implements OnInit {
   public fileInput: any;
   public fileSelectErrorMsg: any;
   public bUploadFileError: boolean = false;
+  file: any;
+  localUrl: any;
+  sizeOfOriginalImage: number;
+  imgResultAfterCompress: any;
+  localCompressedURl: any;
+  sizeOFCompressedImage: number;
   // api_loading1:boolean;
   constructor(
     public _location: Location,
@@ -42,7 +49,8 @@ export class SelectAttachmentComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snackbarService: SnackbarService,
     public shared_services: SharedServices,
-    private fileService: FileService
+    private fileService: FileService,
+    private imageCompress: NgxImageCompressService,
   ) {
     this.source = this.data.source
   }
@@ -255,5 +263,83 @@ export class SelectAttachmentComponent implements OnInit {
   }
   goBack() {
     this._location.back();
+  }
+  selectFile(event: any) {
+    const _this = this;
+    let input;
+    if (event.target.files) {
+      input = event.target.files;
+    }
+    console.log('input', input);
+    if (input) {
+      for (const file of input) {
+        console.log('file', file)
+        if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
+          _this.snackbarService.openSnackBar("Please upload images with size < 10mb", { panelClass: "snackbarerror" });
+          // return;
+        }
+        else {
+          _this.file = file;
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            _this.localUrl = e.target.result;
+            if (file && file['type'] === 'application/pdf') {
+              _this.selectedMessage.files.push(file);
+              _this.selectedMessage.base64.push(e.target["result"]);
+              _this.snackbarService.openSnackBar('You uploded' + ' ' + file['name']);
+            }
+            else {
+              if (file && file['type'] && file['type'].includes('image')) {
+                if (file && file['type'] && file['type'].includes('webp')) {
+                  _this.selectedMessage.files = [];
+                  _this.selectedMessage.base64 = [];
+                  _this.selectedMessage.caption = [];
+                  _this.snackbarService.openSnackBar("File type not supported", { panelClass: "snackbarerror" });
+                }
+                else {
+                  _this.compressFile(_this.localUrl, file['name'], _this.file);
+                  _this.snackbarService.openSnackBar('You uploded' + ' ' + file['name']);
+                  // _this.selectedMessage.files.push(_this.file);
+                }
+
+              }
+              else {
+                _this.selectedMessage.files = [];
+                _this.selectedMessage.base64 = [];
+                _this.selectedMessage.caption = [];
+                _this.snackbarService.openSnackBar("File type not supported", { panelClass: "snackbarerror" });
+              }
+            }
+          }
+          reader.readAsDataURL(file);
+          _this.action = "attachment";
+          console.log('_this.selectedMessage', _this.selectedMessage);
+          if (_this.selectedMessage.caption) {
+            return _this.imgCaptions;
+          } else {
+            return (_this.imgCaptions = "");
+          }
+        }
+      }
+    }
+  }
+  compressFile(image, fileName,fileInfo) {
+    const _this=this;
+    console.log('fileInfo',fileInfo)
+    const orientation = -1;
+    _this.sizeOfOriginalImage = _this.imageCompress.byteCount(image) / (1024 * 1024);
+    console.warn('Size in bytes is now:', _this.sizeOfOriginalImage);
+    _this.imageCompress.compressFile(image, orientation, 50, 50).then(
+      result => {
+        if(result){
+          _this.imgResultAfterCompress = result;
+          _this.selectedMessage.base64.push(result);
+          _this.selectedMessage.files.push(fileInfo);
+          _this.localCompressedURl = result;
+          _this.sizeOFCompressedImage = _this.imageCompress.byteCount(result) / (1024 * 1024)
+          console.warn('Size in bytes after compression:', _this.sizeOFCompressedImage);
+          // fileInfo['size']=this.sizeOFCompressedImage;
+        }
+      });
   }
 }
