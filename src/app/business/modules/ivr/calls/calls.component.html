@@ -86,26 +86,25 @@
                     <td>
                         <div class="d-flex text-center">
                             <button pButton pRipple type="button"
-                                class="p-button-warning btn-warning mr-2 font-weight-600"
+                                class="p-button-warning btn-warning bg-light mr-2 font-weight-600"
                                 (click)="openUsersPopup(call.uid)"
-                                *ngIf="call && !call.userId">Assign
+                                *ngIf="call && !call.userId"  tooltipPosition="top" pTooltip="Assign"><img width="20" src="./assets/images/ivr/unassign.png">
+                            </button>
+                            <button pButton pRipple type="button" styleClass="p-button-raised" class="p-button-light bg-light mr-2 font-weight-600"
+                              (click)="getCallBack(call.uid)"   tooltipPosition="top" pTooltip="CallBack"><img width="20" src="./assets/images/ivr/callback.png">
                             </button>
                             <button pButton pRipple type="button"
-                                class="p-button-warning btn-warning mr-2 font-weight-600"
+                                class="p-button-warning btn-warning bg-light mr-2 font-weight-600"
                                 (click)="unassignToCall(call.uid)"
-                                *ngIf="call && call.userId">Unassign
+                                *ngIf="call && call.userId"   tooltipPosition="top" pTooltip="Unassign"><img width="20" src="./assets/images/ivr/unassign.png">
                             </button>
 
-                            <button pButton pRipple type="button" class="p-button-info btn-info mr-2 font-weight-600"
-                              (click)="getCallBack(call.uid)">Callback
-                            </button>
-
-                            <button pButton pRipple type="button" class="p-button-success btn-success mr-2 font-weight-600"
-                              (click)="markAsComplete(call.uid)">Complete
+                            <button pButton pRipple type="button" class="p-button-success btn-success mr-2 font-weight-600 text-light"
+                              (click)="markAsComplete(call.uid)"  tooltipPosition="top" pTooltip="Complete" ><i class="fa fa-check" aria-hidden="true"></i>
                             </button>
 
                             <button pButton pRipple type="button" class="p-button-primary btn-primary font-weight-600"
-                                (click)="viewCall(call.uid)">View
+                                (click)="viewCall(call.uid)"  tooltipPosition="top" pTooltip="View"><i class="fa fa-eye" aria-hidden="true"></i>
                             </button>
                         </div>
                     </td>

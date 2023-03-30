@@ -33,8 +33,16 @@
   font-weight: 600 !important;
 }
 
+.bg-light {
+  background-color: #fff !important;
+}
+
+.fa-check {
+  color: #fff !important;
+}
+
 .status-callCompleted {
-  /* background-color: #cce6c8 !important; */
+  background-color: #cce6c8 !important;
   color: rgb(55, 97, 55) !important;
   font-weight: bold !important;
   padding: 5px !important;
@@ -75,7 +83,7 @@ th {
 }
 
 .status-connected {
-  /* background-color: #cce6c8 !important; */
+  background-color: #cce6c8 !important;
   color: #052407 !important;
   font-weight: bold !important;
   padding: 5px !important;
@@ -83,7 +91,7 @@ th {
 }
 
 .status-missed {
-  /* background-color: #FFCDD2 !important; */
+  background-color: #FFCDD2 !important;
   color: #C63737 !important;
   font-weight: bold !important;
   padding: 5px !important;
@@ -91,7 +99,7 @@ th {
 }
 
 .status-voicemail {
-  /* background-color: #d9e3ff !important; */
+  background-color: #d9e3ff !important;
   color: #10359c !important;
   font-weight: bold !important;
   padding: 5px !important;
@@ -115,5 +123,33 @@ th {
 
   .heading {
     font-size: 16px !important;
+  }
+}
+
+
+
+@media screen and (max-width: 576px) and (min-width: 0px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .container {
+    overflow: none !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .mobile-only {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .mobile-only {
+    display: none;
+  }
+
+  ::ng-deep .p-timeline-event-content {
+    font-size: 0.7rem !important;
   }
 }

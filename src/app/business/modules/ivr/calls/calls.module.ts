@@ -15,7 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MenuModule } from 'primeng/menu';
 import { RippleModule } from 'primeng/ripple';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { TooltipModule } from 'primeng/tooltip';
 const routes: Routes = [
   { path: '', component: CallsComponent }
 ]
@@ -41,6 +41,7 @@ const routes: Routes = [
     MenuModule,
     RippleModule,
     MatMenuModule,
+    TooltipModule,
     [RouterModule.forChild(routes)]
   ]
 })
