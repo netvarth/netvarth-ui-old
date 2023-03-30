@@ -183,6 +183,7 @@ export class CreateComponent implements OnInit {
   equifaxData: any;
   equifaxId: any;
   type: any;
+  disableBtn: any = false;
   constructor(
     private location: Location,
     private router: Router,
@@ -1745,6 +1746,7 @@ export class CreateComponent implements OnInit {
 
 
   saveCustomerDetails() {
+    this.disableBtn = true;
     const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
     this.cdlService.getCustomerDetails(filter).subscribe((data) => {
       this.customerDetails = data;
@@ -1809,9 +1811,11 @@ export class CreateComponent implements OnInit {
         this.customerDetailsPanel = false;
         this.kycDetailsPanel = true;
         this.customerDetailsVerified = true;
+        this.disableBtn = true;
         this.snackbarService.openSnackBar("Customer Details Saved Successfully")
       },
         (error) => {
+          this.disableBtn = true;
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
         })
     },

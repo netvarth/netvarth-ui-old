@@ -209,8 +209,8 @@
               </div>
             </div>
             <div>
-              <button
-                [disabled]="!verification || !(selectedFiles && selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0)"
+              <button type="button"
+                [disabled]="(!verification || !(selectedFiles && selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0)) || disableBtn"
                 class="btn btn-primary open-all-btn" (click)="saveCustomerDetails()">Save</button>
             </div>
           </mat-expansion-panel>
