@@ -14,6 +14,7 @@ import { WordProcessor } from "../../services/word-processor.service";
 import { MediaService } from "../../services/media-service";
 import * as Video from 'twilio-video';
 import { RequestDialogComponent } from "../../modules/request-dialog/request-dialog.component";
+import { projectConstantsLocal } from "../../constants/project-constants";
 @Component({
     selector: 'app-meet-room',
     templateUrl: './meet-room.component.html',

@@ -12,6 +12,7 @@ import { RequestDialogComponent } from '../request-dialog/request-dialog.compone
 import { MatDialog } from '@angular/material/dialog';
 import { MediaService } from '../../services/media-service';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { projectConstantsLocal } from '../../constants/project-constants';
 @Component({
     selector: 'app-live-chat',
     templateUrl: './live-chat.component.html',

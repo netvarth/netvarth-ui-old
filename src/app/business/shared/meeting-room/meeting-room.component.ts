@@ -15,6 +15,7 @@ import { RequestDialogComponent } from "../../../shared/modules/request-dialog/r
 import * as Video from 'twilio-video';
 //import { SharedServices } from "../../../shared/services/shared-services";
 import { ProviderServices } from '../../services/provider-services.service';
+import { projectConstantsLocal } from "../../../shared/constants/project-constants";
 @Component({
     selector: 'app-meeting-room',
     templateUrl: './meeting-room.component.html',
