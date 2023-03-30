@@ -4,11 +4,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 // import { CrmService } from "../../../crm.service";
 import { Observable } from "rxjs";
 // import { HttpEventType, HttpResponse } from "@angular/common/http";
-// import { SnackbarService } from "../../../../../../shared/services/snackbar.service";
+import { SnackbarService } from "../../../../../../shared/services/snackbar.service";
 import { SharedServices } from "../../../../../../shared/services/shared-services";
 import { FileService } from "../../../../../../shared/services/file-service";
-// import { projectConstantsLocal } from "../../../../../../shared/constants/project-constants";
+import { projectConstantsLocal } from "../../../../../../shared/constants/project-constants";
 // import { NgxImageCompressService } from "ngx-image-compress";
+
 
 @Component({
   selector: "app-select-attachment",
@@ -47,7 +48,7 @@ export class SelectAttachmentComponent implements OnInit {
     public dialogRef: MatDialogRef<SelectAttachmentComponent>,
     // private uploadService: CrmService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    // private snackbarService: SnackbarService,
+    private snackbarService: SnackbarService,
     public shared_services: SharedServices,
     private fileService: FileService,
     // private imageCompress: NgxImageCompressService,
@@ -88,50 +89,50 @@ export class SelectAttachmentComponent implements OnInit {
   //   );
   // }
 
-  // filesSelected(event, type?) {
-  //   const input = event.target.files;
-  //   this.fileInput = input;
-  //   if (input.length === 1) {
-  //     for (const file of input) {
-  //       if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
-  //         this.snackbarService.openSnackBar(
-  //           "Please upload images with size < 10mb",
-  //           { panelClass: "snackbarerror" }
-  //         );
-  //         return;
-  //       } else {
-  //         this.selectedMessage.files.push(file);
-  //         const reader = new FileReader();
-  //         reader.onload = e => {
-  //           this.selectedMessage.base64.push(e.target["result"]);
-  //         };
-  //         console.log(' this.selectedMessage', this.selectedMessage.files)
+  filesSelected(event, type?) {
+    const input = event.target.files;
+    this.fileInput = input;
+    if (input.length === 1) {
+      for (const file of input) {
+        if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
+          this.snackbarService.openSnackBar(
+            "Please upload images with size < 10mb",
+            { panelClass: "snackbarerror" }
+          );
+          return;
+        } else {
+          this.selectedMessage.files.push(file);
+          const reader = new FileReader();
+          reader.onload = e => {
+            this.selectedMessage.base64.push(e.target["result"]);
+          };
+          console.log(' this.selectedMessage', this.selectedMessage.files)
 
-  //         reader.readAsDataURL(file);
-  //         this.action = "attachment";
+          reader.readAsDataURL(file);
+          this.action = "attachment";
 
-  //         if (this.selectedMessage.caption) {
-  //           return this.imgCaptions;
-  //         } else {
-  //           return (this.imgCaptions = "");
-  //         }
-  //       }
-  //     }
-  //   }
-  //   else {
-  //     if (event && event.target && event.target.files && event.target.files.length) {
-  //       for (let i = 0; i < event.target.files.length; i++) {
-  //         this.selectedMessage.files.push(event.target.files[i]);
-  //         const reader = new FileReader();
-  //         reader.onload = e => {
-  //           this.selectedMessage.base64.push(e.target["result"]);
-  //         };
-  //         reader.readAsDataURL(event.target.files[i]);
-  //         this.action = "attachment";
-  //       }
-  //     }
-  //   }
-  // }
+          if (this.selectedMessage.caption) {
+            return this.imgCaptions;
+          } else {
+            return (this.imgCaptions = "");
+          }
+        }
+      }
+    }
+    else {
+      if (event && event.target && event.target.files && event.target.files.length) {
+        for (let i = 0; i < event.target.files.length; i++) {
+          this.selectedMessage.files.push(event.target.files[i]);
+          const reader = new FileReader();
+          reader.onload = e => {
+            this.selectedMessage.base64.push(e.target["result"]);
+          };
+          reader.readAsDataURL(event.target.files[i]);
+          this.action = "attachment";
+        }
+      }
+    }
+  }
 
   saveFile(fileDes: any) {
     const _this = this;

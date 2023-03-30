@@ -196,8 +196,7 @@ export class FileService {
           if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
             // _this.snackbarService.openSnackBar("Please upload images with size < 10mb", { panelClass: "snackbarerror" });
             return _this.snackbarService.openSnackBar("Please upload images with size < 10mb", { panelClass: "snackbarerror" });
-          }
-          else {
+          } else {
             _this.file = file;
             const reader = new FileReader();
             reader.onload = (e: any) => {
