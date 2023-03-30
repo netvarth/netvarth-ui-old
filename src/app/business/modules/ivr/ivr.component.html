@@ -1,171 +1,123 @@
-<div class="card">
+<div class="col-md-12">
+  <div class="card">
     <div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-center">
-            <div>
-                <img width="60" height="60" src="./assets/images/ivr/profile.png">
-            </div>
-            <div class="pt-1">
-                <span class="font-weight-bold welcome-text">Welcome back,
-                    <span *ngIf="user && user.firstName">{{user.firstName}}</span>
-                    <span *ngIf="user && user.lastName"> {{user.lastName}}</span>
-                </span>
-                <br><span class="sub-title"
-                    *ngIf="user && user.primaryPhoneNumber">+91&nbsp;{{user.primaryPhoneNumber}}</span>
-            </div>
+      <div class="d-flex justify-content-center">
+        <div class="mr-2">
+          <img width="60" height="60" src="./assets/images/ivr/profile.png">
         </div>
-        <!-- <div>
-            <div>
-                <img class="company-logo" src="./assets/images/cdl/company_logo.png">
-            </div>
-        </div> -->
+        <div class="pt-1">
+          <span class="font-weight-bold welcome-text">Welcome back,
+            <span *ngIf="user && user.firstName">{{user.firstName}}</span>
+            <span *ngIf="user && user.lastName"> {{user.lastName}}</span>
+          </span>
+          <br><span class="sub-title">You have <span class="text-primary">4 calls</span> for today</span>
+        </div>
+      </div>
     </div>
+    <div class="bg-light-green mt-3 p-2">
+      <div class="d-lg-flex d-md-flex justify-content-between">
+        <div class="d-flex text-success font-weight-500">
+          <div class="mr-2"><img width="20" height="20" src="./assets/images/ivr/dashboard-icon.png"></div>
+          <div class="pt-1">I am are available for on demand calls</div>
+        </div>
+        <div class="d-flex">
+          <div class="font-weight-500 pt-1 mr-2 text-success">Availability</div>
+          <div><input type="checkbox"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="row">
-    <div class="col-md-6 mt-4">
+
+<div class="col-md-12 no-padding">
+  <div class="col-md-6 mt-4">
+    <div class="card col-md-12 dashboard-card">
+      <div class="col-md-6 mt-4">
+        <div class="card text-center p-2 connected-calls-bg">
+          <div class="font-weight-500" (click)="gotoConnectedCalls()">
+            <div class="mr-2"><img width="120" src="./assets/images/ivr/connected.png"></div>
+            <div class="mt-1 text-dark font-weight-600">Connected Calls</div>
+            <div class="mt-1 text-success font-weight-600 box-wrapper font-large">{{connectedCallsCount}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 mt-4">
+        <div class="card text-center p-2 missed-calls-bg">
+          <div class="font-weight-500" (click)="gotoMissedCalls()">
+            <div class="mr-2"><img width="120" src="./assets/images/ivr/missed.png"></div>
+            <div class="mt-1 text-dark font-weight-600">Missed Calls</div>
+            <div class="mt-1 text-danger font-weight-600 box-wrapper font-large">{{missedCallsCount}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mt-4">
+    <div class="card text-center p-2 dashboard-card">
+      <div class="row mx-0 p-0">
+        <span class="font-weight-bold">Analytics</span>
         <div>
-            <div class="row">
-                <div class="col-md-12 no-padding px-1">
-                    <div class="card text-center p-2">
-                        <span class="font-weight-bold card-title">
-                            <div class="px-2 d-flex justify-content-between" *ngIf="onGoingCall && onGoingCall.length>0">
-                                <div>
-                                    <span class="table-column-data">
-                                      <span *ngIf="onGoingCall[0] && onGoingCall[0].consumerPhone && onGoingCall[0].consumerPhone.countryCode">{{onGoingCall[0].consumerPhone.countryCode}}</span>
-                                      <span
-                                          *ngIf="onGoingCall[0] && onGoingCall[0].consumerPhone && onGoingCall[0].consumerPhone.number">{{onGoingCall[0].consumerPhone.number}}
-                                      </span>
-                                  </span>
-                                </div>
-                                <div>
-                                    <span class="table-column-data text-capitalize status-ongoing"><i
-                                            class="fa fa-circle pt-1" aria-hidden="true"></i>&nbsp;Ongoing</span>
-                                </div>
-                                <div>
-                                    <span class="table-column-data" *ngIf="onGoingCall[0] && onGoingCall[0].language">{{onGoingCall[0].language}}</span>
-                                </div>
-                                <div>
-                                  <button pButton pRipple type="button" class="p-button-primary btn-primary font-weight-600"
-                                    (click)="viewCall(onGoingCall[0].uid)">View
-                                  </button>
-                                </div>
-                            </div>
-                            <div class="px-2 text-center" *ngIf="onGoingCall && onGoingCall.length==0">
-                              <span class="font-weight-bold">No Ongoing Call</span>
-                            </div>
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mx-0 p-0 mt-2">
-                <div class="col-md-4 col-sm-4 col-xs-4 px-1 pointer-cursor" (click)="createPatient()">
-                    <div class="card text-center dashboard-card">
-                        <div>
-                            <img width="60" height="60" src="./assets/images/ivr/create_token.png">
-                        </div>
-                        <span class="font-weight-bold card-title mt-2">
-                            Create Patient
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-4 px-1">
-                    <div class="card text-center dashboard-card pointer-cursor" (click)="gotoMyCalls()">
-                        <div>
-                            <img width="60" height="60" src="./assets/images/ivr/my_calls.png">
-                        </div>
-                        <span class="font-weight-bold card-title mt-2">
-                            My Calls
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-4 px-1 pointer-cursor" (click)="gotoMissedCalls()">
-                    <div class="card text-center dashboard-card">
-                        <div>
-                            <img width="60" height="60" src="./assets/images/ivr/missed_calls.png">
-                        </div>
-                        <span class="font-weight-bold card-title mt-2">
-                            Missed Calls
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="card mt-2 p-2">
-                <div class="row mx-0 p-0 mt-3">
-                    <div class="text-center">
-                        <div class="col-lg-4 col-md-6 col-sm-6 px-1">
-                            <div>
-                                <div class="progress-wrapper">
-                                    <div class="semi-progress-bar text-center">
-                                        <b>
-                                            {{totalCallsCount}}<br><span class="semi-progress-bar-title mt-1">All
-                                                Calls</span>
-                                        </b>
-                                    </div>
-                                    <round-progress [current]="50" [max]="100" [color]="'#1E4079'"
-                                        [background]="'#eaeaea'" [radius]="125" [stroke]="20" [semicircle]="true"
-                                        [rounded]="true" [clockwise]="true" [responsive]="true" [duration]="1500"
-                                        [animation]="'easeInOutQuart'" [animationDelay]="0"></round-progress>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-8 col-md-6 col-sm-6 px-1 no-padding-small mt-sm-5">
-                            <div class="col-md-12 no-padding-small">
-                                <div class="col-lg-6 col-md-12 col-sm-6 col-xs-6 px-1">
-                                    <div class="text-left">
-                                        <div class="d-flex">
-                                            <div class="fa fa-stop-circle missed-calls d-flex align-items-center">
-                                            </div>&nbsp;
-                                            <div class="font-weight-bold">Missed Calls</div>
-                                        </div>
-                                        <span class="calls-count">{{missedCallsCount}}</span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12 col-sm-6 col-xs-6 px-1">
-                                    <div class="text-left">
-                                        <div class="d-flex">
-                                            <div class="fa fa-stop-circle answered-calls d-flex align-items-center">
-                                            </div>&nbsp;
-                                            <div class="font-weight-bold">Answered Calls</div>
-                                        </div>
-                                        <span class="calls-count">{{connectedCallsCount}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <p-chart type="line" height="265" [data]="lineChartData" [options]="lineChartOptions"></p-chart>
         </div>
+      </div>
     </div>
-
-    <div class="col-md-6 mt-4">
-        <div class="card">
-            <div class="row mx-0 p-0">
-                <span class="font-weight-bold">Analytics</span>
-                <div>
-                    <p-chart type="line" height="310" [data]="lineChartData" [options]="lineChartOptions"></p-chart>
-                </div>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>
 
+<!-- <div class="row">
+  <div class="col-md-12 no-padding px-1">
+    <div class="card text-center p-2">
+      <span class="font-weight-bold card-title">
+        <div class="px-2 d-flex justify-content-between" *ngIf="onGoingCall && onGoingCall.length>0">
+          <div>
+            <span class="table-column-data">
+              <span
+                *ngIf="onGoingCall[0] && onGoingCall[0].consumerPhone && onGoingCall[0].consumerPhone.countryCode">{{onGoingCall[0].consumerPhone.countryCode}}</span>
+              <span
+                *ngIf="onGoingCall[0] && onGoingCall[0].consumerPhone && onGoingCall[0].consumerPhone.number">{{onGoingCall[0].consumerPhone.number}}
+              </span>
+            </span>
+          </div>
+          <div>
+            <span class="table-column-data text-capitalize status-ongoing"><i class="fa fa-circle pt-1"
+                aria-hidden="true"></i>&nbsp;Ongoing</span>
+          </div>
+          <div>
+            <span class="table-column-data"
+              *ngIf="onGoingCall[0] && onGoingCall[0].language">{{onGoingCall[0].language}}</span>
+          </div>
+          <div>
+            <button pButton pRipple type="button" class="p-button-primary btn-primary font-weight-600"
+              (click)="viewCall(onGoingCall[0].uid)">View
+            </button>
+          </div>
+        </div>
+        <div class="px-2 text-center" *ngIf="onGoingCall && onGoingCall.length==0">
+          <span class="font-weight-bold">No Ongoing Call</span>
+        </div>
+      </span>
+    </div>
+  </div>
+</div> -->
+
+
 <div class="row">
-    <div class="col-lg-12 col-md-12 mt-4">
+    <div class="col-lg-7 col-md-7 mt-4">
         <div class="card">
             <div>
                 <span class="font-weight-bold">Calls</span>
             </div>
             <div class="mt-3">
                 <p-table #callsTable [value]="calls" [lazy]="true" (onLazyLoad)="loadCalls($event)" dataKey="id"
-                  [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [rows]="5"
-                  [totalRecords]="totalCallsCount" responsiveLayout="scroll"
+                  [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,15,25]" [paginator]="true" [rows]="5"
+                  [totalRecords]="totalCallsCount" responsiveLayout="stack"
                   [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']"
-                  styleClass="p-datatable-customers p-datatable-gridlines"
+                  styleClass="p-datatable-customers"
                   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
 
-                  <ng-template pTemplate="header">
+                  <!-- <ng-template pTemplate="header">
                     <tr>
                       <th pSortableColumn="consumerPhone">Phone Number <p-sortIcon field="consumerPhone"></p-sortIcon>
                       </th>
@@ -187,9 +139,74 @@
                       <th></th>
                       <th></th>
                     </tr>
-                  </ng-template>
+                  </ng-template> -->
                   <ng-template pTemplate="body" let-call>
-                    <tr class="mobile-card">
+                    <div class="card mt-2">
+                      <div class="d-flex">
+                        <tr>
+                          <td>
+                            <div class="mr-5">
+                              <div class="font-weight-bold">
+                                <span *ngIf="call && call.consumerPhone && call.consumerPhone.countryCode">
+                                  {{call.consumerPhone.countryCode}}
+                                </span>
+                                <span *ngIf="call && call.consumerPhone && call.consumerPhone.number">
+                                  {{call.consumerPhone.number}}
+                                </span>
+                              </div>
+                              <div>
+                                <span *ngIf="call && call.consumerId" class="font-weight-600">#{{call.consumerId}}</span>&nbsp;
+                                <span *ngIf="call && call.language" class="text-primary font-weight-600">{{call.language}}</span>
+                              </div>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div class="mr-5">
+                              <div class="font-weight-bold">
+                                <span>
+                                  <span class="text-grey">User : </span>
+                                  <span *ngIf="call && call.userName">{{call.userName}}</span>
+                                  <span *ngIf="call && !call.userName">Not Assigned</span>
+                                </span>
+                              </div>
+                              <div>
+                                <span [class]="'status-' + call.callStatus" class="text-capitalize">{{call.callStatus}}</span>
+                              </div>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div class="d-flex">
+                              <div class="mr-5">
+                                <button pButton pRipple type="button" class="p-button-primary btn-primary font-weight-600"
+                                  (click)="viewCall(call.uid)">View
+                                </button>
+                              </div>
+                              <div>
+                                <div class="pointer-cursor d-flex justify-content-center">
+                                  <span [matMenuTriggerFor]="menu" class="p-2"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
+                                  <mat-menu #menu="matMenu">
+                                    <button mat-menu-item pRipple type="button" (click)="openUsersPopup(call.uid)" *ngIf="call && !call.userId">Assign
+                                    </button>
+                                    <button mat-menu-item pRipple type="button" (click)="unassignToCall(call.uid)"
+                                      *ngIf="call && call.userId">Unassign
+                                    </button>
+                                    <button mat-menu-item pRipple type="button" (click)="getCallBack(call.uid)" *ngIf="call && call.userId">Callback
+                                    </button>
+                                    <button mat-menu-item pRipple type="button" (click)="markAsComplete(call.uid)">Complete
+                                    </button>
+                                    <!-- <button mat-menu-item pRipple type="button" (click)="viewCall(call.uid)">View
+                                    </button> -->
+                                  </mat-menu>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </div>
+                    </div>
+                    <!-- <tr class="mobile-card">
                       <td>
                         <span
                           class="table-column-data">{{call.consumerPhone.number}}</span>
@@ -228,7 +245,7 @@
                           </button>
                         </div>
                       </td>
-                    </tr>
+                    </tr> -->
                     <br class="d-lg-none d-md-none">
                   </ng-template>
                   <ng-template pTemplate="emptymessage">
@@ -287,7 +304,7 @@
       </div>
     </div> -->
 
-    <div class="col-lg-6 col-md-6 mt-4">
+    <div class="col-lg-5 col-md-5 mt-4">
         <div class="card">
             <div>
                 <span class="font-weight-bold text-capitalize">{{customer_label}}s</span>
