@@ -289,7 +289,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
                     clearTimeout(this.timer);
                     this.timer = setTimeout(() => {
                         _this.exitMeeting();                        
-                    }, 60000);
+                    }, projectConstantsLocal.TIMEOUT_MEETING);
                 } else {
                     _this.exitFromMeeting = false;
                     console.log("Timer Status: true");

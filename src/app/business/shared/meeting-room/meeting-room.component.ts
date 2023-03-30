@@ -245,7 +245,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
                     clearTimeout(_this.timer);
                     _this.timer = setTimeout(() => {
                         _this.exitMeeting();
-                    }, 60000);
+                    }, projectConstantsLocal.TIMEOUT_MEETING);
                 } else {
                     _this.exitFromMeeting = false;
                 }

@@ -63,6 +63,7 @@ export const projectConstantsLocal = {
   TIMEOUT_DELAY_LARGE6: 6000, // msec
   TIMEOUT_DELAY_LARGE10: 10000, // msec
   TIMEOUT_DELAY_600: 600,
+  TIMEOUT_MEETING:120000,
   TOOLBAR_CONFIG: [
     {
       name: 'document',
