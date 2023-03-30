@@ -12,6 +12,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PopupModule } from '../popup/popup.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MenuModule } from 'primeng/menu';
+import { RippleModule } from 'primeng/ripple';
+import { MatMenuModule } from '@angular/material/menu';
 
 const routes: Routes = [
   { path: '', component: CallsComponent }
@@ -35,6 +38,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     PopupModule,
     MatDialogModule,
+    MenuModule,
+    RippleModule,
+    MatMenuModule,
     [RouterModule.forChild(routes)]
   ]
 })

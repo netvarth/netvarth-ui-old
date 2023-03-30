@@ -1,36 +1,44 @@
 .fa-arrow-left {
-    color: #1E4070 !important;
-    font-size: 16px !important;
-    font-weight: bold !important;
+  color: #1E4070 !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
 }
 
 .heading {
-    font-size: 18px !important;
-    font-weight: 700 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
 }
 
 .full-width {
-    width: 100% !important;
+  width: 100% !important;
 }
 
 .btn-primary {
-    background-color: #1e4079 !important;
-    border-color: #1e4070 !important;
-    color: #fff !important;
-    font-weight: 100 !important;
-    border-radius: 4px !important;
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 4px !important;
 }
 
 .btn-warning {
-    background-color: #EFA855 !important;
-    border-color: #EFA855 !important;
-    color: #fff !important;
-    font-weight: 100 !important;
-    border-radius: 4px !important;
+  background-color: #EFA855 !important;
+  border-color: #EFA855 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 4px !important;
 }
 
 .font-weight-600 {
-    font-weight: 600 !important;
+  font-weight: 600 !important;
+}
+
+.status-callCompleted {
+  /* background-color: #cce6c8 !important; */
+  color: rgb(55, 97, 55) !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
 }
 
 /* .p-button {
@@ -38,74 +46,74 @@
 } */
 
 .text-white {
-    color: #fff !important;
+  color: #fff !important;
 }
 
 th {
-    font-size: 14px !important;
+  font-size: 14px !important;
 }
 
 .shadow {
-    -webkit-box-shadow: 0 0 5px 2px #fff !important;
-    -moz-box-shadow: 0 0 5px 2px #fff !important;
-    box-shadow: 0 0 5px 2px #fff !important;
+  -webkit-box-shadow: 0 0 5px 2px #fff !important;
+  -moz-box-shadow: 0 0 5px 2px #fff !important;
+  box-shadow: 0 0 5px 2px #fff !important;
 }
 
 .text-right.p-dropdown.p-component {
-    width: 400px !important;
+  width: 400px !important;
 }
 
 .back-btn {
-    color: #1E4070 !important;
-    font-size: 16px !important;
-    font-weight: 700 !important;
+  color: #1E4070 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
 }
 
 
 .text-primary {
-    color: #1E4079 !important;
+  color: #1E4079 !important;
 }
 
 .status-connected {
-    background-color: #cce6c8 !important;
-    color: #052407 !important;
-    font-weight: bold !important;
-    padding: 5px !important;
-    border-radius: 8px !important;
+  /* background-color: #cce6c8 !important; */
+  color: #052407 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
 }
 
 .status-missed {
-    background-color: #FFCDD2 !important;
-    color: #C63737 !important;
-    font-weight: bold !important;
-    padding: 5px !important;
-    border-radius: 8px !important;
+  /* background-color: #FFCDD2 !important; */
+  color: #C63737 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
 }
 
 .status-voicemail {
-    background-color: #d9e3ff !important;
-    color: #10359c !important;
-    font-weight: bold !important;
-    padding: 5px !important;
-    border-radius: 8px !important;
+  /* background-color: #d9e3ff !important; */
+  color: #10359c !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
 }
 
 
 @media (max-width: 767px) {
 
-    .table-column-data {
-        font-weight: bold !important;
-    }
+  .table-column-data {
+    font-weight: bold !important;
+  }
 
-    .mobile-card {
-        box-shadow: 0px 2px 20px -10px #bbb !important;
-    }
+  .mobile-card {
+    box-shadow: 0px 2px 20px -10px #bbb !important;
+  }
 
-    .text-right.p-dropdown.p-component {
-        width: 400px !important;
-    }
+  .text-right.p-dropdown.p-component {
+    width: 400px !important;
+  }
 
-    .heading {
-        font-size: 16px !important;
-    }
+  .heading {
+    font-size: 16px !important;
+  }
 }
