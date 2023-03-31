@@ -226,7 +226,6 @@ export class CreateComponent implements OnInit {
       "aadhaar": this.createLead.controls.aadhar.value,
       "pan": this.createLead.controls.pan.value,
       "loanAmount": this.createLead.controls.loanamount.value
-
     }
 
     const dialogRef = this.dialog.open(OtpVerifyComponent, {

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 // import { AuthService } from '../../../../../shared/services/auth-service';
 // import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
@@ -19,6 +19,7 @@ export class OtpVerifyComponent implements OnInit {
   otpEntered: any;
   otpSuccess: any;
   otpError: any;
+  @ViewChild('ngOtpInput') ngOtpInputRef: any;
   config = {
     allowNumbersOnly: true,
     length: 4,
@@ -48,6 +49,7 @@ export class OtpVerifyComponent implements OnInit {
   relation: any;
   email: any;
   partnerName: any;
+  otpDisabled: any = false;
   constructor(
     public dialogRef: MatDialogRef<OtpVerifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -382,6 +384,7 @@ export class OtpVerifyComponent implements OnInit {
 
 
   getCustomerDetails(filter) {
+    this.ngOtpInputRef.otpForm.disable();
     this.cdlservice.getCustomerDetails(filter).subscribe((data) => {
       this.customerDetails = data;
       if (this.customerDetails && this.customerDetails.length != 0) {
@@ -497,6 +500,7 @@ export class OtpVerifyComponent implements OnInit {
   }
 
   partnerOtpVerify() {
+    this.ngOtpInputRef.otpForm.disable();
     this.partnerData = {
       "partnerName": this.partnerName,
       "countryCode": "+91",
@@ -529,13 +533,13 @@ export class OtpVerifyComponent implements OnInit {
 
 
   equifaxOtpVerify() {
-
-
+    this.ngOtpInputRef.otpForm.disable();
     if (this.data) {
       this.subs.sink = this.cdlservice.verifyEquifaxOtp(this.otpEntered, this.data.data)
         .subscribe(
           (response: any) => {
             if (response) {
+              this.otpDisabled = false;
               this.snackbarService.openSnackBar("Mobile Number Verification Successful");
               const data = {
                 response: response,
@@ -546,6 +550,7 @@ export class OtpVerifyComponent implements OnInit {
             console.log("Response", response)
           },
           error => {
+            this.otpDisabled = false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );

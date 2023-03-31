@@ -7,7 +7,7 @@
       <span class="font-weight-bold title">Otp Verification</span>
       <label for="phone" class="mgn-bt-20 subtitle">We Will send you a one time password on
         this {{type}}</label>
-      <ng-otp-input class="bkgclr" (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
+      <ng-otp-input #ngOtpInput class="bkgclr" (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
       <!-- <button class="cust-logpg-submt mgn-up-20 mat-button continue-button btn-primary text-capitalize" type="button"
         (click)="otpVerification()">Verify {{type}} </button> -->
       <p class="mgn-up-20">Not received yet! <a class="pointer-cursor link" (click)="sendOTP('resent')">Resend</a>
