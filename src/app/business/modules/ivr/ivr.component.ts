@@ -315,7 +315,7 @@ export class IvrComponent implements OnInit {
             color: '#1E4079'
           },
           grid: {
-            color: '#ebedef'
+            color: '#EBEDEF'
           }
         },
         y: {
@@ -324,7 +324,7 @@ export class IvrComponent implements OnInit {
             color: '#1E4079'
           },
           grid: {
-            color: '#ebedef'
+            color: '#EBEDEF'
           }
         }
       },
