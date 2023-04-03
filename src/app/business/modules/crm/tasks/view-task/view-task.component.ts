@@ -3785,6 +3785,7 @@ export class ViewTaskComponent implements OnInit {
         let filesToUpload = [];
         let index=0;
         for (const pic of input) {
+          console.log('Input:', pic);
           const size = pic["size"] / 1024;
           let fileObj = {
             owner: user.id,
@@ -3794,7 +3795,11 @@ export class ViewTaskComponent implements OnInit {
             fileType: pic["type"].split("/")[1],
             action: 'add'
           }
-          fileObj['file'] = pic;
+          if (pic['file']) {
+            fileObj['file'] = pic['file'];
+          } else {
+            fileObj['file'] = pic;
+          }          
           fileObj['order'] = index;
           index++;
           filesToUpload.push(fileObj);
@@ -4018,5 +4023,4 @@ export class ViewTaskComponent implements OnInit {
     )
 
   }
-
 }

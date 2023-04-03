@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import { projectConstantsLocal } from '../constants/project-constants';
-import { SnackbarService } from './snackbar.service';
-import { NgxImageCompressService } from 'ngx-image-compress';
-// import { projectConstantsLocal } from '../constants/project-constants';
+import { NgxImageCompressService} from 'ngx-image-compress';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +16,14 @@ export class FileService {
     'image/jpeg',
     'image/bmp',
     'image/webp'
+  ];
+
+  COMPRESSION_SUPPORTED = [
+    'image/gif',
+    'image/png',
+    'image/jpeg',
+    'image/bmp',
+    'application/pdf'
   ];
 
   FILETYPES_UPLOAD = [
@@ -46,8 +51,8 @@ export class FileService {
   imageSize = 15000000;
   FILE_MAX_SIZE = 10000000;
   file: any;
-  constructor(private snackbarService: SnackbarService,
-    private imageCompress: NgxImageCompressService,) { }
+  constructor(
+    private imageCompress: NgxImageCompressService) { }
   /**
    * Method returns supported formats of files which has to be uploaded
    * @param source image/file
@@ -180,107 +185,67 @@ export class FileService {
       }
     })
   }
-
-  selectFile(event: any,selectedFiles) {
+  dataURItoBlob(dataURI, type) {
+    console.log("DataURI:", dataURI);
+    var binary = atob(dataURI.split(',')[1]);
+    var array = [];
+    for (var i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], { type: type });
+  }
+  compressFile(image, file, selectedMessage) {
     const _this = this;
-    return new Promise((resolve, reject) => {
-      let input;
-      if (event.target.files) {
-        input = event.target.files;
-      }
-      console.log('input', input);
-      if (input) {
-        // resolve(input);
-        for (const file of input) {
-          console.log('file', file)
-          if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
-            // _this.snackbarService.openSnackBar("Please upload images with size < 10mb", { panelClass: "snackbarerror" });
-            return _this.snackbarService.openSnackBar("Please upload images with size < 10mb", { panelClass: "snackbarerror" });
-          } else {
-            _this.file = file;
-            const reader = new FileReader();
-            reader.onload = (e: any) => {
-              let localUrl = e.target.result;
-              if (file && file['type'] === 'application/pdf') {
-                // _this.selectedFiles.files.push(file);
-                // _this.selectedFiles.base64.push(e.target["result"]);
-                const fileInfoPdf = {
-                  'file': file,
-                  'base64': e.target['result']
-                }
-                // _this.snackbarService.openSnackBar('You uploded' + ' ' + file['name']);
-                resolve(fileInfoPdf);
-                return fileInfoPdf;
-              }
-              else {
-                if (file && file['type'] && file['type'].includes('image')) {
-                  if (file && file['type'] && file['type'].includes('webp')) {
-                    selectedFiles.files = [];
-                    selectedFiles.base64 = [];
-                    selectedFiles.caption = [];
-                    resolve(false);
-                    return _this.snackbarService.openSnackBar("File type not supported", { panelClass: "snackbarerror" });
-                  }
-                  else {
-                    _this.compressFile(localUrl, file['name'], _this.file, selectedFiles).then((element)=>{
-                      resolve(element);
-                    });
-                    
-                    // _this.selectedFiles.files.push(_this.file);
-                  }
-
-                }
-                else {
-                  selectedFiles.files = [];
-                  selectedFiles.base64 = [];
-                  selectedFiles.caption = [];
-                  resolve(false);
-                  _this.snackbarService.openSnackBar("File type not supported", { panelClass: "snackbarerror" });
-                }
-              }
-            }
-            reader.readAsDataURL(file);
-            // _this.action = "attachment";
-            // console.log('_this.selectedFiles',selectedFiles);
-            // if (this.selectedFiles.caption) {
-            //   return _this.imgCaptions;
-            // } else {
-            //   return (_this.imgCaptions = "");
-            // }
-          }
-        }
-      }
+    return new Promise(function(resolve){
+      var orientation = -1;
+      _this.imageCompress.compressFile(image, orientation, 50, 50).then(
+        result => {
+          console.log("Result:", result);
+          file['size'] = _this.imageCompress.byteCount(result) / (1024 * 1024);
+          const imageBlob = _this.dataURItoBlob(result, file['type']);
+          file['file'] = imageBlob;
+          selectedMessage['files'].push(file);
+          selectedMessage['base64'].push(result);
+          resolve(selectedMessage);
+        });
     })
     
   }
-  compressFile(image, fileName,fileInfo,selectedFiles) {
-    const _this=this;
-    return new Promise((resolve,reject)=>{
-      console.log('fileInfo',fileInfo)
-      const orientation = -1;
-      let sizeOfOriginalImage = _this.imageCompress.byteCount(image) / (1024 * 1024);
-      console.warn('Size in bytes is now:', sizeOfOriginalImage);
-      _this.imageCompress.compressFile(image, orientation, 50, 50).then(
-        result => {
-          if(result){
-            // let imgResultAfterCompress = result;
-            // selectedFiles.base64.push(result);
-            // selectedFiles.files.push(fileInfo);
-            // let localCompressedURl = result;
-            let sizeOFCompressedImage = _this.imageCompress.byteCount(result) / (1024 * 1024)
-            console.warn('Size in bytes after compression:',sizeOFCompressedImage);
-            const fileInfoPdf = {
-              'file': fileInfo,
-              'base64': result,
-              'size':sizeOFCompressedImage
-            }
-            // fileInfoPdf['file']['size']=sizeOFCompressedImage
-            resolve(fileInfoPdf);
-            return fileInfoPdf;
-            // return _this.snackbarService.openSnackBar('You uploded' + ' ' + fileInfo['name']);
-            // fileInfo['size']=this.sizeOFCompressedImage;
+  getCompressedFiles(event, selectedMessage) {
+    const _this = this;
+      return new Promise(function(resolve) {
+        if (event && event.target && event.target.files && event.target.files.length) {
+          for (let i = 0; i < event.target.files.length; i++) {
+            const reader = new FileReader();
+            reader.onload = e => {
+              console.log(_this.COMPRESSION_SUPPORTED.indexOf(event.target.files[i].type));
+              if (_this.COMPRESSION_SUPPORTED.indexOf(event.target.files[i].type) === -1) {
+                selectedMessage['files'].push(event.target.files[i]);
+                selectedMessage['base64'].push(e.target["result"]);
+                console.log(selectedMessage);
+                if (selectedMessage['files'].length === event.target.files.length) {
+                  resolve(selectedMessage);
+                }
+              } else {
+                let file = {
+                  'name': event.target.files[i]["name"],
+                  'type': event.target.files[i].type,
+                  'caption': ''
+                }
+                _this.compressFile(e.target["result"], file, selectedMessage).then(
+                  (selectedMessage)=> {
+                    if (selectedMessage['files'].length === event.target.files.length) {
+                      resolve(selectedMessage);
+                    }                    
+                  }
+                );
+              }
+            };
+            reader.readAsDataURL(event.target.files[i]);
           }
-        });
-    })
+        } else {
+          resolve(false);
+        }
+      })
   }
 }
