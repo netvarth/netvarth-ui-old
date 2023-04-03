@@ -56,9 +56,18 @@ export class SelectAttachmentComponent implements OnInit {
     const _this=this;
     _this.api_loading1 = true;
     _this.action = "attachment";
-    _this.fileService.getCompressedFiles(event, _this.selectedMessage).then(
+    let selectedMessage = {
+      files: [],
+      base64: [],
+      caption: []
+    };
+    _this.fileService.getCompressedFiles(event, selectedMessage).then(
       (selectedMessage)=> {
         console.log("SelectedMessage:", selectedMessage);
+        for (let i=0;i<selectedMessage['files'].length;i++) {
+          _this.selectedMessage.files.push(selectedMessage['files'][i]);
+          _this.selectedMessage.base64.push(selectedMessage['base64'][i]);
+        }
         _this.api_loading1 = false;
       }
     );

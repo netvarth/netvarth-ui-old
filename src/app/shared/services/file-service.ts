@@ -22,8 +22,7 @@ export class FileService {
     'image/gif',
     'image/png',
     'image/jpeg',
-    'image/bmp',
-    'application/pdf'
+    'image/bmp'
   ];
 
   FILETYPES_UPLOAD = [
