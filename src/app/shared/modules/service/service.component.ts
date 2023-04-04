@@ -334,7 +334,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                                 this.service_data['minPrePaymentAmount'] !== 0
                                             ) ? true : false,
                                             'priceDynamic': this.service_data['priceDynamic'] ? true : false,
+                                            'supportInternationalConsumer': this.service_data['supportInternationalConsumer'] ? true : false,
                                             'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
+                                            'internationalAmount': this.service_data['internationalAmount'] || this.serviceForm.get('internationalAmount').value,
                                             'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
@@ -396,7 +398,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             ) ? true : false,
                                             'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
                                             'priceDynamic': this.service_data['priceDynamic'] ? true : false,
+                                            'supportInternationalConsumer': this.service_data['supportInternationalConsumer'] ? true : false,
                                             'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
+                                            'internationalAmount': this.service_data['internationalAmount'] || this.serviceForm.get('internationalAmount').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
                                             'serviceBookingType': this.service_data['serviceBookingType'] || this.serviceForm.get('serviceBookingType').value,
@@ -426,7 +430,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
                                             'priceDynamic': this.service_data['priceDynamic'] ? true : false,
+                                            'supportInternationalConsumer': this.service_data['supportInternationalConsumer'] ? true : false,
                                             'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
+                                            'internationalAmount': this.service_data['internationalAmount'] || this.serviceForm.get('internationalAmount').value,
                                             'serviceBookingType': this.service_data['serviceBookingType'] || this.serviceForm.get('serviceBookingType').value,
                                             'date': this.service_data['date'] || this.serviceForm.get('date').value,
                                             'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
@@ -840,12 +846,15 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 //   form_data['multiples'] = 0;
                 form_data['isPrePayment'] = false;
                 form_data['priceDynamic'] = false;
+                form_data['supportInternationalConsumer'] = false;
                 form_data['taxable'] = false;
             } else {
                 form_data['isPrePayment'] = false;
                 form_data['minPrePaymentAmount'] = 0;
                 form_data['priceDynamic'] = false;
+                form_data['supportInternationalConsumer'] = false;
                 form_data['paymentDescription'] = '';
+                form_data['internationalAmount'] = '';
             }
             form_data['serviceDuration'] = 1;
             form_data['serviceType'] = 'donationService';
@@ -862,6 +871,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 form_data['totalAmount'] = 0;
                 form_data['isPrePayment'] = false;
                 form_data['priceDynamic'] = false;
+                form_data['supportInternationalConsumer'] = false;
                 form_data['taxable'] = false;
             } else {
                 form_data.minPrePaymentAmount = (!form_data.isPrePayment || form_data.isPrePayment === false) ?
@@ -869,6 +879,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
                 form_data.paymentDescription = (!form_data.priceDynamic || form_data.priceDynamic === false) ?
                     form_data.paymentDescription : form_data.paymentDescription;
+                    form_data.internationalAmount = (!form_data.supportInternationalConsumer || form_data.supportInternationalConsumer === false) ?
+                    form_data.internationalAmount : form_data.internationalAmount;
               //  form_data.priceDynamic = (!form_data.priceDynamic || form_data.priceDynamic === false) ? false : true;
                 const duration = this.shared_service.getTimeinMin(this.duration);
                 form_data.serviceDuration = duration;
@@ -920,7 +932,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     if (!form_data.virtualCallingModes[0].callingMode) {
                         this.snackbarService.openSnackBar(Messages.SELECT_TELE_TOOL, { 'panelClass': 'snackbarerror' });
                     }
-                    
+                  
    else if(form_data.priceDynamic === true && form_data.paymentDescription === ''){
                 this.snackbarService.openSnackBar('Please provide payment description', { 'panelClass': 'snackbarerror' });
             }
@@ -1017,6 +1029,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     priceDynamic: [false],
                     paymentDescription: [''],
+                    supportInternationalConsumer: [false],
+                    internationalAmount: [''],
                     taxable: [false],
                     notification: [true],
                     livetrack: [false],
@@ -1046,6 +1060,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     priceDynamic: [false],
                     paymentDescription: [''],
+                    supportInternationalConsumer: [false],
+                    internationalAmount: [''],
                     taxable: [false],
                     notification: [true],
                     livetrack: [false],
@@ -1083,6 +1099,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     priceDynamic: [false],
                     paymentDescription: [''],
+                    supportInternationalConsumer: [false],
+                    internationalAmount: [''],
                     taxable: [false],
                     notification: [true],
                     livetrack: [false],

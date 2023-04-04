@@ -536,7 +536,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
 
             <div class="no-padding">
               <input matInput type="number" class="form-control number-ip-sm" 
-                (keypress)="isNumeric($event)" placeholder="Maximum bookings allowed"
+                (keypress)="isNumeric($event)" 
                 formControlName="leadTime" autocomplete="off" min="0">
             </div>
           </section>
@@ -645,6 +645,37 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 'maxlength' : 'Only 10 digits are allowed'})">
               </app-field-error-display>
             </div>
+            <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
+              <div>
+                <label style="margin-bottom: 0 !important;">International payment
+                  <mat-slide-toggle class="example-margin" formControlName="supportInternationalConsumer" (change)="changePrepayment()">
+                  </mat-slide-toggle>
+                  <!-- <div class="form-level-settings">{{frm_enable_prepayment_cap}}</div> -->
+                </label>
+              </div>
+              <ng-container *ngIf="subdomainsettings.serviceBillable && !is_donation">
+                <div class="form-group" *ngIf="serviceForm.get('supportInternationalConsumer').value === true">
+                 
+                  <div class="rupee-font d-flex align-items-center">
+                    <span *ngIf="is_checked_fixed">{{rupee_symbol}}</span>&nbsp;
+                    <input matInput min="0" max={{maxlimit}} type="number"
+                      (keyup)="isvalid($event, 'internationalAmount')" (keypress)="isNumeric($event)" maxlength="10"
+                      class="form-control number-ip-sm" id="prepayment_amount"
+                      formControlName="internationalAmount"
+                      autocomplete="off">&nbsp;
+                    <span *ngIf="is_checked_percentage">{{percentage_symbol}}</span>
+                  </div>
+                 
+                  <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'internationalAmount')"
+                    [errorMsgs]="fed_service.getErrorMessage(serviceForm,'internationalAmount',
+                    {'required' : 'Please enter prepayment amount',
+                    'pattern' : 'Enter a valid amount'})">
+                  </app-field-error-display>
+
+                </div>
+              </ng-container>
+            </div>
+            
             <div *ngIf="serviceForm.get('totalAmount') && serviceForm.get('totalAmount').value > 0">
               <mat-checkbox [checked]="showPrice" [(ngModel)]="showPrice" [ngModelOptions]="{standalone: true}">
                 Show Service Price
@@ -719,6 +750,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </div>
               </ng-container>
             </div>
+
             <div class="form-group inline" *ngIf="subdomainsettings.serviceBillable">
               <label class="col-form-label">{{tax_applicable_cap}}</label>
               <mat-slide-toggle class="example-margin" formControlName="taxable" (change)="taxapplicableChange()">

@@ -1830,7 +1830,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
             if (found) {
                 this.couponvalid = true;
-                this.snackbarService.openSnackBar('Promocode accepted', { 'panelclass': 'snackbarerror' });
+                // this.snackbarService.openSnackBar('Promocode accepted', { 'panelclass': 'snackbarerror' });
                 setTimeout(() => {
                     this.action = '';
                 }, 500);
