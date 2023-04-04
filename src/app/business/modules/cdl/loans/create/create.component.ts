@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+// import { Location } from '@angular/common';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OtpVerifyComponent } from '../otp-verify/otp-verify.component';
@@ -185,7 +185,7 @@ export class CreateComponent implements OnInit {
   type: any;
   disableBtn: any = false;
   constructor(
-    private location: Location,
+    // private location: Location,
     private router: Router,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
@@ -1423,7 +1423,8 @@ export class CreateComponent implements OnInit {
 
 
   goBack() {
-    this.location.back();
+    // this.location.back();
+    this.router.navigate(['provider', 'cdl']);
   }
 
   goNext() {

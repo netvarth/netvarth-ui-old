@@ -83,11 +83,12 @@ export class LoanDetailsComponent implements OnInit {
       if (params) {
         if (params && params.id) {
           this.loanId = params.id;
-          if (this.loanId) {
-            this.getAccountAggregatorStatus(this.loanId, 0)
-          }
+
           this.cdlservice.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
+            if (this.loanId && this.loanData && this.loanData.isAccountAggregated) {
+              this.getAccountAggregatorStatus(this.loanId, 0)
+            }
             if (this.loanData && this.loanData.customer && this.loanData.customer.phoneNo) {
               this.customerPhoneNo = this.loanData.customer.phoneNo;
             }

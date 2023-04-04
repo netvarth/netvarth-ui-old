@@ -242,10 +242,10 @@ export class CreateComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result.msg == "success") {
-          this.cdlService.getEquifax(equifaxData).subscribe((data: any) => {
-            if (data) {
-              if (data.id) {
-                this.cdlService.getEquifaxReport(data.id).subscribe((reportData) => {
+          console.log("response", result.response);
+            if (result.response) {
+              if (result.response.id) {
+                this.cdlService.getEquifaxReport(result.response.id).subscribe((reportData) => {
                   if (reportData) {
                     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
                       width: '50%',
@@ -255,7 +255,7 @@ export class CreateComponent implements OnInit {
                         from: "equifax",
                         equifaxData: reportData,
                         equifaxFormData: equifaxFormData,
-                        equifaxId: data.id
+                        equifaxId: result.response.id
                       }
                     });
                     dialogRef.afterClosed().subscribe(
@@ -266,10 +266,6 @@ export class CreateComponent implements OnInit {
                 });
               }
             }
-          }, (error) => {
-            console.log('error', error)
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          });
         }
       }
     });

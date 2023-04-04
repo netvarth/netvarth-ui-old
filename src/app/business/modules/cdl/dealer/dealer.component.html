@@ -67,6 +67,11 @@
           </th>
           <th>
             <div class="p-d-flex p-jc-between p-ai-center">
+              Created On
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
               More Actions
             </div>
           </th>
@@ -90,6 +95,10 @@
             <span class="d-lg-none d-md-none">Status : </span>
             <span [class]="'customer-badge status-' + dealer.spInternalStatus" class="table-column-data">
               {{dealer.spInternalStatus}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Created On : </span><span
+              class="table-column-data">{{dealer.createdDate}}</span>
           </td>
           <td>
             <!-- capabilities && capabilities.canUpdatePartner || -->
