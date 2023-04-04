@@ -35,6 +35,11 @@ export class CallsComponent implements OnInit {
     private groupService: GroupStorageService,
     private dialog: MatDialog
   ) {
+
+  }
+
+  ngOnInit(): void {
+    this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.activatedRoute.queryParams.subscribe((params: any) => {
       if (params && params.type) {
         this.statusType = params.type;
@@ -42,10 +47,6 @@ export class CallsComponent implements OnInit {
         this.statusChange({ value: { name: params.type } })
       }
     })
-  }
-
-  ngOnInit(): void {
-    this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     if (!this.statusType) {
       this.getIvrCalls();
     }

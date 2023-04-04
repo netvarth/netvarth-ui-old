@@ -37,6 +37,8 @@ export class IvrComponent implements OnInit {
   usersDialogRef: any;
   users: any;
   confirmBoxRef: any;
+  voiceMailCalls: any;
+  voiceMailCount: any;
   constructor(
     private groupService: GroupStorageService,
     private ivrService: IvrService,
@@ -52,9 +54,13 @@ export class IvrComponent implements OnInit {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.getIvrCalls();
     this.getCustomers();
-    this.getIvrCallsCount();
+    this.getIvrCallsCount().then((count) => {
+      this.totalCallsCount = count;
+    });
+    this.getIvrVoiceMailCount();
     this.getIvrMissedCallsCount();
     this.getIvrConnectedCallsCount();
+    this.getIvrVoiceMailCalls();
     this.getGraphDetails('WEEKLY').then((data) => {
       if (data) {
         this.getAnalyticsChartOptions();
@@ -63,6 +69,24 @@ export class IvrComponent implements OnInit {
     this.getOngoingCall();
     this.getUsers();
     this.primengConfig.ripple = true;
+  }
+
+
+
+  getIvrVoiceMailCalls() {
+    let api_filter = {}
+    api_filter['callStatus-eq'] = "voicemail";
+    this.getIvrCallsbyFilter(api_filter).then((data) => {
+      this.voiceMailCalls = data;
+    });
+  }
+
+  getIvrVoiceMailCount() {
+    let api_filter = {}
+    api_filter['callStatus-eq'] = "voicemail";
+    this.getIvrCallsCount(api_filter).then((count) => {
+      this.voiceMailCount = count;
+    });
   }
 
 
@@ -114,12 +138,30 @@ export class IvrComponent implements OnInit {
   }
 
   loadCalls(event) {
-    this.getIvrCallsCount()
+    this.getIvrCallsCount().then((count) => {
+      this.totalCallsCount = count;
+    });
     let api_filter = this.ivrService.setFiltersFromPrimeTable(event);
     if (api_filter) {
-      this.getIvrCallsCount(api_filter)
+      this.getIvrCallsCount(api_filter).then((count) => {
+        this.totalCallsCount = count;
+      });
       this.ivrService.getAllIvrCallsbyFilter(api_filter).subscribe((data: any) => {
         this.calls = data;
+      })
+    }
+  }
+
+  loadVoiceMailCalls(event) {
+    this.getIvrVoiceMailCalls();
+    let api_filter = this.ivrService.setFiltersFromPrimeTable(event);
+    api_filter['callStatus-eq'] = "voicemail";
+    if (api_filter) {
+      this.getIvrCallsCount(api_filter).then((count) => {
+        this.voiceMailCount = count;
+      });
+      this.ivrService.getAllIvrCallsbyFilter(api_filter).subscribe((data: any) => {
+        this.voiceMailCalls = data;
       })
     }
   }
@@ -341,21 +383,26 @@ export class IvrComponent implements OnInit {
   }
 
   getIvrCallsbyFilter(filter) {
-    this.ivrService.getAllIvrCallsbyFilter(filter).subscribe((data: any) => {
-      this.calls = data;
-    },
-      (error) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-      });
+    return new Promise((resolve, reject) => {
+      this.ivrService.getAllIvrCallsbyFilter(filter).subscribe((data: any) => {
+        resolve(data)
+      },
+        (error) => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+        });
+    })
   }
 
   getIvrCallsCount(filter = {}) {
-    this.ivrService.getIvrCallsCount(filter).subscribe((data: any) => {
-      this.totalCallsCount = data;
-    },
-      (error) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-      });
+    return new Promise((resolve, reject) => {
+      this.ivrService.getIvrCallsCount(filter).subscribe((data: any) => {
+        resolve(data);
+      },
+        (error) => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+        });
+    })
+
   }
 
 
@@ -386,13 +433,17 @@ export class IvrComponent implements OnInit {
   statusChange(event) {
     let api_filter = {}
     if (event.value.name == 'All') {
-      this.getIvrCallsbyFilter(api_filter);
+      this.getIvrCallsbyFilter(api_filter).then((data) => {
+        this.calls = data;
+      });
     }
     else {
       if (event.value.name) {
         api_filter['callStatus-eq'] = event.value.name;
       }
-      this.getIvrCallsbyFilter(api_filter);
+      this.getIvrCallsbyFilter(api_filter).then((data) => {
+        this.calls = data;
+      });
     }
   }
 

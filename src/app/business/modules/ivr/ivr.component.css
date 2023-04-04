@@ -200,6 +200,10 @@ input[type="checkbox"]:checked {
   color: #757575 !important;
 }
 
+::ng-deep .callsTabsView .p-tabview .p-tabview-panels {
+  padding: 0 !important;
+}
+
 
 /* Mobile Only Styles */
 
