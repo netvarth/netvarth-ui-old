@@ -384,7 +384,7 @@
           <div class="text-left">
             <div class="filesUploadThings">
               <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed'}" mat-button
-                [mat-dialog-close]="true"
+               
                 class="lnk action pointer-cursor btn btn-primary upload-file-btn text-primary inputFile"
                 (click)="taskDetails.status.name !=='Completed' && uploadFiles()">
                 <div class="filesUploadThingsAction" *ngIf="uploadFilesrelated">

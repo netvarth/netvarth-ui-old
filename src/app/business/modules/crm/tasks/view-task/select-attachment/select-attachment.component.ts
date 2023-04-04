@@ -54,23 +54,25 @@ export class SelectAttachmentComponent implements OnInit {
   }
   filesSelected(event) {
     const _this=this;
-    _this.api_loading1 = true;
-    _this.action = "attachment";
-    let selectedMessage = {
-      files: [],
-      base64: [],
-      caption: []
-    };
-    _this.fileService.getCompressedFiles(event, selectedMessage).then(
-      (selectedMessage)=> {
-        console.log("SelectedMessage:", selectedMessage);
-        for (let i=0;i<selectedMessage['files'].length;i++) {
-          _this.selectedMessage.files.push(selectedMessage['files'][i]);
-          _this.selectedMessage.base64.push(selectedMessage['base64'][i]);
+    if (event.target && event.target.files && event.target.files.length>0) {
+      _this.api_loading1 = true;
+      _this.action = "attachment"; 
+      let selectedMessage = {
+        files: [],
+        base64: [],
+        caption: []
+      };
+      _this.fileService.getCompressedFiles(event, selectedMessage).then(
+        (selectedMessage)=> {
+          console.log("SelectedMessage:", selectedMessage);
+          for (let i=0;i<selectedMessage['files'].length;i++) {
+            _this.selectedMessage.files.push(selectedMessage['files'][i]);
+            _this.selectedMessage.base64.push(selectedMessage['base64'][i]);
+          }
+          _this.api_loading1 = false;
         }
-        _this.api_loading1 = false;
-      }
-    );
+      );
+    }    
   }
   saveFile() {
     const _this = this;
@@ -109,7 +111,9 @@ export class SelectAttachmentComponent implements OnInit {
     }
   }
   dialogClose() {
-    this.dialogRef.close('close');
+    if (this.dialogRef) {
+      this.dialogRef.close('close');
+    }
   }
   goBack() {
     this._location.back();
