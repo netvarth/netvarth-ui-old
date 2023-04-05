@@ -138,10 +138,12 @@
                 <img src="assets/images/undefinedUser.png" />
               </div>
               <div class="float-right" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].id">
-                <a (click)="editCustomerDetails()" style="font-size:13px!important;"
-                  class="edit-btn pointer-cursor"><b>Edit Details</b></a>&nbsp;
+                <!-- <a (click)="editCustomerDetails()" style="font-size:13px!important;"
+                  class="edit-btn pointer-cursor"><b>{{customer_label |
+                    capitalizeFirst}} Details</b></a>&nbsp; -->
                <a (click)="gotoCustomerDetails()" style="font-size:13px!important;"
-                  class="edit-btn pointer-cursor"><b>View Details</b></a>
+                  class="edit-btn pointer-cursor"><b>{{customer_label |
+                    capitalizeFirst}} Details</b></a>
               </div>
             </div>
             <span (click)="gotoCustomerDetails()" class="ml-0 pl-0 pointer-cursor"

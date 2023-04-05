@@ -175,10 +175,12 @@
               </div>
              
               <div class="float-right" *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].id">
-                <a (click)="editCustomerDetails()" style="font-size:13px!important;"
-                  class="edit-btn pointer-cursor"><b>Edit Details</b></a>&nbsp;
+                <!-- <a (click)="editCustomerDetails()" style="font-size:13px!important;"
+                  class="edit-btn pointer-cursor"><b>{{customer_label |
+                    capitalizeFirst}} Details</b></a>&nbsp; -->
                   <a (click)="gotoCustomerDetails()" style="font-size:13px!important;"
-                  class="edit-btn pointer-cursor"><b>View Details</b></a>
+                  class="edit-btn pointer-cursor"><b>{{customer_label |
+                    capitalizeFirst}} Details</b></a>
               </div>
             </div>
            
