@@ -37,7 +37,7 @@ export class LoanDetailsComponent implements OnInit {
   IFSCCode: string = '';
   bankName: string = '';
   emiPaidNo: number;
-  cibilScore: number;
+  cibilScore: any;
   mafilScore: number;
   perfiosScore: number;
   totalScore: number;
@@ -137,6 +137,31 @@ export class LoanDetailsComponent implements OnInit {
     });
   }
 
+  generateCibilScore(id) {
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        type: "cibil",
+        from:"cibil"
+      }
+    });
+    dialogRef.afterClosed().subscribe(
+      (response: any) => {
+        if (response) {
+          let data = {
+            id: id,
+            cibilScore: response
+          }
+          this.cdlservice.generateCibilScore(data).subscribe((data) => {
+            this.ngOnInit();
+            this.snackbarService.openSnackBar("Cibil Saved Successfully");
+          })
+        }
+      });
+
+  }
 
   getAccountAggregatorStatus(uId, kycId) {
     this.cdlservice.getAccountAggregatorStatus(uId, 0).subscribe((data) => {

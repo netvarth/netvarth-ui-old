@@ -141,6 +141,11 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  generateCibilScore(data) {
+    const url = 'provider/loanapplication/cibilscore';
+    return this.servicemeta.httpPut(url, data);
+  }
+
 
   createPartner(data) {
     const url = 'provider/partner';

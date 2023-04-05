@@ -505,17 +505,19 @@
             <div class="card">
               <div class="d-flex">
                 <div>
-                  <img src="../../../../assets/images/cdl/total_score.png" width="100">
+                  <img src="../../../../assets/images/cdl/cibil_score.png" width="100">
                 </div>&nbsp;&nbsp;
                 <div>
-                  <div class="customerScoreLabel">Mafil Score (%)</div>
-                  <div class="customerScoreInfoLabel" *ngIf="mafilScorePercentange">{{mafilScorePercentange}} %</div>
-                  <!-- <div class="btn btn-primary">View Report</div> -->
+                  <div class="customerScoreLabel">CIBIL Score</div>
+                  <div class="customerScoreInfoLabel" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0]
+                  && loanData.loanApplicationKycList[0].cibilScoreGenerated">{{loanData.loanApplicationKycList[0].cibilScore}}</div>
+                  <div class="customerScoreInfoLabel" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0]
+                                    && !loanData.loanApplicationKycList[0].cibilScoreGenerated">
+                                    <div class="btn btn-primary" (click)="generateCibilScore(loanData.loanApplicationKycList[0].id)">Generate Score</div>
+                    </div>
+
                 </div>
               </div>
-              <!-- <div class="text-right">
-                <div class="btn btn-primary py-1">View Report</div>
-              </div> -->
             </div>
           </div>
         </section>

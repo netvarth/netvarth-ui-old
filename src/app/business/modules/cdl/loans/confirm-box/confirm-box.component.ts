@@ -34,6 +34,7 @@ export class ConfirmBoxComponent implements OnInit {
       'height': '40px'
     }
   };
+  cibilScore:any;
   totalPayment: any = 0;
   downPayment: any = 0;
   loanAmount: any = 0;
@@ -104,6 +105,11 @@ export class ConfirmBoxComponent implements OnInit {
     }
 
 
+  }
+
+  saveCibilScore()
+  {
+    this.dialogRef.close(this.cibilScore);
   }
 
   convertToLoan() {
