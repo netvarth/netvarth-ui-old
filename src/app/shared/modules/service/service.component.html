@@ -647,7 +647,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
             <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
               <div>
-                <label style="margin-bottom: 0 !important;">International Price
+                <label style="margin-bottom: 0 !important;">Allow International Consumers
                   <mat-slide-toggle class="example-margin" formControlName="supportInternationalConsumer" (change)="changePrepayment()">
                   </mat-slide-toggle>
                   <!-- <div class="form-level-settings">{{frm_enable_prepayment_cap}}</div> -->
@@ -655,7 +655,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
               </div>
               <ng-container *ngIf="subdomainsettings.serviceBillable && !is_donation">
                 <div class="form-group" *ngIf="serviceForm.get('supportInternationalConsumer').value === true">
-                 
+                  <label class="label">Enter Price for International Consumers ({{rupee_symbol}})</label>
                   <div class="rupee-font d-flex align-items-center">
                     <span *ngIf="is_checked_fixed">{{rupee_symbol}}</span>&nbsp;
                     <input matInput min="0" max={{maxlimit}} type="number"
@@ -663,7 +663,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                       class="form-control number-ip-sm" id="prepayment_amount"
                       formControlName="internationalAmount"
                       autocomplete="off">&nbsp;
-                    <span *ngIf="is_checked_percentage">{{percentage_symbol}}</span>
+                    
                   </div>
                  
                   <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'internationalAmount')"
