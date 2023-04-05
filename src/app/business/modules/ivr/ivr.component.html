@@ -93,6 +93,17 @@
               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
               <ng-template pTemplate="body" let-call>
                 <div class="card mt-2">
+                  <div class="d-flex justify-content-between px-3" *ngIf="call.callStatus == 'inCall'">
+                    <div>
+                      <button type="button" class="btn btn-light bg-orange mr-2 font-weight-600" (click)="fillForm(onGoingCall[0].uid)"
+                        tooltipPosition="top" pTooltip="Fill the Form">Fill the Form
+                      </button>
+                    </div>
+                    <div>
+                      <a class="btn btn-success font-weight-600 border-radius-20" tooltipPosition="top" pTooltip="In Call">In Call
+                      </a>
+                    </div>
+                  </div>
                   <div class="row px-1">
                     <div class="col-md-3 col-xs-6 mt-2">
                       <div class="font-weight-bold">
@@ -166,17 +177,17 @@
               <i class="pi pi-phone"></i>&nbsp;
               <span>Calls</span>
             </ng-template>
-            <div class="card mt-2" *ngIf="onGoingCall && onGoingCall.length>0">
+            <!-- <div class="card mt-2" *ngIf="onGoingCall && onGoingCall.length>0">
               <div class="d-flex justify-content-between px-3">
-              <div>
-                <button type="button" class="btn btn-light bg-orange mr-2 font-weight-600" (click)="fillForm(onGoingCall[0].uid)"
-                  tooltipPosition="top" pTooltip="Fill the Form">Fill the Form
-                </button>
-              </div>
-              <div>
-                <a class="btn btn-success font-weight-600 border-radius-20" tooltipPosition="top" pTooltip="In Call">In Call
-                </a>
-              </div>
+                <div>
+                  <button type="button" class="btn btn-light bg-orange mr-2 font-weight-600" (click)="fillForm(onGoingCall[0].uid)"
+                    tooltipPosition="top" pTooltip="Fill the Form">Fill the Form
+                  </button>
+                </div>
+                <div>
+                  <a class="btn btn-success font-weight-600 border-radius-20" tooltipPosition="top" pTooltip="In Call">In Call
+                  </a>
+                </div>
               </div>
               <div class="row px-1">
                 <div class="col-md-3 col-xs-6 mt-2">
@@ -229,7 +240,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <p-table #callsTable [value]="calls" [lazy]="true" (onLazyLoad)="loadCalls($event)" dataKey="id"
               [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,15,25]" [paginator]="true" [rows]="5"
               [totalRecords]="totalCallsCount" responsiveLayout="stack"
@@ -237,6 +248,17 @@
               styleClass="p-datatable-customers" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
               <ng-template pTemplate="body" let-call>
                 <div class="card mt-2">
+                  <div class="d-flex justify-content-between px-3" *ngIf="call.callStatus == 'inCall'">
+                    <div>
+                      <button type="button" class="btn btn-light bg-orange mr-2 font-weight-600" (click)="fillForm(onGoingCall[0].uid)"
+                        tooltipPosition="top" pTooltip="Fill the Form">Fill the Form
+                      </button>
+                    </div>
+                    <div>
+                      <a class="btn btn-success font-weight-600 border-radius-20" tooltipPosition="top" pTooltip="In Call">In Call
+                      </a>
+                    </div>
+                  </div>
                   <div class="row px-1">
                     <div class="col-md-3 col-xs-6 mt-2">
                       <div class="font-weight-bold">
