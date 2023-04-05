@@ -478,7 +478,7 @@
             <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="item.provider">
                 <!-- (click)="gotoCustomerDetailsToken(waitlist, $event)" -->
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
-                    (click)="cardActionPerformed(item.type, 'view-patient', null, null, null, $event, item)"
+                (click)="cardActionPerformed(item.type, 'view', null, null, null, $event, item)" 
                     *ngIf="item.type=='checkin-dashboard' && (item.waitlistingFor[0].firstName || item.waitlistingFor[0].lastName)">
                     {{item.waitlistingFor[0].firstName}}
                     {{item.waitlistingFor[0].lastName}}
@@ -598,7 +598,7 @@
             <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="appointment.provider">
                 <!-- (click)="gotoCustomerDetailsAppt(appointment, $event)" -->
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
-                    (click)="cardActionPerformed(item.type, 'view-patient', null, null, null, $event, item)"
+                (click)="cardActionPerformed(item.type, 'view', null, null, null, $event, item)" 
                     *ngIf="item.type=='appointment-dashboard' && (appointment.appmtFor[0].firstName || appointment.appmtFor[0].lastName)">
                     {{appointment.appmtFor[0].firstName}}
                     {{appointment.appmtFor[0].lastName}}
