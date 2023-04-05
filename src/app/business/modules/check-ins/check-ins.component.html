@@ -706,7 +706,7 @@
                     class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                     *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                     [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                    (click)="gotoCustomerDetails(checkin)">
+                    (click)="goCheckinDetail(checkin)">
                     {{checkin.waitlistingFor[0].firstName}}
                     {{checkin.waitlistingFor[0].lastName}}
                     <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
@@ -733,7 +733,7 @@
                     class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                     *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                     [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                    (click)="gotoCustomerDetails(checkin)">
+                    (click)="goCheckinDetail(checkin)">
                     {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                 </td>
                 <td class="title td-two">
@@ -957,7 +957,7 @@
                     class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                     *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                     [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                    (click)="gotoCustomerDetails(checkin)" [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
+                    (click)="goCheckinDetail(checkin)" [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
                     [class.pointer-auto]="checkin.waitlistStatus=='blocked'">
                     {{checkin.waitlistingFor[0].firstName}}
                     {{checkin.waitlistingFor[0].lastName}}
@@ -986,7 +986,7 @@
                     class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                     *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                     [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                    (click)="gotoCustomerDetails(checkin)">
+                    (click)="goCheckinDetail(checkin)">
                     {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                 </td>
                 <td class="title td-two">
@@ -1675,7 +1675,7 @@
                   class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                   *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                   [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                  (click)="gotoCustomerDetails(checkin)" [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
+                  (click)="goCheckinDetail(checkin)" [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
                   [class.pointer-auto]="checkin.waitlistStatus=='blocked'">{{checkin.waitlistingFor[0].firstName}}
                   {{checkin.waitlistingFor[0].lastName}}
                   <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
@@ -1708,7 +1708,7 @@
                   class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                   *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                   [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                  (click)="gotoCustomerDetails(checkin)">
+                  (click)="goCheckinDetail(checkin)">
                   {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
               </td>
               <td class="title td-two">
@@ -2508,7 +2508,7 @@
                   class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                   *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                   [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                  (click)="gotoCustomerDetails(checkin)">
+                  (click)="goCheckinDetail(checkin)">
                   {{checkin.waitlistingFor[0].firstName}}
                   {{checkin.waitlistingFor[0].lastName}}
                   <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
@@ -2538,7 +2538,7 @@
                   class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                   *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                   [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                  (click)="gotoCustomerDetails(checkin)">
+                  (click)="goCheckinDetail(checkin)">
                   {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
               </td>
               <td class="title td-two">

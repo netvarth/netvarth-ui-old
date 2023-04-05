@@ -593,7 +593,7 @@
                   <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
                 </div>
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                  class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
+                  class="bold pull-left mgn-lt-5 name font11" (click)="goCheckinDetail(appt)"
                   *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                   [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                   [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
@@ -619,7 +619,7 @@
                   <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
                 </div>
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
-                  class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
+                  class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="goCheckinDetail(appt)"
                   *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
                   {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
               </td>
@@ -1081,7 +1081,7 @@
                     style="color: rgb(255, 123, 0) !important;">{{getTimeMinute(appt.apptDelay)}}</span>&nbsp;
                 </div>
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                  class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
+                  class="bold pull-left mgn-lt-5 name font11" (click)="goCheckinDetail(appt)"
                   *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                   [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                   [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
@@ -1106,7 +1106,7 @@
                   <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
                 </div>
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
-                  class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
+                  class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="goCheckinDetail(appt)"
                   *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
                   {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
               </td>
@@ -1673,7 +1673,7 @@
 
               </div>
               <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
+                class="bold pull-left mgn-lt-5 name font11" (click)="goCheckinDetail(appt)"
                 *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                 [class.pointer-cursor]="appt.apptStatus!=='blocked'" [class.pointer-auto]="appt.apptStatus=='blocked'">
                 {{appt.appmtFor[0].firstName}}
@@ -1697,7 +1697,7 @@
                 <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
               </div>
               <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
-                class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
+                class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="goCheckinDetail(appt)"
                 *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
                 {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
             </td>
@@ -2471,7 +2471,7 @@
                 <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
               </div>
               <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
+                class="bold pull-left mgn-lt-5 name font11" (click)="goCheckinDetail(appt)"
                 *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                 [class.pointer-cursor]="appt.apptStatus!=='blocked'" [class.pointer-auto]="appt.apptStatus=='blocked'">
                 {{appt.appmtFor[0].firstName}}
@@ -2495,7 +2495,7 @@
                 <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
               </div>
               <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
-                class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
+                class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="goCheckinDetail(appt)"
                 *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
                 {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
             </td>

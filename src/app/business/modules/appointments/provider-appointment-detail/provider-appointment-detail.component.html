@@ -139,7 +139,9 @@
               </div>
               <div class="float-right" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].id">
                 <a (click)="editCustomerDetails()" style="font-size:13px!important;"
-                  class="edit-btn pointer-cursor"><b>Edit Details</b></a>
+                  class="edit-btn pointer-cursor"><b>Edit Details</b></a>&nbsp;
+               <a (click)="gotoCustomerDetails()" style="font-size:13px!important;"
+                  class="edit-btn pointer-cursor"><b>View Details</b></a>
               </div>
             </div>
             <span (click)="gotoCustomerDetails()" class="ml-0 pl-0 pointer-cursor"
@@ -185,9 +187,9 @@
                   {{waitlist_data.appmtFor[0].bookingLocation.state}}</span>
               </div>
               <div class="mb-0">
-                <a (click)="showCommunications()" *ngIf="whatsappNumber || mobileNumber || email"
+                <!-- <a (click)="showCommunications()" *ngIf="whatsappNumber || mobileNumber || email"
                   class="btn btn-primary col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2">Call {{customer_label |
-                  capitalizeFirst}}</a>
+                  capitalizeFirst}}</a> -->
               </div>
             </div>
           </div>
