@@ -269,7 +269,7 @@ input[type="checkbox"]:checked {
     left: 32% !important;
   }
 
-  ::ng-deep .callsTabsView a#p-tabpanel-0-label {
+  ::ng-deep .callsTabsView .p-tabview-nav-link{
     width: 140px!important;
   }
 
