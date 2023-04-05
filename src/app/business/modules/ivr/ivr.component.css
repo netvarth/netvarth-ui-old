@@ -225,7 +225,7 @@ input[type="checkbox"]:checked {
 }
 
 ::ng-deep .callsTabsView a#p-tabpanel-0-label {
-  width: 160px;
+  width: 160px!important;
 }
 
 
@@ -270,7 +270,7 @@ input[type="checkbox"]:checked {
   }
 
   ::ng-deep .callsTabsView a#p-tabpanel-0-label {
-    width: 120px;
+    width: 140px!important;
   }
 
   .analytics-card {

@@ -389,7 +389,7 @@
               <img width="20" src="./assets/images/ivr/callback.png">&nbsp;
               <span>CallBacks</span>
             </ng-template>
-            <p-table #callsTable [value]="callBackCalls" [lazy]="true" (onLazyLoad)="loadCalls($event)" dataKey="id"
+            <p-table #callsTable [value]="callBackCalls" [lazy]="true" (onLazyLoad)="loadCallBackCalls($event)" dataKey="id"
               [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,15,25]" [paginator]="true" [rows]="5"
               [totalRecords]="callBacksCount" responsiveLayout="stack" styleClass="p-datatable-customers"
               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">

@@ -43,6 +43,7 @@ export class IvrComponent implements OnInit {
   callBacksCount: any;
   assignedCalls: any;
   assignedCallsCount: any;
+  callBackCallsCount: unknown;
   constructor(
     private groupService: GroupStorageService,
     private ivrService: IvrService,
@@ -63,8 +64,8 @@ export class IvrComponent implements OnInit {
     });
     this.getIvrVoiceMailCount();
     this.getIvrMissedCallsCount();
-    // this.getIvrCallBacks();
-    // this.getIvrCallBacksCount();
+    this.getIvrCallBacks();
+    this.getIvrCallBacksCount();
     this.getIvrConnectedCallsCount();
     this.getIvrVoiceMailCalls();
     this.getIvrAssignedCalls();
@@ -74,7 +75,7 @@ export class IvrComponent implements OnInit {
         this.getAnalyticsChartOptions();
       }
     });
-    // this.getOngoingCall();
+    this.getOngoingCall();
     this.getUsers();
     this.primengConfig.ripple = true;
   }
@@ -99,7 +100,7 @@ export class IvrComponent implements OnInit {
 
   getIvrCallBacks() {
     let api_filter = {}
-    api_filter['callStatus-eq'] = "CallBack";
+    api_filter['tokenRaised-eq'] = true;
     this.getIvrCallsbyFilter(api_filter).then((data) => {
       this.callBackCalls = data;
     });
@@ -107,7 +108,7 @@ export class IvrComponent implements OnInit {
 
   getIvrCallBacksCount() {
     let api_filter = {}
-    api_filter['callStatus-eq'] = "CallBack";
+    api_filter['tokenRaised-eq'] = true;
     this.getIvrCallsCount(api_filter).then((count) => {
       this.callBacksCount = count;
     });
@@ -209,6 +210,20 @@ export class IvrComponent implements OnInit {
       });
       this.ivrService.getAllIvrCallsbyFilter(api_filter).subscribe((data: any) => {
         this.assignedCalls = data;
+      })
+    }
+  }
+
+  loadCallBackCalls(event) {
+    this.getIvrCallBacks();
+    let api_filter = this.ivrService.setFiltersFromPrimeTable(event);
+    api_filter['tokenRaised-eq'] = true;
+    if (api_filter) {
+      this.getIvrCallsCount(api_filter).then((count) => {
+        this.callBacksCount = count;
+      });
+      this.ivrService.getAllIvrCallsbyFilter(api_filter).subscribe((data: any) => {
+        this.callBackCalls = data;
       })
     }
   }
