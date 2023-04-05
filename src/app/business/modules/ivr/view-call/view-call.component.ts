@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { IvrService } from '../ivr.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-view-call',
@@ -19,6 +20,7 @@ export class ViewCallComponent implements OnInit {
     private router: Router,
     private ActivatedRoute: ActivatedRoute,
     private ivrService: IvrService,
+    private location: Location
   ) {
     this.ActivatedRoute.params.subscribe((params) => {
       if (params) {
@@ -31,7 +33,6 @@ export class ViewCallComponent implements OnInit {
               this.callHistories = this.callData.userCallHistories;
             }
             if (this.callData && this.callData.consumerId) {
-              this.getCustomerDetails(this.callData.consumerId);
               this.getCustomerDetails(this.callData.consumerId);
               this.getCustomerTokens(this.callData.consumerId);
               // this.getCustomerTokens(34609);
@@ -89,7 +90,8 @@ export class ViewCallComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['provider', 'ivr']);
+    // this.router.navigate(['provider', 'ivr']);
+    this.location.back()
   }
 
 }

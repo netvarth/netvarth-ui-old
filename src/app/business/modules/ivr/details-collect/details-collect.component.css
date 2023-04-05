@@ -1,0 +1,93 @@
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #1E4079;
+  font-size: 22px;
+  color: #fff !important;
+  text-align: center;
+  line-height: 40px;
+}
+
+.fa-arrow-left {
+  color: #1E4070 !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+
+.heading {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
+
+.back-btn {
+  color: #1E4070 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+}
+
+.text-grey {
+  color: #aeaeae !important;
+}
+
+.btn-primary {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 300 !important;
+  border-radius: 3px !important;
+}
+
+.font-small {
+  font-size: 16px !important;
+}
+
+.status-inCall {
+  /* background-color: #cce6c8 !important; */
+  color: #198f20 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+
+.status-callCompleted {
+  /* background-color: #cce6c8 !important; */
+  color: rgb(55, 97, 55) !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+
+.status-missed {
+  /* background-color: #FFCDD2 !important; */
+  color: #C63737 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-voicemail {
+  /* background-color: #d9e3ff !important; */
+  color: #10359c !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-ongoing {
+  /* background-color: #ebd6ff !important; */
+  color: #52267b !important;
+  font-weight: bold !important;
+  padding: 5px 10px !important;
+  border-radius: 15px !important;
+}
+
+.text-primary {
+  color: #1E4079 !important;
+}
+
+.form-title {
+  font-weight: 600 !important;
+}

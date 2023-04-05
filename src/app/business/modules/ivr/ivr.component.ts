@@ -39,6 +39,10 @@ export class IvrComponent implements OnInit {
   confirmBoxRef: any;
   voiceMailCalls: any;
   voiceMailCount: any;
+  callBackCalls: any;
+  callBacksCount: any;
+  assignedCalls: any;
+  assignedCallsCount: any;
   constructor(
     private groupService: GroupStorageService,
     private ivrService: IvrService,
@@ -59,14 +63,18 @@ export class IvrComponent implements OnInit {
     });
     this.getIvrVoiceMailCount();
     this.getIvrMissedCallsCount();
+    // this.getIvrCallBacks();
+    // this.getIvrCallBacksCount();
     this.getIvrConnectedCallsCount();
     this.getIvrVoiceMailCalls();
+    this.getIvrAssignedCalls();
+    this.getIvrAssignedCallsCount();
     this.getGraphDetails('WEEKLY').then((data) => {
       if (data) {
         this.getAnalyticsChartOptions();
       }
     });
-    this.getOngoingCall();
+    // this.getOngoingCall();
     this.getUsers();
     this.primengConfig.ripple = true;
   }
@@ -80,6 +88,31 @@ export class IvrComponent implements OnInit {
       this.voiceMailCalls = data;
     });
   }
+
+  getIvrAssignedCalls() {
+    let api_filter = {}
+    api_filter['userId-neq'] = null;
+    this.getIvrCallsbyFilter(api_filter).then((data) => {
+      this.assignedCalls = data;
+    });
+  }
+
+  getIvrCallBacks() {
+    let api_filter = {}
+    api_filter['callStatus-eq'] = "CallBack";
+    this.getIvrCallsbyFilter(api_filter).then((data) => {
+      this.callBackCalls = data;
+    });
+  }
+
+  getIvrCallBacksCount() {
+    let api_filter = {}
+    api_filter['callStatus-eq'] = "CallBack";
+    this.getIvrCallsCount(api_filter).then((count) => {
+      this.callBacksCount = count;
+    });
+  }
+
 
   getIvrVoiceMailCount() {
     let api_filter = {}
@@ -162,6 +195,20 @@ export class IvrComponent implements OnInit {
       });
       this.ivrService.getAllIvrCallsbyFilter(api_filter).subscribe((data: any) => {
         this.voiceMailCalls = data;
+      })
+    }
+  }
+
+  loadAssignedCalls(event) {
+    this.getIvrAssignedCalls();
+    let api_filter = this.ivrService.setFiltersFromPrimeTable(event);
+    api_filter['userId-neq'] = null;
+    if (api_filter) {
+      this.getIvrCallsCount(api_filter).then((count) => {
+        this.assignedCallsCount = count;
+      });
+      this.ivrService.getAllIvrCallsbyFilter(api_filter).subscribe((data: any) => {
+        this.assignedCalls = data;
       })
     }
   }
@@ -272,6 +319,10 @@ export class IvrComponent implements OnInit {
     this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras)
   }
 
+  fillForm(id) {
+    this.router.navigate(['provider', 'ivr', 'details-collect', id])
+  }
+
   createPatient() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -292,6 +343,7 @@ export class IvrComponent implements OnInit {
     };
     this.router.navigate(['provider', 'customers', id], navigationExtras)
   }
+
 
   markAsComplete(uid) {
     this.ivrService.markAsComplete(uid).subscribe((data: any) => {
@@ -424,6 +476,18 @@ export class IvrComponent implements OnInit {
     }
     this.ivrService.getIvrCallsCount(filter).subscribe((data: any) => {
       this.connectedCallsCount = data;
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
+
+  getIvrAssignedCallsCount() {
+    let filter = {
+      "userId-neq": null
+    }
+    this.ivrService.getIvrCallsCount(filter).subscribe((data: any) => {
+      this.assignedCallsCount = data;
     },
       (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })

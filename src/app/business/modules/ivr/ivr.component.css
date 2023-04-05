@@ -53,6 +53,22 @@
   border-radius: 8px !important;
 }
 
+.border-radius-20 {
+  border-radius: 20px !important;
+}
+
+.bg-orange {
+  background-color: #EB7565 !important;
+}
+
+.status-inCall {
+  /* background-color: #cce6c8 !important; */
+  color: #198f20 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
 
 .status-callCompleted {
   /* background-color: #cce6c8 !important; */
@@ -196,12 +212,20 @@ input[type="checkbox"]:checked {
   background: #00ed64;
 }
 
+.analytics-card {
+  height: 285px !important;
+}
+
 .text-grey {
   color: #757575 !important;
 }
 
 ::ng-deep .callsTabsView .p-tabview .p-tabview-panels {
   padding: 0 !important;
+}
+
+::ng-deep .callsTabsView a#p-tabpanel-0-label {
+  width: 160px;
 }
 
 
@@ -243,6 +267,14 @@ input[type="checkbox"]:checked {
 
   .semi-progress-bar {
     left: 32% !important;
+  }
+
+  ::ng-deep .callsTabsView a#p-tabpanel-0-label {
+    width: 120px;
+  }
+
+  .analytics-card {
+    height: auto !important;
   }
 }
 
