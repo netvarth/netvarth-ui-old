@@ -392,8 +392,8 @@ export class CdlService {
   }
 
 
-  getLoanSchemes() {
-    const url = 'provider/loan/schemes';
+  getLoanSchemes(id) {
+    const url = 'provider/loanapplication/' + id + '/availableschemes ';
     return this.servicemeta.httpGet(url, null);
   }
 

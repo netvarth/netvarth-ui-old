@@ -222,7 +222,7 @@ export class ConfirmBoxComponent implements OnInit {
   }
 
   getLoanSchemes() {
-    this.cdlservice.getLoanSchemes().subscribe((data) => {
+    this.cdlservice.getLoanSchemes(this.loanId).subscribe((data) => {
       this.loanSchemes = data;
       console.log("this.loanSchemes", this.loanSchemes)
     })

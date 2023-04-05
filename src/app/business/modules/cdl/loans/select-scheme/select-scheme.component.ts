@@ -7,7 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./select-scheme.component.css']
 })
 export class SelectSchemeComponent implements OnInit {
-  schemes
+  schemes:any;
   constructor(
     public dialogRef: MatDialogRef<SelectSchemeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any

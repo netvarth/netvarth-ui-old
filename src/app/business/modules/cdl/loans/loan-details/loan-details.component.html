@@ -85,7 +85,16 @@
         </div>
         <br>
         <div class="text-left">
-          <span class="font-weight-bold text-primary">Personal Details</span>
+          <div class="d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+              <span class="font-weight-bold text-primary">Personal Details</span>
+            </div>
+            <div>
+              <div class="btn btn-primary pointer-cursor" *ngIf="loanData && loanData.isActionRequired" (click)="editLoan()">
+                <i class="fa fa-edit"></i>&nbsp;Edit
+              </div>
+            </div>
+          </div>
           <hr class="mt-2">
         </div>
         <div>
@@ -515,7 +524,6 @@
                                     && !loanData.loanApplicationKycList[0].cibilScoreGenerated">
                                     <div class="btn btn-primary" (click)="generateCibilScore(loanData.loanApplicationKycList[0].id)">Generate Score</div>
                     </div>
-
                 </div>
               </div>
             </div>

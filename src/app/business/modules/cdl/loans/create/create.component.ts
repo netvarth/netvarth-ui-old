@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import { Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OtpVerifyComponent } from '../otp-verify/otp-verify.component';
@@ -185,7 +185,7 @@ export class CreateComponent implements OnInit {
   type: any;
   disableBtn: any = false;
   constructor(
-    // private location: Location,
+    private location: Location,
     private router: Router,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
@@ -277,9 +277,6 @@ export class CreateComponent implements OnInit {
       if (params && params.from) {
         this.from = params.from;
       }
-      if (params && params.type) {
-        this.type = params.type;
-      }
       if (params && params.type && params.type == 'enquire') {
         if (params && params.enquireId) {
           this.enquireUid = params.enquireId;
@@ -338,6 +335,7 @@ export class CreateComponent implements OnInit {
 
           this.loanData = data;
           this.action = params.action;
+          this.type = params.action;
           this.loanId = params.id;
           console.log("this.LaonData", this.loanData)
           if (params.action == 'update' && this.loanData) {
@@ -952,7 +950,7 @@ export class CreateComponent implements OnInit {
   }
 
   getLoanSchemes() {
-    this.cdlService.getLoanSchemes().subscribe((data) => {
+    this.cdlService.getLoanSchemes(this.loanId).subscribe((data) => {
       this.loanSchemes = data;
       console.log("this.loanSchemes", this.loanSchemes)
     })
@@ -1423,8 +1421,13 @@ export class CreateComponent implements OnInit {
 
 
   goBack() {
-    // this.location.back();
-    this.router.navigate(['provider', 'cdl']);
+    console.log("this.from", this.from)
+    if (this.from && this.from == 'edit') {
+      this.location.back();
+    }
+    else {
+      this.router.navigate(['provider', 'cdl']);
+    }
   }
 
   goNext() {

@@ -144,7 +144,7 @@ export class LoanDetailsComponent implements OnInit {
       disableClose: true,
       data: {
         type: "cibil",
-        from:"cibil"
+        from: "cibil"
       }
     });
     dialogRef.afterClosed().subscribe(
@@ -161,6 +161,17 @@ export class LoanDetailsComponent implements OnInit {
         }
       });
 
+  }
+
+  editLoan() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        id: this.loanId,
+        action: "update",
+        from: "edit"
+      }
+    };
+    this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras)
   }
 
   getAccountAggregatorStatus(uId, kycId) {

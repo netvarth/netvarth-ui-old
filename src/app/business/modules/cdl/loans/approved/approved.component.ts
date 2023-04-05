@@ -397,7 +397,7 @@ export class ApprovedComponent implements OnInit {
 
 
   getLoanSchemes() {
-    this.cdlService.getLoanSchemes().subscribe((data) => {
+    this.cdlService.getLoanSchemes(this.loanId).subscribe((data) => {
       this.loanSchemes = data;
       console.log("this.loanSchemes", this.loanSchemes)
     })
