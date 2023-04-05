@@ -320,7 +320,12 @@ export class IvrComponent implements OnInit {
   }
 
   fillForm(id) {
-    this.router.navigate(['provider', 'ivr', 'details-collect', id])
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'form'
+      }
+    };
+    this.router.navigate(['provider', 'ivr', 'details-collect', id], navigationExtras)
   }
 
   createPatient() {
@@ -358,7 +363,12 @@ export class IvrComponent implements OnInit {
   }
 
   viewCall(uid) {
-    this.router.navigate(['provider', 'ivr', 'call', uid]);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'details'
+      }
+    };
+    this.router.navigate(['provider', 'ivr', 'details', uid], navigationExtras);
   }
 
   gotoMissedCalls() {

@@ -23,6 +23,7 @@ export class DetailsCollectComponent implements OnInit {
   confirmBoxRef: any;
   customerDetailsPanel: any;
   customerCallHistory: any;
+  type: any;
   constructor(
     private ActivatedRoute: ActivatedRoute,
     private ivrService: IvrService,
@@ -54,6 +55,15 @@ export class DetailsCollectComponent implements OnInit {
         }
       }
     })
+
+    this.ActivatedRoute.queryParams.subscribe((params) => {
+      if (params) {
+        if (params && params.type) {
+          this.type = params.type;
+        }
+      }
+    })
+
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getUsers();
   }
@@ -139,7 +149,12 @@ export class DetailsCollectComponent implements OnInit {
   }
 
   viewCall(uid) {
-    this.router.navigate(['provider', 'ivr', 'call', uid]);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'details'
+      }
+    };
+    this.router.navigate(['provider', 'ivr', 'details', uid], navigationExtras)
   }
 
 

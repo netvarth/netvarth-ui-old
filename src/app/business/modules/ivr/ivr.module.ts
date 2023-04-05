@@ -18,7 +18,8 @@ const routes: Routes = [
   { path: '', component: IvrComponent },
   { path: 'calls', loadChildren: () => import('./calls/calls.module').then(m => m.CallsModule) },
   { path: 'call/:id', loadChildren: () => import('./view-call/view-call.module').then(m => m.ViewCallModule) },
-  { path: 'details-collect/:id', loadChildren: () => import('./details-collect/details-collect.module').then(m => m.DetailsCollectModule) }
+  { path: 'details-collect/:id', loadChildren: () => import('./details-collect/details-collect.module').then(m => m.DetailsCollectModule) },
+  { path: 'details/:id', loadChildren: () => import('./details-collect/details-collect.module').then(m => m.DetailsCollectModule) }
 ]
 
 @NgModule({
