@@ -228,7 +228,16 @@ export class LoansComponent implements OnInit {
   }
 
 
-
+  editLoan(id) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        id: id,
+        action: "update",
+        from: "edit"
+      }
+    };
+    this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras)
+  }
 
   statusChange(event) {
     this.statusDropdownClicked = true;
@@ -341,7 +350,7 @@ export class LoansComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['provider', 'cdl']);
+    this.router.navigate(['provider', 'cdl','loans']);
     // this.location.back();
   }
 
