@@ -1964,7 +1964,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.paymentLength = Object.keys(this.paymentDetails).length;
                 this.checkJcash = true
                 this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
-                alert(this.jcashamount)
+               
                 this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;
                 if (this.checkJcash && this.paymentDetails.amountRequiredNow > this.jcashamount) {
                     this.payAmount = this.paymentDetails.amountRequiredNow - this.jcashamount;
