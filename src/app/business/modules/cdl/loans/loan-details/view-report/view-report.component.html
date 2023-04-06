@@ -106,12 +106,11 @@
                                         {{reportData.totalCashWithdrawal}}
                                     </th>
                                 </tr>
-
-
-
-
                             </tbody>
                         </table>
+                    </div>
+                    <div class="text-center my-2" *ngIf="reportData.perfiosExcelpath">
+                      <a [href]="reportData.perfiosExcelpath" class="btn btn-primary">Download Report</a>
                     </div>
                 </div>
                 <!-- <div class="btn btn-primary mt-3" (click)="goHome()">
@@ -270,7 +269,7 @@
                         <div class="col-md-4 no-padding-small">
                             <div class="d-flex">
                                 <div class="details-title-equifax mr-3">Mobile : </div>
-                                <div class="details-sub-title-equifax" *ngIf="equifaxReportData.IDAndContactInfo.PhoneInfo && equifaxReportData.IDAndContactInfo.PhoneInfo[0] && 
+                                <div class="details-sub-title-equifax" *ngIf="equifaxReportData.IDAndContactInfo.PhoneInfo && equifaxReportData.IDAndContactInfo.PhoneInfo[0] &&
                                     equifaxReportData.IDAndContactInfo.PhoneInfo[0].Number">
                                     {{equifaxReportData.IDAndContactInfo.PhoneInfo[0].Number}}
                                 </div>
@@ -302,7 +301,7 @@
                         <div class="col-md-4 no-padding-small">
                             <div class="d-flex">
                                 <div class="details-title-equifax mr-3">Alt. Home/Other No : </div>
-                                <div class="details-sub-title-equifax" *ngIf="equifaxReportData.IDAndContactInfo.PhoneInfo && equifaxReportData.IDAndContactInfo.PhoneInfo[1] && 
+                                <div class="details-sub-title-equifax" *ngIf="equifaxReportData.IDAndContactInfo.PhoneInfo && equifaxReportData.IDAndContactInfo.PhoneInfo[1] &&
                                                         equifaxReportData.IDAndContactInfo.PhoneInfo[1].Number">
                                     {{equifaxReportData.IDAndContactInfo.PhoneInfo[1].Number}}
                                 </div>
@@ -335,7 +334,7 @@
                             <div class="d-flex">
                                 <div class="details-title-equifax mr-3">Alt. Office : </div>
                                 <div class="details-sub-title-equifax"
-                                    *ngIf="equifaxReportData.IDAndContactInfo.PhoneInfo && equifaxReportData.IDAndContactInfo.PhoneInfo[2] && 
+                                    *ngIf="equifaxReportData.IDAndContactInfo.PhoneInfo && equifaxReportData.IDAndContactInfo.PhoneInfo[2] &&
                                                                             equifaxReportData.IDAndContactInfo.PhoneInfo[2].Number">
                                     {{equifaxReportData.IDAndContactInfo.PhoneInfo[2].Number}}
                                 </div>
@@ -368,7 +367,7 @@
                             <div class="d-flex">
                                 <div class="details-title-equifax mr-3">Alt. Mobile : </div>
                                 <div class="details-sub-title-equifax"
-                                    *ngIf="equifaxReportData.IDAndContactInfo.PhoneInfo && equifaxReportData.IDAndContactInfo.PhoneInfo[3] && 
+                                    *ngIf="equifaxReportData.IDAndContactInfo.PhoneInfo && equifaxReportData.IDAndContactInfo.PhoneInfo[3] &&
                                                                                                 equifaxReportData.IDAndContactInfo.PhoneInfo[3].Number">
                                     {{equifaxReportData.IDAndContactInfo.PhoneInfo[3].Number}}
                                 </div>
@@ -401,7 +400,7 @@
                             <div class="d-flex">
                                 <div class="details-title-equifax mr-3">Email : </div>
                                 <div class="details-sub-title-equifax"
-                                    *ngIf="equifaxReportData.IDAndContactInfo.EmailAddressInfo && equifaxReportData.IDAndContactInfo.EmailAddressInfo[0] && 
+                                    *ngIf="equifaxReportData.IDAndContactInfo.EmailAddressInfo && equifaxReportData.IDAndContactInfo.EmailAddressInfo[0] &&
                                                                                                                     equifaxReportData.IDAndContactInfo.EmailAddressInfo[0].EmailAddress">
                                     {{equifaxReportData.IDAndContactInfo.EmailAddressInfo[0].EmailAddress}}
                                 </div>
@@ -516,7 +515,7 @@
                             <div class="d-flex">
                                 <div class="details-title-equifax mr-3 font-weight-bold">Address Information 1 : </div>
                                 <!-- <div class="details-sub-title-equifax"
-                                    *ngIf="equifaxReportData.InquiryRequestInfo.InquiryEmails && equifaxReportData.InquiryRequestInfo.InquiryEmails[0] && 
+                                    *ngIf="equifaxReportData.InquiryRequestInfo.InquiryEmails && equifaxReportData.InquiryRequestInfo.InquiryEmails[0] &&
                                                                                                                                         equifaxReportData.InquiryRequestInfo.InquiryEmails[0].EmailAddress">
                                     {{equifaxReportData.InquiryRequestInfo.InquiryEmails[0].EmailAddress}}
                                 </div> -->
