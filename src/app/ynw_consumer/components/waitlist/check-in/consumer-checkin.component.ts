@@ -1849,7 +1849,17 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const post_Data = this.generateInputforCheckin();
         const param = { 'account': this.account_id };
         this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
-            .subscribe(data => { this.paymentDetails = data; },
+            .subscribe(data => { this.paymentDetails = data; 
+                this.checkJcash = true
+                this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
+                this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;
+                if (this.checkJcash && this.paymentDetails.amountRequiredNow > this.jcashamount) {
+                  this.payAmount = this.paymentDetails.amountRequiredNow - this.jcashamount;
+          
+                } else if (this.checkJcash && this.paymentDetails.amountRequiredNow <= this.jcashamount) {
+                  this.payAmount = 0;
+                }
+            },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
@@ -1954,6 +1964,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.paymentLength = Object.keys(this.paymentDetails).length;
                 this.checkJcash = true
                 this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
+                alert(this.jcashamount)
                 this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;
                 if (this.checkJcash && this.paymentDetails.amountRequiredNow > this.jcashamount) {
                     this.payAmount = this.paymentDetails.amountRequiredNow - this.jcashamount;
