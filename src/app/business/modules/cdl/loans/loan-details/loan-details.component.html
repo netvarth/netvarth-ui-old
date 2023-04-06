@@ -657,20 +657,22 @@
             *ngIf="accountaggregatingStatusShowing && !(bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0])">
             <div class="col-md-12 no-padding-small">
               <div>
-                <div class="btn btn-warning" [class.approved]="accountaggregatingStatus == 'Approved'">Statement
-                  Aggregation
-                  {{accountaggregatingStatus}}
+                <div class="btn btn-warning" *ngIf="!accountaggregatingStatus || accountaggregatingStatus == 'InProgress'" [class.approved]="accountaggregatingStatus == 'Approved'">
+                  Waiting for Customer Consent
+                </div>
+                <div class="btn btn-warning" *ngIf="accountaggregatingStatus == 'Approved'"
+                  [class.approved]="accountaggregatingStatus == 'Approved'">Account Aggregator Statement Fetching in Progress
                 </div>
               </div>
             </div>
             <div class="col-md-12 no-padding-small mt-3" *ngIf="accountaggregatingStatus == 'Approved'">
               <div>
-                <div class="btn btn-primary" (click)="refreshAccountAggregator()">Refresh
+                <div class="btn btn-primary" (click)="refreshAccountAggregator()">
+                  Refresh
                 </div>
               </div>
             </div>
           </div>
-
           <br>
         </div>
 

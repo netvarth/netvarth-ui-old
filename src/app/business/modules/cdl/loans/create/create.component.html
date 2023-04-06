@@ -1458,7 +1458,7 @@
                             Upload Statements
                           </label>
                           <input #bankAttach type='file' formControlName="bankstatements"
-                            (change)="filesSelected($event,'bank')" accept="image/*;capture=camera" />
+                            (change)="filesSelected($event,'bank')" accept=".pdf" />
                         </div>
                         <div class="img-section clearfix"
                           *ngIf="selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0">
