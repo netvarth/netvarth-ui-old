@@ -551,16 +551,17 @@ export class CatalogItemComponent implements OnInit {
   }
 
   checkout() {
+    // console.log(this.businessProfile)
     this.userType = '';
     if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner')) {
       this.userType = (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') ? 'provider' : 'consumer';
     }
-
+  
     if (!this.itemId) {
       const businessObject = {
         'bname': this.businessjson.businessName,
         'blocation': this.businessProfile.baseLocation.place,
-        'logo': this.businessProfile.logo.url
+        'logo': this.businessProfile.logo != undefined? this.businessProfile.logo.url: ''
       };
 
       this.lStorageService.setitemonLocalStorage('order', this.orderList);
