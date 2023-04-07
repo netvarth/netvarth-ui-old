@@ -29,6 +29,7 @@ export class CreateDealerComponent implements OnInit {
   bankverification: any = false;
   verifyingUID: any;
   branches: any;
+  apiloading: any = false;
   selectedMessage = {
     files: [],
     base64: [],
@@ -407,6 +408,7 @@ export class CreateDealerComponent implements OnInit {
   }
 
   filesSelected(event, type) {
+    this.apiloading = true;
     console.log("Event ", event, type)
     const input = event.target.files;
     console.log("input ", input)
@@ -440,10 +442,12 @@ export class CreateDealerComponent implements OnInit {
               this.uploadAudioVideo(s3Urls).then(
                 (dataS3Url) => {
                   console.log(dataS3Url);
+                  this.apiloading = false;
                   console.log("Sending Attachment Success");
                 });
             }
           }, error => {
+            this.apiloading = false;
             this.snackbarService.openSnackBar(error,
               { panelClass: "snackbarerror" }
             );

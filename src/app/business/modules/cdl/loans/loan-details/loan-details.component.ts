@@ -37,6 +37,7 @@ export class LoanDetailsComponent implements OnInit {
   IFSCCode: string = '';
   bankName: string = '';
   emiPaidNo: number;
+  perfiosError: any;
   cibilScore: any;
   mafilScore: number;
   perfiosScore: number;
@@ -232,7 +233,7 @@ export class LoanDetailsComponent implements OnInit {
   sendDigitalAgreement() {
     this.cdlservice.sendDigitalDocument(this.loanId).subscribe((data: any) => {
       if (data) {
-        this.snackbarService.openSnackBar("Digital Document Sent Successfully", { 'panelClass': 'snackbarerror' })
+        this.snackbarService.openSnackBar("Digital Document Sent Successfully")
       }
     },
       (error) => {
@@ -243,7 +244,18 @@ export class LoanDetailsComponent implements OnInit {
   sendInsuranceDocument() {
     this.cdlservice.sendInsuranceDocument(this.loanId).subscribe((data: any) => {
       if (data) {
-        this.snackbarService.openSnackBar("Insurance Document Sent Successfully", { 'panelClass': 'snackbarerror' })
+        this.snackbarService.openSnackBar("Insurance Document Sent Successfully")
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
+
+  sendEnach() {
+    this.cdlservice.sendEnach(this.loanId).subscribe((data: any) => {
+      if (data) {
+        this.snackbarService.openSnackBar("Enach Link Sent Successfully")
       }
     },
       (error) => {
@@ -355,6 +367,10 @@ export class LoanDetailsComponent implements OnInit {
       if (data) {
         this.perfiosData = data;
       }
+    }, (error) => {
+      this.perfiosError = error.error;
+      console.log("error", error)
+      // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
     });
   }
 

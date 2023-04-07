@@ -322,6 +322,20 @@ th {
   color: red !important;
 }
 
+.btn-warning {
+  background-color: orange !important;
+  padding: 10px !important;
+  color: #fff !important;
+  /* font-weight: 600!important; */
+}
+
+.btn-success {
+  background-color: green !important;
+  padding: 10px !important;
+  color: #fff !important;
+  /* font-weight: 600!important; */
+}
+
 
 @media screen and (max-width: 576px) and (min-width: 0px) {
   .desktop-only {

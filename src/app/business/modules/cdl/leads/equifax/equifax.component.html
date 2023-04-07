@@ -1,0 +1,109 @@
+<section class="card">
+  <div class="pointer-cursor">
+    <div class="d-flex">
+      <div> <i class="fa fa-arrow-left mr-2" aria-hidden="true" (click)="goBack()"></i></div>
+      <div class="text-primary heading" class="back-btn">Equifax</div>
+    </div>
+  </div>
+</section>
+
+
+<section *ngIf="loading">
+  <div>
+    <app-skeleton-loading></app-skeleton-loading>
+  </div>
+</section>
+
+
+<div *ngIf="!loading">
+  <div class="card">
+    <p-table [responsive]="true" responsiveLayout="stack" scrollHeight="flex" #dt1 [value]="equifaxList" dataKey="id"
+      [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+      styleClass="p-datatable-customers p-datatable-gridlines" [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [globalFilterFields]="['enquireId','customer.Name','createdDate','status']">
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="col-md-4">
+            <span>
+              <input pInputText type="text" [style]="{'width':'100%'}" class="search-field"
+                (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword"
+                style="width:100%" />
+            </span>
+          </div>
+          <div class="col-md-4"></div>
+          <div class="col-md-4 text-right">
+            <button pButton pRipple type="button" class="p-button-primary btn-primary" (click)="checkEquifax()">Check Equifax</button>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Id
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Customer Name
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Customer Phone
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Created Date
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              More Actions
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-equifax>
+        <tr class="mobile-card">
+          <td>
+            <span class="d-lg-none d-md-none">Id : </span><span
+              class="table-column-data">{{equifax.id}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Customer Name : </span><span
+              class="table-column-data">{{equifax.customerFirstName}}</span>&nbsp;
+              <span class="table-column-data">{{equifax.customerLastName}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Customer Phone : </span>
+            <span class="table-column-data">{{equifax.customerPhone}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Date : </span>
+            <span class="table-column-data">
+              {{equifax.createdDate}}</span>
+          </td>
+          <td>
+            <div class="text-center">
+              <div class="d-flex">
+                <!-- <button *ngIf="loan.spInternalStatus=='Draft'" pButton pRipple type="button"
+                  class="p-button-primary mr-2" (click)="updateLoan(loan.uid, 'update', 'Draft')">Update</button> -->
+                <button pButton pRipple type="button" class="p-button-primary btn-primary"
+                  (click)="convertToLoan(equifax.id)">Convert to Loan</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <br class="d-lg-none d-md-none">
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">No Equifax found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

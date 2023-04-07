@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { GooglemapModule } from '../../googlemap/googlemap.module';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { LoadingSpinnerModule } from '../../../../../shared/modules/loading-spinner/loading-spinner.module';
 
 
 const routes: Routes = [
@@ -49,6 +50,7 @@ const routes: Routes = [
     MatIconModule,
     GooglemapModule,
     NgxMatSelectSearchModule,
+    LoadingSpinnerModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [

@@ -25,7 +25,7 @@ export class CdlComponent implements OnInit {
     { name: 'Away', displayName: 'Away' },
     { name: 'NotAvailable', displayName: 'Not Available' }
   ];
-  allLoansCount: any;
+  allLoansCount: any = 0;
   dealers: any;
   customersList: any;
   customers: any;
@@ -129,9 +129,19 @@ export class CdlComponent implements OnInit {
       this.capabilities = this.cdlservice.getCapabilitiesConfig(this.user);
       console.log("Capabilities", this.capabilities);
     }
-    this.getApprovedloansCount();
-    this.getPendingloansCount();
-    this.getRejectedloansCount();
+    this.getLoansCounts().then((data) => {
+      if (data) {
+        this.getBarChartData();
+        this.getPieChartData();
+      }
+    });
+
+    this.getDealersCounts().then((data) => {
+
+    });
+    // this.getApprovedloansCount();
+    // this.getPendingloansCount();
+    // this.getRejectedloansCount();
     this.getLeadsCount();
     this.getLoans();
     this.getDealers();
@@ -142,9 +152,56 @@ export class CdlComponent implements OnInit {
     this.getBarChartData();
     this.getUsers();
     this.getDashboardStats();
+
     if (this.capabilities && this.capabilities.canCreateBranch) {
       this.getBranchesByFilter();
     }
+  }
+
+
+  getLoansCounts() {
+    return new Promise((resolve, reject) => {
+      this.getLoansCount().then((count) => {
+        this.allLoansCount = count;
+      });
+
+      this.getLoansCount({ 'spInternalStatus-eq': 'SchemeConfirmed' }).then((count) => {
+        this.approvedLoansCount = count;
+      });
+
+      this.getLoansCount({ 'spInternalStatus-eq': 'ApprovalRequired' }).then((count) => {
+        this.pendingLoansCount = count;
+      });
+
+      this.getLoansCount({ 'applicationStatus-eq': 'Rejected' }).then((count) => {
+        this.rejectedLoansCount = count;
+      });
+
+      resolve(true);
+    })
+  }
+
+
+  getDealersCounts() {
+    return new Promise((resolve, reject) => {
+      this.getDealersCount().then((count) => {
+        this.allDealersCount = count;
+      });
+
+      this.getDealersCount({ 'spInternalStatus-eq': 'Approved' }).then((count) => {
+        this.approvedDealersCount = count;
+      });
+
+      this.getDealersCount({ 'spInternalStatus-eq': 'ApprovalPending' }).then((count) => {
+        this.requestedDealersCount = count;
+      });
+
+      this.getDealersCount({ 'spInternalStatus-eq': 'Rejected' }).then((count) => {
+        this.rejectedDealersCount = count;
+      });
+
+      resolve(true);
+    })
   }
 
 
@@ -220,14 +277,12 @@ export class CdlComponent implements OnInit {
     api_filter['spInternalStatus-neq'] = 'Draft';
     this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
       this.dealers = data;
-      this.allDealersCount = data.length;
     });
   }
 
   getDealersByFilter(api_filter) {
     this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
       this.dealers = data;
-      this.allDealersCount = data.length;
     });
   }
 
@@ -236,7 +291,6 @@ export class CdlComponent implements OnInit {
     api_filter['spInternalStatus-eq'] = 'Approved';
     this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
       this.approvedDealers = data;
-      this.approvedDealersCount = data.length;
     });
   }
 
@@ -246,7 +300,6 @@ export class CdlComponent implements OnInit {
     api_filter['spInternalStatus-eq'] = 'ApprovalPending';
     this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
       this.dealersRequested = data;
-      this.requestedDealersCount = data.length;
     });
   }
 
@@ -256,7 +309,6 @@ export class CdlComponent implements OnInit {
     api_filter['spInternalStatus-eq'] = 'Rejected';
     this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
       this.dealersRejected = data;
-      this.rejectedDealersCount = data.length;
     });
   }
 
@@ -288,7 +340,7 @@ export class CdlComponent implements OnInit {
 
 
     this.pieChartData = {
-      labels: ['Leads', 'Scheme Confirmed', 'Pending', 'Rejected'],
+      labels: ['Leads', 'Scheme Confirmed', 'Approval Required', 'Rejected'],
       datasets: [
         {
           data: [this.leadsCount, this.approvedLoansCount, this.pendingLoansCount, this.rejectedLoansCount],
@@ -406,10 +458,25 @@ export class CdlComponent implements OnInit {
     api_filter['spInternalStatus-neq'] = 'Draft';
     this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
       this.statusLoansList = data
-      this.allLoansCount = data.length
       this.loans = data;
       this.getBarChartData();
     });
+  }
+
+  getLoansCount(filter = {}) {
+    return new Promise((resolve, reject) => {
+      this.cdlservice.getLoansCountByFilter(filter).subscribe((data: any) => {
+        resolve(data);
+      });
+    })
+  }
+
+  getDealersCount(filter = {}) {
+    return new Promise((resolve, reject) => {
+      this.cdlservice.getDealersCountByFilter(filter).subscribe((data: any) => {
+        resolve(data);
+      });
+    })
   }
 
   getBranchesByFilter(api_filter = {}) {
@@ -494,12 +561,12 @@ export class CdlComponent implements OnInit {
   }
 
   checkEquifax() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        src: 'equifax'
-      }
-    };
-    this.router.navigate(['provider', 'cdl', 'equifax', 'checkequifax'], navigationExtras);
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     src: 'equifax'
+    //   }
+    // };
+    this.router.navigate(['provider', 'cdl', 'leads', 'equifax']);
   }
 
   requestedDealers() {
@@ -556,43 +623,37 @@ export class CdlComponent implements OnInit {
   }
 
 
-  getApprovedloansCount() {
-    const api_filter = {};
-    api_filter['spInternalStatus-eq'] = 'SchemeConfirmed';
-    this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
-      if (data && data.length > 0) {
-        this.approvedLoansCount = data.length
-        this.getBarChartData();
-        this.getPieChartData();
-      }
-    });
-  }
+  // getApprovedloansCount() {
+  //   const api_filter = {};
+  //   api_filter['spInternalStatus-eq'] = 'SchemeConfirmed';
+  //   this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
+  //     if (data && data.length > 0) {
 
-  getPendingloansCount() {
-    const api_filter = {};
-    api_filter['spInternalStatus-eq'] = 'ApprovalRequired';
-    this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
-      if (data && data.length > 0) {
-        this.pendingLoansCount = data.length
-        this.getBarChartData();
-        this.getPieChartData();
+  //     }
+  //   });
+  // }
 
-      }
-    });
-  }
+  // getPendingloansCount() {
+  //   const api_filter = {};
+  //   api_filter['spInternalStatus-eq'] = 'ApprovalRequired';
+  //   this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
+  //     if (data && data.length > 0) {
+  //       this.getBarChartData();
+  //       this.getPieChartData();
+  //     }
+  //   });
+  // }
 
-  getRejectedloansCount() {
-    const api_filter = {};
-    api_filter['applicationStatus-eq'] = 'Rejected';
-    this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
-      if (data && data.length > 0) {
-        this.rejectedLoansCount = data.length
-        this.getBarChartData();
-        this.getPieChartData();
-
-      }
-    });
-  }
+  // getRejectedloansCount() {
+  //   const api_filter = {};
+  //   api_filter['applicationStatus-eq'] = 'Rejected';
+  //   this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
+  //     if (data && data.length > 0) {
+  //       this.getBarChartData();
+  //       this.getPieChartData();
+  //     }
+  //   });
+  // }
 
 
   transform(event) {

@@ -483,7 +483,8 @@
                   <div class="customerScoreLabel">Perfios Banking Habits</div>
                   <div class="customerScoreInfoLabel" *ngIf="perfiosData && perfiosData.bankingHabits">
                     {{getStringWithSpaces(perfiosData.bankingHabits)}}</div>
-                  <div class="btn btn-primary" (click)="viewReport('perfios',perfiosData)">View Report</div>
+                  <div class="btn btn-primary" *ngIf="perfiosData" (click)="viewReport('perfios',perfiosData)">View Report</div>
+                  <div class="font-weight-bold text-danger" *ngIf="!perfiosData && perfiosError">{{perfiosError}}</div>
                 </div>
               </div>
               <!-- <div class="text-right">
@@ -657,11 +658,11 @@
             *ngIf="accountaggregatingStatusShowing && !(bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0])">
             <div class="col-md-12 no-padding-small">
               <div>
-                <div class="btn btn-warning" *ngIf="!accountaggregatingStatus || accountaggregatingStatus == 'InProgress'" [class.approved]="accountaggregatingStatus == 'Approved'">
-                  Waiting for Customer Consent
+                <div *ngIf="!accountaggregatingStatus || accountaggregatingStatus == 'InProgress'" [class.approved]="accountaggregatingStatus == 'Approved'">
+                 <span class="btn-warning">Waiting for Customer Consent</span>
                 </div>
-                <div class="btn btn-warning" *ngIf="accountaggregatingStatus == 'Approved'"
-                  [class.approved]="accountaggregatingStatus == 'Approved'">Account Aggregator Statement Fetching in Progress
+                <div class="btn-success" *ngIf="accountaggregatingStatus == 'Approved'">
+                  Account Aggregator Statement Fetching in Progress
                 </div>
               </div>
             </div>
@@ -894,24 +895,34 @@
             <div class="mx-md-2 mt-2">
               <div class="btn btn-primary" (click)="viewconsumerAgreementLetter()">View Sanction Letter</div>
             </div>
-
           </div>
-          <div class="d-lg-flex" *ngIf="loanData && loanData.isAcceptanceOtpUpdated">
-            <div class="mt-2" *ngIf="digitalDocumenId && digitalDocumenId!=''">
-              <div class="btn btn-primary" (click)="viewDigitalDocument()">View Agreement</div>
+          <div *ngIf="loanData && loanData.isAcceptanceOtpUpdated">
+            <div class="d-lg-flex" >
+              <div class="mt-2" *ngIf="digitalDocumenId && digitalDocumenId!=''">
+                <div class="btn btn-primary mr-2" (click)="viewDigitalDocument()">View Agreement</div>
+              </div>
+              <!-- *ngIf="!digitalDocumenId || (digitalDocumenId && digitalDocumenId=='')" -->
+              <div class="mt-2">
+                <div class="btn btn-primary" (click)="sendDigitalAgreement()">Send Agreement</div>
+              </div>
             </div>
 
-            <div class="mt-2" *ngIf="!digitalDocumenId || (digitalDocumenId && digitalDocumenId=='')">
-              <div class="btn btn-primary" (click)="sendDigitalAgreement()">Send Agreement</div>
+            <div class="d-lg-flex" >
+              <div class="mt-2 mr-2">
+                <div class="btn btn-primary" (click)="viewInsuranceDocument()">View Insurance Agreement</div>
+              </div>
+              <!-- *ngIf="!digitalInsuranceId || (digitalInsuranceId && digitalInsuranceId=='')" -->
+              <div class="mt-2">
+                <div class="btn btn-primary" (click)="sendInsuranceDocument()">Send Insurance Agreement</div>
+              </div>
             </div>
 
-            <div class="mx-md-2 mt-2" *ngIf="digitalInsuranceId && digitalInsuranceId!=''">
-              <div class="btn btn-primary" (click)="viewInsuranceDocument()">View Insurance Agreement</div>
+            <div class="d-lg-flex">
+              <div class="mt-2">
+                <div class="btn btn-primary" (click)="sendEnach()">Send Enach</div>
+              </div>
             </div>
 
-            <div class="mx-md-2 mt-2" *ngIf="!digitalInsuranceId || (digitalInsuranceId && digitalInsuranceId=='')">
-              <div class="btn btn-primary" (click)="sendInsuranceDocument()">View Insurance Agreement</div>
-            </div>
           </div>
           <div class="d-lg-flex">
             <div class="mt-2">

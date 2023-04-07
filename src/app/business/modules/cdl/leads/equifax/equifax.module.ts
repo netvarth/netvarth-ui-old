@@ -1,14 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LeadsComponent } from './leads.component';
+import { EquifaxComponent } from './equifax.component';
 import { RouterModule, Routes } from '@angular/router';
-import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
-import { TableModule } from 'primeng/table';
-import { CalendarModule } from 'primeng/calendar';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputTextModule } from 'primeng/inputtext';
+import { SkeletonLoadingModule } from '../../../../../shared/modules/skeleton-loading/skeleton-loading.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,21 +15,23 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { PagerModule } from '../../../../shared/modules/pager/pager.module';
-import { SkeletonLoadingModule } from '../../../../shared/modules/skeleton-loading/skeleton-loading.module';
-import { SelectSchemeModule } from '../loans/select-scheme/select-scheme.module';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { TableModule } from 'primeng/table';
+import { PagerModule } from '../../../../../shared/modules/pager/pager.module';
+import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
+import { SelectSchemeModule } from '../../loans/select-scheme/select-scheme.module';
 
 const routes: Routes = [
-  { path: '', component: LeadsComponent },
-  { path: 'create', loadChildren: () => import('./create/create.module').then(m => m.CreateModule) },
-  { path: 'checkequifax', loadChildren: () => import('./create/create.module').then(m => m.CreateModule) },
-  { path: 'create/:id', loadChildren: () => import('./create/create.module').then(m => m.CreateModule) },
-  { path: 'equifax', loadChildren: () => import('./equifax/equifax.module').then(m => m.EquifaxModule) }
+  { path: '', component: EquifaxComponent }
 ]
 
 @NgModule({
   declarations: [
-    LeadsComponent
+    EquifaxComponent
   ],
   imports: [
     CommonModule,
@@ -67,9 +63,6 @@ const routes: Routes = [
     ButtonModule,
     InputTextModule,
     [RouterModule.forChild(routes)]
-  ],
-  exports: [
-    LeadsComponent
   ]
 })
-export class LeadsModule { }
+export class EquifaxModule { }

@@ -277,6 +277,9 @@ export class CreateComponent implements OnInit {
       if (params && params.from) {
         this.from = params.from;
       }
+      if (params && params.type) {
+        this.type = params.type;
+      }
       if (params && params.type && params.type == 'enquire') {
         if (params && params.enquireId) {
           this.enquireUid = params.enquireId;
@@ -1421,9 +1424,12 @@ export class CreateComponent implements OnInit {
 
 
   goBack() {
-    console.log("this.from", this.from)
+    console.log("this.type", this.type)
     if (this.from && this.from == 'edit') {
       this.location.back();
+    }
+    else if (this.type && this.type == 'equifax') {
+      this.router.navigate(['provider', 'cdl', 'leads', 'equifax']);
     }
     else {
       this.router.navigate(['provider', 'cdl']);

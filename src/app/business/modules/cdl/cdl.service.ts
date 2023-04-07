@@ -72,6 +72,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null, filter);
   }
 
+  getEquifaxByFilter(filter = {}) {
+    const url = 'provider/equifax';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
   getLeadsByUid(uid) {
     const url = 'provider/enquire/' + uid;
     return this.servicemeta.httpGet(url, null);
@@ -116,6 +121,11 @@ export class CdlService {
 
   getLoansCountByFilter(filter = {}) {
     const url = 'provider/loanapplication/count';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
+  getDealersCountByFilter(filter = {}) {
+    const url = 'provider/partner/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
 
@@ -636,6 +646,11 @@ export class CdlService {
 
   sendInsuranceDocument(id) {
     const url = 'provider/loanapplication/digitalinsurance/' + id;
+    return this.servicemeta.httpPost(url, null);
+  }
+
+  sendEnach(id) {
+    const url = 'provider/loanapplication/emandate/account/' + id;
     return this.servicemeta.httpPost(url, null);
   }
 
