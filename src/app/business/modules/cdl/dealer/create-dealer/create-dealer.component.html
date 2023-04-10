@@ -138,7 +138,7 @@
                   <label for='photoAttach' (click)="photoAttach.click()">
                     Upload File
                   </label>
-                  <input #photoAttach type='file' formControlName="photo" (change)="filesSelected($event,'photo')"
+                  <input #photoAttach type='file' (change)="filesSelected($event,'photo')"
                     accept="image/*;capture=camera" />
                 </div>
               </div>
@@ -178,7 +178,7 @@
                   <label for='storeAttach' (click)="storeAttach.click()">
                     Upload File
                   </label>
-                  <input #storeAttach type='file' formControlName="storephoto" (change)="filesSelected($event,'store')"
+                  <input #storeAttach type='file' (change)="filesSelected($event,'store')"
                     accept="image/*;capture=camera" />
                 </div>
               </div>
@@ -241,7 +241,7 @@
                   <label (click)="aadharAttach.click()">
                     Upload File
                   </label>
-                  <input #aadharAttach type='file' formControlName="aadharattachment"
+                  <input #aadharAttach type='file'
                     (change)="filesSelected($event,'aadhar')" accept="image/*;capture=camera" />
                 </div>
               </div>
@@ -299,7 +299,7 @@
                   <label (click)="panAttach.click()">
                     Upload File
                   </label>
-                  <input #panAttach type='file' formControlName="panattachment" (change)="filesSelected($event,'pan')"
+                  <input #panAttach type='file' (change)="filesSelected($event,'pan')"
                     accept="image/*;capture=camera" />
                 </div>
               </div>
@@ -343,7 +343,7 @@
                   <label for='chequeAttach' (click)="chequeAttach.click()">
                     Upload File
                   </label>
-                  <input #chequeAttach type='file' formControlName="cheque" (change)="filesSelected($event,'cheque')"
+                  <input #chequeAttach type='file' (change)="filesSelected($event,'cheque')"
                     accept="image/*;capture=camera" />
                 </div>
               </div>
@@ -629,7 +629,7 @@
                   <label for='gstAttach' (click)="gstAttach.click()">
                     Upload File
                   </label>
-                  <input #gstAttach type='file' formControlName="gstphoto" (change)="filesSelected($event,'gst')"
+                  <input #gstAttach type='file' (change)="filesSelected($event,'gst')"
                     accept="image/*;capture=camera" />
                 </div>
               </div>
