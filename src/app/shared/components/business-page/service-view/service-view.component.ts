@@ -219,7 +219,6 @@ export class ServiceViewComponent implements OnInit {
       this.login_countryCode = this.login_details.countryCode;
     }
     console.log("Image Galley :", this.galleryenabledArr)
-
     const _this = this;
     _this.accountIdExists = false;
     if (_this.sharedFunctionobj.isBusinessOwner()) {
