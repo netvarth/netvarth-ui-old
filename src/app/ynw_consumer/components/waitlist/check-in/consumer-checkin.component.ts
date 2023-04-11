@@ -2869,7 +2869,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             const question = new Blob([JSON.stringify(questions)], { type: 'application/json' });
             dataToSend.append('answer', answer);
             dataToSend.append('question', question);
-            this.shared_services.validateConsumerOneTimeQuestionnaire(dataToSend, this.account_id, '').subscribe((data: any) => {
+            this.shared_services.validateConsumerOneTimeQuestionnaire(dataToSend, this.account_id, this.providerConsumerId).subscribe((data: any) => {
                 if (data.length === 0) {
                     this.submitOneTimeInfo().then(
                         (status) => {
@@ -2968,30 +2968,28 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     submitOneTimeInfo() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
-                const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
-                const dataToSend: FormData = new FormData();
-                if (_this.oneTimeInfo.files) {
-                    for (const pic of _this.oneTimeInfo.files) {
-                        dataToSend.append('files', pic, pic['name']);
-                    }
-                }
-                const blobpost_Data = new Blob([JSON.stringify(_this.oneTimeInfo.answers)], { type: 'application/json' });
-                dataToSend.append('question', blobpost_Data);
-                _this.subs.sink = _this.shared_services.submitCustomerOnetimeInfo(dataToSend, activeUser.id, _this.account_id).subscribe((data: any) => {
-                    resolve(true);
-                },
-                    error => {
-                        _this.isClickedOnce = false;
-                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                        _this.disablebutton = false;
-                        resolve(false);
-                    });
-            } else {
-                resolve(true);
+          if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+            const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
+            const dataToSend: FormData = new FormData();
+            if (_this.oneTimeInfo.files) {
+              for (const pic of _this.oneTimeInfo.files) {
+                dataToSend.append('files', pic, pic['name']);
+              }
             }
+            const blobpost_Data = new Blob([JSON.stringify(_this.oneTimeInfo.answers)], { type: 'application/json' });
+            dataToSend.append('question', blobpost_Data);
+            _this.subs.sink = _this.sharedServices.submitCustomerOnetimeInfo(dataToSend, activeUser.id, _this.account_id).subscribe((data: any) => {
+              resolve(true);
+            }, error => {
+              _this.isClickedOnce = false;
+              _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+              resolve(false);
+            });
+          } else {
+            resolve(true);
+          }
         });
-    }
+      }
     setAnalytics(source?) {
         const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
 
