@@ -148,6 +148,8 @@ export class ServiceViewComponent implements OnInit {
   serviceType;
 
   back;
+  login_details: any;
+  login_countryCode: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public shared_services: SharedServices,
@@ -163,6 +165,7 @@ export class ServiceViewComponent implements OnInit {
     private dateTimeProcessor: DateTimeProcessor,
     public sharedFunctionobj: SharedFunctions,
     private authService: AuthService,
+    public shared_functions: SharedFunctions,
     //  private observer: BreakpointObserver,
     private dialog: MatDialog,
     private activaterouterobj: ActivatedRoute) {
@@ -211,7 +214,10 @@ export class ServiceViewComponent implements OnInit {
     responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
   }
   ngOnInit() {
-
+    this.login_details =this.shared_functions.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials')); 
+    if(this.login_details && this.login_details.countryCode){
+      this.login_countryCode = this.login_details.countryCode;
+    }
     console.log("Image Galley :", this.galleryenabledArr)
 
     const _this = this;

@@ -147,13 +147,34 @@
                                     <span class="service-li-title">Duration</span><br /><span
                                         class="bold service-li-value">{{HHMM}}</span>
                                 </li>
-                                <li
-                                    *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0 && servicedetails.showPrice">
-                                    <span class="service-li-title">Service Fee <i class="fa fa-info-circle" *ngIf="servicedetails.paymentDescription && servicedetails.paymentDescription !== ''"
+                                <li *ngIf="login_countryCode === '+91'"
+                                    >
+                                    <span *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0 && servicedetails.showPrice">
+                                        <span class="service-li-title">Service Fee <i class="fa fa-info-circle" *ngIf="servicedetails.paymentDescription && servicedetails.paymentDescription !== ''"
                                             [matTooltip]="servicedetails.paymentDescription"></i></span><br /><span
                                         class="bold price rupee-font service-li-value">{{servicedetails.totalAmount |
                                         currency:'&#8377;'}}</span>
+                                    </span>
+                                   
                                 </li>
+                                <li *ngIf="login_countryCode === undefined">
+                                    <span *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0 && servicedetails.showPrice">
+                                        <span class="service-li-title">Service Fee <i class="fa fa-info-circle" *ngIf="servicedetails.paymentDescription && servicedetails.paymentDescription !== ''"
+                                                [matTooltip]="servicedetails.paymentDescription"></i></span><br /><span
+                                            class="bold price rupee-font service-li-value">{{servicedetails.totalAmount |
+                                            currency:'&#8377;'}}</span>
+                                        </span>
+                                
+                            </li>
+                            <li *ngIf="login_countryCode !== '+91' && login_countryCode !== undefined">
+                                <span *ngIf="servicedetails && servicedetails.supportInternationalConsumer && servicedetails.internationalAmount != 0 && servicedetails.showPrice">
+                            <span class="service-li-title">Service Fee <i class="fa fa-info-circle" *ngIf="servicedetails.paymentDescription && servicedetails.paymentDescription !== ''"
+                                    [matTooltip]="servicedetails.paymentDescription"></i></span><br /><span
+                                class="bold price rupee-font service-li-value">{{servicedetails.internationalAmount |
+                                currency:'&#8377;'}}</span>
+                            </span>
+                            
+                        </li>
                                 <li
                                     *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount">
                                     <span class="service-li-title">Amount Required Now <i class="fa fa-info-circle" *ngIf="servicedetails.paymentDescription && servicedetails.paymentDescription !== ''"
