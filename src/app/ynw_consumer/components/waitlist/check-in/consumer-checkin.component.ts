@@ -299,6 +299,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     serviceTotalPrice: number;
     total_servicefee: number;
     accountConfig: any;
+    login_details: any;
+    login_countryCode: any;
     constructor(public fed_service: FormMessageDisplayService,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
@@ -326,6 +328,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private fileService: FileService,
         private configService: DomainConfigGenerator,
+        public shared_functions: SharedFunctions,
         @Inject(DOCUMENT) public document
     ) {
 
@@ -446,6 +449,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.login_details =this.shared_functions.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials')); 
+        if(this.login_details && this.login_details.countryCode){
+          this.login_countryCode = this.login_details.countryCode;
+        }
         const _this = this;
         _this.onResize();
         _this.serverDate = _this.lStorageService.getitemfromLocalStorage('sysdate');
@@ -796,7 +803,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 consumerNoteTitle: activeService.consumerNoteTitle,
                 maxBookingsAllowed: activeService.maxBookingsAllowed,
                 showOnlyAvailableSlots: activeService.showOnlyAvailableSlots,
-                showPrice: activeService.showPrice
+                showPrice: activeService.showPrice,
+                internationalAmount :  activeService.internationalAmount,
+        supportInternationalConsumer :  activeService.supportInternationalConsumer,
             };
             console.log("Active Service :", this.selectedService)
 

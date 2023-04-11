@@ -579,14 +579,41 @@
                                                                         <span><b>{{selectedQTime}}</b></span>
                                                                     </h6>
                                                                 </div>
-                                                                <div *ngIf="selectedService.price && !selectedService.isPrePayment && selectedService.showPrice">
-                                                                    <h6 class="text-primary service custom">
-                                                                        <span><b>Service Price : </b></span>
-                                                                        <span *ngIf="selectedService.price" class="rupee-font">
-                                                                            {{selectedService.price
-                                                                              | currency:'&#8377;'}}</span>
+                                                                <div>
+                                                                    <!-- *ngIf="selectedService.price && !selectedService.isPrePayment && selectedService.showPrice" -->
+                                                                    <span *ngIf="login_countryCode === '+91'">
+                                                                      <h6 class="custom text-primary"
+                                                                      *ngIf="selectedService.price && !selectedService.isPrePayment && selectedService.showPrice">
+                                                                      <b><span>Service Price :
+                                                                        </span>
+                                                                        <span class="rupee-font">
+                                                                          {{selectedService.price
+                                                                          | currency:'&#8377;'}}</span>
+                                                                      </b>
                                                                     </h6>
-                                                                </div>
+                                                                    </span>
+                                                                   <span *ngIf="login_countryCode !== '+91'">
+                                                                    <h6 class="custom text-primary"
+                                                                    *ngIf="selectedService.supportInternationalConsumer && selectedService.internationalAmount && !selectedService.isPrePayment && selectedService.showPrice">
+                                                                    <b><span>Service Price :
+                                                                      </span>
+                                                                      <span class="rupee-font">
+                                                                        {{selectedService.internationalAmount
+                                                                        | currency:'&#8377;'}}</span>
+                                                                    </b>
+                                                                  </h6>
+                                                                  <h6 class="custom text-primary"
+                                                                  *ngIf="!selectedService.supportInternationalConsumer && !selectedService.isPrePayment && selectedService.showPrice">
+                                                                  <b><span>Service Price :
+                                                                    </span>
+                                                                    <span class="rupee-font">
+                                                                      {{selectedService.price
+                                                                      | currency:'&#8377;'}}</span>
+                                                                  </b>
+                                                                </h6>
+                                                                   </span>
+                                                                    
+                                                                  </div>
                                                             </div>
                                                         </div>
                                                     </div>

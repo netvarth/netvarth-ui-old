@@ -197,6 +197,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
   accountConfig: any;
   selectedDay: string;
   jCouponMsg: any;
+  login_details: any;
+  login_countryCode: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private lStorageService: LocalStorageService,
@@ -218,7 +220,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     private providerServices: ProviderServices,
     private cdRef: ChangeDetectorRef,
     private fileService: FileService,
-    private configService: DomainConfigGenerator
+    private configService: DomainConfigGenerator,
+    public shared_functions: SharedFunctions,
   ) {
     this.subs.sink = this.activatedRoute.queryParams.subscribe(
       params => {
@@ -293,6 +296,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
   }
   ngOnInit(): void {
+    this.login_details =this.shared_functions.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials')); 
+    if(this.login_details && this.login_details.countryCode){
+      this.login_countryCode = this.login_details.countryCode;
+    }
+    
     const _this = this;
     this.onResize();
     this.serverDate = this.lStorageService.getitemfromLocalStorage('sysdate');
@@ -688,7 +696,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         serviceBookingType: activeService.serviceBookingType,
         date: activeService.date,
         dateTime: activeService.dateTime,
-        noDateTime: activeService.noDateTime
+        noDateTime: activeService.noDateTime,
+        internationalAmount :  activeService.internationalAmount,
+        supportInternationalConsumer :  activeService.supportInternationalConsumer,
       };
       console.log("Active Service :", this.selectedService)
       if (this.selectedService.noDateTime) {
@@ -1750,13 +1760,13 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     console.log(JSON.stringify(post_Data))
     this.subs.sink = this.sharedServices.addApptAdvancePayment(param, post_Data).subscribe(data => {
       this.paymentDetails = data;
-      
+      console.log("PaymentDetails:", this.paymentDetails);
       if (this.paymentDetails && this.paymentDetails.netTotal && this.serviceOptionApptt) {
         this.serviceTotalPrice = this.lStorageService.getitemfromLocalStorage('serviceTotalPrice');
 
         this.total_servicefee = this.paymentDetails.netTotal;
       }
-      console.log("PaymentDetails:", this.paymentDetails);
+     
       this.paymentLength = Object.keys(this.paymentDetails).length;
       this.checkJcash = true
       this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
@@ -1885,7 +1895,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
       // srvAnswerstoSend['answerLine'][0]['answer']['dataGridList'] = [];
       let newDataGrid = []
 
-      console.log("this.serviceOPtionInfo", serviceOPtionInfo.answers)
+     
       console.log("this.itemArray", itemArray)
       for (let i = 0; i < itemArray.length; i++) {
         // newDataGrid.push(itemArray[i].columnItem[0].answer.dataGridList[0])
@@ -1893,7 +1903,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
       }
       srvAnswerstoSend['answerLine'] = newDataGrid;
       console.log("this.srvAnswerstoSend", srvAnswerstoSend)
-      srvAnswerstoSend['questionnaireId'] = serviceOPtionInfo.answers.questionnaireId;
+      if(serviceOPtionInfo && serviceOPtionInfo.answers && serviceOPtionInfo.answers.questionnaireId){
+        srvAnswerstoSend['questionnaireId'] = serviceOPtionInfo.answers.questionnaireId;
+      }
+     
 
       post_Data['appmtFor'][0]['srvAnswers'] = srvAnswerstoSend;
       post_Data['srvAnswers'] = srvAnswerstoSend;
@@ -1904,12 +1917,15 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.paymentDetails = data;
         // this.jCouponMsg = this.paymentDetails.jCouponList.value.systemNote;
         console.log("PaymentDetailss:", this.paymentDetails);
+     
+        
         if (this.paymentDetails && this.paymentDetails.netTotal && this.serviceOptionApptt) {
           this.serviceTotalPrice = this.lStorageService.getitemfromLocalStorage('serviceTotalPrice');
 
           this.total_servicefee = this.paymentDetails.netTotal;
         }
         this.paymentLength = Object.keys(this.paymentDetails).length;
+        // alert(this.paymentLength)
         this.checkJcash = true
         this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
         this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;

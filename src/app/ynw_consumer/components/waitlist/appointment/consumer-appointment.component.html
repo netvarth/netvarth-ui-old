@@ -313,7 +313,8 @@
 
                     <div>
                       <!-- *ngIf="selectedService.price && !selectedService.isPrePayment && selectedService.showPrice" -->
-                      <h6 class="custom text-primary"
+                      <span *ngIf="login_countryCode === '+91'">
+                        <h6 class="custom text-primary"
                         *ngIf="selectedService.price && !selectedService.isPrePayment && selectedService.showPrice">
                         <b><span>Service Price :
                           </span>
@@ -322,6 +323,28 @@
                             | currency:'&#8377;'}}</span>
                         </b>
                       </h6>
+                      </span>
+                     <span *ngIf="login_countryCode !== '+91'">
+                      <h6 class="custom text-primary"
+                      *ngIf="selectedService.supportInternationalConsumer && selectedService.internationalAmount && !selectedService.isPrePayment && selectedService.showPrice">
+                      <b><span>Service Price :
+                        </span>
+                        <span class="rupee-font">
+                          {{selectedService.internationalAmount
+                          | currency:'&#8377;'}}</span>
+                      </b>
+                    </h6>
+                    <h6 class="custom text-primary"
+                    *ngIf="!selectedService.supportInternationalConsumer && !selectedService.isPrePayment && selectedService.showPrice">
+                    <b><span>Service Price :
+                      </span>
+                      <span class="rupee-font">
+                        {{selectedService.price
+                        | currency:'&#8377;'}}</span>
+                    </b>
+                  </h6>
+                     </span>
+                      
                     </div>
                   </div>
                 </div>
