@@ -113,21 +113,29 @@ export class ViewDealerComponent implements OnInit {
       console.log("this.dealerData", this.dealerData)
     });
 
-    this.cdlservice.getDealerUsers(this.dealerUid).subscribe(data => {
-      this.users = data
-      console.log("this.users", this.users)
-    });
 
-    this.cdlservice.getCustomers().subscribe(data => {
-      this.customersList = data
-      this.customers = this.customersList.slice(0, 10);
-    });
 
+
+    this.getPartnerCustomers(this.dealerUid);
+    this.getDealerUsers();
     this.getStaffList('Sales Officer');
     this.getStaffList('Branch Credit Head');
     this.maxDate = new Date(this.minDate);
   }
 
+  getDealerUsers() {
+    this.cdlservice.getDealerUsers(this.dealerUid).subscribe(data => {
+      this.users = data
+      console.log("this.users", this.users)
+    });
+  }
+
+  getPartnerCustomers(id) {
+    this.cdlservice.getPartnerCustomers(id).subscribe(data => {
+      this.customersList = data
+      this.customers = this.customersList.slice(0, 10);
+    });
+  }
 
   getTotalLoanAmount() {
     this.cdlservice.getPartnerTotalAmount(this.dealerId).subscribe((data: any) => {
@@ -135,7 +143,6 @@ export class ViewDealerComponent implements OnInit {
       this.totalLoansCount = data.count
     });
   }
-
 
   updateDealer() {
     const navigationExtras: NavigationExtras = {

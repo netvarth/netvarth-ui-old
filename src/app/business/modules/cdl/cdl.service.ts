@@ -52,6 +52,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  getPartnerCustomers(id) {
+    const url = 'provider/partner/' + id + '/customers';
+    return this.servicemeta.httpGet(url, null);
+  }
+
   getPartnerTotalAmount(id) {
     const url = 'provider/loanapplication/loanamount/' + id;
     return this.servicemeta.httpGet(url, null);

@@ -479,7 +479,7 @@
         <div *ngIf="customers">
           <div class="card">
             <div>
-              <p-table [responsive]="true" responsiveLayout="scroll" #dt1 [value]="customers" dataKey="id" [rows]="10"
+              <p-table [responsive]="true" responsiveLayout="scroll" #dt1 [value]="customersList" dataKey="id" [rows]="10"
                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
                 styleClass="p-datatable-customers p-datatable-gridlines" [paginator]="true"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"

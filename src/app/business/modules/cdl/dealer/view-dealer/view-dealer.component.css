@@ -312,3 +312,15 @@ td {
   width: 10px !important;
   height: 4px !important;
 }
+
+.overflow-y-scroll {
+  max-height: 60vh !important;
+  overflow-y: scroll !important;
+}
+
+@media(max-width: 600px) {
+  .overflow-y-scroll {
+    max-height: 500px !important;
+    overflow-y: scroll !important;
+  }
+}

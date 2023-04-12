@@ -9,6 +9,7 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from './popup/popup.component';
 import { ConfirmBoxComponent } from '../../shared/confirm-box/confirm-box.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-ivr',
@@ -43,7 +44,12 @@ export class IvrComponent implements OnInit {
   callBacksCount: any;
   assignedCalls: any;
   assignedCallsCount: any;
-  callBackCallsCount: unknown;
+  callBackCallsCount: any;
+  userDetails: any;
+  todayCallsCount: any = {
+    "connectedCalls": 0,
+    "allCalls": 0
+  };
   constructor(
     private groupService: GroupStorageService,
     private ivrService: IvrService,
@@ -70,6 +76,8 @@ export class IvrComponent implements OnInit {
     this.getIvrVoiceMailCalls();
     this.getIvrAssignedCalls();
     this.getIvrAssignedCallsCount();
+    this.getUserDetails();
+    this.getTodayCallsCount();
     this.getGraphDetails('WEEKLY').then((data) => {
       if (data) {
         this.getAnalyticsChartOptions();
@@ -80,6 +88,52 @@ export class IvrComponent implements OnInit {
     this.primengConfig.ripple = true;
   }
 
+  getUserDetails() {
+    this.ivrService.getUser(this.user.id)
+      .subscribe(
+        res => {
+          this.userDetails = res;
+          console.log("this.userDetails", this.userDetails)
+        });
+  }
+
+  getTodayCallsCount() {
+    let api_filter = {}
+    let date = new Date();
+    let todayDate = moment(date).format("DD-MM-YYYY");
+    api_filter['createdDate-eq'] = todayDate;
+    api_filter['callStatus-eq'] = "connected";
+    this.getIvrCallsCount(api_filter).then((data) => {
+      this.todayCallsCount["connectedCalls"] = data;
+    });
+    delete api_filter['callStatus-eq'];
+    this.getIvrCallsCount(api_filter).then((data) => {
+      this.todayCallsCount["allCalls"] = data;
+    });
+    console.log("todayCallsCount", this.todayCallsCount);
+  }
+
+  changeAvailability(status) {
+    this.ivrService.changeAvialabilityStatus(this.user.id, status).subscribe(data => {
+      if (data) {
+        this.snackbarService.openSnackBar("Availability Set to " + status);
+        this.getUserDetails();
+      }
+    },
+      error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+
+  onAvailableChange(event) {
+    let status = event.target.checked;
+    if (status) {
+      this.changeAvailability('Online');
+    }
+    else {
+      this.changeAvailability('NotAvailable');
+    }
+  }
 
 
   getIvrVoiceMailCalls() {
@@ -479,7 +533,6 @@ export class IvrComponent implements OnInit {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
         });
     })
-
   }
 
 

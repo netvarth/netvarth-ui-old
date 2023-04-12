@@ -62,6 +62,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   active_user;
   account_type;
   enquiryCount;
+  accountSettings: any;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sessionStorageService: SessionStorageService,
@@ -142,6 +143,15 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           }
         });
   }
+
+  getAccountSetting() {
+    this.provider_services.getAccountSetting()
+      .subscribe(
+        (data: any) => {
+          this.accountSettings = data;
+        });
+  }
+
   closeMenu() {
     const screenWidth = window.innerWidth;
     if (screenWidth <= 767) {
@@ -277,6 +287,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.setLicense();
     this.reloadHandler();
     this.getBusinessdetFromLocalstorage();
+    this.getAccountSetting();
     this.enable_disable = Messages.ENBLE_DISABLE_TOOLTIP.replace('[waitlist]', this.waitlist_label);
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
       this.reloadHandler();

@@ -66,6 +66,15 @@ export class IvrService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  changeAvialabilityStatus(id, status) {
+    const url = 'provider/user/' + id + '/available/' + status;
+    return this.servicemeta.httpPut(url, null);
+  }
+
+  getUser(providerid) {
+    const url = 'provider/user/' + providerid;
+    return this.servicemeta.httpGet(url);
+  }
 
   getCustomerTodayVisit(id) {
     const url = 'provider/customers/bookings/today/' + id;

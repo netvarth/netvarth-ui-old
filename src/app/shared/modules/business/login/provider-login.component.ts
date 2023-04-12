@@ -119,7 +119,10 @@ export class ProviderLoginComponent implements OnInit {
                   if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
                     if (this.lStorageService.getitemfromLocalStorage('cdl')) {
                       router.navigate(['provider', 'cdl']);
-                    } else if (settings.appointment) {
+                    } else if (settings.enableIvr) {
+                      router.navigate(['provider', 'ivr']);
+                    }
+                    else if (settings.appointment) {
                       router.navigate(['provider', 'appointments']);
                     } else if (settings.waitlist) {
                       router.navigate(['provider', 'check-ins']);
@@ -273,6 +276,8 @@ export class ProviderLoginComponent implements OnInit {
                   console.log("Settings value:", settings);
                   if (settings && settings.enableCdl) {
                     this.router.navigate(['provider', 'cdl']);
+                  } else if (settings.enableIvr) {
+                    this.router.navigate(['provider', 'ivr']);
                   }
                   else {
                     // this.router.navigate(['/provider/dashboard']);

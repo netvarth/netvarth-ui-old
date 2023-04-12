@@ -11,6 +11,12 @@
             <span *ngIf="user && user.lastName"> {{user.lastName}}</span>
           </span>
           <br>
+          <span class="sub-title font-weight-500">Today :
+            <span class="text-primary font-weight-bold">{{todayCallsCount.allCalls}}</span>
+            Received,
+            <span class="text-success font-weight-bold">{{todayCallsCount.connectedCalls}}</span> Picked
+          </span>
+          <br>
           <span class="sub-title font-weight-500">Till Date :
             <span class="text-primary font-weight-bold">{{totalCallsCount}}</span> Received,
             <span class="text-success font-weight-bold">{{connectedCallsCount}}</span> Picked
@@ -25,7 +31,8 @@
           <div class="font-weight-bold pt-1"><span>Available For Calls</span></div>
         </div>
         <div>
-          <input type="checkbox">
+          <input type="checkbox" (change)="onAvailableChange($event)"
+            [checked]="userDetails && userDetails.userAvailable == 'Online' ? true : false">
         </div>
       </div>
     </div>
@@ -35,7 +42,7 @@
 
 <div class="col-md-12 no-padding">
 
-  <div class="col-md-6 mt-2 px-1">
+  <div class="col-md-6 mt-2 px-1 d-none d-md-block d-lg-block d-xl-block">
     <div class="card row analytics-card">
       <div class="d-flex">
         <div class="mr-2"><img width="20" src="./assets/images/ivr/cross-arrow.png"></div>
@@ -45,7 +52,7 @@
         <div class="card text-center p-2 connected-calls-bg">
           <div class="font-weight-500">
             <div class="mt-1 text-grey">Received Calls</div>
-            <div class="mt-1 text-dark font-weight-600 box-wrapper font-large">{{totalCallsCount}}</div>
+            <div class="mt-1 text-dark font-weight-600 box-wrapper font-large">{{todayCallsCount.allCalls}}</div>
           </div>
         </div>
       </div>
@@ -53,14 +60,14 @@
         <div class="card text-center p-2 connected-calls-bg">
           <div class="font-weight-500">
             <div class="mt-1 text-grey">Picked Calls</div>
-            <div class="mt-1 text-dark font-weight-600 box-wrapper font-large">{{connectedCallsCount}}</div>
+            <div class="mt-1 text-dark font-weight-600 box-wrapper font-large">{{todayCallsCount.connectedCalls}}</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="col-md-6 mt-2 px-1">
+  <div class="col-md-6 mt-2 px-1 d-none d-sm-block">
     <div class="card text-center p-2 dashboard-card">
       <div class="row mx-0 p-0">
         <span class="font-weight-bold">Analytics</span>
@@ -71,9 +78,8 @@
     </div>
   </div>
 
-</div>
 
-<div class="row">
+
   <div class="col-lg-7 col-md-7 mt-2 px-1">
     <div class="card">
       <div>
@@ -87,20 +93,22 @@
               <i class="fa fa-user-o"></i>&nbsp;
               <span>My Queue</span>
             </ng-template>
-            <p-table #callsTable [value]="assignedCalls" [lazy]="true" (onLazyLoad)="loadAssignedCalls($event)" dataKey="id"
-              [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,15,25]" [paginator]="true" [rows]="5"
+            <p-table #callsTable [value]="assignedCalls" [lazy]="true" (onLazyLoad)="loadAssignedCalls($event)"
+              dataKey="id" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,15,25]" [paginator]="true" [rows]="5"
               [totalRecords]="assignedCallsCount" responsiveLayout="stack" styleClass="p-datatable-customers"
               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
               <ng-template pTemplate="body" let-call>
                 <div class="card mt-2">
                   <div class="d-flex justify-content-between px-3" *ngIf="call.callStatus == 'inCall'">
                     <div>
-                      <button type="button" class="btn btn-light bg-orange mr-2 font-weight-600" (click)="fillForm(onGoingCall[0].uid)"
-                        tooltipPosition="top" pTooltip="Fill the Form">Fill the Form
+                      <button type="button" class="btn btn-light bg-orange mr-2 font-weight-600"
+                        (click)="fillForm(onGoingCall[0].uid)" tooltipPosition="top" pTooltip="Fill the Form">Fill the
+                        Form
                       </button>
                     </div>
                     <div>
-                      <a class="btn btn-success font-weight-600 border-radius-20" tooltipPosition="top" pTooltip="In Call">In Call
+                      <a class="btn btn-success font-weight-600 border-radius-20" tooltipPosition="top"
+                        pTooltip="In Call">In Call
                       </a>
                     </div>
                   </div>
@@ -108,15 +116,16 @@
                     <div class="col-md-3 col-xs-6 mt-2">
                       <div class="font-weight-bold">
                         <!-- <span *ngIf="call && call.consumerPhone && call.consumerPhone.countryCode">
-                                            {{call.consumerPhone.countryCode}}
-                                          </span> -->
+                                              {{call.consumerPhone.countryCode}}
+                                            </span> -->
                         <span *ngIf="call && call.consumerPhone && call.consumerPhone.number">
                           {{call.consumerPhone.number}}
                         </span>
                       </div>
                       <div>
                         <!-- <span *ngIf="call && call.consumerId" class="font-weight-600">#{{call.consumerId}}</span>&nbsp; -->
-                        <span *ngIf="call && call.language" class="text-primary font-weight-600">{{call.language}}</span>
+                        <span *ngIf="call && call.language"
+                          class="text-primary font-weight-600">{{call.language}}</span>
                       </div>
                     </div>
 
@@ -140,12 +149,13 @@
                         </button>
 
                         <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="getCallBack(call.uid)"
-                          tooltipPosition="top" pTooltip="CallBack"><img width="20" src="./assets/images/ivr/callback.png">
+                          tooltipPosition="top" pTooltip="CallBack"><img width="20"
+                            src="./assets/images/ivr/callback.png">
                         </button>
 
-                        <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="unassignToCall(call.uid)"
-                          *ngIf="call && call.userId" tooltipPosition="top" pTooltip="Unassign"><img width="20"
-                            src="./assets/images/ivr/unassign.png">
+                        <button type="button" class="btn btn-light mr-2 font-weight-600"
+                          (click)="unassignToCall(call.uid)" *ngIf="call && call.userId" tooltipPosition="top"
+                          pTooltip="Unassign"><img width="20" src="./assets/images/ivr/unassign.png">
                         </button>
 
                         <button type="button" class="btn btn-light bg-light mr-2 font-weight-600 text-light"
@@ -153,8 +163,9 @@
                             class="fa fa-check text-grey" aria-hidden="true"></i>
                         </button>
 
-                        <button type="button" class="btn btn-light bg-light font-weight-600" (click)="viewCall(call.uid)"
-                          tooltipPosition="top" pTooltip="View"><i class="fa fa-eye text-grey" aria-hidden="true"></i>
+                        <button type="button" class="btn btn-light bg-light font-weight-600"
+                          (click)="viewCall(call.uid)" tooltipPosition="top" pTooltip="View"><i
+                            class="fa fa-eye text-grey" aria-hidden="true"></i>
                         </button>
                       </div>
                     </div>
@@ -175,107 +186,105 @@
           <p-tabPanel>
             <ng-template pTemplate="header">
               <i class="pi pi-phone"></i>&nbsp;
-              <span>Calls</span>
+              <span>Call History</span>
             </ng-template>
             <!-- <div class="card mt-2" *ngIf="onGoingCall && onGoingCall.length>0">
-              <div class="d-flex justify-content-between px-3">
-                <div>
-                  <button type="button" class="btn btn-light bg-orange mr-2 font-weight-600" (click)="fillForm(onGoingCall[0].uid)"
-                    tooltipPosition="top" pTooltip="Fill the Form">Fill the Form
-                  </button>
-                </div>
-                <div>
-                  <a class="btn btn-success font-weight-600 border-radius-20" tooltipPosition="top" pTooltip="In Call">In Call
-                  </a>
-                </div>
-              </div>
-              <div class="row px-1">
-                <div class="col-md-3 col-xs-6 mt-2">
-                  <div class="font-weight-bold">
-                    <span *ngIf="onGoingCall[0] && onGoingCall[0].consumerPhone && onGoingCall[0].consumerPhone.number">
-                      {{onGoingCall[0].consumerPhone.number}}
-                    </span>
+                <div class="d-flex justify-content-between px-3">
+                  <div>
+                    <button type="button" class="btn btn-light bg-orange mr-2 font-weight-600" (click)="fillForm(onGoingCall[0].uid)"
+                      tooltipPosition="top" pTooltip="Fill the Form">Fill the Form
+                    </button>
                   </div>
                   <div>
-                    <span *ngIf="onGoingCall[0] && onGoingCall[0].language" class="text-primary font-weight-600">{{onGoingCall[0].language}}</span>
+                    <a class="btn btn-success font-weight-600 border-radius-20" tooltipPosition="top" pTooltip="In Call">In Call
+                    </a>
                   </div>
                 </div>
-
-                <div class="col-md-3 col-xs-6 mt-2">
-                  <div class="font-weight-bold">
-                    <span>
-                      <span *ngIf="onGoingCall[0] && onGoingCall[0].userName">{{onGoingCall[0].userName}}</span>
-                      <span *ngIf="onGoingCall[0] && !onGoingCall[0].userName">Not Assigned</span>
-                    </span>
+                <div class="row px-1">
+                  <div class="col-md-3 col-xs-6 mt-2">
+                    <div class="font-weight-bold">
+                      <span *ngIf="onGoingCall[0] && onGoingCall[0].consumerPhone && onGoingCall[0].consumerPhone.number">
+                        {{onGoingCall[0].consumerPhone.number}}
+                      </span>
+                    </div>
+                    <div>
+                      <span *ngIf="onGoingCall[0] && onGoingCall[0].language" class="text-primary font-weight-600">{{onGoingCall[0].language}}</span>
+                    </div>
                   </div>
-                  <div *ngIf="onGoingCall[0] && onGoingCall[0].callStatus">
-                    <span [class]="'status-' + onGoingCall[0].callStatus" class="text-capitalize">{{onGoingCall[0].callStatus}}</span>
+  
+                  <div class="col-md-3 col-xs-6 mt-2">
+                    <div class="font-weight-bold">
+                      <span>
+                        <span *ngIf="onGoingCall[0] && onGoingCall[0].userName">{{onGoingCall[0].userName}}</span>
+                        <span *ngIf="onGoingCall[0] && !onGoingCall[0].userName">Not Assigned</span>
+                      </span>
+                    </div>
+                    <div *ngIf="onGoingCall[0] && onGoingCall[0].callStatus">
+                      <span [class]="'status-' + onGoingCall[0].callStatus" class="text-capitalize">{{onGoingCall[0].callStatus}}</span>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-6 col-xs-12 mt-2">
+                    <div class="d-flex text-center">
+                      <button type="button" class="btn btn-light bg-light mr-2 font-weight-600" (click)="openUsersPopup(onGoingCall[0].uid)"
+                        *ngIf="onGoingCall[0] && !onGoingCall[0].userId" tooltipPosition="top" pTooltip="Assign"><img width="20"
+                          src="./assets/images/ivr/unassign.png">
+                      </button>
+  
+                      <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="getCallBack(onGoingCall[0].uid)"
+                        tooltipPosition="top" pTooltip="CallBack"><img width="20" src="./assets/images/ivr/callback.png">
+                      </button>
+  
+                      <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="unassignToCall(onGoingCall[0].uid)"
+                        *ngIf="onGoingCall[0] && onGoingCall[0].userId" tooltipPosition="top" pTooltip="Unassign"><img width="20"
+                          src="./assets/images/ivr/unassign.png">
+                      </button>
+  
+                      <button type="button" class="btn btn-light bg-light mr-2 font-weight-600 text-light"
+                        (click)="markAsComplete(onGoingCall[0].uid)" tooltipPosition="top" pTooltip="Complete"><i class="fa fa-check text-grey"
+                          aria-hidden="true"></i>
+                      </button>
+  
+                      <button type="button" class="btn btn-light bg-light font-weight-600" (click)="viewCall(onGoingCall[0].uid)"
+                        tooltipPosition="top" pTooltip="View"><i class="fa fa-eye text-grey" aria-hidden="true"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
-
-                <div class="col-md-6 col-xs-12 mt-2">
-                  <div class="d-flex text-center">
-                    <button type="button" class="btn btn-light bg-light mr-2 font-weight-600" (click)="openUsersPopup(onGoingCall[0].uid)"
-                      *ngIf="onGoingCall[0] && !onGoingCall[0].userId" tooltipPosition="top" pTooltip="Assign"><img width="20"
-                        src="./assets/images/ivr/unassign.png">
-                    </button>
-
-                    <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="getCallBack(onGoingCall[0].uid)"
-                      tooltipPosition="top" pTooltip="CallBack"><img width="20" src="./assets/images/ivr/callback.png">
-                    </button>
-
-                    <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="unassignToCall(onGoingCall[0].uid)"
-                      *ngIf="onGoingCall[0] && onGoingCall[0].userId" tooltipPosition="top" pTooltip="Unassign"><img width="20"
-                        src="./assets/images/ivr/unassign.png">
-                    </button>
-
-                    <button type="button" class="btn btn-light bg-light mr-2 font-weight-600 text-light"
-                      (click)="markAsComplete(onGoingCall[0].uid)" tooltipPosition="top" pTooltip="Complete"><i class="fa fa-check text-grey"
-                        aria-hidden="true"></i>
-                    </button>
-
-                    <button type="button" class="btn btn-light bg-light font-weight-600" (click)="viewCall(onGoingCall[0].uid)"
-                      tooltipPosition="top" pTooltip="View"><i class="fa fa-eye text-grey" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div> -->
+              </div> -->
             <p-table #callsTable [value]="calls" [lazy]="true" (onLazyLoad)="loadCalls($event)" dataKey="id"
               [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,15,25]" [paginator]="true" [rows]="5"
-              [totalRecords]="totalCallsCount" responsiveLayout="stack"
-
-              styleClass="p-datatable-customers" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+              [totalRecords]="totalCallsCount" responsiveLayout="stack" styleClass="p-datatable-customers"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
               <ng-template pTemplate="body" let-call>
-                <div class="card mt-2">
+                <div class="card my-1 p-1 py-2">
                   <div class="d-flex justify-content-between px-3" *ngIf="call.callStatus == 'inCall'">
                     <div>
-                      <button type="button" class="btn btn-light bg-orange mr-2 font-weight-600" (click)="fillForm(onGoingCall[0].uid)"
-                        tooltipPosition="top" pTooltip="Fill the Form">Fill the Form
+                      <button type="button" class="btn btn-light bg-orange mr-2 font-weight-600"
+                        (click)="fillForm(onGoingCall[0].uid)" tooltipPosition="top" pTooltip="Fill the Form">Fill the
+                        Form
                       </button>
                     </div>
                     <div>
-                      <a class="btn btn-success font-weight-600 border-radius-20" tooltipPosition="top" pTooltip="In Call">In Call
+                      <a class="btn btn-success font-weight-600 border-radius-20" tooltipPosition="top"
+                        pTooltip="In Call">In Call
                       </a>
                     </div>
                   </div>
                   <div class="row px-1">
-                    <div class="col-md-3 col-xs-6 mt-2">
+                    <div class="col-md-3 col-xs-5 mt-2" (click)="viewCall(call.uid)">
                       <div class="font-weight-bold">
-                        <!-- <span *ngIf="call && call.consumerPhone && call.consumerPhone.countryCode">
-                                  {{call.consumerPhone.countryCode}}
-                                </span> -->
                         <span *ngIf="call && call.consumerPhone && call.consumerPhone.number">
                           {{call.consumerPhone.number}}
                         </span>
                       </div>
                       <div>
-                        <!-- <span *ngIf="call && call.consumerId" class="font-weight-600">#{{call.consumerId}}</span>&nbsp; -->
-                        <span *ngIf="call && call.language" class="text-primary font-weight-600">{{call.language}}</span>
+                        <span *ngIf="call && call.language"
+                          class="text-primary font-weight-600">{{call.language}}</span>
                       </div>
                     </div>
 
-                    <div class="col-md-3 col-xs-6 mt-2">
+                    <div class="col-md-3 col-xs-5 mt-2" (click)="viewCall(call.uid)">
                       <div class="font-weight-bold">
                         <span>
                           <span *ngIf="call && call.userName">{{call.userName}}</span>
@@ -287,37 +296,38 @@
                       </div>
                     </div>
 
-                    <div class="col-md-6 col-xs-12 mt-2">
-                      <div class="d-flex text-center">
-                        <button type="button" class="btn btn-light bg-light mr-2 font-weight-600"
-                          (click)="openUsersPopup(call.uid)" *ngIf="call && !call.userId" tooltipPosition="top"
-                          pTooltip="Assign"><img width="20" src="./assets/images/ivr/unassign.png">
-                        </button>
+                    <div class="col-md-6 col-xs-2 mt-2">
+                      <div class="pointer-cursor d-flex justify-content-center">
+                        <span [matMenuTriggerFor]="menu" class="p-2"><i class="fa fa-ellipsis-v"
+                            aria-hidden="true"></i></span>
+                        <mat-menu #menu="matMenu">
+                          <button type="button" mat-menu-item class="font-weight-600" (click)="viewCall(call.uid)"><i
+                              class="fa fa-eye"></i>View
+                          </button>
 
-                        <button type="button"
-                          class="btn btn-light mr-2 font-weight-600" (click)="getCallBack(call.uid)" tooltipPosition="top"
-                          pTooltip="CallBack"><img width="20" src="./assets/images/ivr/callback.png">
-                        </button>
+                          <button type="button" mat-menu-item class="font-weight-600" (click)="openUsersPopup(call.uid)"
+                            *ngIf="call && !call.userId">
+                            <img width="15" src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Assign
+                          </button>
 
-                        <button type="button" class="btn btn-light mr-2 font-weight-600"
-                          (click)="unassignToCall(call.uid)" *ngIf="call && call.userId" tooltipPosition="top"
-                          pTooltip="Unassign"><img width="20" src="./assets/images/ivr/unassign.png">
-                        </button>
+                          <button type="button" mat-menu-item class="font-weight-600" (click)="getCallBack(call.uid)">
+                            <img width="15" src="./assets/images/ivr/callback.png">&nbsp;&nbsp;Callback
+                          </button>
 
-                        <button  type="button" class="btn btn-light bg-light mr-2 font-weight-600 text-light"
-                          (click)="markAsComplete(call.uid)" tooltipPosition="top" pTooltip="Complete"><i
-                            class="fa fa-check text-grey" aria-hidden="true"></i>
-                        </button>
+                          <button type="button" mat-menu-item class="font-weight-600" (click)="unassignToCall(call.uid)"
+                            *ngIf="call && call.userId">Unassign
+                          </button>
 
-                        <button type="button" class="btn btn-light bg-light font-weight-600"
-                          (click)="viewCall(call.uid)" tooltipPosition="top" pTooltip="View"><i class="fa fa-eye text-grey"
-                            aria-hidden="true"></i>
-                        </button>
+                          <button type="button" mat-menu-item class="font-weight-600"
+                            (click)="markAsComplete(call.uid)"><i class="fa fa-check"></i>Complete
+                          </button>
+                        </mat-menu>
                       </div>
                     </div>
+
                   </div>
                 </div>
-                <br class="d-lg-none d-md-none">
+                <!-- <br class="d-lg-none d-md-none"> -->
               </ng-template>
               <ng-template pTemplate="emptymessage">
                 <tr>
@@ -328,15 +338,92 @@
           </p-tabPanel>
 
 
+          <!-- <p-tabPanel>
+              <ng-template pTemplate="header">
+                <i class="fa fa-envelope-o"></i>&nbsp;
+                <span>VoiceMail</span>
+              </ng-template>
+              <p-table #callsTable [value]="voiceMailCalls" [lazy]="true" (onLazyLoad)="loadVoiceMailCalls($event)"
+                dataKey="id" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,15,25]" [paginator]="true" [rows]="5"
+                [totalRecords]="voiceMailCount" responsiveLayout="stack" styleClass="p-datatable-customers"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+                <ng-template pTemplate="body" let-call>
+                  <div class="card mt-2">
+                    <div class="row px-1">
+                      <div class="col-md-3 col-xs-6 mt-2">
+                        <div class="font-weight-bold">
+                          <span *ngIf="call && call.consumerPhone && call.consumerPhone.number">
+                            {{call.consumerPhone.number}}
+                          </span>
+                        </div>
+                        <div>
+                          <span *ngIf="call && call.language"
+                            class="text-primary font-weight-600">{{call.language}}</span>
+                        </div>
+                      </div>
+  
+                      <div class="col-md-3 col-xs-6 mt-2">
+                        <div class="font-weight-bold">
+                          <span>
+                            <span *ngIf="call && call.userName">{{call.userName}}</span>
+                            <span *ngIf="call && !call.userName">Not Assigned</span>
+                          </span>
+                        </div>
+                        <div>
+                          <span [class]="'status-' + call.callStatus" class="text-capitalize">{{call.callStatus}}</span>
+                        </div>
+                      </div>
+  
+                      <div class="col-md-6 col-xs-12 mt-2">
+                        <div class="d-flex text-center">
+                          <button type="button" class="btn btn-light mr-2 font-weight-600"
+                            (click)="openUsersPopup(call.uid)" *ngIf="call && !call.userId" tooltipPosition="top"
+                            pTooltip="Assign"><img width="20" src="./assets/images/ivr/unassign.png">
+                          </button>
+  
+                          <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="getCallBack(call.uid)"
+                            tooltipPosition="top" pTooltip="CallBack"><img width="20"
+                              src="./assets/images/ivr/callback.png">
+                          </button>
+  
+                          <button type="button" class="btn btn-light mr-2 font-weight-600"
+                            (click)="unassignToCall(call.uid)" *ngIf="call && call.userId" tooltipPosition="top"
+                            pTooltip="Unassign"><img width="20" src="./assets/images/ivr/unassign.png">
+                          </button>
+  
+                          <button type="button" class="btn btn-light bg-light mr-2 font-weight-600 text-light"
+                            (click)="markAsComplete(call.uid)" tooltipPosition="top" pTooltip="Complete"><i
+                              class="fa fa-check text-grey" aria-hidden="true"></i>
+                          </button>
+  
+                          <button type="button" class="btn btn-light bg-light font-weight-600"
+                            (click)="viewCall(call.uid)" tooltipPosition="top" pTooltip="View"><i
+                              class="fa fa-eye text-grey" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br class="d-lg-none d-md-none">
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="7">No Calls found.</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </p-tabPanel> -->
+
+
           <p-tabPanel>
             <ng-template pTemplate="header">
-              <i class="fa fa-envelope-o"></i>&nbsp;
-              <span>VoiceMail</span>
+              <img width="20" src="./assets/images/ivr/callback.png">&nbsp;
+              <span>CallBacks</span>
             </ng-template>
-            <p-table #callsTable [value]="voiceMailCalls" [lazy]="true" (onLazyLoad)="loadVoiceMailCalls($event)" dataKey="id"
-              [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,15,25]" [paginator]="true" [rows]="5"
-              [totalRecords]="voiceMailCount" responsiveLayout="stack"
-              styleClass="p-datatable-customers" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+            <p-table #callsTable [value]="callBackCalls" [lazy]="true" (onLazyLoad)="loadCallBackCalls($event)"
+              dataKey="id" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,15,25]" [paginator]="true" [rows]="5"
+              [totalRecords]="callBacksCount" responsiveLayout="stack" styleClass="p-datatable-customers"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
               <ng-template pTemplate="body" let-call>
                 <div class="card mt-2">
                   <div class="row px-1">
@@ -351,7 +438,8 @@
                       </div>
                       <div>
                         <!-- <span *ngIf="call && call.consumerId" class="font-weight-600">#{{call.consumerId}}</span>&nbsp; -->
-                        <span *ngIf="call && call.language" class="text-primary font-weight-600">{{call.language}}</span>
+                        <span *ngIf="call && call.language"
+                          class="text-primary font-weight-600">{{call.language}}</span>
                       </div>
                     </div>
 
@@ -368,107 +456,43 @@
                     </div>
 
                     <div class="col-md-6 col-xs-12 mt-2">
+                      <div class="pointer-cursor d-flex justify-content-center">
+                        <span [matMenuTriggerFor]="menu" class="p-2"><i class="fa fa-ellipsis-v"
+                            aria-hidden="true"></i></span>
+                        <mat-menu #menu="matMenu">
+                          <button type="button" mat-menu-item class="btn btn-light bg-light mr-2 font-weight-600"
+                            (click)="openUsersPopup(call.uid)" *ngIf="call && !call.userId" tooltipPosition="top"
+                            pTooltip="Assign"><img width="20" src="./assets/images/ivr/unassign.png">
+                          </button>
+
+                          <button type="button" mat-menu-item class="btn btn-light mr-2 font-weight-600"
+                            (click)="getCallBack(call.uid)" tooltipPosition="top" pTooltip="CallBack"><img width="20"
+                              src="./assets/images/ivr/callback.png">
+                          </button>
+
+                          <button type="button" mat-menu-item class="btn btn-light mr-2 font-weight-600"
+                            (click)="unassignToCall(call.uid)" *ngIf="call && call.userId" tooltipPosition="top"
+                            pTooltip="Unassign"><img width="20" src="./assets/images/ivr/unassign.png">
+                          </button>
+
+                          <button type="button" mat-menu-item
+                            class="btn btn-light bg-light mr-2 font-weight-600 text-light"
+                            (click)="markAsComplete(call.uid)" tooltipPosition="top" pTooltip="Complete"><i
+                              class="fa fa-check text-grey" aria-hidden="true"></i>
+                          </button>
+
+                          <button type="button" mat-menu-item class="btn btn-light bg-light font-weight-600"
+                            (click)="viewCall(call.uid)" tooltipPosition="top" pTooltip="View"><i
+                              class="fa fa-eye text-grey" aria-hidden="true"></i>
+                          </button>
+                          <!-- <button mat-menu-item (click)="viewCustomer(customer.id)"><i
+                              class="fa fa-eye"></i>&nbsp;View</button>
+                          <button mat-menu-item (click)="editCustomer(customer.id)"><i
+                              class="fa fa-pencil"></i>&nbsp;Edit</button> -->
+                        </mat-menu>
+                      </div>
                       <div class="d-flex text-center">
-                        <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="openUsersPopup(call.uid)"
-                          *ngIf="call && !call.userId" tooltipPosition="top" pTooltip="Assign"><img width="20"
-                            src="./assets/images/ivr/unassign.png">
-                        </button>
 
-                        <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="getCallBack(call.uid)"
-                          tooltipPosition="top" pTooltip="CallBack"><img width="20" src="./assets/images/ivr/callback.png">
-                        </button>
-
-                        <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="unassignToCall(call.uid)"
-                          *ngIf="call && call.userId" tooltipPosition="top" pTooltip="Unassign"><img width="20"
-                            src="./assets/images/ivr/unassign.png">
-                        </button>
-
-                        <button type="button" class="btn btn-light bg-light mr-2 font-weight-600 text-light"
-                          (click)="markAsComplete(call.uid)" tooltipPosition="top" pTooltip="Complete"><i class="fa fa-check text-grey"
-                            aria-hidden="true"></i>
-                        </button>
-
-                        <button type="button" class="btn btn-light bg-light font-weight-600" (click)="viewCall(call.uid)"
-                          tooltipPosition="top" pTooltip="View"><i class="fa fa-eye text-grey" aria-hidden="true"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <br class="d-lg-none d-md-none">
-              </ng-template>
-              <ng-template pTemplate="emptymessage">
-                <tr>
-                  <td colspan="7">No Calls found.</td>
-                </tr>
-              </ng-template>
-            </p-table>
-          </p-tabPanel>
-
-
-          <p-tabPanel>
-            <ng-template pTemplate="header">
-              <img width="20" src="./assets/images/ivr/callback.png">&nbsp;
-              <span>CallBacks</span>
-            </ng-template>
-            <p-table #callsTable [value]="callBackCalls" [lazy]="true" (onLazyLoad)="loadCallBackCalls($event)" dataKey="id"
-              [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,15,25]" [paginator]="true" [rows]="5"
-              [totalRecords]="callBacksCount" responsiveLayout="stack" styleClass="p-datatable-customers"
-              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
-              <ng-template pTemplate="body" let-call>
-                <div class="card mt-2">
-                  <div class="row px-1">
-                    <div class="col-md-3 col-xs-6 mt-2">
-                      <div class="font-weight-bold">
-                        <!-- <span *ngIf="call && call.consumerPhone && call.consumerPhone.countryCode">
-                                            {{call.consumerPhone.countryCode}}
-                                          </span> -->
-                        <span *ngIf="call && call.consumerPhone && call.consumerPhone.number">
-                          {{call.consumerPhone.number}}
-                        </span>
-                      </div>
-                      <div>
-                        <!-- <span *ngIf="call && call.consumerId" class="font-weight-600">#{{call.consumerId}}</span>&nbsp; -->
-                        <span *ngIf="call && call.language" class="text-primary font-weight-600">{{call.language}}</span>
-                      </div>
-                    </div>
-
-                    <div class="col-md-3 col-xs-6 mt-2">
-                      <div class="font-weight-bold">
-                        <span>
-                          <span *ngIf="call && call.userName">{{call.userName}}</span>
-                          <span *ngIf="call && !call.userName">Not Assigned</span>
-                        </span>
-                      </div>
-                      <div>
-                        <span [class]="'status-' + call.callStatus" class="text-capitalize">{{call.callStatus}}</span>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6 col-xs-12 mt-2">
-                      <div class="d-flex text-center">
-                        <button type="button" class="btn btn-light bg-light mr-2 font-weight-600"
-                          (click)="openUsersPopup(call.uid)" *ngIf="call && !call.userId" tooltipPosition="top"
-                          pTooltip="Assign"><img width="20" src="./assets/images/ivr/unassign.png">
-                        </button>
-
-                        <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="getCallBack(call.uid)"
-                          tooltipPosition="top" pTooltip="CallBack"><img width="20" src="./assets/images/ivr/callback.png">
-                        </button>
-
-                        <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="unassignToCall(call.uid)"
-                          *ngIf="call && call.userId" tooltipPosition="top" pTooltip="Unassign"><img width="20"
-                            src="./assets/images/ivr/unassign.png">
-                        </button>
-
-                        <button type="button" class="btn btn-light bg-light mr-2 font-weight-600 text-light"
-                          (click)="markAsComplete(call.uid)" tooltipPosition="top" pTooltip="Complete"><i
-                            class="fa fa-check text-grey" aria-hidden="true"></i>
-                        </button>
-
-                        <button type="button" class="btn btn-light bg-light font-weight-600" (click)="viewCall(call.uid)"
-                          tooltipPosition="top" pTooltip="View"><i class="fa fa-eye text-grey" aria-hidden="true"></i>
-                        </button>
                       </div>
                     </div>
                   </div>
@@ -484,6 +508,17 @@
           </p-tabPanel>
 
         </p-tabView>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mt-2 px-1 d-block d-sm-none">
+    <div class="card text-center p-2 dashboard-card">
+      <div class="row mx-0 p-0">
+        <span class="font-weight-bold">Analytics</span>
+        <div>
+          <p-chart type="line" height="247" [data]="lineChartData" [options]="lineChartOptions"></p-chart>
+        </div>
       </div>
     </div>
   </div>
@@ -559,4 +594,10 @@
       </div>
     </div>
   </div>
+
+
+</div>
+
+<div class="row">
+
 </div>
