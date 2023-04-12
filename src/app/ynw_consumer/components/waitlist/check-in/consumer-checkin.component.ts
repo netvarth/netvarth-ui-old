@@ -301,6 +301,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     accountConfig: any;
     login_details: any;
     login_countryCode: any;
+    serviceOptDetails: any;
     constructor(public fed_service: FormMessageDisplayService,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
@@ -1028,6 +1029,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.waitlist_for[0]['email'] = this.commObj['communicationEmail'];
         }
         post_Data['waitlistingFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
+
         if (this.selectedSlot) {
             post_Data['appointmentTime'] = this.selectedSlot;
         }
@@ -1054,6 +1056,37 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 return false;
             }
         }
+        let serviceOPtionInfo = this.lStorageService.getitemfromLocalStorage('serviceOPtionInfo');
+        let itemArray = this.lStorageService.getitemfromLocalStorage('itemArray');
+        console.log('itemArray:', itemArray )
+        if (this.serviceOptionApptt) {
+            let srvAnswerstoSend = {}
+            srvAnswerstoSend['answerLine'] = [];
+            srvAnswerstoSend['answerLine'] = [];
+            srvAnswerstoSend['answerLine'][0] = {};
+            srvAnswerstoSend['answerLine'][0]['answer'] = {};
+            // srvAnswerstoSend['answerLine'][0]['answer']['dataGridList'] = [];
+            let newDataGrid = []
+      
+           
+            console.log("this.itemArray", itemArray)
+            for (let i = 0; i < itemArray.length; i++) {
+              // newDataGrid.push(itemArray[i].columnItem[0].answer.dataGridList[0])
+              newDataGrid.push(itemArray[i].columnItem[0])
+            }
+            srvAnswerstoSend['answerLine'] = newDataGrid;
+            console.log("this.srvAnswerstoSend", srvAnswerstoSend)
+            if(serviceOPtionInfo && serviceOPtionInfo.answers && serviceOPtionInfo.answers.questionnaireId){
+              srvAnswerstoSend['questionnaireId'] = serviceOPtionInfo.answers.questionnaireId;
+            }
+           
+      
+            post_Data['waitlistingFor'][0]['srvAnswers'] = srvAnswerstoSend;
+            post_Data['srvAnswers'] = srvAnswerstoSend;
+            this.serviceOptDetails = srvAnswerstoSend;
+            console.log('this.serviceOptDetails:', this.serviceOptDetails )
+            // post_Data['srvAnswers'] = serviceOPtionInfo.answers;
+          }
         return post_Data;
     }
     performCheckin() {

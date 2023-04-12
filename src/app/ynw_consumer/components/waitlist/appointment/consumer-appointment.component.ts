@@ -199,7 +199,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
   jCouponMsg: any;
   login_details: any;
   login_countryCode: any;
-  serviceOptDetails: {};
+  serviceOptDetails: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private lStorageService: LocalStorageService,
