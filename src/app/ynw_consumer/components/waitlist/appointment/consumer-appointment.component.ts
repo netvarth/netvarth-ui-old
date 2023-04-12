@@ -199,6 +199,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
   jCouponMsg: any;
   login_details: any;
   login_countryCode: any;
+  serviceOptDetails: {};
   constructor(
     private activatedRoute: ActivatedRoute,
     private lStorageService: LocalStorageService,
@@ -1749,10 +1750,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     post_Data['appmtFor'][0]['apptTime'] = this.selectedSlots[0]['time'];
     post_Data['schedule'] = { 'id': this.selectedSlots[0]['scheduleId'] };
     if (this.serviceOptionApptt) {
-      console.log(JSON.stringify(this.advPostData))
-      post_Data['srvAnswers'] = this.advPostData;
+      post_Data['srvAnswers'] = this.serviceOptDetails;
     }
-
     console.log("this.advPostData", this.advPostData);
     console.log("this.post_Data", post_Data);
 
@@ -1910,22 +1909,19 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
       post_Data['appmtFor'][0]['srvAnswers'] = srvAnswerstoSend;
       post_Data['srvAnswers'] = srvAnswerstoSend;
+      this.serviceOptDetails = srvAnswerstoSend;
       // post_Data['srvAnswers'] = serviceOPtionInfo.answers;
     }
     this.subs.sink = this.sharedServices.addApptAdvancePayment(param, post_Data)
       .subscribe(data => {
         this.paymentDetails = data;
         // this.jCouponMsg = this.paymentDetails.jCouponList.value.systemNote;
-        console.log("PaymentDetailss:", this.paymentDetails);
-     
-        
         if (this.paymentDetails && this.paymentDetails.netTotal && this.serviceOptionApptt) {
           this.serviceTotalPrice = this.lStorageService.getitemfromLocalStorage('serviceTotalPrice');
 
           this.total_servicefee = this.paymentDetails.netTotal;
         }
         this.paymentLength = Object.keys(this.paymentDetails).length;
-        // alert(this.paymentLength)
         this.checkJcash = true
         this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
         this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;
@@ -2818,6 +2814,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         });
         finalList.push(finalSubList[0]);
         this.advPostData = finalList;
+        console.log('this.advPostDataa:',this.advPostData)
         finalSubList = [];
       }
     }
