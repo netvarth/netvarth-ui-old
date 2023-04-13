@@ -119,6 +119,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null, filter);
   }
 
+  getLeadsCountByFilter(filter = {}) {
+    const url = 'provider/enquire/count';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
   getUsersByFilter(filter = {}) {
     const url = 'provider/user';
     return this.servicemeta.httpGet(url, null, filter);

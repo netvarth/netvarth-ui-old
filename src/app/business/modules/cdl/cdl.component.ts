@@ -96,12 +96,13 @@ export class CdlComponent implements OnInit {
       "url": "./assets/images/cdl/application.png"
     },
     {
+      "url": "./assets/images/cdl/lead_generated.png"
+    },
+    {
       "url": "./assets/images/cdl/loan_converted.png"
     },
     {
       "url": "./assets/images/cdl/rejected.png"
-    }, {
-      "url": "./assets/images/cdl/lead_generated.png"
     }
   ]
 
@@ -384,10 +385,10 @@ export class CdlComponent implements OnInit {
 
   getLeadsCount() {
     const api_filter = {};
-    api_filter['spInternalStatus-eq'] = 'Draft';
-    this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
+    api_filter['loanNature-eq'] = 'ConsumerDurableLoan';
+    this.cdlservice.getLeadsCountByFilter(api_filter).subscribe((data: any) => {
       if (data) {
-        this.leadsCount = data.length
+        this.leadsCount = data;
         this.getPieChartData();
       }
     });
