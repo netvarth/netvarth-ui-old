@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AgreementComponent } from './agreement.component';
 import { OtpVerifyModule } from './otp-verify/otp-verify.module';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { NgxPrintModule } from 'ngx-print';
 
 
 const routes: Routes = [
@@ -22,6 +22,7 @@ const routes: Routes = [
     CommonModule,
     OtpVerifyModule,
     MatDialogModule,
+    NgxPrintModule,
     [RouterModule.forChild(routes)]
   ]
 })

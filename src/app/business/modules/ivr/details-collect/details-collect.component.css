@@ -20,6 +20,13 @@
   font-weight: 700 !important;
 }
 
+.nxt-btn {
+  background-color: #183e7a !important;
+  color: white !important;
+  padding: 5px 10px !important;
+  font-size: 16px !important;
+}
+
 
 
 .back-btn {

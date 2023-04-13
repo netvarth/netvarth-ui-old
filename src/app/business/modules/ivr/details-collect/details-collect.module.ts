@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { DetailsCollectComponent } from './details-collect.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [
   { path: '', component: DetailsCollectComponent }
@@ -15,6 +17,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     MatExpansionModule,
+    MatButtonModule,
+    QuestionnaireModule,
     [RouterModule.forChild(routes)]
   ]
 })

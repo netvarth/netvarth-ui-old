@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { CdlService } from '../../cdl.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { FileService } from '../../../../../shared/services/file-service';
 // import { ViewReportComponent } from './view-report/view-report.component';
 
 @Component({
@@ -66,6 +67,11 @@ export class LoanDetailsComponent implements OnInit {
   digitalDocumenId: any;
   digitalInsuranceId: any;
   mafilScorePercentange: any;
+  selectedFiles = {
+    "invoice": { files: [], base64: [], caption: [] }
+  }
+  filesToUpload: any = [];
+
   constructor(
     private snackbarService: SnackbarService,
     private router: Router,
@@ -73,7 +79,8 @@ export class LoanDetailsComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private groupService: GroupStorageService,
     private dialog: MatDialog,
-    private cdlservice: CdlService
+    private cdlservice: CdlService,
+    private fileService: FileService,
   ) { }
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -163,6 +170,168 @@ export class LoanDetailsComponent implements OnInit {
       });
 
   }
+
+  getImagefromUrl(url, file) {
+    if (file.fileType) {
+      if (file.fileType == 'pdf') {
+        return './assets/images/pdf.png';
+      } else if (file.fileType == 'application/vnd.ms-excel' || file.fileType == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+        return './assets/images/xls.png';
+      } else if (file.fileType == 'audio/mp3' || file.fileType == 'audio/mpeg' || file.fileType == 'audio/ogg') {
+        return './assets/images/audio.png';
+      } else if (file.fileType == 'video/mp4' || file.fileType == 'video/mpeg') {
+        return './assets/images/video.png';
+      } else if (file.fileType == 'application/msword' || file.fileType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.fileType.includes('docx') || file.fileType.includes('doc')) {
+        return './assets/images/ImgeFileIcon/wordDocsBgWhite.jpg';
+      } else if (file.fileType.includes('txt')) {
+        return './assets/images/ImgeFileIcon/docTxt.png';
+      } else {
+        return url;
+      }
+    }
+    return url;
+  }
+
+  filesSelected(event, type) {
+    console.log("Event ", event, type)
+    const input = event.target.files;
+    console.log("input ", input)
+    this.fileService.filesSelected(event, this.selectedFiles[type]).then(
+      () => {
+        for (const pic of input) {
+          const size = pic["size"] / 1024;
+          let fileObj = {
+            owner: this.user.id,
+            fileName: pic["name"],
+            fileSize: size / 1024,
+            caption: "",
+            fileType: pic["type"].split("/")[1],
+            action: 'add'
+          }
+          fileObj['file'] = pic;
+          fileObj['type'] = type;
+          this.filesToUpload.push(fileObj);
+        }
+        if (type == 'invoice') {
+          this.uploadInvoice()
+        }
+      }).catch((error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      })
+
+
+
+
+  }
+
+
+  uploadAudioVideo(data) {
+    const _this = this;
+    let count = 0;
+    console.log("DAta:", data);
+    return new Promise(async function (resolve, reject) {
+      for (const s3UrlObj of data) {
+        console.log("S3URLOBJ:", s3UrlObj);
+        console.log('_this.filesToUpload', _this.filesToUpload)
+        const file = _this.filesToUpload.filter((fileObj) => {
+          return ((fileObj.order === (s3UrlObj.orderId)) ? fileObj : '');
+        })[0];
+        console.log("File:", file);
+        if (file) {
+          await _this.uploadFiles(file['file'], s3UrlObj.url).then(
+            () => {
+              count++;
+              console.log("Count", count);
+              console.log("Count", data.length);
+              if (count === data.length) {
+                console.log("HERE");
+                resolve(true);
+              }
+            }
+          );
+        }
+        else {
+          resolve(true);
+        }
+      }
+    })
+  }
+
+
+  uploadFiles(file, url) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.cdlservice.videoaudioS3Upload(file, url)
+        .subscribe(() => {
+          resolve(true);
+        }, (error) => {
+          console.log('error', error)
+          _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          resolve(false);
+        });
+    })
+  }
+
+  deleteTempImage(i, type, deleteText) {
+    let files = this.filesToUpload.filter((fileObj) => {
+      if (fileObj && fileObj.fileName && this.selectedFiles[type] && this.selectedFiles[type].files[i] && this.selectedFiles[type].files[i].name) {
+        if (fileObj.type) {
+          return (fileObj.fileName === this.selectedFiles[type].files[i].name && fileObj.type === type);
+        }
+      }
+    });
+    if (files && files.length > 0) {
+      console.log(this.filesToUpload.indexOf(files[0]));
+      if (this.filesToUpload && this.filesToUpload.indexOf(files[0])) {
+        const index = this.filesToUpload.indexOf(files[0]);
+        this.filesToUpload.splice(index, 1);
+      }
+    }
+    this.selectedFiles[type].files.splice(i, 1);
+    this.selectedFiles[type].base64.splice(i, 1);
+    this.selectedFiles[type].caption.splice(i, 1);
+    if (type === 'invoice') {
+      // this.loanData.partnerAcceptanceAttachments.splice(i, 1);
+      this.loanData.productImages.splice(i, 1);
+    }
+  }
+
+  getImage(url, file) {
+    return this.fileService.getImage(url, file);
+  }
+
+  uploadInvoice() {
+    let loanData = {
+      "uid": this.loanId,
+    }
+    loanData['partnerAcceptanceAttachments'] = [];
+    for (let i = 0; i < this.filesToUpload.length; i++) {
+      this.filesToUpload[i]['order'] = i;
+      if (this.filesToUpload[i]["type"] == 'invoice') {
+        loanData['partnerAcceptanceAttachments'].push(this.filesToUpload[i]);
+      }
+    }
+
+    this.cdlservice.uploadInvoice(this.loanId, loanData).subscribe((s3urls: any) => {
+      if (s3urls) {
+        if (s3urls.length > 0) {
+          this.uploadAudioVideo(s3urls).then(
+            (dataS3Url) => {
+              console.log(dataS3Url);
+              this.snackbarService.openSnackBar("Invoice Uploaded Successfully")
+              // this.router.navigate(['provider', 'cdl', 'loans']);
+              this.ngOnInit();
+            }).catch(() => {
+            });
+        }
+
+      };
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      })
+  }
+
 
   editLoan() {
     const navigationExtras: NavigationExtras = {

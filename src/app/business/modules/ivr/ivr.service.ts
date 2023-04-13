@@ -31,6 +31,21 @@ export class IvrService {
     return this.servicemeta.httpGet(url, null, filter);
   }
 
+  getIvrQuestionnaire() {
+    const url = 'provider/questionnaire/ivr/call/ONLINE';
+    return this.servicemeta.httpGet(url, null);
+  }
+
+  validateProviderQuestionnaire(body) {
+    const url = 'provider/questionnaire/validate';
+    return this.servicemeta.httpPut(url, body);
+  }
+
+  submitQuestionnaire(id, data) {
+    const url = 'provider/ivr/questionnaire/submit/' + id;
+    return this.servicemeta.httpPost(url, data);
+  }
+
   getCustomers() {
     const url = 'provider/customers';
     return this.servicemeta.httpGet(url, null);

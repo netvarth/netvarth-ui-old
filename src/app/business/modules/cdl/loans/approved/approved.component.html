@@ -181,7 +181,7 @@
   <div class="row text-center">
     <div class="col-md-10">
       <button
-        [disabled]="selectedFiles['invoice'] && selectedFiles['invoice'].files && selectedFiles['invoice'].files.length == 0"
+        [disabled]="selectedFiles['invoice'] && selectedFiles['invoice'].files && selectedFiles['invoice'].files.length == 0 || disableBtn"
         class="btn btn-primary mt-3" (click)="approveLoan()">
         Submit
       </button>

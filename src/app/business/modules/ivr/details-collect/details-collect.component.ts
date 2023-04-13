@@ -24,6 +24,8 @@ export class DetailsCollectComponent implements OnInit {
   customerDetailsPanel: any;
   customerCallHistory: any;
   type: any;
+  ivrQuestionnaire: any;
+  questionAnswers: any;
   constructor(
     private ActivatedRoute: ActivatedRoute,
     private ivrService: IvrService,
@@ -43,6 +45,9 @@ export class DetailsCollectComponent implements OnInit {
           this.callUid = params.id;
           this.ivrService.getAllIvrCallsByUid(params.id).subscribe((data) => {
             this.callData = data;
+            // if (this.callData && this.callData.qnrAnswer) {
+            //   this.questionAnswers = this.callData.qnrAnswer.IVR_Before;
+            // }
             console.log("this.callData", this.callData)
             if (this.callData && this.callData.userCallHistories) {
               this.callHistories = this.callData.userCallHistories;
@@ -56,6 +61,8 @@ export class DetailsCollectComponent implements OnInit {
       }
     })
 
+    this.getQuestionnaire();
+
     this.ActivatedRoute.queryParams.subscribe((params) => {
       if (params) {
         if (params && params.type) {
@@ -68,6 +75,13 @@ export class DetailsCollectComponent implements OnInit {
     this.getUsers();
   }
 
+  getQuestionnaire() {
+    this.ivrService.getIvrQuestionnaire().subscribe((data) => {
+      this.ivrQuestionnaire = data;
+      console.log("this.ivrQuestionnaire", this.ivrQuestionnaire)
+    });
+  }
+
   getCustomerCallHistory(id) {
     let api_filter = {};
     api_filter['consumerId-eq'] = id;
@@ -75,6 +89,10 @@ export class DetailsCollectComponent implements OnInit {
       this.customerCallHistory = data;
     });
 
+  }
+
+  getQuestionAnswers(event) {
+    this.questionAnswers = event;
   }
 
   getCallBack(uid) {
@@ -223,6 +241,39 @@ export class DetailsCollectComponent implements OnInit {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
           })
       }
+    });
+  }
+
+
+  validateQuestionnaire() {
+    if (!this.questionAnswers) {
+      this.questionAnswers = {
+        answers: {
+          answerLine: [],
+          questionnaireId: this.ivrQuestionnaire.id
+        }
+      }
+    }
+    if (this.questionAnswers.answers) {
+      this.ivrService.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
+        if (data.length === 0) {
+          this.submitQuestionnaire(this.questionAnswers.answers);
+        }
+        else {
+          this.snackbarService.openSnackBar("Please Fill All Required Fields", { 'panelClass': 'snackbarerror' });
+        }
+        // this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
+      }, (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+    }
+  }
+
+  submitQuestionnaire(data) {
+    this.ivrService.submitQuestionnaire(this.callUid, this.questionAnswers.answers).subscribe((data: any) => {
+      this.snackbarService.openSnackBar("Details Saved Successfully");
+    }, (error) => {
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     });
   }
 

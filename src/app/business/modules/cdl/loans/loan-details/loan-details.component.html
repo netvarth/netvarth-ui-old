@@ -90,7 +90,8 @@
               <span class="font-weight-bold text-primary">Personal Details</span>
             </div>
             <div>
-              <div class="btn btn-primary pointer-cursor" *ngIf="loanData && loanData.isActionRequired" (click)="editLoan()">
+              <div class="btn btn-primary pointer-cursor" *ngIf="loanData && loanData.isActionRequired"
+                (click)="editLoan()">
                 <i class="fa fa-edit"></i>&nbsp;Edit
               </div>
             </div>
@@ -483,7 +484,8 @@
                   <div class="customerScoreLabel">Perfios Banking Habits</div>
                   <div class="customerScoreInfoLabel" *ngIf="perfiosData && perfiosData.bankingHabits">
                     {{getStringWithSpaces(perfiosData.bankingHabits)}}</div>
-                  <div class="btn btn-primary" *ngIf="perfiosData" (click)="viewReport('perfios',perfiosData)">View Report</div>
+                  <div class="btn btn-primary" *ngIf="perfiosData" (click)="viewReport('perfios',perfiosData)">View
+                    Report</div>
                   <div class="font-weight-bold text-danger" *ngIf="!perfiosData && perfiosError">{{perfiosError}}</div>
                 </div>
               </div>
@@ -520,11 +522,13 @@
                 <div>
                   <div class="customerScoreLabel">CIBIL Score</div>
                   <div class="customerScoreInfoLabel" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0]
-                  && loanData.loanApplicationKycList[0].cibilScoreGenerated">{{loanData.loanApplicationKycList[0].cibilScore}}</div>
+                  && loanData.loanApplicationKycList[0].cibilScoreGenerated">
+                    {{loanData.loanApplicationKycList[0].cibilScore}}</div>
                   <div class="customerScoreInfoLabel" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0]
                                     && !loanData.loanApplicationKycList[0].cibilScoreGenerated">
-                                    <div class="btn btn-primary" (click)="generateCibilScore(loanData.loanApplicationKycList[0].id)">Generate Score</div>
-                    </div>
+                    <div class="btn btn-primary" (click)="generateCibilScore(loanData.loanApplicationKycList[0].id)">
+                      Generate Score</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -658,8 +662,9 @@
             *ngIf="accountaggregatingStatusShowing && !(bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0])">
             <div class="col-md-12 no-padding-small">
               <div>
-                <div *ngIf="!accountaggregatingStatus || accountaggregatingStatus == 'InProgress'" [class.approved]="accountaggregatingStatus == 'Approved'">
-                 <span class="btn-warning">Waiting for Customer Consent</span>
+                <div *ngIf="!accountaggregatingStatus || accountaggregatingStatus == 'InProgress'"
+                  [class.approved]="accountaggregatingStatus == 'Approved'">
+                  <span class="btn-warning">Waiting for Customer Consent</span>
                 </div>
                 <div class="btn-success" *ngIf="accountaggregatingStatus == 'Approved'">
                   Account Aggregator Statement Fetching in Progress
@@ -701,6 +706,69 @@
             <div class="col-md-4 no-padding-small mt-2" *ngIf="loanData && loanData.invoiceAmount">
               <div class="details-title">Total Bill Amount</div>
               <div class="details-sub-title">{{loanData.invoiceAmount}}</div>
+            </div>
+            <div class="col-md-4 no-padding-small mt-2">
+              <div class="details-title"
+                *ngIf="loanData && loanData.partnerAcceptanceAttachments && loanData.partnerAcceptanceAttachments.length == 0">
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="fieldPadding">
+                      <div class="d-lg-flex d-md-flex">
+                        <div class="file">
+                          <label (click)="invoiceAttach.click()">
+                            Upload Invoice
+                          </label>
+                          <input #invoiceAttach type='file' (change)="filesSelected($event, 'invoice')" />
+                        </div>&nbsp;
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['invoice'] && selectedFiles['invoice'].files && selectedFiles['invoice'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['invoice'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['invoice'].base64[i], file)"
+                                  *ngIf="selectedFiles['invoice'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="file.s3path" *ngIf="!selectedFiles['invoice'].base64[i] && file.s3path"
+                                    width="100px" height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'invoice',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                *ngIf="loanData && loanData.partnerAcceptanceAttachments && loanData.partnerAcceptanceAttachments.length > 0">
+                <div class="text-left details-title">Uploaded Invoice
+                </div>
+                <div>
+                  <a [href]="loanData.partnerAcceptanceAttachments[0].s3path" class="btn btn-primary" target="_blank">
+                    View Invoice
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3" *ngIf="loanData && loanData.productImages && loanData.productImages.length>0">
+            <div class="details-title px-md-3">Product Images</div>
+            <div class="no-padding no-padding-small">
+              <div class="details-sub-title col-md-12">
+                <div class="col-md-3 col-sm-4 col-xs-6 no-padding mt-2 no-padding-small"
+                  *ngFor="let file of loanData.productImages">
+                  <a [href]="file.s3path" target="_blank">
+                    <img [src]="getImagefromUrl(file.s3path,file)" width="100px" height="100px">
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
           <br>
@@ -865,7 +933,7 @@
 
             </div>
 
-            <div class="col-md-12 no-padding-small mt-3">
+            <!-- <div class="col-md-12 no-padding-small mt-3">
               <div
                 *ngIf="loanData && loanData.partnerAcceptanceAttachments && loanData.partnerAcceptanceAttachments.length>0">
                 <div class="text-left details-title">Uploaded Invoice&nbsp;
@@ -881,7 +949,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
           </div>
         </div>
@@ -897,7 +965,7 @@
             </div>
           </div>
           <div *ngIf="loanData && loanData.isAcceptanceOtpUpdated">
-            <div class="d-lg-flex" >
+            <div class="d-lg-flex">
               <div class="mt-2" *ngIf="digitalDocumenId && digitalDocumenId!=''">
                 <div class="btn btn-primary mr-2" (click)="viewDigitalDocument()">View Agreement</div>
               </div>
@@ -907,7 +975,7 @@
               </div>
             </div>
 
-            <div class="d-lg-flex" >
+            <div class="d-lg-flex">
               <div class="mt-2 mr-2">
                 <div class="btn btn-primary" (click)="viewInsuranceDocument()">View Insurance Agreement</div>
               </div>

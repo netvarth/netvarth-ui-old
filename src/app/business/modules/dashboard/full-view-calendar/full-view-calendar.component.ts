@@ -136,9 +136,11 @@ export class FullViewCalendarComponent implements OnInit {
 
   handleAppointments(filter, history_filter) {
     const _this = this;
+    let api_filter = { "apptStatus-neq": "prepaymentPending,failed" };
+    filter["apptStatus-neq"] = "prepaymentPending,failed";
     return new Promise((resolve, reject) => {
-      _this.dashboardService.getTodayAppointments().subscribe((todayData: any) => {
-        _this.dashboardService.getFutureAppointments().subscribe((futureData: any) => {
+      _this.dashboardService.getTodayAppointments(api_filter).subscribe((todayData: any) => {
+        _this.dashboardService.getFutureAppointments(api_filter).subscribe((futureData: any) => {
           if (history_filter) {
             _this.dashboardService.getHistoryAppointments(filter).subscribe((historyData: any) => {
               resolve([todayData, futureData, historyData]);
@@ -155,9 +157,11 @@ export class FullViewCalendarComponent implements OnInit {
 
   handleTokens(filter, history_filter) {
     const _this = this;
+    let api_filter = { "waitlistStatus-neq": "prepaymentPending,failed" };
+    filter["waitlistStatus-neq"] = "prepaymentPending,failed";
     return new Promise((resolve, reject) => {
-      _this.dashboardService.getTodayTokens().subscribe((todayData: any) => {
-        _this.dashboardService.getFutureTokens().subscribe((futureData: any) => {
+      _this.dashboardService.getTodayTokens(api_filter).subscribe((todayData: any) => {
+        _this.dashboardService.getFutureTokens(api_filter).subscribe((futureData: any) => {
           if (history_filter) {
             _this.dashboardService.getHistoryTokens(filter).subscribe((historyData: any) => {
               resolve([todayData, futureData, historyData]);

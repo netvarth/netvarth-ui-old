@@ -77,9 +77,9 @@
 
       <div class="col-md-6 col-xs-12 mt-2">
         <div class="d-flex text-center">
-          <button type="button" class="btn btn-light bg-light mr-2 font-weight-600" (click)="openUsersPopup(callData.uid)"
-            *ngIf="callData && !callData.userId" tooltipPosition="top" pTooltip="Assign"><img width="20"
-              src="./assets/images/ivr/unassign.png">
+          <button type="button" class="btn btn-light bg-light mr-2 font-weight-600"
+            (click)="openUsersPopup(callData.uid)" *ngIf="callData && !callData.userId" tooltipPosition="top"
+            pTooltip="Assign"><img width="20" src="./assets/images/ivr/unassign.png">
           </button>
 
           <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="getCallBack(callData.uid)"
@@ -122,6 +122,9 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <div>
+
+
+
                 <div>
                   <div class="bggrey my-2">
                     <div>
@@ -230,8 +233,8 @@
                         <div class="form-title">End of the call - Status</div>
                       </div>
                       <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter End of the call - Status"
-                          class="form-control" autocomplete="off" />
+                        <input (keyup)="resetErrors()" #firstname type="text"
+                          placeholder="Enter End of the call - Status" class="form-control" autocomplete="off" />
                       </div>
                     </div>
                   </div>
@@ -244,8 +247,8 @@
                         <div class="form-title">Ask your questions here</div>
                       </div>
                       <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Ask your questions here"
-                          class="form-control" autocomplete="off" />
+                        <input (keyup)="resetErrors()" #firstname type="text"
+                          placeholder="Enter Ask your questions here" class="form-control" autocomplete="off" />
                       </div>
                     </div>
                   </div>
@@ -324,21 +327,22 @@
               </div>
             </div>
           </div>
-          <div class="text-center" *ngIf="!customerCallHistory || (customerCallHistory && customerCallHistory.length==0)">
+          <div class="text-center"
+            *ngIf="!customerCallHistory || (customerCallHistory && customerCallHistory.length==0)">
             <span class="font-weight-bold">No Call History Found</span>
           </div>
         </div>
       </div>
       <div class="col-md-4 no-padding-small">
         <div class="card mt-2">
-         <div class="d-flex justify-content-between">
-          <div class="d-flex justify-content-center">
-            <span class="font-weight-bold">Remarks</span>
+          <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-center">
+              <span class="font-weight-bold">Remarks</span>
+            </div>
+            <div class="d-flex align-items-center">
+              <a class="btn btn-primary"><i class="fa fa-edit"></i>&nbsp;Add Remarks</a>
+            </div>
           </div>
-          <div class="d-flex align-items-center">
-            <a class="btn btn-primary"><i class="fa fa-edit"></i>&nbsp;Add Remarks</a>
-          </div>
-         </div>
           <div class="card mt-2">
             Patient is Suffering with High Fever from the Past Four Days
             <div>
@@ -393,16 +397,30 @@
       <span class="font-weight-bold">Fill The Details</span>
     </div>
     <hr>
+
+
+
     <div>
       <div>
+        <div>
+          <app-questionnaire [questionnaireList]="ivrQuestionnaire" [source]="'ivr'" [questionAnswers]="questionAnswers"
+            (returnAnswers)="getQuestionAnswers($event)">
+          </app-questionnaire>
+        </div>
+        <!-- <div>
+          <button class="nxt-btn" mat-flat-button (click)="validateQuestionnaire()">save</button>
+        </div> -->
+      </div>
+
+      <!-- <div>
         <div class="bggrey my-2">
           <div>
             <div class="d-flex">
               <div class="form-title">Chief Complaint(Reason for the Call)</div>
             </div>
             <div class="fieldPadding">
-              <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Chief Complaint(Reason for the Call)"
-                class="form-control" autocomplete="off" />
+              <input (keyup)="resetErrors()" #firstname type="text"
+                placeholder="Enter Chief Complaint(Reason for the Call)" class="form-control" autocomplete="off" />
             </div>
           </div>
         </div>
@@ -444,8 +462,8 @@
               <div class="form-title">Family History</div>
             </div>
             <div class="fieldPadding">
-              <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Family History" class="form-control"
-                autocomplete="off" />
+              <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Family History"
+                class="form-control" autocomplete="off" />
             </div>
           </div>
         </div>
@@ -519,12 +537,12 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
 
     </div>
     <div>
-      <button type="button" class="btn btn-primary open-all-btn" (click)="saveCustomerDetails()">Save</button>
+      <button type="button" class="btn btn-primary open-all-btn" (click)="validateQuestionnaire()">Save</button>
     </div>
   </div>
 </div>

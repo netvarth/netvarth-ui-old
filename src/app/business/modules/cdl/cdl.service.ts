@@ -466,6 +466,11 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  uploadInvoice(id, data) {
+    const url = 'provider/loanapplication/' + id + '/uploadinvoice';
+    return this.servicemeta.httpPut(url, data);
+  }
+
 
   salesOfficerApproval(data, id) {
     const url = 'provider/loanapplication/' + id + '/approval';

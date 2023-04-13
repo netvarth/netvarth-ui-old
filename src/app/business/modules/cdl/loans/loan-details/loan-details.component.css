@@ -412,3 +412,108 @@ th {
 .notes {
   font-size: 14px;
 }
+
+
+
+
+/* File Input Styles  */
+
+.file {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.file>input[type='file'] {
+  display: none
+}
+
+.file>label {
+  font-size: 14px !important;
+  font-weight: bold;
+  cursor: pointer;
+  outline: 0;
+  /* user-select: none; */
+  border: 0.5px dashed hsl(204, 86%, 53%);
+  border-radius: 5px;
+  background-color: hsl(204, 86%, 96%);
+  color: hsl(204, 86%, 53%);
+  padding: 8px 20px !important;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.file>label:hover {
+  border-color: hsl(0, 0%, 21%);
+}
+
+.file>label:active {
+  background-color: hsl(0, 0%, 96%);
+}
+
+.file>label>i {
+  padding-right: 5px;
+}
+
+.file--upload>label {
+  color: hsl(204, 86%, 53%);
+  border-color: hsl(204, 86%, 53%);
+}
+
+.file--upload>label:hover {
+  border-color: hsl(204, 86%, 53%);
+  background-color: hsl(204, 86%, 96%);
+}
+
+
+.photo-border {
+  border: 1px solid #D2D6DE !important;
+  padding: 5px 5px 0px 5px !important;
+}
+
+
+.galul {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.galul li {
+  float: left !important;
+}
+
+.galimg_outer {
+  position: relative !important;
+  padding: 5px 10px 10px 5px !important;
+}
+
+.gal-input input {
+  width: 70px !important;
+  font-size: .7rem !important;
+}
+
+.gal_action {
+  position: absolute !important;
+  top: -5px !important;
+  right: -3px !important;
+  background: rgba(0, 0, 0, .5) !important;
+  width: 15px !important;
+  height: 15px !important;
+  text-align: center !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+}
+
+.imageClass {
+  width: 4rem;
+  height: 4rem;
+  padding: 20px;
+  border-radius: 50%;
+  text-align: center;
+  background: #D9D8D8;
+}
+
+.astericColor {
+  color: #f24949 !important;
+}

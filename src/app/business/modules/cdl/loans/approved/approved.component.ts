@@ -52,6 +52,7 @@ export class ApprovedComponent implements OnInit {
   dealers: any;
   partnerName: any;
   loanKycId: any;
+  disableBtn: any = false;
   constructor(
     private location: Location,
     private dialog: MatDialog,
@@ -178,6 +179,7 @@ export class ApprovedComponent implements OnInit {
 
 
   approveLoan() {
+    this.disableBtn = true;
     let loanData = {
       "uid": this.loanId,
     }
@@ -197,15 +199,19 @@ export class ApprovedComponent implements OnInit {
         if (s3urls.length > 0) {
           this.uploadAudioVideo(s3urls).then(
             (dataS3Url) => {
+              this.disableBtn = false;
               console.log(dataS3Url);
               this.snackbarService.openSnackBar("Loan Approved Successfully")
               this.router.navigate(['provider', 'cdl', 'loans']);
+            }).catch(() => {
+              this.disableBtn = false;
             });
         }
 
       };
     },
       (error) => {
+        this.disableBtn = false;
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
       })
   }
