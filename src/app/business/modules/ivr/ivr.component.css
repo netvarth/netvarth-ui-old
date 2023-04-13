@@ -122,6 +122,10 @@
   line-height: 40px;
 }
 
+.font-small {
+  font-size: 12px !important;
+}
+
 
 .semi-progress-bar {
   top: auto;
@@ -225,7 +229,7 @@ input[type="checkbox"]:checked {
 }
 
 ::ng-deep .callsTabsView a#p-tabpanel-0-label {
-  width: 160px!important;
+  width: 160px !important;
 }
 
 
@@ -269,8 +273,8 @@ input[type="checkbox"]:checked {
     left: 32% !important;
   }
 
-  ::ng-deep .callsTabsView .p-tabview-nav-link{
-    width: 140px!important;
+  ::ng-deep .callsTabsView .p-tabview-nav-link {
+    width: 140px !important;
   }
 
   .analytics-card {

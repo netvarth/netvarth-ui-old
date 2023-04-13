@@ -924,6 +924,9 @@ export class CustomerCreateComponent implements OnInit {
         ["provider", "orders", "order-wizard"],
         navigationExtras
       );
+    }
+    else if (this.source === "ivr") {
+      this.router.navigate(['/provider/ivr']);
     } else {
       // this.router.navigate(["provider", "customers"]);
       this.router.navigate(['/provider/customers/' + data]);

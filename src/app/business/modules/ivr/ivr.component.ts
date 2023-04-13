@@ -146,7 +146,7 @@ export class IvrComponent implements OnInit {
 
   getIvrAssignedCalls() {
     let api_filter = {}
-    api_filter['userId-neq'] = null;
+    api_filter['userId-eq'] = this.user.id;
     this.getIvrCallsbyFilter(api_filter).then((data) => {
       this.assignedCalls = data;
     });
@@ -241,7 +241,7 @@ export class IvrComponent implements OnInit {
   }
 
   loadVoiceMailCalls(event) {
-    this.getIvrVoiceMailCalls();
+    this.getIvrVoiceMailCount();
     let api_filter = this.ivrService.setFiltersFromPrimeTable(event);
     api_filter['callStatus-eq'] = "voicemail";
     if (api_filter) {
@@ -255,9 +255,9 @@ export class IvrComponent implements OnInit {
   }
 
   loadAssignedCalls(event) {
-    this.getIvrAssignedCalls();
+    this.getIvrAssignedCallsCount();
     let api_filter = this.ivrService.setFiltersFromPrimeTable(event);
-    api_filter['userId-neq'] = null;
+    api_filter['userId-eq'] = this.user.id;
     if (api_filter) {
       this.getIvrCallsCount(api_filter).then((count) => {
         this.assignedCallsCount = count;
@@ -370,7 +370,8 @@ export class IvrComponent implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         action: 'edit',
-        id: id
+        id: id,
+        source: "ivr"
       }
     };
     this.router.navigate(['provider', 'customers', 'create'], navigationExtras)
@@ -562,7 +563,7 @@ export class IvrComponent implements OnInit {
 
   getIvrAssignedCallsCount() {
     let filter = {
-      "userId-neq": null
+      "userId-eq": this.user.id
     }
     this.ivrService.getIvrCallsCount(filter).subscribe((data: any) => {
       this.assignedCallsCount = data;

@@ -985,7 +985,10 @@ export class CreateDealerComponent implements OnInit {
               this.snackbarService.openSnackBar("Dealer Updated Successfully")
             }
             this.router.navigate(['provider', 'cdl', 'dealers'])
-          })
+          },
+            (error) => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+            })
         },
           (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })

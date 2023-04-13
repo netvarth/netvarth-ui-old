@@ -182,12 +182,12 @@ export class ApprovedComponent implements OnInit {
       "uid": this.loanId,
     }
     console.log("filestoUpload", this.filesToUpload)
-    loanData['partnerAcceptanceAttachments'] = [];
+    // loanData['partnerAcceptanceAttachments'] = [];
     loanData['productImages'] = [];
     for (let i = 0; i < this.filesToUpload.length; i++) {
       this.filesToUpload[i]['order'] = i;
       if (this.filesToUpload[i]["type"] == 'invoice') {
-        loanData['partnerAcceptanceAttachments'].push(this.filesToUpload[i]);
+        // loanData['partnerAcceptanceAttachments'].push(this.filesToUpload[i]);
         loanData['productImages'].push(this.filesToUpload[i]);
       }
     }
@@ -348,7 +348,7 @@ export class ApprovedComponent implements OnInit {
     this.selectedFiles[type].base64.splice(i, 1);
     this.selectedFiles[type].caption.splice(i, 1);
     if (type === 'invoice') {
-      this.loanData.partnerAcceptanceAttachments.splice(i, 1);
+      // this.loanData.partnerAcceptanceAttachments.splice(i, 1);
       this.loanData.productImages.splice(i, 1);
     }
   }
