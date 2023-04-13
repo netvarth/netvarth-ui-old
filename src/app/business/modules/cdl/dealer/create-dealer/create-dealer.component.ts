@@ -412,14 +412,15 @@ export class CreateDealerComponent implements OnInit {
     console.log("Event ", event, type)
     const input = event.target.files;
     console.log("input ", input)
-    let fileUploadtoS3 = []
-    this.fileService.filesSelected(event, this.selectedFiles[type]).then(
+    let fileUploadtoS3 = [];
+    const _this = this;
+    this.fileService.filesSelected(event, _this.selectedFiles[type]).then(
       () => {
-        let index = this.filesToUpload && this.filesToUpload.length > 0 ? this.filesToUpload.length : 0;
+        let index = _this.filesToUpload && _this.filesToUpload.length > 0 ? _this.filesToUpload.length : 0;
         for (const pic of input) {
           const size = pic["size"] / 1024;
           let fileObj = {
-            owner: this.businessId,
+            owner: _this.businessId,
             ownerType: "Provider",
             fileName: pic["name"],
             fileSize: size / 1024,
@@ -431,31 +432,32 @@ export class CreateDealerComponent implements OnInit {
           fileObj['file'] = pic;
           fileObj['type'] = type;
           fileObj['order'] = index;
-          this.filesToUpload.push(fileObj);
+          _this.filesToUpload.push(fileObj);
           fileUploadtoS3.push(fileObj);
           index++;
         }
 
-        this.cdlservice.uploadFilesToS3(fileUploadtoS3).subscribe(
+        _this.cdlservice.uploadFilesToS3(fileUploadtoS3).subscribe(
           (s3Urls: any) => {
             if (s3Urls && s3Urls.length > 0) {
-              this.uploadAudioVideo(s3Urls).then(
+              _this.uploadAudioVideo(s3Urls).then(
                 (dataS3Url) => {
                   console.log(dataS3Url);
-                  this.apiloading = false;
+                  _this.apiloading = false;
                   console.log("Sending Attachment Success");
                 });
             }
           }, error => {
-            this.apiloading = false;
-            this.snackbarService.openSnackBar(error,
+            _this.apiloading = false;
+            _this.snackbarService.openSnackBar(error,
               { panelClass: "snackbarerror" }
             );
           }
         );
 
       }).catch((error) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        _this.apiloading = false;
+        _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       })
 
 
@@ -739,13 +741,15 @@ export class CreateDealerComponent implements OnInit {
   }
 
   deleteTempImage(i, type, file) {
+    console.log("this.selectedFiles[type]", file)
     console.log('file', file);
     delete file['s3path'];
     delete file['uid'];
-    file["action"] = "remove";
-    file["type"] = type;
-    this.filesToUpload.push(file);
-
+    if (file.driveId) {
+      file["action"] = "remove";
+      file["type"] = type;
+      this.filesToUpload.push(file);
+    }
     let files = this.filesToUpload.filter((fileObj) => {
       if (fileObj && fileObj.fileName && this.selectedFiles[type] && this.selectedFiles[type].files[i] && this.selectedFiles[type].files[i].name) {
         if (fileObj.type) {
@@ -755,12 +759,10 @@ export class CreateDealerComponent implements OnInit {
     });
 
     if (files && files.length > 0) {
-      console.log(this.filesToUpload.indexOf(files[0]));
-      // if (this.filesToUpload && this.filesToUpload.indexOf(files[0])) {
-      //   const index = this.filesToUpload.indexOf(files[0]);
-      //   this.filesToUpload.splice(index, 1);
-      // }
-      file['action'] = 'remove';
+      let fileIndex = this.filesToUpload.indexOf(files[0])
+      if (!file.driveId) {
+        this.filesToUpload.splice(fileIndex, 1);
+      }
     }
     console.log("this.filesToUpload", this.filesToUpload)
     this.selectedFiles[type].files.splice(i, 1);
