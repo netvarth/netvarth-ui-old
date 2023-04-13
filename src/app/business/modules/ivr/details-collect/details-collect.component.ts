@@ -46,7 +46,8 @@ export class DetailsCollectComponent implements OnInit {
           this.ivrService.getAllIvrCallsByUid(params.id).subscribe((data) => {
             this.callData = data;
             // if (this.callData && this.callData.qnrAnswer) {
-            //   this.questionAnswers = this.callData.qnrAnswer.IVR_Before;
+            //   this.questionAnswers = this.callData.qnrAnswer;
+            //   console.log("this.questionAnswers", this.questionAnswers)
             // }
             console.log("this.callData", this.callData)
             if (this.callData && this.callData.userCallHistories) {

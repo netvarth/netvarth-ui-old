@@ -196,7 +196,7 @@
               <ng-template pTemplate="body" let-call>
                 <div class="card mt-2">
                   <div class="row px-1">
-                    <div class="col-md-3 col-xs-6 mt-2">
+                    <div class="col-md-3 col-xs-5 mt-2">
                       <div class="font-weight-bold">
                         <!-- <span *ngIf="call && call.consumerPhone && call.consumerPhone.countryCode">
                                                         {{call.consumerPhone.countryCode}}
@@ -212,7 +212,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-3 col-xs-6 mt-2">
+                    <div class="col-md-3 col-xs-5 mt-2">
                       <div class="font-weight-bold">
                         <span>
                           <span *ngIf="call && call.userName">{{call.userName}}</span>
@@ -224,44 +224,33 @@
                       </div>
                     </div>
 
-                    <div class="col-md-6 col-xs-12 mt-2">
+                    <div class="col-md-6 col-xs-2 mt-2">
                       <div class="pointer-cursor d-flex justify-content-center">
                         <span [matMenuTriggerFor]="menu" class="p-2"><i class="fa fa-ellipsis-v"
                             aria-hidden="true"></i></span>
                         <mat-menu #menu="matMenu">
-                          <button type="button" mat-menu-item class="btn btn-light bg-light mr-2 font-weight-600"
-                            (click)="openUsersPopup(call.uid)" *ngIf="call && !call.userId" tooltipPosition="top"
-                            pTooltip="Assign"><img width="20" src="./assets/images/ivr/unassign.png">
+                          <button type="button" mat-menu-item class="font-weight-600" (click)="viewCall(call.uid)"><i
+                              class="fa fa-eye"></i>View
                           </button>
 
-                          <button type="button" mat-menu-item class="btn btn-light mr-2 font-weight-600"
-                            (click)="getCallBack(call.uid)" tooltipPosition="top" pTooltip="CallBack"><img width="20"
-                              src="./assets/images/ivr/callback.png">
+                          <button type="button" mat-menu-item class="font-weight-600" (click)="openUsersPopup(call.uid)"
+                            *ngIf="call && !call.userId">
+                            <img width="15" src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Assign
                           </button>
 
-                          <button type="button" mat-menu-item class="btn btn-light mr-2 font-weight-600"
-                            (click)="unassignToCall(call.uid)" *ngIf="call && call.userId" tooltipPosition="top"
-                            pTooltip="Unassign"><img width="20" src="./assets/images/ivr/unassign.png">
+                          <button type="button" mat-menu-item class="font-weight-600" (click)="getCallBack(call.uid)">
+                            <img width="15" src="./assets/images/ivr/callback.png">&nbsp;&nbsp;Callback
                           </button>
 
-                          <button type="button" mat-menu-item
-                            class="btn btn-light bg-light mr-2 font-weight-600 text-light"
-                            (click)="markAsComplete(call.uid)" tooltipPosition="top" pTooltip="Complete"><i
-                              class="fa fa-check text-grey" aria-hidden="true"></i>
+                          <button type="button" mat-menu-item class="font-weight-600" (click)="unassignToCall(call.uid)"
+                            *ngIf="call && call.userId"><img width="15"
+                              src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Unassign
                           </button>
 
-                          <button type="button" mat-menu-item class="btn btn-light bg-light font-weight-600"
-                            (click)="viewCall(call.uid)" tooltipPosition="top" pTooltip="View"><i
-                              class="fa fa-eye text-grey" aria-hidden="true"></i>
+                          <button type="button" mat-menu-item class="font-weight-600"
+                            (click)="markAsComplete(call.uid)"><i class="fa fa-check"></i>Complete
                           </button>
-                          <!-- <button mat-menu-item (click)="viewCustomer(customer.id)"><i
-                                        class="fa fa-eye"></i>&nbsp;View</button>
-                                    <button mat-menu-item (click)="editCustomer(customer.id)"><i
-                                        class="fa fa-pencil"></i>&nbsp;Edit</button> -->
                         </mat-menu>
-                      </div>
-                      <div class="d-flex text-center">
-
                       </div>
                     </div>
                   </div>

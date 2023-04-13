@@ -48,12 +48,12 @@
 </section>
 
 
-<div class="clearfix"></div>
+<!-- <div class="clearfix"></div>
 <div class="pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
   <p-dropdown [dropdownIcon]="'fa fa-caret-down '" [options]="viewOptions" [(ngModel)]="SelectedView"
     optionLabel="displayName"></p-dropdown>
 </div>
-  
+   -->
 <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
 <section *ngIf="!showDashbard && !apiloading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12" id="bcrumbHeader">
@@ -65,7 +65,8 @@
     </div>
   </div>
 </section>
-<section class="app-check-ins-component dashboard content pro-dash" *ngIf="showDashbard && SelectedView && SelectedView.name == 'list'">
+<section class="app-check-ins-component dashboard content pro-dash"
+  *ngIf="showDashbard && SelectedView && SelectedView.name == 'list'">
   <div class="col-md-12 no-padding-small" *ngIf="!apiloading">
     <div class="row">
       <div class="card p0 w-dta">
@@ -253,27 +254,30 @@
                           <!-- <input type="text" #Ffname (keyup)="keyPressed()" class="filterTextbox filter-textbox"
                             [(ngModel)]="filter.first_name" [ngModelOptions]="{standalone: true}"
                             placeholder="Enter First Name"> -->
-                            <input autocomplete="off" type="text" #Ffname (keyup)="keyPressed()" class="form-control1 form-control1-solid form-control1-lg"
-                            [(ngModel)]="filter.first_name" placeholder="Enter First Name" [matAutocomplete]="autoprov" (ngModelChange)="handleFormField(filter.first_name,'firstName')">
-                            <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
-                              <mat-option *ngFor="let option of customerList"[value]="option.firstName" (onSelectionChange)="handleSearchSelect(option,filter.first_name)">
-                                  <div class="flexFirst" *ngIf="option && option.name">
-                                      <div class="flexClass">
-                                          <div *ngIf="option && option.name">{{option.name | capitalizeFirst }}</div>
-                                      </div>
-                                      <div>
-                                          <i class="fa fa-search iconCls"aria-hidden="true"></i>
-                                      </div>
-                                  </div>
-                              </mat-option>
+                          <input autocomplete="off" type="text" #Ffname (keyup)="keyPressed()"
+                            class="form-control1 form-control1-solid form-control1-lg" [(ngModel)]="filter.first_name"
+                            placeholder="Enter First Name" [matAutocomplete]="autoprov"
+                            (ngModelChange)="handleFormField(filter.first_name,'firstName')">
+                          <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                            <mat-option *ngFor="let option of customerList" [value]="option.firstName"
+                              (onSelectionChange)="handleSearchSelect(option,filter.first_name)">
+                              <div class="flexFirst" *ngIf="option && option.name">
+                                <div class="flexClass">
+                                  <div *ngIf="option && option.name">{{option.name | capitalizeFirst }}</div>
+                                </div>
+                                <div>
+                                  <i class="fa fa-search iconCls" aria-hidden="true"></i>
+                                </div>
+                              </div>
+                            </mat-option>
                           </mat-autocomplete>
                         </li>
                       </div>
                       <div class="filterTextinput filter-text-input">
                         <li class="filterli filter-li">
-                          <input type="text" #Flname (keyup)="keyPressed()" class="form-control1 form-control1-solid form-control1-lg"
-                            [(ngModel)]="filter.last_name" [ngModelOptions]="{standalone: true}"
-                            placeholder="Enter Last Name">
+                          <input type="text" #Flname (keyup)="keyPressed()"
+                            class="form-control1 form-control1-solid form-control1-lg" [(ngModel)]="filter.last_name"
+                            [ngModelOptions]="{standalone: true}" placeholder="Enter Last Name">
                         </li>
                       </div>
                     </div>
@@ -362,23 +366,27 @@
                         </li> -->
                         <li class="filterli filter-li flexClass">
                           <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode
-                            (keyup)="keyPressed()" class="form-control1 form-control1-solid form-control1-lg" style="width:50% !important" placeholder="+91">
-                            <input type="number" id="txt_mobile" [(ngModel)]="filter.phone_number"class="form-control1 form-control1-solid form-control1-lg"
-                              [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()" autocomplete="off"
-                              (keypress)="isNumeric($event)" maxlength="10"placeholder="9955668855"
-                              (ngModelChange)="handleFormField(filter.phone_number,'phoneNumber')" [matAutocomplete]="autoprov">
-                              <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
-                                <mat-option *ngFor="let option of customerList"[value]="option.phoneNo" (onSelectionChange)="handleSearchSelect(option,filter.phone_number)">
-                                    <div class="flexFirst" *ngIf="option && option.phoneNo">
-                                        <div class="flexClass">
-                                            <div *ngIf="option && option.phoneNo">{{option.phoneNo}}</div>
-                                        </div>
-                                        <div>
-                                            <i class="fa fa-search iconCls"aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </mat-option>
-                            </mat-autocomplete>
+                            (keyup)="keyPressed()" class="form-control1 form-control1-solid form-control1-lg"
+                            style="width:50% !important" placeholder="+91">
+                          <input type="number" id="txt_mobile" [(ngModel)]="filter.phone_number"
+                            class="form-control1 form-control1-solid form-control1-lg"
+                            [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()" autocomplete="off"
+                            (keypress)="isNumeric($event)" maxlength="10" placeholder="9955668855"
+                            (ngModelChange)="handleFormField(filter.phone_number,'phoneNumber')"
+                            [matAutocomplete]="autoprov">
+                          <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                            <mat-option *ngFor="let option of customerList" [value]="option.phoneNo"
+                              (onSelectionChange)="handleSearchSelect(option,filter.phone_number)">
+                              <div class="flexFirst" *ngIf="option && option.phoneNo">
+                                <div class="flexClass">
+                                  <div *ngIf="option && option.phoneNo">{{option.phoneNo}}</div>
+                                </div>
+                                <div>
+                                  <i class="fa fa-search iconCls" aria-hidden="true"></i>
+                                </div>
+                              </div>
+                            </mat-option>
+                          </mat-autocomplete>
                         </li>
                       </div>
                     </div>
@@ -607,15 +615,15 @@
                             All</mat-checkbox>
                         </li>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                            *ngFor="let multiUser of users">
-                            <span
-                              *ngIf="multiUser.status === 'ACTIVE' && multiUser.userType && multiUser.userType==='PROVIDER'">
-                              <mat-checkbox class="filter-checkbox"
-                                [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
-                                (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
-                                {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
-                            </span>
-                          </li>
+                          *ngFor="let multiUser of users">
+                          <span
+                            *ngIf="multiUser.status === 'ACTIVE' && multiUser.userType && multiUser.userType==='PROVIDER'">
+                            <mat-checkbox class="filter-checkbox"
+                              [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
+                              (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
+                              {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                          </span>
+                        </li>
                         <!-- <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                           *ngFor="let multiUser of users">
                           <span *ngIf="multiUser.admin === true">
@@ -754,7 +762,8 @@
                       *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                     {{checkin.service.name}}
                   </div>
-                  <div class="bold user-txt-clr" *ngIf="checkin.serviceData && checkin.serviceData.labels && checkin.serviceData.labels.length>0">
+                  <div class="bold user-txt-clr"
+                    *ngIf="checkin.serviceData && checkin.serviceData.labels && checkin.serviceData.labels.length>0">
                     {{getServiceLabels(checkin.serviceData.labels)}}
                   </div>
                   <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
@@ -877,9 +886,8 @@
                   <input type="checkbox" class="pull-left" [checked]="startedChkAppointments[i]"
                     (click)="stopprop($event)" (change)="chkStartedAptHistoryClicked(i, checkin)" />
                 </div>
-                <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                 [teams]="teams" (actionPerformed)="cardClicked($event)"
-                  [allLabels]="allLabels" [statusAction]="'started'">
+                <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type" [teams]="teams"
+                  (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="'started'">
                 </app-card>
               </div>
             </tbody>
@@ -1007,7 +1015,8 @@
                       *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                     {{checkin.service.name}}
                   </div>
-                  <div class="bold user-txt-clr" *ngIf="checkin.serviceData && checkin.serviceData.labels && checkin.serviceData.labels.length>0">
+                  <div class="bold user-txt-clr"
+                    *ngIf="checkin.serviceData && checkin.serviceData.labels && checkin.serviceData.labels.length>0">
                     {{getServiceLabels(checkin.serviceData.labels)}}
                   </div>
                   <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
@@ -1147,9 +1156,8 @@
                   <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]" *ngIf="checkin.consumer"
                     (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
                 </div>
-                <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                   [teams]="teams" (actionPerformed)="cardClicked($event)"
-                  [allLabels]="allLabels" [statusAction]="statusAction">
+                <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type" [teams]="teams"
+                  (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction">
                 </app-card>
               </div>
             </tbody>
@@ -1207,27 +1215,30 @@
                             <!-- <input type="text" #Ffname (keyup)="keyPressed()" class="filterTextbox filter-textbox"
                               [(ngModel)]="filter.first_name" [ngModelOptions]="{standalone: true}"
                               placeholder="Enter First Name"> -->
-                              <input autocomplete="off" type="text" #Ffname (keyup)="keyPressed()" class="form-control1 form-control1-solid form-control1-lg"
-                              [(ngModel)]="filter.first_name" placeholder="Enter First Name" [matAutocomplete]="autoprov" (ngModelChange)="handleFormField(filter.first_name,'firstName')">
-                              <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
-                                <mat-option *ngFor="let option of customerList"[value]="option.firstName" (onSelectionChange)="handleSearchSelect(option,filter.first_name)">
-                                    <div class="flexFirst" *ngIf="option && option.name">
-                                        <div class="flexClass">
-                                            <div *ngIf="option && option.name">{{option.name | capitalizeFirst }}</div>
-                                        </div>
-                                        <div>
-                                            <i class="fa fa-search iconCls"aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </mat-option>
+                            <input autocomplete="off" type="text" #Ffname (keyup)="keyPressed()"
+                              class="form-control1 form-control1-solid form-control1-lg" [(ngModel)]="filter.first_name"
+                              placeholder="Enter First Name" [matAutocomplete]="autoprov"
+                              (ngModelChange)="handleFormField(filter.first_name,'firstName')">
+                            <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                              <mat-option *ngFor="let option of customerList" [value]="option.firstName"
+                                (onSelectionChange)="handleSearchSelect(option,filter.first_name)">
+                                <div class="flexFirst" *ngIf="option && option.name">
+                                  <div class="flexClass">
+                                    <div *ngIf="option && option.name">{{option.name | capitalizeFirst }}</div>
+                                  </div>
+                                  <div>
+                                    <i class="fa fa-search iconCls" aria-hidden="true"></i>
+                                  </div>
+                                </div>
+                              </mat-option>
                             </mat-autocomplete>
                           </li>
                         </div>
                         <div class="filterTextinput filter-text-input">
                           <li class="filterli filter-li">
-                            <input type="text" #Flname (keyup)="keyPressed()" class="form-control1 form-control1-solid form-control1-lg"
-                              [(ngModel)]="filter.last_name" [ngModelOptions]="{standalone: true}"
-                              placeholder="Enter Last Name">
+                            <input type="text" #Flname (keyup)="keyPressed()"
+                              class="form-control1 form-control1-solid form-control1-lg" [(ngModel)]="filter.last_name"
+                              [ngModelOptions]="{standalone: true}" placeholder="Enter Last Name">
                           </li>
                         </div>
                       </div>
@@ -1316,22 +1327,26 @@
                           </li> -->
                           <li class="filterli filter-li flexClass">
                             <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode
-                              (keyup)="keyPressed()" class="form-control1 form-control1-solid form-control1-lg" style="width:50% !important" placeholder="+91">
-                            <input type="number" id="txt_mobile" [(ngModel)]="filter.phone_number"class="form-control1 form-control1-solid form-control1-lg"
+                              (keyup)="keyPressed()" class="form-control1 form-control1-solid form-control1-lg"
+                              style="width:50% !important" placeholder="+91">
+                            <input type="number" id="txt_mobile" [(ngModel)]="filter.phone_number"
+                              class="form-control1 form-control1-solid form-control1-lg"
                               [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()" autocomplete="off"
-                              (keypress)="isNumeric($event)" maxlength="10"placeholder="9955668855"
-                              (ngModelChange)="handleFormField(filter.phone_number,'phoneNumber')" [matAutocomplete]="autoprov">
-                              <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
-                                <mat-option *ngFor="let option of customerList"[value]="option.phoneNo" (onSelectionChange)="handleSearchSelect(option,filter.phone_number)">
-                                    <div class="flexFirst" *ngIf="option && option.phoneNo">
-                                        <div class="flexClass">
-                                            <div *ngIf="option && option.phoneNo">{{option.phoneNo}}</div>
-                                        </div>
-                                        <div>
-                                            <i class="fa fa-search iconCls"aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </mat-option>
+                              (keypress)="isNumeric($event)" maxlength="10" placeholder="9955668855"
+                              (ngModelChange)="handleFormField(filter.phone_number,'phoneNumber')"
+                              [matAutocomplete]="autoprov">
+                            <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                              <mat-option *ngFor="let option of customerList" [value]="option.phoneNo"
+                                (onSelectionChange)="handleSearchSelect(option,filter.phone_number)">
+                                <div class="flexFirst" *ngIf="option && option.phoneNo">
+                                  <div class="flexClass">
+                                    <div *ngIf="option && option.phoneNo">{{option.phoneNo}}</div>
+                                  </div>
+                                  <div>
+                                    <i class="fa fa-search iconCls" aria-hidden="true"></i>
+                                  </div>
+                                </div>
+                              </mat-option>
                             </mat-autocomplete>
                           </li>
                         </div>
@@ -1730,7 +1745,8 @@
                   {{checkin.service.name}}
 
                 </div>
-                <div class="bold user-txt-clr" *ngIf="checkin.serviceData && checkin.serviceData.labels && checkin.serviceData.labels.length>0">
+                <div class="bold user-txt-clr"
+                  *ngIf="checkin.serviceData && checkin.serviceData.labels && checkin.serviceData.labels.length>0">
                   {{getServiceLabels(checkin.serviceData.labels)}}
                 </div>
                 <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
@@ -1858,9 +1874,8 @@
                 <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]" *ngIf="checkin.consumer"
                   (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
               </div>
-              <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                 [teams]="teams" (actionPerformed)="cardClicked($event)"
-                [allLabels]="allLabels" [statusAction]="statusAction">
+              <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type" [teams]="teams"
+                (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction">
               </app-card>
             </div>
           </tbody>
@@ -1914,27 +1929,30 @@
                             <!-- <input type="text" #Ffname (keyup)="keyPressed()" class="filterTextbox filter-textbox"
                               [(ngModel)]="filter.first_name" [ngModelOptions]="{standalone: true}"
                               placeholder="Enter First Name"> -->
-                              <input autocomplete="off" type="text" #Ffname (keyup)="keyPressed()" class="form-control1 form-control1-solid form-control1-lg"
-                            [(ngModel)]="filter.first_name" placeholder="Enter First Name" [matAutocomplete]="autoprov" (ngModelChange)="handleFormField(filter.first_name,'firstName')">
+                            <input autocomplete="off" type="text" #Ffname (keyup)="keyPressed()"
+                              class="form-control1 form-control1-solid form-control1-lg" [(ngModel)]="filter.first_name"
+                              placeholder="Enter First Name" [matAutocomplete]="autoprov"
+                              (ngModelChange)="handleFormField(filter.first_name,'firstName')">
                             <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
-                              <mat-option *ngFor="let option of customerList"[value]="option.firstName" (onSelectionChange)="handleSearchSelect(option,filter.first_name)">
-                                  <div class="flexFirst" *ngIf="option && option.name">
-                                      <div class="flexClass">
-                                          <div *ngIf="option && option.name">{{option.name | capitalizeFirst }}</div>
-                                      </div>
-                                      <div>
-                                          <i class="fa fa-search iconCls"aria-hidden="true"></i>
-                                      </div>
+                              <mat-option *ngFor="let option of customerList" [value]="option.firstName"
+                                (onSelectionChange)="handleSearchSelect(option,filter.first_name)">
+                                <div class="flexFirst" *ngIf="option && option.name">
+                                  <div class="flexClass">
+                                    <div *ngIf="option && option.name">{{option.name | capitalizeFirst }}</div>
                                   </div>
+                                  <div>
+                                    <i class="fa fa-search iconCls" aria-hidden="true"></i>
+                                  </div>
+                                </div>
                               </mat-option>
-                          </mat-autocomplete>
+                            </mat-autocomplete>
                           </li>
                         </div>
                         <div class="filterTextinput filter-text-input">
                           <li class="filterli filter-li">
-                            <input type="text" #Flname (keyup)="keyPressed()" class="form-control1 form-control1-solid form-control1-lg"
-                              [(ngModel)]="filter.last_name" [ngModelOptions]="{standalone: true}"
-                              placeholder="Enter Last Name">
+                            <input type="text" #Flname (keyup)="keyPressed()"
+                              class="form-control1 form-control1-solid form-control1-lg" [(ngModel)]="filter.last_name"
+                              [ngModelOptions]="{standalone: true}" placeholder="Enter Last Name">
                           </li>
                         </div>
                       </div>
@@ -2024,22 +2042,26 @@
                           </li> -->
                           <li class="filterli filter-li flexClass">
                             <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode
-                              (keyup)="keyPressed()" class="form-control1 form-control1-solid form-control1-lg" style="width:50% !important" placeholder="+91">
-                            <input type="number" id="txt_mobile" [(ngModel)]="filter.phone_number"class="form-control1 form-control1-solid form-control1-lg"
+                              (keyup)="keyPressed()" class="form-control1 form-control1-solid form-control1-lg"
+                              style="width:50% !important" placeholder="+91">
+                            <input type="number" id="txt_mobile" [(ngModel)]="filter.phone_number"
+                              class="form-control1 form-control1-solid form-control1-lg"
                               [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()" autocomplete="off"
-                              (keypress)="isNumeric($event)" maxlength="10"placeholder="9955668855"
-                              (ngModelChange)="handleFormField(filter.phone_number,'phoneNumber')" [matAutocomplete]="autoprov">
-                              <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
-                                <mat-option *ngFor="let option of customerList"[value]="option.phoneNo" (onSelectionChange)="handleSearchSelect(option,filter.phone_number)">
-                                    <div class="flexFirst" *ngIf="option && option.phoneNo">
-                                        <div class="flexClass">
-                                            <div *ngIf="option && option.phoneNo">{{option.phoneNo}}</div>
-                                        </div>
-                                        <div>
-                                            <i class="fa fa-search iconCls"aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </mat-option>
+                              (keypress)="isNumeric($event)" maxlength="10" placeholder="9955668855"
+                              (ngModelChange)="handleFormField(filter.phone_number,'phoneNumber')"
+                              [matAutocomplete]="autoprov">
+                            <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                              <mat-option *ngFor="let option of customerList" [value]="option.phoneNo"
+                                (onSelectionChange)="handleSearchSelect(option,filter.phone_number)">
+                                <div class="flexFirst" *ngIf="option && option.phoneNo">
+                                  <div class="flexClass">
+                                    <div *ngIf="option && option.phoneNo">{{option.phoneNo}}</div>
+                                  </div>
+                                  <div>
+                                    <i class="fa fa-search iconCls" aria-hidden="true"></i>
+                                  </div>
+                                </div>
+                              </mat-option>
                             </mat-autocomplete>
                           </li>
                         </div>
@@ -2559,7 +2581,8 @@
                     *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                   {{checkin.service.name}}
                 </div>
-                <div class="bold user-txt-clr" *ngIf="checkin.serviceData && checkin.serviceData.labels && checkin.serviceData.labels.length>0">
+                <div class="bold user-txt-clr"
+                  *ngIf="checkin.serviceData && checkin.serviceData.labels && checkin.serviceData.labels.length>0">
                   {{getServiceLabels(checkin.serviceData.labels)}}
                 </div>
                 <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
@@ -2687,9 +2710,8 @@
                 <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]" (click)="stopprop($event)"
                   (change)="chkAptHistoryClicked(i, checkin)" />
               </div>
-              <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                [teams]="teams" (actionPerformed)="cardClicked($event)"
-                [allLabels]="allLabels" [statusAction]="statusAction">
+              <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type" [teams]="teams"
+                (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction">
               </app-card>
             </div>
           </tbody>
@@ -2726,7 +2748,8 @@
 </section>
 
 
-<section class="app-check-ins-component dashboard content pro-dash" *ngIf="showDashbard && !apiloading && SelectedView && SelectedView.name == 'calendar'">
+<section class="app-check-ins-component dashboard content pro-dash"
+  *ngIf="showDashbard && !apiloading && SelectedView && SelectedView.name == 'calendar'">
   <div class="card">
     <app-full-view-calendar [type]="'tokens'"></app-full-view-calendar>
   </div>
