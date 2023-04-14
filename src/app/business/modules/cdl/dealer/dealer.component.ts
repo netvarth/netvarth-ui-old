@@ -17,7 +17,6 @@ export class DealerComponent implements OnInit {
   dealers: any = [];
   headerName: string = ''
   type: any;
-  dealerList: any;
   filter_sidebar: any;
   selectedLabels: any;
   filterapplied = false;
@@ -37,6 +36,8 @@ export class DealerComponent implements OnInit {
   maxday = new Date();
   loading: any = false;
   capabilities: any;
+  totalDealerCount: any;
+  statusDropdownClicked: any;
   constructor(
     private groupService: GroupStorageService,
     private router: Router,
@@ -62,7 +63,7 @@ export class DealerComponent implements OnInit {
     if (this.user) {
       this.capabilities = this.cdlservice.getCapabilitiesConfig(this.user);
     }
-    this.getDealers();
+    // this.getDealers();
   }
   goBack() {
     this.router.navigate(['provider', 'cdl']);
@@ -107,6 +108,39 @@ export class DealerComponent implements OnInit {
 
   }
 
+  getTotalDealersCount(filter = {}) {
+    this.cdlservice.getDealersCountByFilter(filter).subscribe((data: any) => {
+      this.totalDealerCount = data;
+    });
+  }
+
+  loadDealers(event) {
+    this.getTotalDealersCount()
+    let api_filter = this.cdlservice.setFiltersFromPrimeTable(event);
+    if (this.statusDropdownClicked) {
+      if (this.statusDisplayName && this.statusDisplayName.name) {
+        if (this.statusDisplayName.name != 'All' && this.statusDisplayName.name != 'rejected') {
+          if (this.statusDisplayName.name == 'Rejected') {
+            api_filter['isRejected-eq'] = true;
+          }
+          else if (this.statusDisplayName.name == 'Redirected') {
+            api_filter['isRejected-eq'] = false;
+            api_filter['isActionRequired-eq'] = true;
+          }
+          else {
+            api_filter['spInternalStatus-eq'] = this.statusDisplayName.name;
+          }
+        }
+      }
+    }
+    if (api_filter) {
+      this.getTotalDealersCount(api_filter)
+      this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
+        this.dealers = data;
+      })
+    }
+  }
+
 
 
 
@@ -117,17 +151,14 @@ export class DealerComponent implements OnInit {
       const api_filter = {};
       api_filter['spInternalStatus-eq'] = this.spInternalStatus;
       this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
-        this.dealerList = data;
-        this.dealers = this.dealerList;
-        this.loading = false;
-        console.log("this.dealerList", this.dealerList)
+        this.dealers = data;
       });
     }
     else {
       this.cdlservice.getDealers().subscribe((data) => {
-        this.dealerList = data;
+        this.dealers = data;
         this.loading = false;
-        if (this.dealerList) {
+        if (this.dealers) {
           this.activated_route.queryParams.subscribe((params) => {
             if (params) {
               if (params && (params.type === 'approved')) {
@@ -162,13 +193,8 @@ export class DealerComponent implements OnInit {
                 console.log("Dealers List : ", this.dealers);
               })
             }
-            else {
-              this.dealers = this.dealerList;
-            }
-
           });
         }
-        console.log("dealers List : ", this.dealerList);
 
       })
     }
@@ -197,6 +223,7 @@ export class DealerComponent implements OnInit {
 
 
   statusChange(event) {
+    this.statusDropdownClicked = true;
     if (event.value.name == 'All') {
       this.getDealers();
     }

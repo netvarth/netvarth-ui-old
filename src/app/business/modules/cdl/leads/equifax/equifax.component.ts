@@ -11,6 +11,7 @@ import { NavigationExtras, Router } from '@angular/router';
 export class EquifaxComponent implements OnInit {
   loading: any = false;
   equifaxList: any;
+  equifaxCount: any;
   constructor(
     // private location: Location,
     private cdlService: CdlService,
@@ -18,7 +19,7 @@ export class EquifaxComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getEquifax();
+    // this.getEquifax();
   }
 
   goBack() {
@@ -51,6 +52,23 @@ export class EquifaxComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'equifax', 'checkequifax'], navigationExtras);
   }
 
+  getTotalEquifaxCount(filter = {}) {
+    this.cdlService.getEquifaxCountByFilter(filter).subscribe((data: any) => {
+      this.equifaxCount = data;
+    });
+  }
+
+
+  loadEquifax(event) {
+    this.getTotalEquifaxCount()
+    let api_filter = this.cdlService.setFiltersFromPrimeTable(event);
+    if (api_filter) {
+      this.getTotalEquifaxCount(api_filter)
+      this.cdlService.getEquifaxByFilter(api_filter).subscribe((data: any) => {
+        this.equifaxList = data;
+      })
+    }
+  }
 
 
 

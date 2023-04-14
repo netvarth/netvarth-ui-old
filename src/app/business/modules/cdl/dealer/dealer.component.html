@@ -18,9 +18,9 @@
 <div *ngIf="!loading">
   <div class="card">
     <p-table [responsive]="true" responsiveLayout="stack" scrollHeight="flex" #dealerdata [value]="dealers" dataKey="id"
-      [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
-      styleClass="p-datatable-customers p-datatable-gridlines" [paginator]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [totalRecords]="totalDealerCount" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+      [lazy]="true" (onLazyLoad)="loadDealers($event)" styleClass="p-datatable-customers p-datatable-gridlines"
+      [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
       [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']">
       <ng-template pTemplate="caption">
         <div class="row">
@@ -28,7 +28,7 @@
             <span>
               <input pInputText type="text" [style]="{'width':'100%'}" class="search-field"
                 (input)="dealerdata.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword"
-                style="width:100%" />
+                style="width:100%" [(ngModel)]="statusDropdownClicked" />
             </span>
           </div>
           <div class="col-md-4"></div>
@@ -45,19 +45,19 @@
           <th>
             <div class="p-d-flex p-jc-between p-ai-center">
               Dealer Id
-              <p-columnFilter type="text" field="referenceNo" display="menu"></p-columnFilter>
+              <!-- <p-columnFilter type="text" field="referenceNo" display="menu"></p-columnFilter> -->
             </div>
           </th>
           <th>
             <div class="p-d-flex p-jc-between p-ai-center">
               Dealer Name
-              <p-columnFilter type="text" field="partnerName" display="menu"></p-columnFilter>
+              <!-- <p-columnFilter type="text" field="partnerName" display="menu"></p-columnFilter> -->
             </div>
           </th>
           <th>
             <div class="p-d-flex p-jc-between p-ai-center">
               Dealer Phone
-              <p-columnFilter type="text" field="partnerMobile" display="menu"></p-columnFilter>
+              <!-- <p-columnFilter type="text" field="partnerMobile" display="menu"></p-columnFilter> -->
             </div>
           </th>
           <th>

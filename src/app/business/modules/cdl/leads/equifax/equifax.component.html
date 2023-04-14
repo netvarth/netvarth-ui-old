@@ -2,7 +2,8 @@
   <div class="d-flex justify-content-between">
     <div class="pointer-cursor">
       <div class="d-flex">
-        <div class="d-flex align-items-center"> <i class="fa fa-arrow-left mr-2" aria-hidden="true" (click)="goBack()"></i>
+        <div class="d-flex align-items-center"> <i class="fa fa-arrow-left mr-2" aria-hidden="true"
+            (click)="goBack()"></i>
         </div>
         <div class="text-primary heading" class="back-btn">Equifax</div>
       </div>
@@ -24,10 +25,10 @@
 
 <div *ngIf="!loading">
   <div class="card">
-    <p-table [responsive]="true" responsiveLayout="stack" scrollHeight="flex" #dt1 [value]="equifaxList" dataKey="id"
-      [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
-      styleClass="p-datatable-customers p-datatable-gridlines" [paginator]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    <p-table [responsive]="true" responsiveLayout="stack" scrollHeight="flex" #dt1 [value]="equifaxList" [lazy]="true"
+      [totalRecords]="equifaxCount" (onLazyLoad)="loadEquifax($event)" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines"
+      [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
       [globalFilterFields]="['enquireId','customer.Name','createdDate','status']">
       <ng-template pTemplate="caption">
         <div class="row">
@@ -76,13 +77,12 @@
       <ng-template pTemplate="body" let-equifax>
         <tr class="mobile-card">
           <td>
-            <span class="d-lg-none d-md-none">Id : </span><span
-              class="table-column-data">{{equifax.id}}</span>
+            <span class="d-lg-none d-md-none">Id : </span><span class="table-column-data">{{equifax.id}}</span>
           </td>
           <td>
             <span class="d-lg-none d-md-none">Customer Name : </span><span
               class="table-column-data">{{equifax.customerFirstName}}</span>&nbsp;
-              <span class="table-column-data">{{equifax.customerLastName}}</span>
+            <span class="table-column-data">{{equifax.customerLastName}}</span>
           </td>
           <td>
             <span class="d-lg-none d-md-none">Customer Phone : </span>

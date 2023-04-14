@@ -701,11 +701,16 @@
               <div class="details-title">Down payment</div>
               <div class="details-sub-title">{{loanData.downpaymentAmount}}</div>
             </div>
+
           </div>
           <div class="row mt-2">
             <div class="col-md-4 no-padding-small mt-2" *ngIf="loanData && loanData.invoiceAmount">
               <div class="details-title">Total Bill Amount</div>
               <div class="details-sub-title">{{loanData.invoiceAmount}}</div>
+            </div>
+            <div class="col-md-4 no-padding-small mt-2" *ngIf="loanData && loanData.sanctionedAmount">
+              <div class="details-title">Sanctioned Amount</div>
+              <div class="details-sub-title">{{loanData.sanctionedAmount}}</div>
             </div>
             <div class="col-md-4 no-padding-small mt-2">
               <div class="details-title"

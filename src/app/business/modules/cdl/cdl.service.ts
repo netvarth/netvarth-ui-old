@@ -82,6 +82,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null, filter);
   }
 
+  getEquifaxCountByFilter(filter = {}) {
+    const url = 'provider/equifax/count';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
   getLeadsByUid(uid) {
     const url = 'provider/enquire/' + uid;
     return this.servicemeta.httpGet(url, null);
