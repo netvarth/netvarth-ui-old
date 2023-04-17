@@ -1431,7 +1431,7 @@
 
               <div class="d-md-flex">
                 <div class="mr-3">
-                  <div *ngIf="!accountaggregatingStatusShowing">
+                  <div *ngIf="!accountaggregatingStatusShowing && !(selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0)">
                     <button class="btn btn-primary open-all-btn" (click)="aggregateAccount()">Aggregate
                       Statements</button>
                   </div>
@@ -1442,12 +1442,12 @@
                   </div>
                 </div>
 
-                <div class="mx-5">
+                <div class="mx-5" *ngIf="accountaggregatingStatusShowing || (selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length == 0)">
                   <span class="font-weight-bold">OR</span>
                 </div>
 
                 <!-- *ngIf="showBankAttachments" -->
-                <div>
+                <div *ngIf="!accountaggregatingStatusShowing">
                   <div class="bggrey">
                     <div>
                       <div class="fieldPadding">
