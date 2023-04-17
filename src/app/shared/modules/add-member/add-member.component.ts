@@ -7,6 +7,7 @@ import { SharedServices } from '../../services/shared-services';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { TranslateService } from '@ngx-translate/core';
+import { SnackbarService } from '../../services/snackbar.service';
 @Component({
   selector: 'app-consumer-add-member',
   templateUrl: './add-member.component.html',
@@ -53,6 +54,7 @@ export class AddMemberComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public fed_service: FormMessageDisplayService,
     public sharedservice: SharedServices,
+    private snackbarService: SnackbarService,
     public shared_functions: SharedFunctions,
     public translate: TranslateService,
   ) {
@@ -146,34 +148,36 @@ export class AddMemberComponent implements OnInit {
     console.log(txt);
     this.dialogRef.close(txt) 
   }
-  deActiveAccount(){
-
-    if(this.data && this.data[2]  && this.data[2].requestFrom === 'provider'){
-      setTimeout(() => {
-        this.sharedservice.deactiveProviderAccount().subscribe((res) => {
-          console.log(res);
+  deActiveAccount() {
+    if (this.data && this.data[2]  && this.data[2].requestFrom === 'provider') {
+      this.sharedservice.deactiveProviderAccount().subscribe(
+        (res: any) => {
           if (res) {
             this.dialogRef.close('afterResClose')
           }
-        })
-      }, 2000);
-    }
-   else{
-    let user;
-    if (this.data && this.data[1] && this.data[1].data) {
-      user = this.data[1].data;
-      console.log('user', user);
-      this.beforeDelete = false;
-      // this.dialogRef.close('afterResClose')
-      setTimeout(() => {
-        this.sharedservice.deactiveAccount(user).subscribe((res) => {
-          console.log(res);
-          if (res) {
-            this.dialogRef.close('afterResClose')
-          }
-        })
-      }, 2000);
-    }
-   }
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+    
   }
+    else{
+      let user;
+      if (this.data && this.data[1] && this.data[1].data) {
+        user = this.data[1].data;
+        console.log('user', user);
+        this.beforeDelete = false;
+        // this.dialogRef.close('afterResClose')
+        setTimeout(() => {
+          this.sharedservice.deactiveAccount(user).subscribe((res) => {
+            console.log(res);
+            if (res) {
+              this.dialogRef.close('afterResClose')
+            }
+          })
+        }, 2000);
+      }
+     }
+
+}
 }
