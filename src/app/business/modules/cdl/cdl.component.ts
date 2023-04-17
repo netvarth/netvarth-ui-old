@@ -106,6 +106,18 @@ export class CdlComponent implements OnInit {
     }
   ]
 
+  dealerStatsImages = [
+    {
+      "url": "./assets/images/cdl/lead_generated.png"
+    },
+    {
+      "url": "./assets/images/cdl/loan_converted.png"
+    },
+    {
+      "url": "./assets/images/cdl/rejected.png"
+    }
+  ]
+
   approvedDealers: any;
   dealersRequested: any;
   capabilities: any;
@@ -113,7 +125,7 @@ export class CdlComponent implements OnInit {
   users: any;
   branches: any;
   dealersRejected: any;
-
+  dealerDashboardStats: any;
 
   constructor(
     private groupService: GroupStorageService,
@@ -153,7 +165,7 @@ export class CdlComponent implements OnInit {
     this.getBarChartData();
     this.getUsers();
     this.getDashboardStats();
-
+    this.getDealerDashboardStats();
     if (this.capabilities && this.capabilities.canCreateBranch) {
       this.getBranchesByFilter();
     }
@@ -209,6 +221,12 @@ export class CdlComponent implements OnInit {
   getDashboardStats() {
     this.cdlservice.getDashboardStats().subscribe((data: any) => {
       this.dashboardStats = data;
+    });
+  }
+
+  getDealerDashboardStats() {
+    this.cdlservice.getDealerDashboardStats().subscribe((data: any) => {
+      this.dealerDashboardStats = data;
     });
   }
 

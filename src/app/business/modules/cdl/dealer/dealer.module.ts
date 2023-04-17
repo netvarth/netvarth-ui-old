@@ -22,6 +22,7 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
+import { FilterModule } from '../filter/filter.module';
 
 const routes: Routes = [
   { path: '', component: DealerComponent },
@@ -60,6 +61,7 @@ const routes: Routes = [
     DropdownModule,
     ButtonModule,
     InputTextModule,
+    FilterModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [

@@ -229,7 +229,30 @@
                     </div>
                     <div class="text-primary">
                       <span class="font-small">Amount : </span>
-                      <span class="font-weight-bold font-small"><i class="fa fa-inr"></i>&nbsp;{{item.amountString.split('.')[0]}}</span><br>
+                      <span class="font-weight-bold font-small"><i
+                          class="fa fa-inr"></i>&nbsp;{{item.amountString.split('.')[0]}}</span><br>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-mg-3 col-md-3 col-sm-12 col-xs-12 no-padding-small mt-2"
+          *ngFor="let item of dealerDashboardStats;let i=index;">
+          <div class="card stats-card">
+            <div class="text-center">
+              <div class="d-flex">
+                <div class="d-flex align-items-center"
+                  *ngIf="dealerStatsImages && dealerStatsImages[i] && dealerStatsImages[i].url">
+                  <img class="stats-image" [src]="dealerStatsImages[i].url">
+                </div>&nbsp;&nbsp;
+                <div class="text-left my-auto">
+                  <span class="stats-head-card-title">{{item.name}}</span><br>
+                  <div *ngIf="item">
+                    <div class="mr-2">
+                      <span class="font-weight-bold">{{item.count}}</span><br>
                     </div>
                   </div>
                 </div>

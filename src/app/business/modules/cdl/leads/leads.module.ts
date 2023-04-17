@@ -24,6 +24,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PagerModule } from '../../../../shared/modules/pager/pager.module';
 import { SkeletonLoadingModule } from '../../../../shared/modules/skeleton-loading/skeleton-loading.module';
 import { SelectSchemeModule } from '../loans/select-scheme/select-scheme.module';
+import { FilterModule } from '../filter/filter.module';
 
 const routes: Routes = [
   { path: '', component: LeadsComponent },
@@ -66,6 +67,7 @@ const routes: Routes = [
     DropdownModule,
     ButtonModule,
     InputTextModule,
+    FilterModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [

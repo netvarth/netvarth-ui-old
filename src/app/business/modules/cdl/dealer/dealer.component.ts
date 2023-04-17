@@ -15,7 +15,7 @@ import { UntypedFormGroup } from '@angular/forms';
 export class DealerComponent implements OnInit {
   user: any;
   dealers: any = [];
-  headerName: string = ''
+  headerName: string = 'Dealers';
   type: any;
   filter_sidebar: any;
   selectedLabels: any;
@@ -38,6 +38,7 @@ export class DealerComponent implements OnInit {
   capabilities: any;
   totalDealerCount: any;
   statusDropdownClicked: any;
+  filterConfig: any = [];
   constructor(
     private groupService: GroupStorageService,
     private router: Router,
@@ -55,6 +56,13 @@ export class DealerComponent implements OnInit {
         this.spInternalStatus = qparams.spInternalStatus;
       }
     });
+
+    this.filterConfig = [
+      { field: 'referenceNo', title: 'Dealer Id', type: 'text', filterType: 'like' },
+      { field: 'partnerName', title: 'Partner Name', type: 'text', filterType: 'like' },
+      { field: 'partnerMobile', title: 'Partner Mobile', type: 'text', filterType: 'like' },
+      { field: 'createdDate', title: 'Created Date', type: 'date', filterType: 'eq' }
+    ]
   }
 
   ngOnInit(): void {
@@ -89,6 +97,18 @@ export class DealerComponent implements OnInit {
     }
     else {
       this.showDealer(id, status)
+    }
+  }
+
+
+  applyFilters(event) {
+    console.log("event", event)
+    let api_filter = event;
+    if (api_filter) {
+      this.getTotalDealersCount(api_filter)
+      this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
+        this.dealers = data;
+      })
     }
   }
 

@@ -19,7 +19,7 @@ import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 })
 export class LoansComponent implements OnInit {
   user: any;
-  headerName: string = ''
+  headerName: string = 'Loans'
   loans: any;
   loansList: any;
   filter_sidebar: any;
@@ -53,6 +53,7 @@ export class LoansComponent implements OnInit {
   globalSearchValue: any;
   cols: any[];
   _selectedColumns: any[];
+  filterConfig: any;
   capabilities: { canCreateLoan: any; canUpdateLoan: any; canViewLoan: any; canCreatePartner: any; canUpdatePartner: any; canViewPartner: any; canViewSchemes: any; canApprovePartnerLoan: any; canRejectLoan: any; canApprovePartner: any; canApproveLoan: any; canContactPartner: any; canActionRequired: any; canCreditScoreCheck: any; canAnalyseBankStatement: any; canGenerateMafilScore: any; canLoanDisbursement: any; canUpdateCreditOfficer: any; canUpdateSalesOfficer: any; canUpdatePartnerSettings: any; canMakePartnerInactive: any; canCreateLocation: any; canUpdateLocation: any; canCreateBranch: any; canUpdateBranch: any; canCreateUser: any; canUpdateUser: any; canSuspendPartner: any; canDisableUser: any; canDisablePartner: any; canEnablePartner: any; canVerification: any; canCreditVerification: any; canDocumentVerification: any; canInvoiceUpdation: any; canCreateLead: any; canUpdateLead: any; canViewLead: any; canTransformLeadtoLoan: any; canLoanApplicationOperationsVerification: any; canViewCustomerPhoneNumber: any; canViewKycReport: any; canLoanApplicationBranchVerification: any; };
   constructor(
     private groupService: GroupStorageService,
@@ -79,12 +80,13 @@ export class LoansComponent implements OnInit {
       totalItems: 0
     };
 
-    // ColumnFilterFormElement.prototype.onModelChange = function (value) {
-    //   this.filterConstraint.value = value;
-    //   if (this.type || value === '') {
-    //     this.dt._filter();
-    //   }
-    // }
+    this.filterConfig = [
+      { field: 'referenceNo', title: 'Loan Id', type: 'text', filterType: 'like' },
+      { field: 'customerFirstName', title: 'Customer First Name', type: 'text', filterType: 'like' },
+      { field: 'customerLastName', title: 'Customer Last Name', type: 'text', filterType: 'like' },
+      { field: 'partnerName', title: 'Dealer Name', type: 'text', filterType: 'like' },
+      { field: 'createdDate', title: 'Created Date', type: 'date', filterType: 'eq' }
+    ]
 
   }
 
@@ -194,6 +196,16 @@ export class LoansComponent implements OnInit {
 
   }
 
+  applyFilters(event) {
+    console.log("event", event)
+    let api_filter = event;
+    if (api_filter) {
+      this.getTotalLoansCount(api_filter)
+      this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
+        this.loans = data;
+      })
+    }
+  }
 
   loadLoans(event) {
     this.getTotalLoansCount()

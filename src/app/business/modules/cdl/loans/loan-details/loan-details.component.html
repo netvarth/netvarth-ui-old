@@ -1081,21 +1081,19 @@
   </section>
 
 
-  <section class="d-flex justify-content-center m-2 my-4"
-    *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus == 'SchemeConfirmed' && capabilities && capabilities.canLoanApplicationBranchVerification">
-    <div class="btn-sanctioned mr-2 pointer-cursor" (click)="approveLoanByBranchManager()">
+  <section class="d-flex justify-content-center m-2 my-4">
+    <div class="btn-sanctioned mr-2 pointer-cursor" (click)="approveLoanByBranchManager()"
+      *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus == 'SchemeConfirmed' && capabilities && capabilities.canLoanApplicationBranchVerification">
       Approve Loan
     </div>
 
     <!-- <div class="btn-redirect mr-2 pointer-cursor" (click)="redirectLoan()">
           Redirect Loan
         </div> -->
-
-    <div class="btn-reject pointer-cursor" (click)="rejectLoan()">
+    <div class="btn-reject pointer-cursor" (click)="rejectLoan()" *ngIf=" capabilities && capabilities.canRejectLoan">
       Reject Loan
     </div>
   </section>
-
 
 
   <section class="d-flex justify-content-center m-2 my-4"

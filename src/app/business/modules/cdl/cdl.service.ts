@@ -689,6 +689,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  getDealerDashboardStats() {
+    const url = 'provider/dashboard/dealerstats';
+    return this.servicemeta.httpGet(url, null);
+  }
+
 
   getGoogleMapLocationAddress(lat, lon) {
     const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&key=' + projectConstants.GOOGLEAPIKEY + '&sensor=false';
