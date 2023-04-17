@@ -114,6 +114,7 @@ export class SharedServices {
     return this.servicemeta.httpGet('provider/search/suggester/location', '', params);
   }
   getBusinessUniqueId(customId) {
+
     return this.servicemeta.httpGet('provider/business/' + customId);
   }
   getFeatures(subdomain) {
@@ -1400,4 +1401,10 @@ export class SharedServices {
   videoaudioS3Upload(file, url) {
     return this.servicemeta.httpPut(url, file);
   }
+  deactiveProviderAccount() {
+    const url = 'provider/login/deActivate';
+    // return this.servicemeta.httpDelete(url);
+    return this.servicemeta.httpDelete(url);
+  }
+
 }

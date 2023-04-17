@@ -46,6 +46,7 @@ export class AddMemberComponent implements OnInit {
   countryCode_telegram: any;
   email: any;
   beforeDelete:boolean;
+  isProviderAccount: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<AddMemberComponent>,
@@ -58,6 +59,14 @@ export class AddMemberComponent implements OnInit {
     console.log('data',data)
     if(data && data[0] && data[0].requestType && data[0].requestType==='deactiveAccount'){
       this.beforeDelete=true;
+      if(data && data[2] && data[2].requestFrom && data[2].requestFrom === 'provider'){
+       
+        this.isProviderAccount = true;
+      }
+      else{
+      
+        this.isProviderAccount = false;
+      }
     }
     if (data.type === 'edit') {
       console.log("Member Data",data);
@@ -138,6 +147,18 @@ export class AddMemberComponent implements OnInit {
     this.dialogRef.close(txt) 
   }
   deActiveAccount(){
+
+    if(this.data && this.data[2]  && this.data[2].requestFrom === 'provider'){
+      setTimeout(() => {
+        this.sharedservice.deactiveProviderAccount().subscribe((res) => {
+          console.log(res);
+          if (res) {
+            this.dialogRef.close('afterResClose')
+          }
+        })
+      }, 2000);
+    }
+   else{
     let user;
     if (this.data && this.data[1] && this.data[1].data) {
       user = this.data[1].data;
@@ -153,5 +174,6 @@ export class AddMemberComponent implements OnInit {
         })
       }, 2000);
     }
+   }
   }
 }

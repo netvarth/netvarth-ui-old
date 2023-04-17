@@ -18,6 +18,7 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { ProviderStartTourComponent } from '../../modules/provider-start-tour/provider-start-tour.component';
 import { AuthService } from '../../../shared/services/auth-service';
+import { AddMemberComponent } from '../../../../../src/app/shared/modules/add-member/add-member.component';
 
 @Component({
   selector: 'app-header',
@@ -532,5 +533,28 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   }
   gotoSettings() {
     this.router.navigate(['provider', 'settings']);
+  }
+  deactiveaccount(mod,usertype){
+    const dialogref = this.dialog.open(AddMemberComponent, {
+      // width: '50%',
+      height: '50%',
+      
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data:[{requestType:'deactiveAccount'},{data:usertype}, {requestFrom : 'provider'}]
+    });
+    dialogref.afterClosed().subscribe(
+      result => {
+        console.log('result',result)
+        if (result==='afterResClose') {
+          // window.location.reload();
+          this.authService.logoutFromJaldee().then();
+                }
+        else if(result==='close'){
+          dialogref.close()
+        }
+      }
+    );
+
   }
 }

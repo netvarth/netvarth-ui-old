@@ -71,9 +71,14 @@
         <div class="confirmation">
             <div class="confirmationTxt">Delete Account confirmation</div>
         </div>
-        <div class="confirmationdlt">
+        <div class="confirmationdlt" *ngIf="!isProviderAccount">
             <div class="confirmationTxtDlt">
                 Are You Sure You Want to delete your Jaldee Consumer account?
+            </div>
+        </div>
+        <div class="confirmationdlt" *ngIf="isProviderAccount">
+            <div class="confirmationTxtDlt">
+                Are You Sure You Want to delete your account?
             </div>
         </div>
         <div class="btnActive">
