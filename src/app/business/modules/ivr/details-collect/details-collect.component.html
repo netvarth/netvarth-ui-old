@@ -50,9 +50,9 @@
     </div>
   </div>
 
-  <div class="card mt-2" *ngIf="callData">
+  <div class="card  my-1 p-1 py-2" *ngIf="callData">
     <div class="row px-1">
-      <div class="col-md-3 col-xs-6 mt-2">
+      <div class="col-md-3 col-xs-5 mt-2">
         <div class="font-weight-bold">
           <span *ngIf="callData && callData.consumerPhone && callData.consumerPhone.number">
             {{callData.consumerPhone.number}}
@@ -63,7 +63,7 @@
         </div>
       </div>
 
-      <div class="col-md-3 col-xs-6 mt-2">
+      <div class="col-md-3 col-xs-5 mt-2">
         <div class="font-weight-bold">
           <span>
             <span *ngIf="callData && callData.userName">{{callData.userName}}</span>
@@ -75,190 +75,82 @@
         </div>
       </div>
 
-      <div class="col-md-6 col-xs-12 mt-2">
-        <div class="d-flex text-center">
-          <button type="button" class="btn btn-light bg-light mr-2 font-weight-600"
-            (click)="openUsersPopup(callData.uid)" *ngIf="callData && !callData.userId" tooltipPosition="top"
-            pTooltip="Assign"><img width="20" src="./assets/images/ivr/unassign.png">
-          </button>
+      <div class="col-md-6 col-xs-2 mt-2">
+        <div class="pointer-cursor d-flex justify-content-center">
+          <span [matMenuTriggerFor]="menu" class="p-2"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
+          <mat-menu #menu="matMenu">
+            <button type="button" mat-menu-item class="font-weight-600" (click)="viewCall(callData.uid)"><i
+                class="fa fa-eye"></i>View
+            </button>
 
-          <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="getCallBack(callData.uid)"
-            tooltipPosition="top" pTooltip="CallBack"><img width="20" src="./assets/images/ivr/callback.png">
-          </button>
+            <button type="button" mat-menu-item class="font-weight-600" (click)="openUsersPopup(callData.uid)"
+              *ngIf="callData && !callData.userId">
+              <img width="15" src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Assign
+            </button>
 
-          <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="unassignToCall(callData.uid)"
-            *ngIf="callData && callData.userId" tooltipPosition="top" pTooltip="Unassign"><img width="20"
-              src="./assets/images/ivr/unassign.png">
-          </button>
+            <button type="button" mat-menu-item class="font-weight-600" (click)="getCallBack(callData.uid)">
+              <img width="15" src="./assets/images/ivr/callback.png">&nbsp;&nbsp;Callback
+            </button>
 
-          <button type="button" class="btn btn-light bg-light mr-2 font-weight-600 text-light"
-            (click)="markAsComplete(callData.uid)" tooltipPosition="top" pTooltip="Complete"><i
-              class="fa fa-check text-grey" aria-hidden="true"></i>
-          </button>
+            <button type="button" mat-menu-item class="font-weight-600" (click)="unassignToCall(callData.uid)"
+              *ngIf="callData && callData.userId"><img width="15"
+                src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Unassign
+            </button>
 
-          <button type="button" class="btn btn-light bg-light font-weight-600" (click)="viewCall(callData.uid)"
-            tooltipPosition="top" pTooltip="View"><i class="fa fa-eye text-grey" aria-hidden="true"></i>
-          </button>
+            <button type="button" mat-menu-item class="font-weight-600" (click)="markAsComplete(callData.uid)"><i
+                class="fa fa-check"></i>Complete
+            </button>
+          </mat-menu>
         </div>
       </div>
+
     </div>
   </div>
 
 
   <div class="mt-2">
-    <form enctype="multipart/form-data">
-      <div class="row px-2">
-        <div>
-          <mat-accordion>
-            <mat-expansion-panel [expanded]="customerDetailsPanel" (opened)="customerDetailsPanel = true"
-              (closed)="customerDetailsPanel = false">
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <div class="d-flex justify-content-center">
-                    <div class="d-flex align-items-center text-primary font-weight-bold">
-                      Consultation Details
-                    </div>
-                  </div>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <div>
-
-
-
-                <div>
-                  <div class="bggrey my-2">
-                    <div>
-                      <div class="d-flex">
-                        <div class="form-title">Chief Complaint(Reason for the Call)</div>
-                      </div>
-                      <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" #firstname type="text"
-                          placeholder="Enter Chief Complaint(Reason for the Call)" class="form-control"
-                          autocomplete="off" />
-                      </div>
-                    </div>
+    <div class="row px-md-2">
+      <div>
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="customerDetailsPanel" (opened)="customerDetailsPanel = true"
+            (closed)="customerDetailsPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-center">
+                  <div class="d-flex align-items-center text-primary font-weight-bold">
+                    Consultation Details
                   </div>
                 </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="d-flex justify-content-end">
+              <a class="btn btn-primary" (click)="editQnr()">
+                <span *ngIf="!showEditQnr"><i class="fa fa-edit"></i>&nbsp;Edit</span>
+                <span *ngIf="showEditQnr"><i class="fa fa-eye"></i>&nbsp;View</span>
+              </a>
+            </div>
+            <div class="mt-3">
 
-
+              <div *ngIf="showEditQnr">
+                <app-questionnaire [questionnaireList]="ivrQuestionnaire" [source]="'ivr'"
+                  [questionAnswers]="questionAnswers" (returnAnswers)="getQuestionAnswers($event)" [type]="'details'"
+                  [mode]="'edit'">
+                </app-questionnaire>
                 <div>
-                  <div class="bggrey my-2">
-                    <div>
-                      <div class="d-flex">
-                        <div class="form-title">When did the Problem starts?</div>
-                      </div>
-                      <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" #firstname type="text"
-                          placeholder="Enter When did the Problem starts?" class="form-control" autocomplete="off" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <div class="bggrey my-2">
-                    <div>
-                      <div class="d-flex">
-                        <div class="form-title">Precipitating Condition(What Caused it?)</div>
-                      </div>
-                      <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" #firstname type="text"
-                          placeholder="Enter Precipitating Condition(What Caused it?)" class="form-control"
-                          autocomplete="off" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <div class="bggrey my-2">
-                    <div>
-                      <div class="d-flex">
-                        <div class="form-title">Family History</div>
-                      </div>
-                      <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Family History"
-                          class="form-control" autocomplete="off" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <div class="bggrey my-2">
-                    <div>
-                      <div class="d-flex">
-                        <div class="form-title">Treatment History</div>
-                      </div>
-                      <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Treatment History"
-                          class="form-control" autocomplete="off" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <div class="bggrey my-2">
-                    <div>
-                      <div class="d-flex">
-                        <div class="form-title">Severity (as Assessed)</div>
-                      </div>
-                      <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Severity (as Assessed)"
-                          class="form-control" autocomplete="off" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <div class="bggrey my-2">
-                    <div>
-                      <div class="d-flex">
-                        <div class="form-title">Your Approch to the call </div>
-                      </div>
-                      <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" #firstname type="text"
-                          placeholder="Enter Your Approch to the call " class="form-control" autocomplete="off" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <div class="bggrey my-2">
-                    <div>
-                      <div class="d-flex">
-                        <div class="form-title">End of the call - Status</div>
-                      </div>
-                      <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" #firstname type="text"
-                          placeholder="Enter End of the call - Status" class="form-control" autocomplete="off" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <div class="bggrey my-2">
-                    <div>
-                      <div class="d-flex">
-                        <div class="form-title">Ask your questions here</div>
-                      </div>
-                      <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" #firstname type="text"
-                          placeholder="Enter Ask your questions here" class="form-control" autocomplete="off" />
-                      </div>
-                    </div>
-                  </div>
+                  <button type="button" class="btn btn-primary open-all-btn"
+                    (click)="validateQuestionnaire('details')">Save</button>
                 </div>
               </div>
-            </mat-expansion-panel>
-          </mat-accordion>
-        </div>
+
+              <div *ngIf="qnr">
+                <app-questionaire-view id="{{qnr.questionnaireId}}" [questionaire]="qnr" [source]="'ivr'"
+                  *ngIf="!showEditQnr"></app-questionaire-view>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
       </div>
-    </form>
+    </div>
   </div>
 
   <div>
@@ -269,9 +161,9 @@
             <span class="font-weight-bold">Call History</span>
           </div>
           <div *ngIf="customerCallHistory && customerCallHistory.length>0">
-            <div class="card mt-2" *ngFor="let call of customerCallHistory">
+            <div class="card my-1 p-1 py-2" *ngFor="let call of customerCallHistory">
               <div class="row px-1">
-                <div class="col-md-3 col-xs-6 mt-2">
+                <div class="col-md-3 col-xs-5 mt-2">
                   <div class="font-weight-bold">
                     <!-- <span *ngIf="call && call.consumerPhone && call.consumerPhone.countryCode">
                                                           {{call.consumerPhone.countryCode}}
@@ -286,7 +178,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-3 col-xs-6 mt-2">
+                <div class="col-md-3 col-xs-5 mt-2">
                   <div class="font-weight-bold">
                     <span>
                       <span *ngIf="call && call.userName">{{call.userName}}</span>
@@ -298,32 +190,36 @@
                   </div>
                 </div>
 
-                <div class="col-md-6 col-xs-12 mt-2">
-                  <div class="d-flex text-center">
-                    <button type="button" class="btn btn-light bg-light mr-2 font-weight-600"
-                      (click)="openUsersPopup(call.uid)" *ngIf="call && !call.userId" tooltipPosition="top"
-                      pTooltip="Assign"><img width="20" src="./assets/images/ivr/unassign.png">
-                    </button>
+                <div class="col-md-6 col-xs-2 mt-2">
+                  <div class="pointer-cursor d-flex justify-content-center">
+                    <span [matMenuTriggerFor]="menu" class="p-2"><i class="fa fa-ellipsis-v"
+                        aria-hidden="true"></i></span>
+                    <mat-menu #menu="matMenu">
+                      <button type="button" mat-menu-item class="font-weight-600" (click)="viewCall(call.uid)"><i
+                          class="fa fa-eye"></i>View
+                      </button>
 
-                    <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="getCallBack(call.uid)"
-                      tooltipPosition="top" pTooltip="CallBack"><img width="20" src="./assets/images/ivr/callback.png">
-                    </button>
+                      <button type="button" mat-menu-item class="font-weight-600" (click)="openUsersPopup(call.uid)"
+                        *ngIf="call && !call.userId">
+                        <img width="15" src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Assign
+                      </button>
 
-                    <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="unassignToCall(call.uid)"
-                      *ngIf="call && call.userId" tooltipPosition="top" pTooltip="Unassign"><img width="20"
-                        src="./assets/images/ivr/unassign.png">
-                    </button>
+                      <button type="button" mat-menu-item class="font-weight-600" (click)="getCallBack(call.uid)">
+                        <img width="15" src="./assets/images/ivr/callback.png">&nbsp;&nbsp;Callback
+                      </button>
 
-                    <button type="button" class="btn btn-light bg-light mr-2 font-weight-600 text-light"
-                      (click)="markAsComplete(call.uid)" tooltipPosition="top" pTooltip="Complete"><i
-                        class="fa fa-check text-grey" aria-hidden="true"></i>
-                    </button>
+                      <button type="button" mat-menu-item class="font-weight-600" (click)="unassignToCall(call.uid)"
+                        *ngIf="call && call.userId"><img width="15"
+                          src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Unassign
+                      </button>
 
-                    <button type="button" class="btn btn-light bg-light font-weight-600" (click)="viewCall(call.uid)"
-                      tooltipPosition="top" pTooltip="View"><i class="fa fa-eye text-grey" aria-hidden="true"></i>
-                    </button>
+                      <button type="button" mat-menu-item class="font-weight-600" (click)="markAsComplete(call.uid)"><i
+                          class="fa fa-check"></i>Complete
+                      </button>
+                    </mat-menu>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -340,25 +236,14 @@
               <span class="font-weight-bold">Remarks</span>
             </div>
             <div class="d-flex align-items-center">
-              <a class="btn btn-primary"><i class="fa fa-edit"></i>&nbsp;Add Remarks</a>
+              <a class="btn btn-primary" (click)="addRemarks()"><i class="fa fa-edit"></i>&nbsp;Add Remarks</a>
             </div>
           </div>
-          <div class="card mt-2">
-            Patient is Suffering with High Fever from the Past Four Days
+          <div class="card mt-2" *ngFor="let note of callData.notes">
+            {{note.note}}
             <div>
-              <span class="font-too-small text-primary">( Added on April 02,2023 11:30:23 AM )</span>
-            </div>
-          </div>
-          <div class="card mt-2">
-            Patient have Cold and Cough symptoms
-            <div>
-              <span class="font-too-small text-primary">( Added on April 01,2023 09:30:35 AM )</span>
-            </div>
-          </div>
-          <div class="card mt-2">
-            No Fever,Cough or Cold Only Body Pains
-            <div>
-              <span class="font-too-small text-primary">( Added on Mar 30,2023 10:28:21 AM )</span>
+              <span class="font-too-small text-primary" *ngIf="note.createdDate">( Added on
+                {{note.createdDate}} )</span>
             </div>
           </div>
         </div>
@@ -397,9 +282,6 @@
       <span class="font-weight-bold">Fill The Details</span>
     </div>
     <hr>
-
-
-
     <div>
       <div>
         <div>
@@ -407,139 +289,7 @@
             (returnAnswers)="getQuestionAnswers($event)">
           </app-questionnaire>
         </div>
-        <!-- <div>
-          <button class="nxt-btn" mat-flat-button (click)="validateQuestionnaire()">save</button>
-        </div> -->
       </div>
-
-      <!-- <div>
-        <div class="bggrey my-2">
-          <div>
-            <div class="d-flex">
-              <div class="form-title">Chief Complaint(Reason for the Call)</div>
-            </div>
-            <div class="fieldPadding">
-              <input (keyup)="resetErrors()" #firstname type="text"
-                placeholder="Enter Chief Complaint(Reason for the Call)" class="form-control" autocomplete="off" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div>
-        <div class="bggrey my-2">
-          <div>
-            <div class="d-flex">
-              <div class="form-title">When did the Problem starts?</div>
-            </div>
-            <div class="fieldPadding">
-              <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter When did the Problem starts?"
-                class="form-control" autocomplete="off" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="bggrey my-2">
-          <div>
-            <div class="d-flex">
-              <div class="form-title">Precipitating Condition(What Caused it?)</div>
-            </div>
-            <div class="fieldPadding">
-              <input (keyup)="resetErrors()" #firstname type="text"
-                placeholder="Enter Precipitating Condition(What Caused it?)" class="form-control" autocomplete="off" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="bggrey my-2">
-          <div>
-            <div class="d-flex">
-              <div class="form-title">Family History</div>
-            </div>
-            <div class="fieldPadding">
-              <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Family History"
-                class="form-control" autocomplete="off" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="bggrey my-2">
-          <div>
-            <div class="d-flex">
-              <div class="form-title">Treatment History</div>
-            </div>
-            <div class="fieldPadding">
-              <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Treatment History"
-                class="form-control" autocomplete="off" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="bggrey my-2">
-          <div>
-            <div class="d-flex">
-              <div class="form-title">Severity (as Assessed)</div>
-            </div>
-            <div class="fieldPadding">
-              <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Severity (as Assessed)"
-                class="form-control" autocomplete="off" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="bggrey my-2">
-          <div>
-            <div class="d-flex">
-              <div class="form-title">Your Approch to the call </div>
-            </div>
-            <div class="fieldPadding">
-              <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Your Approch to the call "
-                class="form-control" autocomplete="off" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="bggrey my-2">
-          <div>
-            <div class="d-flex">
-              <div class="form-title">End of the call - Status</div>
-            </div>
-            <div class="fieldPadding">
-              <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter End of the call - Status"
-                class="form-control" autocomplete="off" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="bggrey my-2">
-          <div>
-            <div class="d-flex">
-              <div class="form-title">Ask your questions here</div>
-            </div>
-            <div class="fieldPadding">
-              <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Ask your questions here"
-                class="form-control" autocomplete="off" />
-            </div>
-          </div>
-        </div>
-      </div> -->
-
-
     </div>
     <div>
       <button type="button" class="btn btn-primary open-all-btn" (click)="validateQuestionnaire()">Save</button>

@@ -30,6 +30,7 @@ export class IvrComponent implements OnInit {
   customers: any;
   customerMoreActionMenuItems: MenuItem[];
   customer_label: any;
+  searchCustomerValue: any;
   connectedCallsCount: any = 0;
   missedCallsCount: any = 0;
   graphData: any;
@@ -289,6 +290,13 @@ export class IvrComponent implements OnInit {
       (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
       });
+  }
+
+
+  searchCustomer(value) {
+    let api_filter = {};
+    api_filter['firstName-like'] = value;
+    this.getCustomers(api_filter);
   }
 
   openUsersPopup(uid) {
@@ -591,8 +599,8 @@ export class IvrComponent implements OnInit {
   }
 
 
-  getCustomers() {
-    this.ivrService.getCustomers().subscribe((data: any) => {
+  getCustomers(filter = {}) {
+    this.ivrService.getCustomers(filter).subscribe((data: any) => {
       this.customers = data;
     });
   }

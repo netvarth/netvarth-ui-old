@@ -13,6 +13,7 @@ import { RippleModule } from 'primeng/ripple';
 import { MatMenuModule } from '@angular/material/menu';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { TabViewModule } from 'primeng/tabview';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: '', component: IvrComponent },
@@ -33,6 +34,8 @@ const routes: Routes = [
     CalendarModule,
     DropdownModule,
     ButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
     InputTextModule,
     ChartModule,
     MenuModule,

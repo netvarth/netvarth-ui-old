@@ -46,9 +46,14 @@ export class IvrService {
     return this.servicemeta.httpPost(url, data);
   }
 
-  getCustomers() {
+  addIvrCallRemarks(id, data) {
+    const url = 'provider/ivr/notes/' + id;
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  getCustomers(filter) {
     const url = 'provider/customers';
-    return this.servicemeta.httpGet(url, null);
+    return this.servicemeta.httpGet(url, null, filter);
   }
 
   getCustomerById(id) {

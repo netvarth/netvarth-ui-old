@@ -7,6 +7,8 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { IvrService } from '../ivr.service';
 import { PopupComponent } from '../popup/popup.component';
 import { Location } from '@angular/common';
+import { RemarksComponent } from '../remarks/remarks.component';
+import * as moment from 'moment';
 @Component({
   selector: 'app-details-collect',
   templateUrl: './details-collect.component.html',
@@ -26,6 +28,8 @@ export class DetailsCollectComponent implements OnInit {
   type: any;
   ivrQuestionnaire: any;
   questionAnswers: any;
+  qnr: any;
+  showEditQnr: any = false;
   constructor(
     private ActivatedRoute: ActivatedRoute,
     private ivrService: IvrService,
@@ -45,11 +49,11 @@ export class DetailsCollectComponent implements OnInit {
           this.callUid = params.id;
           this.ivrService.getAllIvrCallsByUid(params.id).subscribe((data) => {
             this.callData = data;
-            if (this.callData && this.callData.questionnaires && this.callData.questionnaires[0].questionAnswers) {
+            if (this.callData && this.callData.questionnaires && this.callData.questionnaires[0] && this.callData.questionnaires[0].questionAnswers) {
               this.questionAnswers = this.callData.questionnaires[0].questionAnswers;
-              console.log("this.questionAnswers", this.questionAnswers)
+              this.qnr = this.callData.questionnaires[0];
+              console.log("this.qnr", this.qnr)
             }
-            console.log("this.callData", this.callData)
             if (this.callData && this.callData.userCallHistories) {
               this.callHistories = this.callData.userCallHistories;
             }
@@ -177,6 +181,16 @@ export class DetailsCollectComponent implements OnInit {
   }
 
 
+  callDetails(id) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'details'
+      }
+    };
+    this.router.navigate(['provider', 'ivr', 'details', id], navigationExtras)
+  }
+
+
 
   getCustomerDetails(id) {
     this.ivrService.getCustomerById(id).subscribe((data) => {
@@ -246,7 +260,7 @@ export class DetailsCollectComponent implements OnInit {
   }
 
 
-  validateQuestionnaire() {
+  validateQuestionnaire(src?) {
     if (!this.questionAnswers) {
       this.questionAnswers = {
         answers: {
@@ -258,7 +272,7 @@ export class DetailsCollectComponent implements OnInit {
     if (this.questionAnswers.answers) {
       this.ivrService.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
         if (data.length === 0) {
-          this.submitQuestionnaire(this.questionAnswers.answers);
+          this.submitQuestionnaire(this.questionAnswers.answers, src);
         }
         else {
           this.snackbarService.openSnackBar("Please Fill All Required Fields", { 'panelClass': 'snackbarerror' });
@@ -270,12 +284,57 @@ export class DetailsCollectComponent implements OnInit {
     }
   }
 
-  submitQuestionnaire(data) {
+  submitQuestionnaire(data, src?) {
     this.ivrService.submitQuestionnaire(this.callUid, this.questionAnswers.answers).subscribe((data: any) => {
       this.snackbarService.openSnackBar("Details Saved Successfully");
+      if (!src) {
+        this.callDetails(this.callUid);
+      }
+      else if (src && src == 'details') {
+        this.showEditQnr = !this.showEditQnr;
+        this.ngOnInit();
+      }
     }, (error) => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     });
   }
 
+  editQnr() {
+    this.showEditQnr = !this.showEditQnr
+  }
+
+
+
+  addRemarks() {
+    const dialogRef = this.dialog.open(RemarksComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        type: "remarks"
+      }
+    });
+    dialogRef.afterClosed().subscribe(
+      (data) => {
+        if (data && data.remarks && data.type == 'remarks') {
+          let notes = {
+            note: data.remarks,
+            attachments: null
+          }
+          console.log("notes", notes);
+          this.ivrService.addIvrCallRemarks(this.callUid, notes).subscribe((data: any) => {
+            this.snackbarService.openSnackBar("Remarks Saved Successfully");
+            this.ngOnInit();
+          }, (error) => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+        }
+      });
+  }
+
+
+  formatDate(date) {
+    let newDate = new Date(date);
+    return moment(newDate).format('MMMM Do YYYY, h:mm:ss a');
+  }
 }

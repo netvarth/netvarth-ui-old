@@ -5,6 +5,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
 import { MatButtonModule } from '@angular/material/button';
+import { QuestionaireViewModule } from '../../../../shared/components/questionaire-view/questionaire-view.module';
+import { MatMenuModule } from '@angular/material/menu';
+import { RemarksModule } from '../remarks/remarks.module';
 
 const routes: Routes = [
   { path: '', component: DetailsCollectComponent }
@@ -19,6 +22,9 @@ const routes: Routes = [
     MatExpansionModule,
     MatButtonModule,
     QuestionnaireModule,
+    QuestionaireViewModule,
+    MatMenuModule,
+    RemarksModule,
     [RouterModule.forChild(routes)]
   ]
 })

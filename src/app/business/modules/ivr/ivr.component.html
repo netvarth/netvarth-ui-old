@@ -90,8 +90,10 @@
 
           <p-tabPanel>
             <ng-template pTemplate="header">
-              <i class="fa fa-user-o"></i>&nbsp;
-              <span>My Queue</span>
+              <span class="tabview-text">
+                <i class="fa fa-user-o"></i>&nbsp;
+                <span>My Queue</span>
+              </span>
             </ng-template>
             <p-table #callsTable [value]="assignedCalls" [lazy]="true" (onLazyLoad)="loadAssignedCalls($event)"
               dataKey="id" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,15,25]" [paginator]="true" [rows]="5"
@@ -114,28 +116,22 @@
                   </div>
                   <div class="row px-1">
                     <div class="col-md-3 col-xs-5 mt-2">
+                      <div>
+                        <span *ngIf="call && call.consumerName"
+                          class="text-secondary font-weight-bold text-capitalize">{{call.consumerName}}</span>
+                      </div>
                       <div class="font-weight-bold">
-                        <!-- <span *ngIf="call && call.consumerPhone && call.consumerPhone.countryCode">
-                                              {{call.consumerPhone.countryCode}}
-                                            </span> -->
                         <span *ngIf="call && call.consumerPhone && call.consumerPhone.number">
                           {{call.consumerPhone.number}}
                         </span>
                       </div>
-                      <div>
-                        <!-- <span *ngIf="call && call.consumerId" class="font-weight-600">#{{call.consumerId}}</span>&nbsp; -->
-                        <span *ngIf="call && call.language"
-                          class="text-primary font-weight-600">{{call.language}}</span>
-                      </div>
                     </div>
 
                     <div class="col-md-3 col-xs-5 mt-2">
-                      <!-- <div class="font-weight-bold">
-                        <span>
-                          <span *ngIf="call && call.userName">{{call.userName}}</span>
-                          <span *ngIf="call && !call.userName">Not Assigned</span>
-                        </span>
-                      </div> -->
+                      <div class="font-weight-bold">
+                        <span *ngIf="call && call.language"
+                          class="text-primary font-weight-600">{{call.language}}</span>
+                      </div>
                       <div>
                         <span [class]="'status-' + call.callStatus" class="text-capitalize">{{call.callStatus}}</span>
                       </div>
@@ -186,8 +182,10 @@
 
           <p-tabPanel>
             <ng-template pTemplate="header">
-              <img width="20" src="./assets/images/ivr/callback.png">&nbsp;
-              <span>CallBacks</span>
+              <span class="tabview-text">
+                <img width="15" src="./assets/images/ivr/callback.png">&nbsp;
+                <span>CallBacks</span>
+              </span>
             </ng-template>
             <p-table #callsTable [value]="callBackCalls" [lazy]="true" (onLazyLoad)="loadCallBackCalls($event)"
               dataKey="id" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,15,25]" [paginator]="true" [rows]="5"
@@ -269,8 +267,10 @@
 
           <p-tabPanel>
             <ng-template pTemplate="header">
-              <i class="pi pi-phone"></i>&nbsp;
-              <span>Call History</span>
+              <span class="tabview-text">
+                <i class="fa fa-phone"></i>&nbsp;
+                <span>Call History</span>
+              </span>
             </ng-template>
             <!-- <div class="card mt-2" *ngIf="onGoingCall && onGoingCall.length>0">
                 <div class="d-flex justify-content-between px-3">
@@ -532,10 +532,10 @@
             <div class="container-fluid no-padding">
               <div class="row mt-2">
                 <div class="col-md-6 col-sm-12 no-padding">
-                  <span>
+                  <span class="p-input-icon-right" [style]="{'width':'100%'}">
+                    <i class="pi pi-search pointer-cursor" (click)="searchCustomer(searchCustomerValue)"></i>
                     <input pInputText type="text" [style]="{'width':'100%'}" class="search-field"
-                      (input)="callsTable.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword"
-                      style="width:100%" />
+                      [(ngModel)]="searchCustomerValue" placeholder="Search Customer" style="width:100%" />
                   </span>
                 </div>
                 <div class="col-md-6 col-sm-12 no-padding">
