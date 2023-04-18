@@ -153,6 +153,7 @@ export class AddMemberComponent implements OnInit {
       this.sharedservice.deactiveProviderAccount().subscribe(
         (res: any) => {
           if (res) {
+            this.snackbarService.openSnackBar('Account Deleted successfully');
             this.dialogRef.close('afterResClose')
           }
         },
