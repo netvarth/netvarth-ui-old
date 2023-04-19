@@ -621,18 +621,24 @@ padding: 0 15px;
     height: 100%;
 }
 }
+@media (max-width: 500px)
+{
 .modal-dialog-centered {
     display: flex;
     align-items: center;
     min-height: calc(100% - 1rem);
 }
-
-.modal-dialog {
-    position: relative;
-    width: auto;
-    margin: 0.5rem;
-    pointer-events: none;
 }
+@media (max-width: 500px)
+{
+    .modal-dialog {
+        position: relative;
+        width: auto;
+        margin: 0.5rem;
+        pointer-events: none;
+    }
+}
+
 .modal-content {
     position: relative;
     display: flex;
@@ -650,11 +656,7 @@ padding: 0 15px;
     transition: transform .3s ease-out;
     transform: translateY(-50px);
 }
-.modal-dialog-centered {
-    display: flex;
-    align-items: center;
-    
-}
+
 .modal .modal-header {
     align-items: center;
 }
@@ -769,3 +771,19 @@ i {
     font-size: 1.25rem;
     color: #b5b5c3;
 }
+
+@media only screen and (min-width: 768px) {
+    .modal-dialog-centered {
+        display: flex;
+        align-items: center;
+        min-height: calc(100% - 1rem);
+        width: 50% !important;
+    }
+    }
+    @media only screen and (min-width: 768px) {
+        .modal-dialog {
+            position: relative;
+            width: auto;
+            pointer-events: none;
+        }
+        }
