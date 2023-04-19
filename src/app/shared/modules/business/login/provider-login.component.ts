@@ -95,13 +95,14 @@ export class ProviderLoginComponent implements OnInit {
       if (data.muid) {
         const prevMuid = this.lStorageService.getitemfromLocalStorage('mUniqueId');
         if (data.muid !== prevMuid) {
+          this.lStorageService.setitemonLocalStorage('mUniqueId', data.muid);
           const request = {
             "mUniqueIdOld": prevMuid,
             "mUniqueId": data.muid
           }
           this.shared_services.updateProviderMUniqueId(request).subscribe(
             () => {
-              this.lStorageService.setitemonLocalStorage('mUniqueId', data.muid);
+             
             }
           )
         }
