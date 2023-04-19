@@ -320,13 +320,14 @@ export class AppointmentActionsComponent implements OnInit {
   }
   setData() {
     this.holdselectedTime = this.appt.appmtTime;
-    if (this.data.timetype === 3) {
+   
+    if (this.data.timetype === 4) {
+   
       this.pastDate = this.appt.appmtDate;
-      this.sel_checkindate = this.hold_sel_checkindate = moment(
-        this.today,
-        "YYYY-MM-DD HH:mm"
-      ).format();
+      this.sel_checkindate  = this.hold_sel_checkindate = moment(this.today, 'YYYY-MM-DD HH:mm').format();
+     
     } else {
+    
       this.sel_checkindate = this.hold_sel_checkindate = this.appt.appmtDate;
     }
     if (this.appt && this.appt.schedule && this.appt.schedule.id) {
