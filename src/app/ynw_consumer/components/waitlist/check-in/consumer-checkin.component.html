@@ -790,13 +790,13 @@
                                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                                     <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt"
                                                                         class="ser_price no-mgn-bt bold mgn-rt-10">Service
-                                                                        Price :
+                                                                        Price <span *ngIf="paymentDetails && paymentDetails.fullPrepaymentService && selectedService.taxable">(Inclusive of taxes)</span>:
                                                                         <span
                                                                             class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
                                                                             | currency:'&#8377;'}}</span></span>
                                                                             <span *ngIf="paymentDetails.showPrice && serviceOptionApptt"
                                                                             class="ser_price no-mgn-bt bold mgn-rt-10">Service
-                                                                            Price :
+                                                                            Price <span *ngIf="paymentDetails && paymentDetails.fullPrepaymentService && selectedService.taxable">(Inclusive of taxes)</span> :
                                                                             <span
                                                                                 class="ser_price no-mgn-bt bold rupee-font">{{total_servicefee
                                                                                 | currency:'&#8377;'}}</span></span>
@@ -818,13 +818,13 @@
                                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                                                                     <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt"
                                                                         class="ser_price no-mgn-bt bold mgn-rt-10">Service
-                                                                        Price :
+                                                                        Price <span *ngIf="paymentDetails && paymentDetails.fullPrepaymentService && selectedService.taxable">(Inclusive of taxes)</span> :
                                                                         <span
                                                                             class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
                                                                             | currency:'&#8377;'}}</span></span>
                                                                             <span *ngIf="paymentDetails.showPrice && serviceOptionApptt"
                                                                         class="ser_price no-mgn-bt bold mgn-rt-10">Service
-                                                                        Price :
+                                                                        Price <span *ngIf="paymentDetails && paymentDetails.fullPrepaymentService && selectedService.taxable">(Inclusive of taxes)</span> :
                                                                         <span
                                                                             class="ser_price no-mgn-bt bold rupee-font">{{total_servicefee
                                                                             | currency:'&#8377;'}}</span></span><br>
