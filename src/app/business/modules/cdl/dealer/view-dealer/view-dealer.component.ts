@@ -54,6 +54,7 @@ export class ViewDealerComponent implements OnInit {
   fromminDate = new Date();
   minDate = new Date();
   maxDate: any;
+  roleId: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -72,6 +73,9 @@ export class ViewDealerComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (this.user && this.user.roles && this.user.roles[0] && this.user.roles[0].roleId) {
+      this.roleId = this.user.roles[0].roleId;
+    }
     if (this.user) {
       this.capabilities = this.cdlservice.getCapabilitiesConfig(this.user);
     }

@@ -68,7 +68,8 @@ export class LoanDetailsComponent implements OnInit {
   digitalInsuranceId: any;
   mafilScorePercentange: any;
   selectedFiles = {
-    "invoice": { files: [], base64: [], caption: [] }
+    "invoice": { files: [], base64: [], caption: [] },
+    "bankStatements": { files: [], base64: [], caption: [] }
   }
   filesToUpload: any = [];
 
@@ -151,21 +152,16 @@ export class LoanDetailsComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
+        kycId: id,
         type: "cibil",
         from: "cibil"
       }
     });
     dialogRef.afterClosed().subscribe(
       (response: any) => {
-        if (response) {
-          let data = {
-            id: id,
-            cibilScore: response
-          }
-          this.cdlservice.generateCibilScore(data).subscribe((data) => {
-            this.ngOnInit();
-            this.snackbarService.openSnackBar("Cibil Saved Successfully");
-          })
+        if (response.msg == "success") {
+          this.ngOnInit();
+          this.snackbarService.openSnackBar("Cibil Saved Successfully");
         }
       });
 
@@ -214,6 +210,9 @@ export class LoanDetailsComponent implements OnInit {
         }
         if (type == 'invoice') {
           this.uploadInvoice()
+        }
+        if (type == 'bankStatements') {
+          this.uploadBankStatements()
         }
       }).catch((error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -319,6 +318,38 @@ export class LoanDetailsComponent implements OnInit {
             (dataS3Url) => {
               console.log(dataS3Url);
               this.snackbarService.openSnackBar("Invoice Uploaded Successfully")
+              // this.router.navigate(['provider', 'cdl', 'loans']);
+              this.ngOnInit();
+            }).catch(() => {
+            });
+        }
+
+      };
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      })
+  }
+
+  uploadBankStatements() {
+    let loanData = {
+      // "uid": this.loanId,
+    }
+    loanData['bankStatementAttachments'] = [];
+    for (let i = 0; i < this.filesToUpload.length; i++) {
+      this.filesToUpload[i]['order'] = i;
+      if (this.filesToUpload[i]["type"] == 'bankStatements') {
+        loanData['bankStatementAttachments'].push(this.filesToUpload[i]);
+      }
+    }
+    console.log("coming here to here", loanData)
+    this.cdlservice.uploadBankStatements(this.loanId, loanData).subscribe((s3urls: any) => {
+      if (s3urls) {
+        if (s3urls.length > 0) {
+          this.uploadAudioVideo(s3urls).then(
+            (dataS3Url) => {
+              console.log(dataS3Url);
+              this.snackbarService.openSnackBar("Bank Statement Uploaded Successfully")
               // this.router.navigate(['provider', 'cdl', 'loans']);
               this.ngOnInit();
             }).catch(() => {

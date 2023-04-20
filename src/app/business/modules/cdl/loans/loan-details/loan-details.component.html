@@ -529,6 +529,14 @@
                     <div class="btn btn-primary" (click)="generateCibilScore(loanData.loanApplicationKycList[0].id)">
                       Generate Score</div>
                   </div>
+                  <div
+                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0]
+                                    && loanData.loanApplicationKycList[0].cibilReport && loanData.loanApplicationKycList[0].cibilReport[0]">
+                    <a [href]="loanData.loanApplicationKycList[0].cibilReport[0].s3path" class="btn btn-primary"
+                      target="_blank">
+                      View Report
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -629,6 +637,48 @@
               <div class="details-sub-title">{{bankData.bankIfsc}}</div>
             </div>
           </div>
+
+          <div class="row mt-2"
+            *ngIf="!(bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments.length>0)">
+            <div class="details-title">
+              <div class="bggrey my-2">
+                <div>
+                  <div class="fieldPadding">
+                    <div class="d-lg-flex d-md-flex">
+                      <div class="file">
+                        <label (click)="bankStatements.click()">
+                          Upload Bank Statements
+                        </label>
+                        <input #bankStatements type='file' (change)="filesSelected($event, 'bankStatements')" />
+                      </div>&nbsp;
+                    </div>
+                    <div class="img-section clearfix"
+                      *ngIf="selectedFiles['bankStatements'] && selectedFiles['bankStatements'].files && selectedFiles['bankStatements'].files.length > 0">
+                      <ul class="galul">
+                        <li *ngFor="let file of selectedFiles['bankStatements'].files;let i = index ">
+                          <div class="galimg_outer">
+                            <div class="gal_img pointer-cursor">
+                              <img [src]="getImage(selectedFiles['bankStatements'].base64[i], file)"
+                                *ngIf="selectedFiles['bankStatements'].base64[i]" width="100px" height="100px">
+                              <a [href]="file.s3path" target="_blank">
+                                <img [src]="file.s3path"
+                                  *ngIf="!selectedFiles['bankStatements'].base64[i] && file.s3path" width="100px"
+                                  height="100px">
+                              </a>
+                            </div>
+                            <div class="gal_action" (click)="deleteTempImage(i, 'bankStatements',file)">
+                              <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="row mt-2"
             *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0]">
             <div class="col-md-4 no-padding-small">

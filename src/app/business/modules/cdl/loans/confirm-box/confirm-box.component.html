@@ -52,7 +52,48 @@
     </div>
     <div class="otp mgn-bt-20">
       <input type="text" placeholder="Enter Cibil Score" class="form-control" autocomplete="off"
-        [(ngModel)]="cibilScore">
+        [(ngModel)]="cibilScore" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+        maxlength="3">
+    </div>
+    <div>
+      <div class="bggrey my-2">
+        <div>
+          <div class="d-flex">
+            <div class="form-title">Cibil Report</div>
+          </div>
+          <div class="fieldPadding photo-border">
+            <div class="file"
+              *ngIf="!(selectedFiles['cibil'] && selectedFiles['cibil'].files && selectedFiles['cibil'].files.length > 0)">
+              <label for='cibilAttach' (click)="cibilAttach.click()">
+                <!-- <i class="material-icons">cloud_upload</i> -->
+                Upload File
+              </label>
+              <input #cibilAttach type='file' (change)="filesSelected($event,'cibil')"
+                accept="image/*;capture=camera" />
+            </div>
+            <div class="img-section clearfix"
+              *ngIf="selectedFiles['cibil'] && selectedFiles['cibil'].files && selectedFiles['cibil'].files.length > 0">
+              <ul class="galul">
+                <li *ngFor="let file of selectedFiles['cibil'].files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img pointer-cursor">
+                      <img [src]="getImage(selectedFiles['cibil'].base64[i], file)"
+                        *ngIf="selectedFiles['cibil'].base64[i]" width="100px" height="100px">
+                      <a [href]="file.s3path" target="_blank">
+                        <img [src]="file.s3path" *ngIf="!selectedFiles['cibil'].base64[i] && file.s3path" width="100px"
+                          height="100px">
+                      </a>
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImage(i, 'cibil',file)">
+                      <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="d-flex justify-content-center mt-2">
       <div class="mr-3">
@@ -238,7 +279,7 @@
             </div>
             <div class="fieldPadding">
               <input (keyup)="resetErrors()" type="number" #loanamount placeholder="Enter Required Loan Amount"
-                class="form-control" autocomplete="off" [value]="loanAmount" disabled/>
+                class="form-control" autocomplete="off" [value]="loanAmount" disabled />
             </div>
           </div>
         </div>

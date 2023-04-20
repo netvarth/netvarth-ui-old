@@ -194,7 +194,7 @@ export class CreateComponent implements OnInit {
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
     private cdlService: CdlService,
-    private fileService: FileService,
+    private fileService: FileService
   ) {
 
 
