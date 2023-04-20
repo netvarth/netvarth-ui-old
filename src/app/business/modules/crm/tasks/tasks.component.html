@@ -52,7 +52,7 @@
           <ng-template let-status pTemplate="item">
             <div class="flex align-items-center gap-2">
               <img width="25px" src="{{status.image}}" alt="Stat Image" />&nbsp;
-              <span>{{ status.name }}</span>
+              <span class="font-weight-bold">{{ status.name }} ( {{ status.count }} )</span>
             </div>
           </ng-template>
         </p-dropdown>

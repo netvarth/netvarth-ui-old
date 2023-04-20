@@ -34,10 +34,10 @@ export class TasksComponent implements OnInit {
   filtericonTooltip = '';
   msg = 'Do you really want to mark as done this activity? ';
   public taskStatusList: any = [{
-    id: 1, name: 'New', image: './assets/images/crmImages/new.png',
+    id: 1, name: 'New', image: './assets/images/crmImages/new.png', count: 0
   },
   {
-    id: 5, name: 'Completed', image: './assets/images/crmImages/completed2.png',
+    id: 5, name: 'Completed', image: './assets/images/crmImages/completed2.png', count: 0
   }];
   public categoryListData: any = [];
   public taskTypeList: any = [];
@@ -48,7 +48,7 @@ export class TasksComponent implements OnInit {
   public taskMasterList: any = [];
   public arr: any;
   public statusFilter: any = {
-    id: 1, name: 'New', image: './assets/images/crmImages/new.png',
+    id: 1, name: 'New', image: './assets/images/crmImages/new.png', count: 0
   };
   public totalActivity: any = 'Total activity';
   public headerName: any = 'Activity updation';
@@ -95,12 +95,15 @@ export class TasksComponent implements OnInit {
       { field: 'dueDate', title: 'Starting Date', type: 'date', filterType: 'ge' },
       { field: 'dueDate', title: 'Ending Date', type: 'date', filterType: 'le' }
     ]
+
+
+    this.getNewStatusCount();
+    this.getCompletedStatusCount();
   }
 
   ngOnInit() {
 
     this.getTaskmaster();
-
     const _this = this;
     this.getLocationList().then(() => {
       this.selected_location = this.locations[0];
@@ -129,6 +132,22 @@ export class TasksComponent implements OnInit {
     // }
   }
 
+  getNewStatusCount() {
+    let api_filter = this.setFilterWithPreDefinedValues();
+    api_filter['status-eq'] = 1;
+    this.getTotalTaskActivityCount(api_filter).then((count: any) => {
+      this.taskStatusList[0]['count'] = count;
+    })
+  }
+
+  getCompletedStatusCount() {
+    let api_filter = this.setFilterWithPreDefinedValues();
+    api_filter['status-eq'] = 5;
+    this.getTotalTaskActivityCount(api_filter).then((count: any) => {
+      this.taskStatusList[1]['count'] = count;
+      this.statusFilter[0]['count'] = count;
+    })
+  }
 
   // getTomorrowDate() {
   //   const server = this.server_date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
