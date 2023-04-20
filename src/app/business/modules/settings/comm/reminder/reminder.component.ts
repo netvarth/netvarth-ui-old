@@ -126,7 +126,7 @@ export class ReminderComponent implements OnInit {
     if(this.selectedId){
       console.log("from patientsss :",this.selectedId);
       this.getCustomerbyId(this.selectedId);
-      this.editReminder();
+      // this.editReminder();
     }
     this.pagination.startpageval = this.groupService.getitemFromGroupStorage('paginationStart') || 1;
      //this.getReminders();
