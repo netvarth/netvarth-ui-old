@@ -22,7 +22,7 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
-import { FilterModule } from '../filter/filter.module';
+import { FilterModule } from '../../../../shared/modules/filter/filter.module';
 
 const routes: Routes = [
   { path: '', component: DealerComponent },

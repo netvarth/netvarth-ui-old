@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { ServiceMeta } from '../../../shared/services/service-meta';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -92,7 +93,7 @@ export class CrmService {
   // }
 
   getTotalTask(filter = {}) {
-    const url = 'provider/task/provider?isSubTask-eq=false'
+    const url = 'provider/task/provider'
     return this.servicemeta.httpGet(url, null, filter);
   }
   getTotalLead(filter) {
@@ -101,7 +102,7 @@ export class CrmService {
   }
 
   getTotalTaskCount(filter) {
-    const url = 'provider/task/provider/count?isSubTask-eq=false';
+    const url = 'provider/task/provider/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
 
@@ -304,7 +305,7 @@ export class CrmService {
   //   });
   // }
 
-  uploadFilesToTask (id, data) {
+  uploadFilesToTask(id, data) {
     const url = 'provider/task/' + id + '/taskattachment';
     return this.servicemeta.httpPost(url, data);
   }
@@ -572,9 +573,9 @@ export class CrmService {
   }
 
   //API to Retain Rejected Lead - PUT REST API
-  retainRejectedLead(leadUid,body){
+  retainRejectedLead(leadUid, body) {
     //provider/lead/{leadUid}/retainrejected
-    const url = 'provider/lead/'+ leadUid + '/retainrejected'
+    const url = 'provider/lead/' + leadUid + '/retainrejected'
     return this.servicemeta.httpPut(url, body)
   }
 
@@ -641,8 +642,70 @@ export class CrmService {
     const url = 'provider/lead/dashboard/status';
     return this.servicemeta.httpGet(url);
   }
-  loanSanctionProceed(status,uid){
+  loanSanctionProceed(status, uid) {
     const url = 'provider/lead/questionnaire/proceed/' + status + '/' + uid;
     return this.servicemeta.httpPut(url)
+  }
+
+  setFiltersFromPrimeTable(event) {
+    let api_filter = {}
+    if ((event && event.first) || (event && event.first == 0)) {
+      api_filter['from'] = event.first;
+    }
+
+    if (event && event.rows) {
+      api_filter['count'] = event.rows;
+    }
+
+    if (event && event.filters) {
+      let filters = event.filters;
+      Object.entries(filters).forEach(([key, value]) => {
+        if (filters[key]['value'] != null) {
+          let filterSuffix = ''
+          if (filters[key]['matchMode'] == 'startsWith') {
+            filterSuffix = 'startWith';
+          }
+          else if (filters[key]['matchMode'] == 'contains') {
+            filterSuffix = 'like';
+          }
+          else if (filters[key]['matchMode'] == 'endsWith') {
+            filterSuffix = 'endWith';
+          }
+          else if (filters[key]['matchMode'] == 'equals') {
+            filterSuffix = 'eq';
+          }
+          else if (filters[key]['matchMode'] == 'notEquals') {
+            filterSuffix = 'neq';
+          }
+          else if (filters[key]['matchMode'] == "dateIs") {
+            filterSuffix = 'eq';
+            let dateValue = new Date(filters[key]['value']);
+            filters[key]['value'] = moment(dateValue).format('YYYY-MM-DD');
+          }
+          else if (filters[key]['matchMode'] == "dateIsNot") {
+            filterSuffix = 'neq';
+            let dateValue = new Date(filters[key]['value']);
+            filters[key]['value'] = moment(dateValue).format('YYYY-MM-DD');
+          }
+          if (filterSuffix != '') {
+            api_filter[key + '-' + filterSuffix] = filters[key]['value'];
+          }
+        }
+      });
+    }
+
+    if (event && event.sortField) {
+      let filterValue;
+      if (event.sortOrder && event.sortOrder == 1) {
+        filterValue = 'asc';
+      }
+      else if (event.sortOrder && event.sortOrder == -1) {
+        filterValue = 'dsc';
+      }
+      if (filterValue) {
+        api_filter['sort_' + event.sortField] = filterValue;
+      }
+    }
+    return api_filter;
   }
 }
