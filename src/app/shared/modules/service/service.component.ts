@@ -185,6 +185,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     is_change: boolean = false;
     providerLabels: any;
     allLabels: any = [];
+    serviceBookingType_check: any;
     // show_internationalmode = false;
 
     constructor(private fb: UntypedFormBuilder,
@@ -243,6 +244,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                       
                         if (this.action === 'show' && this.active_user.accountType === 'BRANCH') {
                             this.getDepartments(this.service.department);
+                        }
+                        if(this.service_data && this.service_data.serviceBookingType){
+                           this. serviceBookingType_check = this.service_data.serviceBookingType;
                         }
                         if (this.service_data) {
                            

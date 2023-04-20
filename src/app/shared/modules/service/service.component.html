@@ -397,7 +397,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
               </mat-radio-button> -->
             <!-- <div class="example-full-width row">
                 <div class="col-sm-6 col-md-3 col-lg-3 col-xs-6"> -->
-            <div class="">
+            <div class="" *ngIf="this.action === 'add'">
               <!--  -->
               <mat-radio-group class="" formControlName="serviceBookingType">
                 <mat-radio-button (change)="selectRequest(request.value)" [checked]="is_checked_booking"
@@ -410,6 +410,29 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 <!-- </div>
               <div class="col-sm-6 col-md-3 col-lg-3 col-xs-6"> -->
                 <mat-radio-button *ngIf="!is_donation" (change)="selectRequest(request1.value)"
+                  [checked]="is_checked_request" [value]="'request'" #request1>
+                  <span class="font-weight-bold">Request</span>
+                </mat-radio-button>
+
+              </mat-radio-group>
+              <!-- <div>
+                <span class="inactive" *ngIf="action === 'add'">*Once Appointment type is selected, you can't change it.</span>
+              </div> -->
+           
+            </div>
+            <div class=""  *ngIf="this.action === 'edit'">
+              <!--  -->
+              <mat-radio-group class="" formControlName="serviceBookingType">
+                <mat-radio-button (change)="selectRequest(request.value)" [checked]="is_checked_booking" [disabled] = "serviceBookingType_check === 'request'"
+                  [value]="'booking'" #request>
+                  <span class="font-weight-bold">Booking</span>
+                </mat-radio-button> &nbsp;
+                <!-- <mat-radio-button *ngIf="action != 'add'"  (change)="selectRequest(request.value)" [checked]="is_checked_request" [value]="'booking'" #request >
+                <span class="font-weight-bold">Booking</span>
+              </mat-radio-button> &nbsp; -->
+                <!-- </div>
+              <div class="col-sm-6 col-md-3 col-lg-3 col-xs-6"> -->
+                <mat-radio-button *ngIf="!is_donation" (change)="selectRequest(request1.value)" [disabled] = "serviceBookingType_check === 'booking'"
                   [checked]="is_checked_request" [value]="'request'" #request1>
                   <span class="font-weight-bold">Request</span>
                 </mat-radio-button>
