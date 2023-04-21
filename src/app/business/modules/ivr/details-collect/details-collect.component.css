@@ -54,6 +54,7 @@
 .font-too-small {
   font-size: 12px !important;
 }
+
 .status-inCall {
   /* background-color: #cce6c8 !important; */
   color: #198f20 !important;
@@ -118,4 +119,8 @@
 
 .form-title {
   font-weight: 600 !important;
+}
+
+::ng-deep .callHistoryPanel .mat-expansion-panel-body {
+  padding: 0 0px 16px;
 }

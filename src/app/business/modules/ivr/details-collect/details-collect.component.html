@@ -155,99 +155,115 @@
 
   <div>
     <div class="row">
-      <div class="col-md-8 no-padding-small">
-        <div class="card mt-2">
-          <div>
-            <span class="font-weight-bold">Call History</span>
-          </div>
-          <div *ngIf="customerCallHistory && customerCallHistory.length>0">
-            <div class="card my-1 p-1 py-2" *ngFor="let call of customerCallHistory">
-              <div class="row px-1">
-                <div class="col-md-3 col-xs-5 mt-2">
-                  <div class="font-weight-bold">
-                    <!-- <span *ngIf="call && call.consumerPhone && call.consumerPhone.countryCode">
+      <div class="col-md-8 no-padding-small callHistoryPanel mt-2">
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="callHistoryPanel" (opened)="callHistoryPanel = true"
+            (closed)="callHistoryPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-center">
+                  <div class="d-flex align-items-center text-primary font-weight-bold">
+                    Call History
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+              <div *ngIf="customerCallHistory && customerCallHistory.length>0">
+                <div class="card my-1 p-1 py-2" *ngFor="let call of customerCallHistory">
+                  <div class="row px-1">
+                    <div class="col-md-6 col-xs-6 mt-2">
+                      <div class="font-weight-bold">
+                        <!-- <span *ngIf="call && call.consumerPhone && call.consumerPhone.countryCode">
                                                           {{call.consumerPhone.countryCode}}
                                                         </span> -->
-                    <span *ngIf="call && call.consumerPhone && call.consumerPhone.number">
-                      {{call.consumerPhone.number}}
-                    </span>
-                  </div>
-                  <div>
-                    <!-- <span *ngIf="call && call.consumerId" class="font-weight-600">#{{call.consumerId}}</span>&nbsp; -->
-                    <span *ngIf="call && call.language" class="text-primary font-weight-600">{{call.language}}</span>
-                  </div>
-                </div>
+                        <span *ngIf="call && call.consumerPhone && call.consumerPhone.number">
+                          {{call.consumerPhone.number}}
+                        </span>
+                      </div>
+                      <div>
+                        <!-- <span *ngIf="call && call.consumerId" class="font-weight-600">#{{call.consumerId}}</span>&nbsp; -->
+                        <span *ngIf="call && call.language" class="text-primary font-weight-600">{{call.language}}
+                        </span>
+                      </div>
+                    </div>
 
-                <div class="col-md-3 col-xs-5 mt-2">
-                  <div class="font-weight-bold">
-                    <span>
-                      <span *ngIf="call && call.userName">{{call.userName}}</span>
-                      <span *ngIf="call && !call.userName">Not Assigned</span>
-                    </span>
-                  </div>
-                  <div>
-                    <span [class]="'status-' + call.callStatus" class="text-capitalize">{{call.callStatus}}</span>
-                  </div>
-                </div>
+                    <div class="col-md-6 col-xs-6 mt-2">
+                      <div class="font-weight-bold">
+                        <span>
+                          <span *ngIf="call && call.userName">{{call.userName}}</span>
+                          <span *ngIf="call && !call.userName">Not Assigned</span>
+                        </span>
+                      </div>
+                      <div>
+                        <span [class]="'status-' + call.callStatus" class="text-capitalize">{{call.callStatus}}</span>
+                      </div>
+                    </div>
 
-                <div class="col-md-6 col-xs-2 mt-2">
-                  <div class="pointer-cursor d-flex justify-content-center">
-                    <span [matMenuTriggerFor]="menu" class="p-2"><i class="fa fa-ellipsis-v"
-                        aria-hidden="true"></i></span>
-                    <mat-menu #menu="matMenu">
-                      <button type="button" mat-menu-item class="font-weight-600" (click)="viewCall(call.uid)"><i
-                          class="fa fa-eye"></i>View
-                      </button>
+                    <div class="col-md-12 col-xs-12 no-padding">
+                      <div class="font-weight-bold col-md-6 col-xs-6">
+                        <span *ngIf="call && call.createdDate">{{call.createdDate}}</span>
+                      </div>
+                      <div class="font-weight-bold col-md-6 col-xs-6">
+                        <span *ngIf="call && call.Callduration">{{call.Callduration}}</span>
+                      </div>
+                    </div>
 
-                      <button type="button" mat-menu-item class="font-weight-600" (click)="openUsersPopup(call.uid)"
-                        *ngIf="call && !call.userId">
-                        <img width="15" src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Assign
-                      </button>
-
-                      <button type="button" mat-menu-item class="font-weight-600" (click)="getCallBack(call.uid)">
-                        <img width="15" src="./assets/images/ivr/callback.png">&nbsp;&nbsp;Callback
-                      </button>
-
-                      <button type="button" mat-menu-item class="font-weight-600" (click)="unassignToCall(call.uid)"
-                        *ngIf="call && call.userId"><img width="15"
-                          src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Unassign
-                      </button>
-
-                      <button type="button" mat-menu-item class="font-weight-600" (click)="markAsComplete(call.uid)"><i
-                          class="fa fa-check"></i>Complete
-                      </button>
-                    </mat-menu>
                   </div>
                 </div>
-
+              </div>
+              <div class="text-center"
+                *ngIf="!customerCallHistory || (customerCallHistory && customerCallHistory.length==0)">
+                <span class="font-weight-bold">No Call History Found</span>
               </div>
             </div>
-          </div>
-          <div class="text-center"
-            *ngIf="!customerCallHistory || (customerCallHistory && customerCallHistory.length==0)">
-            <span class="font-weight-bold">No Call History Found</span>
-          </div>
-        </div>
+          </mat-expansion-panel>
+        </mat-accordion>
       </div>
-      <div class="col-md-4 no-padding-small">
-        <div class="card mt-2">
-          <div class="d-flex justify-content-between">
-            <div class="d-flex justify-content-center">
-              <span class="font-weight-bold">Remarks</span>
-            </div>
-            <div class="d-flex align-items-center">
-              <a class="btn btn-primary" (click)="addRemarks()"><i class="fa fa-edit"></i>&nbsp;Add Remarks</a>
-            </div>
-          </div>
-          <div class="card mt-2" *ngFor="let note of callData.notes">
-            {{note.note}}
+
+
+      <div class="col-md-4 no-padding-small remarksPanel mt-2">
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="remarksPanel" (opened)="remarksPanel = true" (closed)="remarksPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-center">
+                  <div class="d-flex align-items-center text-primary font-weight-bold">
+                    Remarks
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
             <div>
-              <span class="font-too-small text-primary" *ngIf="note.createdDate">( Added on
-                {{note.createdDate}} )</span>
+              <div class="mt-2">
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex justify-content-center">
+                    <span class="font-weight-bold"></span>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <a class="btn btn-primary" (click)="addRemarks()"><i class="fa fa-edit"></i>&nbsp;Add Remarks</a>
+                  </div>
+                </div>
+                <div *ngIf="callData && callData.notes && callData.notes.length > 0">
+                  <div class="card mt-2" *ngFor="let note of callData.notes">
+                    {{note.note}}
+                    <div>
+                      <span class="font-too-small text-primary" *ngIf="note.createdDate">( Added on
+                        {{note.createdDate}} )</span>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="callData && callData.notes && callData.notes.length == 0">
+                  <div class="card mt-2">
+                    No Notes Added
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </mat-expansion-panel>
+        </mat-accordion>
       </div>
+
     </div>
   </div>
 </div>

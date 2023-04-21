@@ -284,7 +284,8 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   getIvrCallHistoryOfcustomer() {
-    this.ivrService.getAllIvrCallsByUid(this.uid).subscribe((response: any) => {
+    let filter = { "consumerId-eq": this.customerId }
+    this.ivrService.getAllIvrCallsbyFilter(filter).subscribe((response: any) => {
       if (response) {
         this.ivrCallData = response;
       }
@@ -666,8 +667,25 @@ export class CustomerDetailComponent implements OnInit {
       console.log("Global Settings : ", this.globalSettings);
     });
   }
+
+  viewCall(uid) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'details'
+      }
+    };
+    this.router.navigate(['provider', 'ivr', 'details', uid], navigationExtras);
+  }
+
+
   actionPerformed(event) {
-    if (event.type === "details") {
+    console.log("event", event)
+    if (event.source == 'ivr') {
+      if (event.record && event.record.uid) {
+        this.viewCall(event.record.uid);
+      }
+    }
+    if (event.type === "details" && (!event.source || (event.source && event.source != 'ivr'))) {
       this.gotoCustomerDetail(event.record, event.timeType);
     } else if (event.type === "more") {
       if (event.heading === "Today") {

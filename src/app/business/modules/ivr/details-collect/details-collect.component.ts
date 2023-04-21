@@ -24,6 +24,8 @@ export class DetailsCollectComponent implements OnInit {
   users: any;
   confirmBoxRef: any;
   customerDetailsPanel: any;
+  callHistoryPanel: any;
+  remarksPanel: any;
   customerCallHistory: any;
   type: any;
   ivrQuestionnaire: any;

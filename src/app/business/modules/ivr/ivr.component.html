@@ -42,6 +42,31 @@
 
 <div class="col-md-12 no-padding">
 
+  <div class="col-md-6 mt-2 px-1 d-none d-md-block d-lg-block d-xl-block" *ngIf="user && !user.adminPrivilege">
+    <div class="card row analytics-card">
+      <div class="d-flex">
+        <div class="mr-2"><img width="20" src="./assets/images/ivr/cross-arrow.png"></div>
+        <div class="text-dark font-weight-600 d-flex align-items-center">Till</div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-6 mt-5 px-1 pr-2">
+        <div class="card text-center p-2 connected-calls-bg">
+          <div class="font-weight-500">
+            <div class="mt-1 text-grey">Received Calls</div>
+            <div class="mt-1 text-dark font-weight-600 box-wrapper font-large">{{totalCallsCount}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-6 mt-5 px-1">
+        <div class="card text-center p-2 connected-calls-bg">
+          <div class="font-weight-500">
+            <div class="mt-1 text-grey">Picked Calls</div>
+            <div class="mt-1 text-dark font-weight-600 box-wrapper font-large">{{connectedCallsCount}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="col-md-6 mt-2 px-1 d-none d-md-block d-lg-block d-xl-block">
     <div class="card row analytics-card">
       <div class="d-flex">
@@ -67,7 +92,7 @@
     </div>
   </div>
 
-  <div class="col-md-6 mt-2 px-1 d-none d-sm-block">
+  <div class="col-md-6 mt-2 px-1 d-none d-sm-block" *ngIf="user && user.adminPrivilege">
     <div class="card text-center p-2 dashboard-card">
       <div class="row mx-0 p-0">
         <span class="font-weight-bold">Analytics</span>
@@ -115,7 +140,7 @@
                     </div>
                   </div>
                   <div class="row px-1">
-                    <div class="col-md-3 col-xs-5 mt-2">
+                    <div class="col-md-3 col-xs-5 mt-2" (click)="viewCall(call.uid)">
                       <div>
                         <span *ngIf="call && call.consumerName"
                           class="text-secondary font-weight-bold text-capitalize">{{call.consumerName}}</span>
@@ -127,7 +152,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-3 col-xs-5 mt-2">
+                    <div class="col-md-3 col-xs-5 mt-2" (click)="viewCall(call.uid)">
                       <div class="font-weight-bold">
                         <span *ngIf="call && call.language"
                           class="text-primary font-weight-600">{{call.language}}</span>
@@ -147,7 +172,7 @@
                           </button>
 
                           <button type="button" mat-menu-item class="font-weight-600" (click)="openUsersPopup(call.uid)"
-                            *ngIf="call && !call.userId">
+                            *ngIf="call && !call.userId && (call.callStatus && call.callStatus!='callCompleted')">
                             <img width="15" src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Assign
                           </button>
 
@@ -156,12 +181,13 @@
                           </button>
 
                           <button type="button" mat-menu-item class="font-weight-600" (click)="unassignToCall(call.uid)"
-                            *ngIf="call && call.userId"><img width="15"
-                              src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Unassign
+                            *ngIf="call && call.userId && (call.callStatus && call.callStatus!='callCompleted')"><img
+                              width="15" src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Unassign
                           </button>
 
-                          <button type="button" mat-menu-item class="font-weight-600"
-                            (click)="markAsComplete(call.uid)"><i class="fa fa-check"></i>Complete
+                          <button type="button" mat-menu-item class="font-weight-600" (click)="markAsComplete(call.uid)"
+                            *ngIf="call.questionnaires && call.questionnaires[0] && call.questionnaires[0].questionAnswers && (call.callStatus && call.callStatus!='callCompleted')"><i
+                              class="fa fa-check"></i>Complete
                           </button>
                         </mat-menu>
                       </div>
@@ -194,7 +220,7 @@
               <ng-template pTemplate="body" let-call>
                 <div class="card mt-2">
                   <div class="row px-1">
-                    <div class="col-md-3 col-xs-5 mt-2">
+                    <div class="col-md-3 col-xs-5 mt-2" (click)="viewCall(call.uid)">
                       <div class="font-weight-bold">
                         <!-- <span *ngIf="call && call.consumerPhone && call.consumerPhone.countryCode">
                                                         {{call.consumerPhone.countryCode}}
@@ -210,7 +236,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-3 col-xs-5 mt-2">
+                    <div class="col-md-3 col-xs-5 mt-2" (click)="viewCall(call.uid)">
                       <div class="font-weight-bold">
                         <span>
                           <span *ngIf="call && call.userName">{{call.userName}}</span>
@@ -232,7 +258,7 @@
                           </button>
 
                           <button type="button" mat-menu-item class="font-weight-600" (click)="openUsersPopup(call.uid)"
-                            *ngIf="call && !call.userId">
+                            *ngIf="call && !call.userId && (call.callStatus && call.callStatus!='callCompleted')">
                             <img width="15" src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Assign
                           </button>
 
@@ -241,12 +267,14 @@
                           </button>
 
                           <button type="button" mat-menu-item class="font-weight-600" (click)="unassignToCall(call.uid)"
-                            *ngIf="call && call.userId"><img width="15"
-                              src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Unassign
+                            *ngIf="call && call.userId && (call.callStatus && call.callStatus!='callCompleted')"><img
+                              width="15" src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Unassign
                           </button>
 
-                          <button type="button" mat-menu-item class="font-weight-600"
-                            (click)="markAsComplete(call.uid)"><i class="fa fa-check"></i>Complete
+                          <button type="button" mat-menu-item class="font-weight-600" (click)="markAsComplete(call.uid)"
+                            *ngIf="call.questionnaires && call.questionnaires[0] 
+                            && call.questionnaires[0].questionAnswers  && (call.callStatus && call.callStatus!='callCompleted')"><i
+                              class="fa fa-check"></i>Complete
                           </button>
                         </mat-menu>
                       </div>
@@ -356,7 +384,7 @@
                     </div>
                   </div>
                   <div class="row px-1">
-                    <div class="col-md-3 col-xs-5 mt-2" (click)="viewCall(call.uid)">
+                    <div class="col-md-6 col-xs-6 mt-2" (click)="viewCall(call.uid)">
                       <div class="font-weight-bold">
                         <span *ngIf="call && call.consumerPhone && call.consumerPhone.number">
                           {{call.consumerPhone.number}}
@@ -368,7 +396,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-3 col-xs-5 mt-2" (click)="viewCall(call.uid)">
+                    <div class="col-md-6 col-xs-6 mt-2" (click)="viewCall(call.uid)">
                       <div class="font-weight-bold">
                         <span>
                           <span *ngIf="call && call.userName">{{call.userName}}</span>
@@ -380,33 +408,12 @@
                       </div>
                     </div>
 
-                    <div class="col-md-6 col-xs-2 mt-2">
-                      <div class="pointer-cursor d-flex justify-content-center">
-                        <span [matMenuTriggerFor]="menu" class="p-2"><i class="fa fa-ellipsis-v"
-                            aria-hidden="true"></i></span>
-                        <mat-menu #menu="matMenu">
-                          <button type="button" mat-menu-item class="font-weight-600" (click)="viewCall(call.uid)"><i
-                              class="fa fa-eye"></i>View
-                          </button>
-
-                          <button type="button" mat-menu-item class="font-weight-600" (click)="openUsersPopup(call.uid)"
-                            *ngIf="call && !call.userId">
-                            <img width="15" src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Assign
-                          </button>
-
-                          <button type="button" mat-menu-item class="font-weight-600" (click)="getCallBack(call.uid)">
-                            <img width="15" src="./assets/images/ivr/callback.png">&nbsp;&nbsp;Callback
-                          </button>
-
-                          <button type="button" mat-menu-item class="font-weight-600" (click)="unassignToCall(call.uid)"
-                            *ngIf="call && call.userId"><img width="15"
-                              src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Unassign
-                          </button>
-
-                          <button type="button" mat-menu-item class="font-weight-600"
-                            (click)="markAsComplete(call.uid)"><i class="fa fa-check"></i>Complete
-                          </button>
-                        </mat-menu>
+                    <div class="col-md-12 col-xs-12 no-padding">
+                      <div class="font-weight-bold col-md-6 col-xs-6">
+                        <span *ngIf="call && call.createdDate">{{call.createdDate}}</span>
+                      </div>
+                      <div class="font-weight-bold col-md-6 col-xs-6">
+                        <span *ngIf="call && call.Callduration">{{call.Callduration}}</span>
                       </div>
                     </div>
 

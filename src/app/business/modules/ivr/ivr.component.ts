@@ -231,6 +231,7 @@ export class IvrComponent implements OnInit {
       this.totalCallsCount = count;
     });
     let api_filter = this.ivrService.setFiltersFromPrimeTable(event);
+    api_filter['callStatus-eq'] = "callCompleted";
     if (api_filter) {
       this.getIvrCallsCount(api_filter).then((count) => {
         this.totalCallsCount = count;
@@ -371,7 +372,12 @@ export class IvrComponent implements OnInit {
   }
 
   viewCustomer(id) {
-    this.router.navigate(['provider', 'customers', id])
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        src: 'ivr'
+      }
+    };
+    this.router.navigate(['provider', 'customers', id], navigationExtras)
   }
 
   editCustomer(id) {
@@ -514,7 +520,9 @@ export class IvrComponent implements OnInit {
   }
 
   getIvrCalls() {
-    this.ivrService.getAllIvrCalls().subscribe((data: any) => {
+    let api_filter = {};
+    api_filter['callStatus-eq'] = "callCompleted";
+    this.ivrService.getAllIvrCallsbyFilter(api_filter).subscribe((data: any) => {
       this.calls = data;
     },
       (error) => {

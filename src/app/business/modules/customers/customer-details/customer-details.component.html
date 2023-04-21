@@ -120,10 +120,9 @@
     </div>
     <div class="row records-sec pt-0">
 
-        <div class="column" *ngIf="ivrCallData">
-            <app-records-datagrid [records]="ivrCallData.userCallHistories" [source]="'ivr'"
-                (actionPerformed)="actionPerformed($event)" [view]="'small'" [heading]="'IVR Calls'"
-                [waitlist_heading]="'IVR Calls'">
+        <div class="column" *ngIf="src == 'ivr' && ivrCallData && ivrCallData.length > 0">
+            <app-records-datagrid [records]="ivrCallData" [source]="'ivr'" (actionPerformed)="actionPerformed($event)"
+                [view]="'small'" [waitlist_heading]="'IVR Calls'" [heading]="'IVR_Calls'">
             </app-records-datagrid>
         </div>
 
@@ -141,6 +140,9 @@
                 (actionPerformed)="actionPerformed($event)" [view]="'small'">
             </app-records-datagrid>
         </div>
+
+
+
         <!-- <div class="column" *ngIf="domain != 'finance'">
             <app-records-datagrid [records]="futureordervisitDetails" [heading]="'Future_Order'" [source]="'order'"
                 [showMore]="showMoreorderFuture" [timeType]="2" (actionPerformed)="actionPerformed($event)"
@@ -168,6 +170,7 @@
             <app-booking-medical-records-rx [customerId]="customer[0].id" [source]="'customer-details'" [type]="'rx'">
             </app-booking-medical-records-rx>
         </div>
+
         <div class="column" *ngIf="customer[0].questionnaires && customer[0].questionnaires.length > 0">
             <div class="card">
                 <div class="card-header collapsed"

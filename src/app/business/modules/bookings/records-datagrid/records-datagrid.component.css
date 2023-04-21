@@ -270,3 +270,45 @@ th {
     padding: 5px !important;
     border-radius: 8px !important;
 }
+
+.status-inCall {
+    background-color: #cce6c8 !important;
+    color: #198f20 !important;
+    font-weight: bold !important;
+    padding: 5px !important;
+    border-radius: 8px !important;
+}
+
+
+.status-callCompleted {
+    background-color: #cce6c8 !important;
+    color: rgb(55, 97, 55) !important;
+    font-weight: bold !important;
+    padding: 5px !important;
+    border-radius: 8px !important;
+}
+
+
+.status-missed {
+    background-color: #FFCDD2 !important;
+    color: #C63737 !important;
+    font-weight: bold !important;
+    padding: 5px !important;
+    border-radius: 8px !important;
+}
+
+.status-voicemail {
+    background-color: #d9e3ff !important;
+    color: #10359c !important;
+    font-weight: bold !important;
+    padding: 5px !important;
+    border-radius: 8px !important;
+}
+
+.status-ongoing {
+    background-color: #ebd6ff !important;
+    color: #52267b !important;
+    font-weight: bold !important;
+    padding: 5px 10px !important;
+    border-radius: 15px !important;
+}
