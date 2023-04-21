@@ -71,7 +71,7 @@
       </div>
     </div>
     <div id="myDiv" class="my-2 heightlimitSalesVerified"
-      *ngIf="(leadInfo.redirectNotes &&  leadInfo.redirectNotes.length>0)">
+      *ngIf="(leadInfo && leadInfo.redirectNotes &&  leadInfo.redirectNotes.length>0)">
       <div>
         <div *ngFor="let note of leadInfo.redirectNotes;let i=index" class="allNotesList">
           <div class="notesListSection" *ngIf="note.note">
@@ -102,7 +102,7 @@
 
     </div>
     <div id="myDiv" class="my-2heightlimitSalesVerified label"
-      *ngIf="(leadNotes &&  leadNotes.length == 0) && (leadInfo.redirectNotes && leadInfo.redirectNotes.length == 0)">
+      *ngIf="(leadNotes &&  leadNotes.length == 0) && (leadInfo && leadInfo.redirectNotes && leadInfo.redirectNotes.length == 0)">
       <div class="notesListSection ml-2">
         No Remarks Added
       </div>

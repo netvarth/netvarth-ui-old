@@ -32,7 +32,7 @@ export class ViewLeadQnrComponent implements OnInit {
   crifDetails: any;
   crifScore: any;
   showCrifSection = false;
-  showCrifSectionTemp:boolean=false;
+  showCrifSectionTemp: boolean = false;
   crifHTML: any;
   showPdfIcon: boolean;
   crifDialog: any;
@@ -111,10 +111,10 @@ export class ViewLeadQnrComponent implements OnInit {
   tempType: any;
   tempInquiryId: any;
   tempCrifDetails: any = [];
-  kycFilesCount=0;
+  kycFilesCount = 0;
   counter = 0;
   errorInfo: any;
-  disbaleFielInput:boolean=false;
+  disbaleFielInput: boolean = false;
   leadNotes: any;
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -155,7 +155,7 @@ export class ViewLeadQnrComponent implements OnInit {
     _this.questionaire = {};
     _this.fetchLeadInfo(_this.leadUID).then(
       (leadInfo: any) => {
-        console.log('leadInfo',leadInfo)
+        console.log('leadInfo', leadInfo)
         _this.leadInfo = leadInfo; // Setting Lead information.
         _this.leadNotes = _this.leadInfo.notes.sort().reverse();
         if (_this.leadInfo && _this.leadInfo.customer && this.leadInfo.customer.phoneNo) {
@@ -203,14 +203,14 @@ export class ViewLeadQnrComponent implements OnInit {
           _this.crmService.getkyc(leadInfo.uid).subscribe(
             (kycInfo: any) => {
               _this.kycInfo = kycInfo;
-              if(_this.leadInfo.isRejected){
+              if (_this.leadInfo.isRejected) {
                 _this.initApplicantForm(kycInfo);
               }
               kycInfo.forEach((item) => {
-                if(leadInfo && leadInfo.status && leadInfo.status.name === 'Credit Score Generated' ){
+                if (leadInfo && leadInfo.status && leadInfo.status.name === 'Credit Score Generated') {
                   _this.headerName = 'Sales Field Verification';
                 }
-                else{
+                else {
                   _this.headerName = 'Login';
                 }
                 _this.getCrifInquiryVerification(item);
@@ -221,21 +221,21 @@ export class ViewLeadQnrComponent implements OnInit {
         } else {
           if (leadInfo && leadInfo.status && leadInfo.status.name === 'Login Verified') {
             _this.headerName = 'Credit Recommendation';
-            if(_this.leadInfo.isRejected){
+            if (_this.leadInfo.isRejected) {
               _this.crmService.getkyc(leadInfo.uid).subscribe(
                 (kycInfo: any) => {
                   _this.kycInfo = kycInfo;
-                  if(_this.leadInfo.isRejected){
+                  if (_this.leadInfo.isRejected) {
                     _this.initApplicantForm(kycInfo);
                   }
                 }
               )
             }
           }
-          else if (leadInfo && leadInfo.status && (leadInfo.status.name === 'Credit Recommendation' || leadInfo.status.name==='Loan Sanction')) {
-             _this.headerName = leadInfo.status.aliasName;
+          else if (leadInfo && leadInfo.status && (leadInfo.status.name === 'Credit Recommendation' || leadInfo.status.name === 'Loan Sanction')) {
+            _this.headerName = leadInfo.status.aliasName;
             _this.crmService.getkyc(leadInfo.uid).subscribe(
-              (kycInfo:any) => {
+              (kycInfo: any) => {
                 _this.initApplicantForm(kycInfo);
                 kycInfo.forEach((item) => {
                   _this.getCrifInquiryVerification(item);
@@ -262,10 +262,10 @@ export class ViewLeadQnrComponent implements OnInit {
     this.initLead();
     this.disableField()
   }
-  disableField(){
-    if(this.tempType && (this.tempType==='Loan Sanction')){
+  disableField() {
+    if (this.tempType && (this.tempType === 'Loan Sanction')) {
       //|| this.tempType==='Rejected'
-      this.disbaleFielInput=true;
+      this.disbaleFielInput = true;
     }
   }
 
@@ -297,15 +297,15 @@ export class ViewLeadQnrComponent implements OnInit {
               this.crmService.deleteCoApplicant(applicantInfo['applicantid'], this.leadInfo.uid).subscribe((response) => {
                 if (response) {
                   this.applicantsInfo = {};
-                  if(this.tempType ==='Loan Sanction'){
+                  if (this.tempType === 'Loan Sanction') {
                     return false;
                   }
-                  else if(this.tempType ==='Rejected'){
+                  else if (this.tempType === 'Rejected') {
                     return false;
                   }
-                  else{
+                  else {
                     this.updateKyc();
-            
+
                   }
                   // this.initLead();
                   this.snackbarService.openSnackBar('Successfully removed Co-Applicant');
@@ -330,15 +330,15 @@ export class ViewLeadQnrComponent implements OnInit {
               if (this.applicants) {
                 const index = this.applicants.indexOf(applicantInfo['applicantid']);
                 this.applicants.splice(index, 1);
-                if(this.tempType ==='Loan Sanction'){
+                if (this.tempType === 'Loan Sanction') {
                   return false;
                 }
-                else if(this.tempType ==='Rejected'){
+                else if (this.tempType === 'Rejected') {
                   return false;
                 }
-                else{
+                else {
                   this.updateKyc();
-          
+
                 }
                 this.snackbarService.openSnackBar('Successfully removed Co-Applicant');
               }
@@ -363,15 +363,15 @@ export class ViewLeadQnrComponent implements OnInit {
             this.crmService.deleteCoApplicant(applicantInfo['applicantid'], this.leadInfo.uid).subscribe((response) => {
               if (response) {
                 this.applicantsInfo = {};
-                if(this.tempType ==='Loan Sanction'){
+                if (this.tempType === 'Loan Sanction') {
                   return false;
                 }
-                else if(this.tempType ==='Rejected'){
+                else if (this.tempType === 'Rejected') {
                   return false;
                 }
-                else{
+                else {
                   this.updateKyc();
-          
+
                 }
                 // this.initLead();
                 this.snackbarService.openSnackBar('Successfully removed Co-Applicant');
@@ -433,8 +433,8 @@ export class ViewLeadQnrComponent implements OnInit {
         if (file) {
           await _this.uploadFiles(file['file'], s3UrlObj.url).then(
             () => {
-                resolve(true);
-              }
+              resolve(true);
+            }
           );
         } else {
           resolve(true);
@@ -467,13 +467,24 @@ export class ViewLeadQnrComponent implements OnInit {
       }
     })
   }
-  uploadFiles(file, url) {
+  uploadFiles(file, url, s3Obj?) {
     const _this = this;
     return new Promise(function (resolve, reject) {
       _this.providerServices.videoaudioS3Upload(file, url)
         .subscribe(() => {
           resolve(true);
         }, error => {
+          if (s3Obj) {
+            delete _this.questionAnswers.filestoUpload[s3Obj.labelName][s3Obj.document];
+          }
+          _this.fileLoading = false;
+          console.log("this.questionAnswers.answers", _this.questionAnswers.answers.answerLine[0].answer.fileUpload)
+          _this.questionAnswers.answers.answerLine[0].answer.fileUpload.forEach(element => {
+            if (element.caption && element.caption == s3Obj.document) {
+              _this.questionAnswers.answers.answerLine[0].answer.fileUpload.splice(
+                _this.questionAnswers.answers.answerLine[0].answer.fileUpload.indexOf(element), 1)
+            }
+          });
           _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           resolve(false);
         });
@@ -564,89 +575,89 @@ export class ViewLeadQnrComponent implements OnInit {
     if (serviceCall === 'Delete') {
       this.api_loading = true;
       // this.afterUpdate = 'UpdateServiceCall'
-      if(this.tempType ==='Loan Sanction'){
+      if (this.tempType === 'Loan Sanction') {
         return false;
       }
-      else if(this.tempType ==='Rejected'){
+      else if (this.tempType === 'Rejected') {
         return false;
       }
-      else{
+      else {
         this.updateKyc(serviceCall);
 
       }
-      
-    } else if (serviceCall === 'InputFileUpload'){
-      if(this.tempType ==='Loan Sanction'){
+
+    } else if (serviceCall === 'InputFileUpload') {
+      if (this.tempType === 'Loan Sanction') {
         return false;
       }
-      else if(this.tempType ==='Rejected'){
+      else if (this.tempType === 'Rejected') {
         return false;
       }
-      else{
-          this.api_loading = true;
-          this.fileLoading = true;
-          // this.filesToUpload = null;
-          const uploadedFile = [];
-          console.log("Files To Upload:", this.filesToUpload);
-          let fileData = this.getFileInfo(applicant.imageMode, applicant.files);
-          console.log("Filedata",fileData);
-          for(let i=0; i< fileData.length; i++) {
-            if (!fileData[i]['driveId']) {
-              fileData[i]['uid'] = this.leadUID;
-              fileData[i]['action'] = 'add';
-              fileData[i]['order'] = ++this.kycFilesCount;
-              uploadedFile.push(fileData[i]);
-            }
+      else {
+        this.api_loading = true;
+        this.fileLoading = true;
+        // this.filesToUpload = null;
+        const uploadedFile = [];
+        console.log("Files To Upload:", this.filesToUpload);
+        let fileData = this.getFileInfo(applicant.imageMode, applicant.files);
+        console.log("Filedata", fileData);
+        for (let i = 0; i < fileData.length; i++) {
+          if (!fileData[i]['driveId']) {
+            fileData[i]['uid'] = this.leadUID;
+            fileData[i]['action'] = 'add';
+            fileData[i]['order'] = ++this.kycFilesCount;
+            uploadedFile.push(fileData[i]);
           }
-          console.log(uploadedFile);
-          // this.filesToUpload = uploadedFile;
-          // this.afterUpdate = 'UpdateServiceCall';
-          this.uploadKycFile(uploadedFile).then(
-            (file)=> {
-              if (file) {
-                if (applicant.imageMode === 'kyc1') {
-                  _this.applicantsInfo[applicantIndex].validationIds[0].attachments.push(file[0]);
-                  this.updateKyc(serviceCall);
-                } else if (applicant.imageMode === 'kyc2') {
-                  _this.applicantsInfo[applicantIndex].validationIds[1].attachments.push(file[0]);
-                  this.updateKyc(serviceCall);
-                } else if (applicant.imageMode === 'kyc3') {
-                  _this.applicantsInfo[applicantIndex].validationIds[2].attachments.push(file[0]);
-                  this.updateKyc(serviceCall);
-                } else {
-                  console.log('_this.applicantsInfo[applicantIndex].otherAttachments',_this.applicantsInfo[applicantIndex].otherAttachments)
-                  if (!_this.applicantsInfo[applicantIndex].otherAttachments) {
-                    _this.applicantsInfo[applicantIndex].otherAttachments = [];
-                  }
-                  _this.applicantsInfo[applicantIndex].otherAttachments.push(file[0]);
-                  this.updateKyc(serviceCall);
-                }            
+        }
+        console.log(uploadedFile);
+        // this.filesToUpload = uploadedFile;
+        // this.afterUpdate = 'UpdateServiceCall';
+        this.uploadKycFile(uploadedFile).then(
+          (file) => {
+            if (file) {
+              if (applicant.imageMode === 'kyc1') {
+                _this.applicantsInfo[applicantIndex].validationIds[0].attachments.push(file[0]);
+                this.updateKyc(serviceCall);
+              } else if (applicant.imageMode === 'kyc2') {
+                _this.applicantsInfo[applicantIndex].validationIds[1].attachments.push(file[0]);
+                this.updateKyc(serviceCall);
+              } else if (applicant.imageMode === 'kyc3') {
+                _this.applicantsInfo[applicantIndex].validationIds[2].attachments.push(file[0]);
+                this.updateKyc(serviceCall);
+              } else {
+                console.log('_this.applicantsInfo[applicantIndex].otherAttachments', _this.applicantsInfo[applicantIndex].otherAttachments)
+                if (!_this.applicantsInfo[applicantIndex].otherAttachments) {
+                  _this.applicantsInfo[applicantIndex].otherAttachments = [];
+                }
+                _this.applicantsInfo[applicantIndex].otherAttachments.push(file[0]);
+                this.updateKyc(serviceCall);
               }
             }
-          );
+          }
+        );
       }
     }
   }
   uploadKycFile(fileToUpload) {
-    const _this=this;
-    return new Promise(function(resolve) {
+    const _this = this;
+    return new Promise(function (resolve) {
       _this.leadsService.uploadKycFile(fileToUpload).subscribe(
-        (result)=> {
+        (result) => {
           fileToUpload[0]['driveId'] = result[0]['driveId'];
           delete fileToUpload[0]['action'];
-          console.log('fileToUpload[0]',fileToUpload[0])
+          console.log('fileToUpload[0]', fileToUpload[0])
           console.log("Result", result);
           _this.uploadAudioVideoKYC(result, fileToUpload[0]).then(() => {
             _this.api_loading = false;
             _this.fileLoading = false;
             resolve(fileToUpload);
-          }, (error)=> {
+          }, (error) => {
             _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             _this.api_loading = false;
             _this.fileLoading = false;
             resolve(false);
           });
-        }, (error)=> {
+        }, (error) => {
           _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           _this.api_loading = false;
           _this.fileLoading = false;
@@ -654,7 +665,7 @@ export class ViewLeadQnrComponent implements OnInit {
         }
       )
     })
-    
+
   }
   /**
    * Back to previous page
@@ -682,14 +693,15 @@ export class ViewLeadQnrComponent implements OnInit {
     return new Promise(async function (resolve, reject) {
       if (s3UrlObj.urls && s3UrlObj.urls.length > 0) {
         for (const s3Obj of s3UrlObj.urls) {
-          postData['urls'].push({ uid: s3Obj.uid, labelName: s3Obj.labelName });
-
           const file = _this.questionAnswers.filestoUpload[s3Obj.labelName][s3Obj.document];
-          await _this.uploadFiles(file, s3Obj.url).then(
-            () => {
+          await _this.uploadFiles(file, s3Obj.url, s3Obj).then(
+            (data) => {
               count++;
-              if (count === s3UrlObj.urls.length) {
-                resolve(postData);
+              if (data) {
+                postData['urls'].push({ uid: s3Obj.uid, labelName: s3Obj.labelName });
+                if (count === s3UrlObj.urls.length) {
+                  resolve(postData);
+                }
               }
             }
           );
@@ -736,9 +748,9 @@ export class ViewLeadQnrComponent implements OnInit {
   submitQuestionnaire(uuid, type?) {
     const _this = this;
     const dataToSend: FormData = new FormData();
-    let questionAnswer:any;
-    if(this.questionAnswers && this.questionAnswers.answers){
-      questionAnswer= this.questionAnswers.answers;
+    let questionAnswer: any;
+    if (this.questionAnswers && this.questionAnswers.answers) {
+      questionAnswer = this.questionAnswers.answers;
     }
     const blobpost_Data = new Blob([JSON.stringify(questionAnswer)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
@@ -846,7 +858,7 @@ export class ViewLeadQnrComponent implements OnInit {
               this.submitQuestionnaire(this.leadInfo.uid);
               this.snackbarService.openSnackBar('Updated successfully');
             } else {
-              if(data){
+              if (data) {
                 this.errorInfo = data.map(function (a) { return a.questionField; });
               }
               this.api_loading_UpdateKycProceed = false;
@@ -864,9 +876,9 @@ export class ViewLeadQnrComponent implements OnInit {
               this.submitQuestionnaire(this.leadInfo.uid);
               this.snackbarService.openSnackBar('Updated successfully');
             } else {
-              if(data){
+              if (data) {
                 this.errorInfo = data.map(function (a) { return a.questionField; });
-              }              
+              }
               this.api_loading_UpdateKycProceed = false;
             }
             this.sharedFunctions.sendMessage({ type: 'qnrValidateError', value: data });
@@ -965,8 +977,8 @@ export class ViewLeadQnrComponent implements OnInit {
     this.questionaire = {};
     this.providerServices.getActiveQuestionaire(this.leadInfo.uid).subscribe(
       (questionaire: any) => {
-        console.log('questionaire',questionaire)
-        console.log('this.leadInfo.questionnaires',this.leadInfo.questionnaires)
+        console.log('questionaire', questionaire)
+        console.log('this.leadInfo.questionnaires', this.leadInfo.questionnaires)
         this.questionaire = questionaire;
         if (this.questionaire.questionAnswers) {
           this.questionAnswers = this.questionaire.questionAnswers;
@@ -1001,8 +1013,8 @@ export class ViewLeadQnrComponent implements OnInit {
       this.crmService.addLeadNotes(this.leadInfo.uid, createNoteData).subscribe((response: any) => {
         this.notes = '';
         this.initLead();
-          this.api_loadingNotes = false;
-          this.remarksDisable = false;
+        this.api_loadingNotes = false;
+        this.remarksDisable = false;
         this.snackbarService.openSnackBar('Remarks added successfully');
       }, (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
@@ -1055,24 +1067,24 @@ export class ViewLeadQnrComponent implements OnInit {
   }
   showCrifscoreSection(i) {
     console.log(this.counter++);
-    if((this.counter) %2===0){
+    if ((this.counter) % 2 === 0) {
       setTimeout(() => {
         if (this.generateCrifText === 'Verify CRIF Score of') {
           this.showCrifSection = !this.showCrifSection;
-          this.showCrifSectionTemp=false;
+          this.showCrifSectionTemp = false;
         }
       }, projectConstants.TIMEOUT_DELAY);
     }
-    else{
-      this.showCrifSectionTemp=true;
+    else {
+      this.showCrifSectionTemp = true;
       setTimeout(() => {
         if (this.generateCrifText === 'Verify CRIF Score of') {
           this.showCrifSection = !this.showCrifSection;
-          this.showCrifSectionTemp=false;
+          this.showCrifSectionTemp = false;
         }
       }, projectConstants.TIMEOUT_DELAY);
     }
-    
+
   }
   getCrifInquiryVerification(kycInfoList) {
     const _this = this;
@@ -1097,7 +1109,7 @@ export class ViewLeadQnrComponent implements OnInit {
           }
         }, ((error: any) => {
           if (this.leadInfo && this.leadInfo.status) {
-            if (this.leadInfo.status.name === 'Credit Score Generated' || this.leadInfo.status.name === 'Sales Verified'||this.leadInfo.status.name==='Loan Sanction') {
+            if (this.leadInfo.status.name === 'Credit Score Generated' || this.leadInfo.status.name === 'Sales Verified' || this.leadInfo.status.name === 'Loan Sanction') {
               this.generateCrifText = 'Sorry you have no CRIF score of';
             }
           }
@@ -1126,17 +1138,17 @@ export class ViewLeadQnrComponent implements OnInit {
 
 
   uploadFile(input) {
-    console.log('input',input)
-    console.log('this.tempType',this.tempType)
-    if(this.tempType==='Loan Sanction'){
+    console.log('input', input)
+    console.log('this.tempType', this.tempType)
+    if (this.tempType === 'Loan Sanction') {
       this.fileLoading = false;
       return false;
     }
-    else if(this.tempType==='Rejected'){
+    else if (this.tempType === 'Rejected') {
       this.fileLoading = false;
       return false;
     }
-    else{
+    else {
       this.fileLoading = true;
       const _this = this;
       const fileString = [{
@@ -1183,7 +1195,7 @@ export class ViewLeadQnrComponent implements OnInit {
         }
       )
     }
-    
+
   }
   reject(uid) {
     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
@@ -1196,7 +1208,7 @@ export class ViewLeadQnrComponent implements OnInit {
       }
     })
     dialogRef.afterClosed().subscribe((response: any) => {
-      console.log('response',response)
+      console.log('response', response)
       if (response) {
         let leadType: string = '';
         if (this.leadInfo && this.leadInfo.status && this.leadInfo.status.name === 'KYC') {
@@ -1226,12 +1238,12 @@ export class ViewLeadQnrComponent implements OnInit {
       }
     })
     dialogRef.afterClosed().subscribe((response: any) => {
-      console.log('response',response)
+      console.log('response', response)
       if (response) {
         if (response && response.note !== '') {
           this.crmService.retainRejectedLead(this.leadInfo.uid, response).subscribe((response) => {
-            console.log("Response :",response);
-            if(response){
+            console.log("Response :", response);
+            if (response) {
               this.snackbarService.openSnackBar('Lead retained successfully', { 'panelClass': 'snackbarnormal' });
             }
             this.router.navigate(['provider', 'crm']);
@@ -1254,14 +1266,14 @@ export class ViewLeadQnrComponent implements OnInit {
       }
     })
     dialogRef.afterClosed().subscribe((response: any) => {
-      console.log('response',response)
+      console.log('response', response)
       if (response) {
         if (response && response.note !== '') {
           this.crmService.addLeadNotes(this.leadInfo.uid, response).subscribe((response: any) => {
             this.notes = '';
             this.initLead();
-              this.api_loadingNotes = false;
-              this.remarksDisable = false;
+            this.api_loadingNotes = false;
+            this.remarksDisable = false;
             this.snackbarService.openSnackBar('Remarks added successfully');
           }, (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
@@ -1271,12 +1283,12 @@ export class ViewLeadQnrComponent implements OnInit {
     })
   }
 
- 
+
   editable(data) {
   }
-  ProceedStatusLoanSanction(){
-    const _this=this;
-    return new Promise((resolve,reject)=>{
+  ProceedStatusLoanSanction() {
+    const _this = this;
+    return new Promise((resolve, reject) => {
       _this.crmService.proceedToLoginVerified(_this.leadInfo.status.id, _this.leadInfo.uid).subscribe((response) => {
         _this.api_loading_UpdateKycProceed = true;
         _this.snackbarService.openSnackBar('Updated successfully');
