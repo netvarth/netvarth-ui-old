@@ -208,7 +208,7 @@ export class LoansComponent implements OnInit {
   }
 
   loadLoans(event) {
-    this.getTotalLoansCount()
+    // this.getTotalLoansCount()
     let api_filter = this.cdlservice.setFiltersFromPrimeTable(event);
     if (this.statusDropdownClicked) {
       if (this.statusDisplayName && this.statusDisplayName.name) {
@@ -253,11 +253,12 @@ export class LoansComponent implements OnInit {
 
   statusChange(event) {
     this.statusDropdownClicked = true;
+    let api_filter = {}
     if (event.value.name == 'All') {
-      this.getLoans();
+      api_filter['from'] = 0;
+      api_filter['count'] = 10;
     }
     else {
-      let api_filter = {}
       if (event.value.name == 'Rejected') {
         api_filter['applicationStatus-eq'] = event.value.name;
       }
@@ -269,8 +270,11 @@ export class LoansComponent implements OnInit {
         api_filter['spInternalStatus-eq'] = event.value.name;
         api_filter['applicationStatus-neq'] = 'Rejected';
       }
-      this.getLoansByFilter(api_filter);
     }
+    this.getTotalLoansCount(api_filter);
+    api_filter['from'] = 0;
+    api_filter['count'] = 10;
+    this.getLoansByFilter(api_filter);
   }
 
   getLoans() {

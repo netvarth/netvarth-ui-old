@@ -32,7 +32,10 @@ export class FilterComponent implements OnInit {
         this.filter[element.field + '-' + element.filterType] = '';
       });
     }
-    this.filterEvent.emit({})
+    let api_filter = {};
+    api_filter['from'] = 0;
+    api_filter['count'] = 10;
+    this.filterEvent.emit(api_filter);
   }
 
   applyFilters() {

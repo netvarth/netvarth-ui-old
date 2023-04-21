@@ -260,6 +260,7 @@ export class IvrComponent implements OnInit {
     this.getIvrAssignedCallsCount();
     let api_filter = this.ivrService.setFiltersFromPrimeTable(event);
     api_filter['userId-eq'] = this.user.id;
+    api_filter['callStatus-neq'] = "callCompleted";
     if (api_filter) {
       this.getIvrCallsCount(api_filter).then((count) => {
         this.assignedCallsCount = count;
@@ -579,7 +580,8 @@ export class IvrComponent implements OnInit {
 
   getIvrAssignedCallsCount() {
     let filter = {
-      "userId-eq": this.user.id
+      "userId-eq": this.user.id,
+      "callStatus-neq": "callCompleted"
     }
     this.ivrService.getIvrCallsCount(filter).subscribe((data: any) => {
       this.assignedCallsCount = data;

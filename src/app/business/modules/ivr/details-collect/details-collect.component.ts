@@ -92,6 +92,8 @@ export class DetailsCollectComponent implements OnInit {
   getCustomerCallHistory(id) {
     let api_filter = {};
     api_filter['consumerId-eq'] = id;
+    api_filter['callStatus-eq'] = "callCompleted";
+
     this.ivrService.getAllIvrCallsbyFilter(api_filter).subscribe((data) => {
       this.customerCallHistory = data;
     });
@@ -181,6 +183,7 @@ export class DetailsCollectComponent implements OnInit {
     };
     this.router.navigate(['provider', 'ivr', 'details', uid], navigationExtras)
   }
+
 
 
   callDetails(id) {

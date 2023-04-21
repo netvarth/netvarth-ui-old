@@ -97,8 +97,7 @@ export class TasksComponent implements OnInit {
     ]
 
 
-    this.getNewStatusCount();
-    this.getCompletedStatusCount();
+
   }
 
   ngOnInit() {
@@ -108,6 +107,8 @@ export class TasksComponent implements OnInit {
     this.getLocationList().then(() => {
       this.selected_location = this.locations[0];
       const filter = this.setFilterWithPreDefinedValues();
+      this.getNewStatusCount();
+      this.getCompletedStatusCount();
       _this.getTotalTaskActivityCount(filter).then(
         (count: any) => {
           this.api_loading = false;
@@ -265,10 +266,13 @@ export class TasksComponent implements OnInit {
   handleTaskStatus(statusValue: any) {
     let filter = this.setFilterWithPreDefinedValues();
     filter['status-eq'] = statusValue;
-    this.getTotalTaskActivity(filter)
     this.getTotalTaskActivityCount(filter).then((count: any) => {
       this.taskCount = count;
     })
+    filter['from'] = 0;
+    filter['count'] = 10;
+    this.getTotalTaskActivity(filter)
+
   }
 
   getTotalTaskActivity(filter) {
@@ -825,12 +829,15 @@ export class TasksComponent implements OnInit {
 
   setFilterWithPreDefinedValues() {
     let api_filter = {};
-    if (this.statusFilter && this.statusFilter.id) {
-      api_filter['status-eq'] = this.statusFilter.id;
-    }
+
     if (this.selected_location && this.selected_location.id) {
       api_filter['location-eq'] = this.selected_location.id;
     }
+
+    if (this.statusFilter && this.statusFilter.id) {
+      api_filter['status-eq'] = this.statusFilter.id;
+    }
+
     api_filter['isSubTask-eq'] = false;
     return api_filter;
   }

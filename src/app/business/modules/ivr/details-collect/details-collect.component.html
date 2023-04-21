@@ -123,11 +123,15 @@
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end" *ngIf="callData && callData.questionnaires && callData.questionnaires[0] && callData.questionnaires[0].questionAnswers">
               <a class="btn btn-primary" (click)="editQnr()">
                 <span *ngIf="!showEditQnr"><i class="fa fa-edit"></i>&nbsp;Edit</span>
                 <span *ngIf="showEditQnr"><i class="fa fa-eye"></i>&nbsp;View</span>
               </a>
+            </div>
+            <div class="text-center"
+              *ngIf="callData && callData.questionnaires && !callData.questionnaires[0]">
+              Questionnare Not Filled
             </div>
             <div class="mt-3">
 
@@ -172,7 +176,7 @@
               <div *ngIf="customerCallHistory && customerCallHistory.length>0">
                 <div class="card my-1 p-1 py-2" *ngFor="let call of customerCallHistory">
                   <div class="row px-1">
-                    <div class="col-md-6 col-xs-6 mt-2">
+                    <div class="col-md-6 col-xs-6 mt-2" (click)="viewCall(call.uid)">
                       <div class="font-weight-bold">
                         <!-- <span *ngIf="call && call.consumerPhone && call.consumerPhone.countryCode">
                                                           {{call.consumerPhone.countryCode}}
@@ -188,7 +192,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-6 col-xs-6 mt-2">
+                    <div class="col-md-6 col-xs-6 mt-2" (click)="viewCall(call.uid)">
                       <div class="font-weight-bold">
                         <span>
                           <span *ngIf="call && call.userName">{{call.userName}}</span>
@@ -200,7 +204,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-12 col-xs-12 no-padding">
+                    <div class="col-md-12 col-xs-12 no-padding" (click)="viewCall(call.uid)">
                       <div class="font-weight-bold col-md-6 col-xs-6">
                         <span *ngIf="call && call.createdDate">{{call.createdDate}}</span>
                       </div>
