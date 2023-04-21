@@ -244,11 +244,13 @@ export class DealerComponent implements OnInit {
 
   statusChange(event) {
     this.statusDropdownClicked = true;
+    let api_filter = {}
+    api_filter['from'] = 0;
+    api_filter['count'] = 10;
     if (event.value.name == 'All') {
-      this.getDealers();
+      this.getDealersByFilter(api_filter);
     }
     else {
-      let api_filter = {}
       api_filter['spInternalStatus-eq'] = event.value.name;
       this.getDealersByFilter(api_filter);
     }

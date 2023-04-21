@@ -123,14 +123,14 @@
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="d-flex justify-content-end" *ngIf="callData && callData.questionnaires && callData.questionnaires[0] && callData.questionnaires[0].questionAnswers">
+            <div class="d-flex justify-content-end"
+              *ngIf="callData && callData.questionnaires && callData.questionnaires[0] && callData.questionnaires[0].questionAnswers">
               <a class="btn btn-primary" (click)="editQnr()">
                 <span *ngIf="!showEditQnr"><i class="fa fa-edit"></i>&nbsp;Edit</span>
                 <span *ngIf="showEditQnr"><i class="fa fa-eye"></i>&nbsp;View</span>
               </a>
             </div>
-            <div class="text-center"
-              *ngIf="callData && callData.questionnaires && !callData.questionnaires[0]">
+            <div class="text-center" *ngIf="callData && callData.questionnaires && !callData.questionnaires[0]">
               Questionnare Not Filled
             </div>
             <div class="mt-3">
@@ -267,7 +267,6 @@
           </mat-expansion-panel>
         </mat-accordion>
       </div>
-
     </div>
   </div>
 </div>
