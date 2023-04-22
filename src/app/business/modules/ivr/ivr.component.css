@@ -280,7 +280,7 @@ input[type="checkbox"]:checked {
   } */
 
   ::ng-deep .callsTabsView .p-tabview-nav-link {
-    width: 32vw !important;
+    width: 33vw !important;
   }
 
   .tabview-text {

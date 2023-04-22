@@ -218,7 +218,7 @@
               [totalRecords]="callBacksCount" responsiveLayout="stack" styleClass="p-datatable-customers"
               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
               <ng-template pTemplate="body" let-call>
-                <div class="card mt-2">
+                <div class="card my-1 p-1 py-2">
                   <div class="row px-1">
                     <div class="col-md-3 col-xs-5 mt-2" (click)="viewCall(call.uid)">
                       <div class="font-weight-bold">
@@ -276,6 +276,11 @@
                             && call.questionnaires[0].questionAnswers  && (call.callStatus && call.callStatus!='callCompleted')"><i
                               class="fa fa-check"></i>Complete
                           </button>
+
+                          <!-- <button type="button" mat-menu-item class="font-weight-600" (click)="getRecordingFile(call.recordingFileName)"
+                            *ngIf="(call.callStatus && call.callStatus=='voicemail')"><i class="fa fa-play"></i>Play
+                          </button> -->
+
                         </mat-menu>
                       </div>
                     </div>

@@ -148,6 +148,7 @@ export class IvrComponent implements OnInit {
   getIvrAssignedCalls() {
     let api_filter = {}
     api_filter['userId-eq'] = this.user.id;
+    api_filter['callStatus-neq'] = "callCompleted";
     this.getIvrCallsbyFilter(api_filter).then((data) => {
       this.assignedCalls = data;
     });
@@ -155,7 +156,8 @@ export class IvrComponent implements OnInit {
 
   getIvrCallBacks() {
     let api_filter = {}
-    api_filter['tokenRaised-eq'] = true;
+    api_filter['userId-eq'] = null;
+    // api_filter['tokenRaised-eq'] = true;
     this.getIvrCallsbyFilter(api_filter).then((data) => {
       this.callBackCalls = data;
     });
@@ -163,7 +165,8 @@ export class IvrComponent implements OnInit {
 
   getIvrCallBacksCount() {
     let api_filter = {}
-    api_filter['tokenRaised-eq'] = true;
+    api_filter['userId-eq'] = null;
+    // api_filter['tokenRaised-eq'] = true;
     this.getIvrCallsCount(api_filter).then((count) => {
       this.callBacksCount = count;
     });
@@ -274,7 +277,9 @@ export class IvrComponent implements OnInit {
   loadCallBackCalls(event) {
     this.getIvrCallBacks();
     let api_filter = this.ivrService.setFiltersFromPrimeTable(event);
-    api_filter['tokenRaised-eq'] = true;
+    // api_filter['tokenRaised-eq'] = true;
+    api_filter['userId-eq'] = null;
+
     if (api_filter) {
       this.getIvrCallsCount(api_filter).then((count) => {
         this.callBacksCount = count;
@@ -294,6 +299,15 @@ export class IvrComponent implements OnInit {
       });
   }
 
+
+  getRecordingFile(filename) {
+    this.ivrService.getRecordingFile(filename).subscribe((data: any) => {
+      console.log("Recording Data",data)
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
 
   searchCustomer(value) {
     let api_filter = {};

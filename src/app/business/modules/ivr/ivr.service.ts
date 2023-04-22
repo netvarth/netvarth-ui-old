@@ -81,6 +81,12 @@ export class IvrService {
     return this.servicemeta.httpPost(url, null);
   }
 
+  getRecordingFile(filename)
+  {
+    const url = 'provider/ivr/file/'+filename;
+    return this.servicemeta.httpGet(url, null);
+  }
+
   unassignToCall(data) {
     const url = 'provider/ivr/unassign';
     return this.servicemeta.httpPut(url, data);
