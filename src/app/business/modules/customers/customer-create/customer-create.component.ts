@@ -928,7 +928,8 @@ export class CustomerCreateComponent implements OnInit {
     else if (this.source === "ivr") {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          src: 'ivr'
+          src: 'ivr',
+          from: this.action
         }
       };
       this.router.navigate(['/provider/customers/' + data], navigationExtras);

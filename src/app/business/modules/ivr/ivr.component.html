@@ -92,7 +92,7 @@
     </div>
   </div>
 
-  <div class="col-md-6 mt-2 px-1 d-none d-sm-block" *ngIf="user && user.adminPrivilege">
+  <div class="col-md-6 mt-2 px-1 d-none d-sm-block" *ngIf="user  && user.adminPrivilege">
     <div class="card text-center p-2 dashboard-card">
       <div class="row mx-0 p-0">
         <span class="font-weight-bold">Analytics</span>
@@ -272,7 +272,7 @@
                           </button>
 
                           <button type="button" mat-menu-item class="font-weight-600" (click)="markAsComplete(call.uid)"
-                            *ngIf="call.questionnaires && call.questionnaires[0] 
+                            *ngIf="call.questionnaires && call.questionnaires[0]
                             && call.questionnaires[0].questionAnswers  && (call.callStatus && call.callStatus!='callCompleted')"><i
                               class="fa fa-check"></i>Complete
                           </button>
@@ -323,7 +323,7 @@
                       <span *ngIf="onGoingCall[0] && onGoingCall[0].language" class="text-primary font-weight-600">{{onGoingCall[0].language}}</span>
                     </div>
                   </div>
-  
+
                   <div class="col-md-3 col-xs-6 mt-2">
                     <div class="font-weight-bold">
                       <span>
@@ -335,28 +335,28 @@
                       <span [class]="'status-' + onGoingCall[0].callStatus" class="text-capitalize">{{onGoingCall[0].callStatus}}</span>
                     </div>
                   </div>
-  
+
                   <div class="col-md-6 col-xs-12 mt-2">
                     <div class="d-flex text-center">
                       <button type="button" class="btn btn-light bg-light mr-2 font-weight-600" (click)="openUsersPopup(onGoingCall[0].uid)"
                         *ngIf="onGoingCall[0] && !onGoingCall[0].userId" tooltipPosition="top" pTooltip="Assign"><img width="20"
                           src="./assets/images/ivr/unassign.png">
                       </button>
-  
+
                       <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="getCallBack(onGoingCall[0].uid)"
                         tooltipPosition="top" pTooltip="CallBack"><img width="20" src="./assets/images/ivr/callback.png">
                       </button>
-  
+
                       <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="unassignToCall(onGoingCall[0].uid)"
                         *ngIf="onGoingCall[0] && onGoingCall[0].userId" tooltipPosition="top" pTooltip="Unassign"><img width="20"
                           src="./assets/images/ivr/unassign.png">
                       </button>
-  
+
                       <button type="button" class="btn btn-light bg-light mr-2 font-weight-600 text-light"
                         (click)="markAsComplete(onGoingCall[0].uid)" tooltipPosition="top" pTooltip="Complete"><i class="fa fa-check text-grey"
                           aria-hidden="true"></i>
                       </button>
-  
+
                       <button type="button" class="btn btn-light bg-light font-weight-600" (click)="viewCall(onGoingCall[0].uid)"
                         tooltipPosition="top" pTooltip="View"><i class="fa fa-eye text-grey" aria-hidden="true"></i>
                       </button>
@@ -453,7 +453,7 @@
                             class="text-primary font-weight-600">{{call.language}}</span>
                         </div>
                       </div>
-  
+
                       <div class="col-md-3 col-xs-6 mt-2">
                         <div class="font-weight-bold">
                           <span>
@@ -465,29 +465,29 @@
                           <span [class]="'status-' + call.callStatus" class="text-capitalize">{{call.callStatus}}</span>
                         </div>
                       </div>
-  
+
                       <div class="col-md-6 col-xs-12 mt-2">
                         <div class="d-flex text-center">
                           <button type="button" class="btn btn-light mr-2 font-weight-600"
                             (click)="openUsersPopup(call.uid)" *ngIf="call && !call.userId" tooltipPosition="top"
                             pTooltip="Assign"><img width="20" src="./assets/images/ivr/unassign.png">
                           </button>
-  
+
                           <button type="button" class="btn btn-light mr-2 font-weight-600" (click)="getCallBack(call.uid)"
                             tooltipPosition="top" pTooltip="CallBack"><img width="20"
                               src="./assets/images/ivr/callback.png">
                           </button>
-  
+
                           <button type="button" class="btn btn-light mr-2 font-weight-600"
                             (click)="unassignToCall(call.uid)" *ngIf="call && call.userId" tooltipPosition="top"
                             pTooltip="Unassign"><img width="20" src="./assets/images/ivr/unassign.png">
                           </button>
-  
+
                           <button type="button" class="btn btn-light bg-light mr-2 font-weight-600 text-light"
                             (click)="markAsComplete(call.uid)" tooltipPosition="top" pTooltip="Complete"><i
                               class="fa fa-check text-grey" aria-hidden="true"></i>
                           </button>
-  
+
                           <button type="button" class="btn btn-light bg-light font-weight-600"
                             (click)="viewCall(call.uid)" tooltipPosition="top" pTooltip="View"><i
                               class="fa fa-eye text-grey" aria-hidden="true"></i>
@@ -514,7 +514,7 @@
     </div>
   </div>
 
-  <div class="col-md-6 mt-2 px-1 d-block d-sm-none">
+  <div class="col-md-6 mt-2 px-1 d-block d-sm-none" *ngIf="user  && user.adminPrivilege">
     <div class="card text-center p-2 dashboard-card">
       <div class="row mx-0 p-0">
         <span class="font-weight-bold">Analytics</span>

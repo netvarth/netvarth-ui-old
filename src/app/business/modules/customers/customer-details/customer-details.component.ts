@@ -136,6 +136,7 @@ export class CustomerDetailComponent implements OnInit {
   groups: any[] = [];
   src: any;
   ivrCallData: any;
+  from: any;
   constructor(
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
@@ -171,6 +172,9 @@ export class CustomerDetailComponent implements OnInit {
       }
       if (qparams.src) {
         this.src = qparams.src;
+      }
+      if (qparams.from) {
+        this.from = qparams.from;
       }
       if (qparams.checkinType) {
         this.checkin_type = qparams.checkinType;
@@ -249,6 +253,7 @@ export class CustomerDetailComponent implements OnInit {
 
     if (this.src && this.src == 'ivr') {
       this.getIvrCallHistoryOfcustomer()
+
     }
   }
   @HostListener("window:resize", ["$event"])
@@ -288,6 +293,15 @@ export class CustomerDetailComponent implements OnInit {
     this.ivrService.getAllIvrCallsbyFilter(filter).subscribe((response: any) => {
       if (response) {
         this.ivrCallData = response;
+        if(this.from && this.from=="edit" && this.ivrCallData && this.ivrCallData.length>0)
+        {
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              type: 'details'
+            }
+          };
+          this.router.navigate(['provider', 'ivr', 'details', this.ivrCallData[0].uid], navigationExtras)
+        }
       }
     },
       (error) => {

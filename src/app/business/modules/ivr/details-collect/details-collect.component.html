@@ -84,7 +84,7 @@
             </button>
 
             <button type="button" mat-menu-item class="font-weight-600" (click)="openUsersPopup(callData.uid)"
-              *ngIf="callData && !callData.userId">
+              *ngIf="callData && !callData.userId && (callData.callStatus && callData.callStatus!='callCompleted')">
               <img width="15" src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Assign
             </button>
 
@@ -93,17 +93,64 @@
             </button>
 
             <button type="button" mat-menu-item class="font-weight-600" (click)="unassignToCall(callData.uid)"
-              *ngIf="callData && callData.userId"><img width="15"
+              *ngIf="callData && callData.userId && (callData.callStatus && callData.callStatus!='callCompleted')"><img width="15"
                 src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Unassign
             </button>
 
-            <button type="button" mat-menu-item class="font-weight-600" (click)="markAsComplete(callData.uid)"><i
+            <button type="button" mat-menu-item class="font-weight-600" (click)="markAsComplete(callData.uid)"
+              *ngIf="callData.questionnaires && callData.questionnaires[0] && callData.questionnaires[0].questionAnswers && (callData.callStatus && callData.callStatus!='callCompleted')"><i
                 class="fa fa-check"></i>Complete
             </button>
           </mat-menu>
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <div class="mt-2">
+    <div class="row px-md-2">
+      <div class="col-md-12 no-padding remarksPanel mt-2">
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="remarksPanel" (opened)="remarksPanel = true" (closed)="remarksPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-center">
+                  <div class="d-flex align-items-center text-primary font-weight-bold">
+                    Remarks
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+              <div class="mt-2">
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex justify-content-center">
+                    <span class="font-weight-bold"></span>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <a class="btn btn-primary" (click)="addRemarks()"><i class="fa fa-edit"></i>&nbsp;Add Remarks</a>
+                  </div>
+                </div>
+                <div *ngIf="callData && callData.notes && callData.notes.length > 0">
+                  <div class="card mt-2" *ngFor="let note of callData.notes">
+                    {{note.note}}
+                    <div>
+                      <span class="font-too-small text-primary" *ngIf="note.createdDate">( Added on
+                        {{note.createdDate}} )</span>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="callData && callData.notes && callData.notes.length == 0">
+                  <div class="card mt-2">
+                    No Notes Added
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
     </div>
   </div>
 
@@ -130,11 +177,17 @@
                 <span *ngIf="showEditQnr"><i class="fa fa-eye"></i>&nbsp;View</span>
               </a>
             </div>
-            <div class="text-center" *ngIf="callData && callData.questionnaires && !callData.questionnaires[0]">
-              Questionnare Not Filled
+            <div *ngIf="callData && callData.questionnaires && !callData.questionnaires[0]">
+              <div>
+                <a class="btn btn-primary" (click)="editQnr()">
+                  <span><i class="fa fa-edit"></i>&nbsp;Fill Form</span>
+                </a>
+              </div>
+              <div class="text-center">
+                Questionnare Not Filled
+              </div>
             </div>
             <div class="mt-3">
-
               <div *ngIf="showEditQnr">
                 <app-questionnaire [questionnaireList]="ivrQuestionnaire" [source]="'ivr'"
                   [questionAnswers]="questionAnswers" (returnAnswers)="getQuestionAnswers($event)" [type]="'details'"
@@ -158,8 +211,8 @@
   </div>
 
   <div>
-    <div class="row">
-      <div class="col-md-8 no-padding-small callHistoryPanel mt-2">
+    <div class="row px-md-2">
+      <div class="col-md-12 no-padding callHistoryPanel mt-2">
         <mat-accordion>
           <mat-expansion-panel [expanded]="callHistoryPanel" (opened)="callHistoryPanel = true"
             (closed)="callHistoryPanel = false">
@@ -226,47 +279,7 @@
       </div>
 
 
-      <div class="col-md-4 no-padding-small remarksPanel mt-2">
-        <mat-accordion>
-          <mat-expansion-panel [expanded]="remarksPanel" (opened)="remarksPanel = true" (closed)="remarksPanel = false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <div class="d-flex justify-content-center">
-                  <div class="d-flex align-items-center text-primary font-weight-bold">
-                    Remarks
-                  </div>
-                </div>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div>
-              <div class="mt-2">
-                <div class="d-flex justify-content-between">
-                  <div class="d-flex justify-content-center">
-                    <span class="font-weight-bold"></span>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <a class="btn btn-primary" (click)="addRemarks()"><i class="fa fa-edit"></i>&nbsp;Add Remarks</a>
-                  </div>
-                </div>
-                <div *ngIf="callData && callData.notes && callData.notes.length > 0">
-                  <div class="card mt-2" *ngFor="let note of callData.notes">
-                    {{note.note}}
-                    <div>
-                      <span class="font-too-small text-primary" *ngIf="note.createdDate">( Added on
-                        {{note.createdDate}} )</span>
-                    </div>
-                  </div>
-                </div>
-                <div *ngIf="callData && callData.notes && callData.notes.length == 0">
-                  <div class="card mt-2">
-                    No Notes Added
-                  </div>
-                </div>
-              </div>
-            </div>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div>
+
     </div>
   </div>
 </div>

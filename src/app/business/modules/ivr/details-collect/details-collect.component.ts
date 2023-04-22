@@ -6,7 +6,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { IvrService } from '../ivr.service';
 import { PopupComponent } from '../popup/popup.component';
-import { Location } from '@angular/common';
+// import { Location } from '@angular/common';
 import { RemarksComponent } from '../remarks/remarks.component';
 import * as moment from 'moment';
 @Component({
@@ -39,7 +39,7 @@ export class DetailsCollectComponent implements OnInit {
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
     private groupService: GroupStorageService,
-    private location: Location
+    // private location: Location
   ) {
 
   }
@@ -121,7 +121,8 @@ export class DetailsCollectComponent implements OnInit {
   }
 
   goBack() {
-    this.location.back()
+    // this.location.back()
+    this.router.navigate(['provider','ivr'])
   }
 
   saveCustomerDetails() {
@@ -181,7 +182,9 @@ export class DetailsCollectComponent implements OnInit {
         type: 'details'
       }
     };
+    this.router.navigate(['provider', 'ivr']).then(()=>{
     this.router.navigate(['provider', 'ivr', 'details', uid], navigationExtras)
+    })
   }
 
 
@@ -296,8 +299,8 @@ export class DetailsCollectComponent implements OnInit {
         this.callDetails(this.callUid);
       }
       else if (src && src == 'details') {
-        this.showEditQnr = !this.showEditQnr;
         this.ngOnInit();
+        this.showEditQnr = !this.showEditQnr;
       }
     }, (error) => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

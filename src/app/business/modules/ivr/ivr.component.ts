@@ -227,9 +227,9 @@ export class IvrComponent implements OnInit {
   }
 
   loadCalls(event) {
-    this.getIvrCallsCount().then((count) => {
-      this.totalCallsCount = count;
-    });
+    // this.getIvrCallsCount().then((count) => {
+    //   this.totalCallsCount = count;
+    // });
     let api_filter = this.ivrService.setFiltersFromPrimeTable(event);
     api_filter['callStatus-eq'] = "callCompleted";
     if (api_filter) {
