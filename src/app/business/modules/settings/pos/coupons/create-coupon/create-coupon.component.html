@@ -2,7 +2,7 @@
   <div class="card title-gb rounded-0">
     <h5 class="mgn-up-10">
       <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToCoupon()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     {{coupon_title}} 
+     {{coupon_title}}
     </h5>
   </div>
 </section>
@@ -107,7 +107,7 @@
                           </mat-radio-group>
                           <app-field-error-display [displayError]="fed_service.isFieldValid(couponForm,'calculationType')"  [errorMsgs]="fed_service.getErrorMessage(couponForm,'calculationType',
                             {
-                              'required' : 'Please choose calculation type.'                             
+                              'required' : 'Please choose calculation type.'
                             })"></app-field-error-display>
                         </div>
                         <!--end::Input-->
@@ -176,12 +176,12 @@
                             <app-field-error-display  style="color: #f24949 !important;"  [displayError]=startDaterequired
                             errorMsg="Please choose Start Date">
                         </app-field-error-display>
-                          
+
                         </div>
                         </div>
 
                       <div class="col-xl-6">
-                     
+
                         <div class="form-group normalpicker">
                             <label for="last_name">End Date <span
                               class="red">*</span> <span>(Valid To)</span></label>
@@ -200,7 +200,7 @@
                     </app-field-error-display>
                         </div>
                       </div>
-                  
+
                     </div>
                     <div class="row days">
                       <div class="col-xl-12">
@@ -217,7 +217,7 @@
                       </app-field-error-display>
                         </div>
                       </div>
-                    </div>          
+                    </div>
                     <div class="row">
                       <div class="col-xl-12">
                         <div class="form-group">
@@ -236,7 +236,7 @@
                         </div>
                       </div>
                     </div>
-                    <!-- <div class="row"
+                    <div class="row"
                       [hidden]="this.couponForm.get('couponRules').get('isproviderAcceptCoupon').value==false">
                       <div class="col-xl-6 col-lg-6 col-md-6">
                           <div class="form-group">
@@ -245,7 +245,7 @@
                           placeholder="Max coupon apply limit" formControlName="maxProviderUseLimit" />
                       </div>
                       </div>
-                    </div> -->
+                    </div>
                     <div class="row">
                       <div class="col-xl-6 col-lg-6 col-md-6">
                         <div class="form-group">
@@ -256,7 +256,7 @@
                             errorMsg="Please enter value">
                         </app-field-error-display>
                       </div>
-                          </div>                      
+                          </div>
                       <div class="col-xl-6 col-lg-6 col-md-6" [hidden]="this.couponForm.get('calculationType').value=='Fixed'">
                         <div class="form-group">
                           <label class="rupee-font">Maximum Discount value (₹) <span
@@ -465,14 +465,14 @@
                         <div class="form-group">
                             <label>Terms and Conditions </label>
                             <textarea type="text" class="form-control1 form-control-solid form-control-lg"
-                            id="description" placeholder="Enter coupon terms and conditions" formControlName="termsConditions"                           
+                            id="description" placeholder="Enter coupon terms and conditions" formControlName="termsConditions"
                             maxlength="500"></textarea>
                           <app-field-error-display [displayError]="fed_service.isFieldValid(couponForm,'termsConditions')"
                             [errorMsgs]="fed_service.getErrorMessage(couponForm,'termsConditions',
                             {
-                            'required' : 'Enter coupon terms and conditions.'        
+                            'required' : 'Enter coupon terms and conditions.'
                             })">
-                          </app-field-error-display>                       
+                          </app-field-error-display>
                         </div>
                       </div>
                     </div>

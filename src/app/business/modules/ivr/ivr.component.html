@@ -117,7 +117,7 @@
             <ng-template pTemplate="header">
               <span class="tabview-text">
                 <i class="fa fa-user-o"></i>&nbsp;
-                <span>My Queue</span>
+                <span>My Queue<span>({{assignedCallsCount}})</span></span>
               </span>
             </ng-template>
             <p-table #callsTable [value]="assignedCalls" [lazy]="true" (onLazyLoad)="loadAssignedCalls($event)"
@@ -210,7 +210,7 @@
             <ng-template pTemplate="header">
               <span class="tabview-text">
                 <img width="15" src="./assets/images/ivr/callback.png">&nbsp;
-                <span>CallBacks</span>
+                <span>CallBacks<span>({{callBacksCount}})</span></span>
               </span>
             </ng-template>
             <p-table #callsTable [value]="callBackCalls" [lazy]="true" (onLazyLoad)="loadCallBackCalls($event)"
@@ -297,7 +297,7 @@
             <ng-template pTemplate="header">
               <span class="tabview-text">
                 <i class="fa fa-phone"></i>&nbsp;
-                <span>Call History</span>
+                <span>Call History<span>({{totalCallsCount}})</span></span>
               </span>
             </ng-template>
             <!-- <div class="card mt-2" *ngIf="onGoingCall && onGoingCall.length>0">

@@ -280,11 +280,11 @@ input[type="checkbox"]:checked {
   } */
 
   ::ng-deep .callsTabsView .p-tabview-nav-link {
-    width: 30vw !important;
+    width: 32vw !important;
   }
 
   .tabview-text {
-    font-size: 12px !important;
+    font-size: 10px !important;
   }
 
   .analytics-card {

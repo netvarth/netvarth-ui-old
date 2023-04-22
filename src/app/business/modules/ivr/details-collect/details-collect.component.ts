@@ -219,7 +219,8 @@ export class DetailsCollectComponent implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         action: "edit",
-        id: id
+        id: id,
+        source:"ivr"
       }
     };
     this.router.navigate(['provider', 'customers', 'create'], navigationExtras);
