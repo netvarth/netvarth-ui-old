@@ -3,6 +3,7 @@ import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+// import listPlugin from '@fullcalendar/list';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { DashboardService } from '../dashboard.service';
 import { NavigationExtras, Router } from '@angular/router';
@@ -19,29 +20,66 @@ export class FullViewCalendarComponent implements OnInit {
   showWeekends: any = false;
   bookingsForCalendar: any = [];
   backgroundColors: any = ["#FBFFB1", "#FFEBB4", "#ECF9FF", "#AEE2FF", "#FFF1DC"];
+  // calendarOptions: CalendarOptions = {
+  //   initialView: 'dayGridMonth',
+  //   dateClick: this.handleDateClick.bind(this),
+  //   plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+  //   headerToolbar: {
+  //     // left: 'prev,next today',
+  //     // center: 'title',
+  //     // right: 'dayGridMonth,timeGridWeek,timeGridDay'
+  //   },
+  //   weekends: true,
+  //   datesSet: this.handleMonthChange.bind(this),
+  //   events: [],
+  //   selectable: true,
+  //   // contentHeight: 999,
+  //   selectMirror: true,
+  //   dayMaxEvents: true,
+  //   dayMaxEventRows: true,
+  //   views: {
+  //     dayGrid: {
+  //       dayMaxEventRows: 3 // adjust to 6 only for timeGridWeek/timeGridDay
+  //     }
+  //   }
+  // };
+
   calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth',
-    dateClick: this.handleDateClick.bind(this),
-    plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+    plugins: [
+      interactionPlugin,
+      dayGridPlugin,
+      timeGridPlugin,
+      // listPlugin,
+    ],
     headerToolbar: {
-      // left: 'prev,next today',
-      // center: 'title',
-      // right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
+    initialView: 'dayGridMonth',
+    // initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
-    datesSet: this.handleMonthChange.bind(this),
-    events: [],
+    editable: true,
     selectable: true,
-    // contentHeight: 999,
     selectMirror: true,
     dayMaxEvents: true,
-    dayMaxEventRows: true,
-    views: {
-      dayGrid: {
-        dayMaxEventRows: 3 // adjust to 6 only for timeGridWeek/timeGridDay
-      }
-    }
+    events: [],
+    eventTimeFormat: { // like '14:30:00'
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    meridiem: false
+  },
+    select: this.handleDateSelect.bind(this),
+    eventClick: this.handleEventClick.bind(this),
+    eventsSet: this.handleEvents.bind(this)
+    /* you can update a remote database when these fire:
+    eventAdd:
+    eventChange:
+    eventRemove:
+    */
   };
+
   eventsPromise: Promise<EventInput>;
   totalBookings: any = [];
   startedAppointmentsChecked: any = [];
@@ -267,6 +305,17 @@ export class FullViewCalendarComponent implements OnInit {
 
   randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
+
+  handleDateSelect(selectInfo) {
+
+  }
+
+  handleEventClick(clickInfo) {
+  }
+
+  handleEvents(events) {
   }
 
 }
