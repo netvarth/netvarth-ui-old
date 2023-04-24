@@ -198,11 +198,11 @@
                                 <li (click)="redirectto('members', 'consumer')" class="icon-members">
                                     <!--*ngIf="!customId"-->
                                     {{family_members_cap}}</li>
-                                <!-- <li (click)="deactiveaccount('deactive', 'consumer')" style="padding-left: 0px;"
+                                <li (click)="deactiveaccount('deactive', 'consumer')" style="padding-left: 0px;"
                                     *ngIf="customId">
                                     <span><i class="fa fa-trash" aria-hidden="true"></i></span>
                                     <span style="margin-left: 20px;">Delete Your Account</span>
-                                </li> -->
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -369,10 +369,14 @@
                     <div class="right-menu-header">{{related_links_cap}}</div>
                     <ul class="related-link">
                         <li (click)="redirectto('change-password','provider')" class="icon-password">
-                            {{change_password_cap}}</li>
+                            {{change_password_cap}}es</li>
                         <li (click)="redirectto('change-mobile','provider')" class="icon-mobile">
                             {{change_mobile_cap}}</li>
-                        <li (click)="deactiveaccount('deactive', 'provider consumer')" style="padding-left: 0px;">
+                        <!-- <li (click)="deactiveaccount('deactive', 'provider consumer')" style="padding-left: 0px;">
+                            <span><i class="fa fa-trash" aria-hidden="true"></i></span>
+                            <span style="margin-left: 20px;">Delete Your Account</span>
+                        </li> -->
+                        <li (click)="deactiveaccount('deactive', 'provider')" style="padding-left: 0px;">
                             <span><i class="fa fa-trash" aria-hidden="true"></i></span>
                             <span style="margin-left: 20px;">Delete Your Account</span>
                         </li>

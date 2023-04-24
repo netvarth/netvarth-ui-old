@@ -58,10 +58,18 @@ export class AddMemberComponent implements OnInit {
     public shared_functions: SharedFunctions,
     public translate: TranslateService,
   ) {
-    console.log('data',data)
+   
     if(data && data[0] && data[0].requestType && data[0].requestType==='deactiveAccount'){
       this.beforeDelete=true;
-      if(data && data[2] && data[2].requestFrom && data[2].requestFrom === 'provider'){
+      // if(data && data[2] && data[2].requestFrom && data[2].requestFrom === 'provider'){
+       
+      //   this.isProviderAccount = true;
+      // }
+      // else{
+      
+      //   this.isProviderAccount = false;
+      // }
+      if(data && data[1] && data[1].data === 'provider'){
        
         this.isProviderAccount = true;
       }
@@ -149,7 +157,7 @@ export class AddMemberComponent implements OnInit {
     this.dialogRef.close(txt) 
   }
   deActiveAccount() {
-    if (this.data && this.data[2]  && this.data[2].requestFrom === 'provider') {
+    if (this.data && this.data[1]  && this.data[1].data === 'provider') {
       this.sharedservice.deactiveProviderAccount().subscribe(
         (res: any) => {
           if (res) {
