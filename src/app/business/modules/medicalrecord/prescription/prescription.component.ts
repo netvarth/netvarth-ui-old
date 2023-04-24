@@ -343,7 +343,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     this.disableFromControl()
     // this.disable = true;
     this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
-      width: '50%',
+      // width: '100%',
       panelClass: ['popup-class'],
       disableClose: true,
       data: {
