@@ -33,7 +33,7 @@
         </h5>
     </div>
 </section>
-<section class="" 
+<section class=""
     *ngIf="source ==='token' || source ==='checkin' || source ==='appointment' || source === 'appt-block' || source === 'waitlist-block' || source === 'clist'">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
@@ -42,22 +42,23 @@
         </h5>
     </div>
 </section>
-<div class="card mgn-up-10" >
+<div class="card mgn-up-10">
     <section class="createCustomer">
         <div class="content loc-list p-checkin col-lg-12 no-padding-small">
-            <div class="card card-custom gutter-b example example-compact rounded-0 p-0" >
+            <div class="card card-custom gutter-b example example-compact rounded-0 p-0">
                 <!--begin::Form-->
                 <div class="card-body" *ngIf="!qnrLoaded || !loaded">
                     <app-common-innerloading-spinner></app-common-innerloading-spinner>
                 </div>
                 <form *ngIf="!loading && !viewCustomer && qnrLoaded" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
-                onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="form" id="customer_creation" style="border: 1px solid #e2dddd;border-radius: 5px;">
-                    <div class="card-body" *ngIf="!showBookingQnr" >
+                onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="form" id="customer_creation"
+                    style="border: 1px solid #e2dddd;border-radius: 5px;">
+                    <div class="card-body" *ngIf="!showBookingQnr">
                         <div class="form-group row">
                             <div class="col-lg-4">
                                 <label class="p-0 m-0 pt-1 form-text-light">First Name</label>
-                                <input type="email" name="first_name" formControlName="first_name" class="form-control" id="first_name"
-                                    placeholder="Enter Your {{f_name_cap}}"  autocomplete="off"
+                                <input type="email" name="first_name" formControlName="first_name" class="form-control"
+                                    id="first_name" placeholder="Enter Your {{f_name_cap}}" autocomplete="off"
                                     (blur)="onFieldBlur('first_name')" />
                                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')"
                                     [errorMsgs]="fed_service.getErrorMessage(amForm,'first_name',
@@ -69,8 +70,9 @@
                             </div>
                             <div class="col-lg-4">
                                 <label class="p-0 m-0 pt-1 form-text-light">Last Name</label>
-                                <input type="email" class="form-control" id="last_name" placeholder="Enter Your {{l_name_cap}}"
-                                    formControlName="last_name" autocomplete="off" (blur)="onFieldBlur('last_name')" />
+                                <input type="email" class="form-control" id="last_name"
+                                    placeholder="Enter Your {{l_name_cap}}" formControlName="last_name"
+                                    autocomplete="off" (blur)="onFieldBlur('last_name')" />
                                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')"
                                     [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
                                         {
@@ -86,7 +88,7 @@
                                 <div class="input-group">
                                     <div class="countrycode">
                                         <input type="text"
-                                         [readonly]="action === 'edit'&& customer[0].jaldeeConsumer !=0 && customer[0].phoneNo"
+                                            [readonly]="action === 'edit'&& customer[0].jaldeeConsumer !=0 && customer[0].phoneNo"
                                             (keypress)="isNumericSign($event)" matInput class="form-control"
                                             id="countryCode" placeholder="Country code " formControlName="countryCode"
                                             autocomplete="off" maxlength="5" style="width: 90%;">
@@ -95,8 +97,9 @@
                                         <input
                                             [readonly]="action === 'edit'&& customer[0].jaldeeConsumer !=0 && customer[0].phoneNo"
                                             type="text" class="form-control" (keypress)="isNumeric($event)"
-                                            id="mobile_number" placeholder="Enter Your {{mobile_cap}} " formControlName="mobile_number"
-                                            autocomplete="off" maxlength=10 style="width: 100%;" />
+                                            id="mobile_number" placeholder="Enter Your {{mobile_cap}} "
+                                            formControlName="mobile_number" autocomplete="off" maxlength=10
+                                            style="width: 100%;" />
                                     </div>
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
@@ -109,8 +112,10 @@
                                     </app-field-error-display>
                                 </div>
                             </div>
-                            <div class="col-lg-4" *ngIf="customidFormat && customidFormat.customerSeriesEnum && customidFormat.customerSeriesEnum === 'MANUAL'">
-                                <label class="p-0 pt-1 m-0 form-text-light">{{customerPlaceholder | capitalizeFirst}}</label>
+                            <div class="col-lg-4"
+                                *ngIf="customidFormat && customidFormat.customerSeriesEnum && customidFormat.customerSeriesEnum === 'MANUAL'">
+                                <label class="p-0 pt-1 m-0 form-text-light">{{customerPlaceholder |
+                                    capitalizeFirst}}</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="customer_id"
                                         placeholder="{{customerPlaceholder | capitalizeFirst}}"
@@ -130,19 +135,22 @@
                                     <label class="p-0 pt-1 m-0 form-text-light">Email</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend"></div>
-                                        <input type="text" class="form-control" id="email_id" placeholder="Email(user@xyz.com)"
-                                            formControlName="email_id" autocomplete="off" />
+                                        <input type="text" class="form-control" id="email_id"
+                                            placeholder="Email(user@xyz.com)" formControlName="email_id"
+                                            autocomplete="off" />
                                     </div>
-                                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email_id')"
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'email_id')"
                                         errorMsg="Please enter valid email.">
                                     </app-field-error-display>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-lg-4 form-group ">
-                                <label class="p-0 py-1 m-0 form-text-light col-form-label" for="gender">{{gender_cap}}</label>
+                                <label class="p-0 py-1 m-0 form-text-light col-form-label"
+                                    for="gender">{{gender_cap}}</label>
                                 <mat-radio-group formControlName="gender">
                                     <mat-radio-button value="male">{{male_cap}}</mat-radio-button>
                                     <mat-radio-button class="mat-radio-button-createpatient" value="female">
@@ -154,7 +162,7 @@
                                     errorMsg="Please select the gender.">
                                 </app-field-error-display>
                             </div>
-                            
+
                             <!-- <div class="form-group col-lg-2 ">
                                 <label class="form-level-settings text-danger" *ngIf="this.domain === 'healthCare'">Enter
                                     {{customer_label | capitalizeFirst}}'s DOB or Age *</label>
@@ -164,19 +172,23 @@
                                 <div class="form-group normalpicker">
                                     <label class="p-0 py-1 m-0 form-text-light"> Date of birth</label>
                                     <div class="pickerouter">
-                                        <input class="form-control dtepicker" type="text" matInput (click)="picker.open()"
-                                            [matDatepicker]="picker" formControlName="dob" id="dob" [max]="tday" [min]="minday"
-                                            placeholder="DD/MM/YYYY" readonly>&nbsp;
-                                        <mat-datepicker-toggle matSuffix [for]="picker"  style="background-color: #f6f6f6 !important; margin-right: 0px !important;"></mat-datepicker-toggle>
-                                        <mat-datepicker class="" #picker style="background-color: #f6f6f6 !important; margin-right: 0px !important;"></mat-datepicker>
+                                        <input class="form-control dtepicker" type="text" matInput
+                                            (click)="picker.open()" [matDatepicker]="picker" formControlName="dob"
+                                            id="dob" [max]="tday" [min]="minday" placeholder="DD/MM/YYYY" readonly
+                                            (dateChange)="calculateAge($event)">&nbsp;
+                                        <mat-datepicker-toggle matSuffix [for]="picker"
+                                            style="background-color: #f6f6f6 !important; margin-right: 0px !important;"></mat-datepicker-toggle>
+                                        <mat-datepicker class="" #picker
+                                            style="background-color: #f6f6f6 !important; margin-right: 0px !important;"></mat-datepicker>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group col-lg-3" style="display: flex">
-                                
+
                                 <div class="col-lg-12 no-padding">
-                                    <label class="p-0 py-1 m-0 form-text-light">Age<span class="text-danger">*</span></label>
+                                    <label class="p-0 py-1 m-0 form-text-light">Age<span
+                                            class="text-danger">*</span></label>
                                     <!-- <div class="input-group">
                                         <div class="input-group-prepend"></div>
                                         <mat-form-field style="width : 80px; margin-top: -20px; height: 34px !important;"
@@ -197,39 +209,40 @@
                                     <div class="input-group">
                                         <div class="ageyear">
                                             <input type="number" class="input1" id="age" min="0" max="100000"
-                                            (keypress)="isNumeric($event)" (keyup)="isvalid($event)" formControlName="age"
-                                            autocomplete="off" style="margin-top: -1px" />
+                                                (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
+                                                formControlName="age" autocomplete="off" style="margin-top: -1px" />
                                         </div>
                                         <div class="monthyear">
-                                            <mat-form-field   appearance="none">
-                                            <!-- <mat-label style="color: black">Age</mat-label> -->
-                                            <mat-select class="matStyle" formControlName="ageType" style="width : 100px;background-color: #f6f6f6; align-items: center;"
-                                                (selectionChange)="changeType($event)" [(value)]="ageType">
-                                                <mat-option value="year">Years</mat-option>
-                                                <mat-option value="month">Months</mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
+                                            <mat-form-field appearance="none">
+                                                <!-- <mat-label style="color: black">Age</mat-label> -->
+                                                <mat-select class="matStyle" formControlName="ageType"
+                                                    style="width : 100px;background-color: #f6f6f6; align-items: center;"
+                                                    (selectionChange)="changeType($event)" [(value)]="ageType">
+                                                    <mat-option value="year">Years</mat-option>
+                                                    <mat-option value="month">Months</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
                                         </div>
                                         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
-                                        errorMsg="Please select the date of birth.">
-                                    </app-field-error-display>
+                                            errorMsg="Please select the date of birth.">
+                                        </app-field-error-display>
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
-                        
-                        
+
+
                         <div class="form-group row">
                             <div class="col-lg-8">
                                 <label class="p-0 pt-1 m-0 form-text-light">Address</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend"></div>
-                                    <textarea type="text" class="form-control" id="address" placeholder="Enter your address"
-                                        formControlName="address"></textarea>
+                                    <textarea type="text" class="form-control" id="address"
+                                        placeholder="Enter your address" formControlName="address"></textarea>
                                 </div>
                             </div>
-    
+
                         </div>
                     </div>
                     <div class="card-body" *ngIf="loaded">
@@ -240,10 +253,13 @@
                     <div class="card-footer" *ngIf="!showBookingQnr">
                         <div class="row">
                             <div class="col-lg-8">
-                                <button (click)="onCancel()" type="reset" class="btn btn-secondary custom-btn-length text-center" style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;"
+                                <button (click)="onCancel()" type="reset"
+                                    class="btn btn-secondary custom-btn-length text-center"
+                                    style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;"
                                     [disabled]="disableButton">{{cancel_btn}}</button>&nbsp;
                                 <button type="submit" [disabled]="!amForm.valid || disableButton"
-                                    class="btn btn-primary mr-2 custom-btn-length text-center" style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;" >{{save_btn}}</button>
+                                    class="btn btn-primary mr-2 custom-btn-length text-center"
+                                    style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;">{{save_btn}}</button>
                             </div>
                         </div>
                     </div>

@@ -1033,6 +1033,23 @@ export class CustomerCreateComponent implements OnInit {
   onFieldBlur(key) {
     this.amForm.get(key).setValue(this.toCamelCase(this.amForm.get(key).value));
   }
+
+  calculateAge(event) {
+    const dob = event.value.toDate();
+    const today = Date.now();
+    const diffTime = Math.abs(dob - today);
+    const diffyears = Math.floor((diffTime / (1000 * 60 * 60 * 24)) / 365);
+    const diffMonths = Math.floor((diffTime / (1000 * 60 * 60 * 24)) / 365 * 12);
+    if (diffMonths < 12) {
+      this.amForm.controls.age.setValue(diffMonths);
+      this.amForm.controls.ageType.setValue('month');
+    }
+    else {
+      this.amForm.controls.age.setValue(diffyears);
+      this.amForm.controls.ageType.setValue('year');
+    }
+  }
+
   toCamelCase(word) {
     if (word) {
       return this.wordProcessor.toCamelCase(word);
