@@ -2127,7 +2127,7 @@
               <button class="btn btn-primary open-all-btn" (click)="addCoApplicant()">Add Co-Applicant</button>
             </div> -->
             <div class="mt-4">
-              <button class="btn btn-primary open-all-btn" (click)="saveCoApplicantDetails(0)">Save</button>
+              <button class="btn btn-primary open-all-btn" (click)="saveCoApplicantDetails(0)" [disabled]="!coapplicantPhoneVerification">Save</button>
             </div>
           </mat-expansion-panel>
         </mat-accordion>

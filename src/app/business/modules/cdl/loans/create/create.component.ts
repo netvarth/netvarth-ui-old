@@ -811,7 +811,7 @@ export class CreateComponent implements OnInit {
         "customerLastName": this.createLoan.controls.coapplicants.value[i].coapplicantlastname,
         "customerPhoneCode": "+91",
         "customerPhone": this.createLoan.controls.coapplicants.value[i].coapplicantphone,
-        "customerDob": this.createLoan.controls.coapplicants.value[i].coapplicantdob,
+        "dob": this.createLoan.controls.coapplicants.value[i].coapplicantdob,
         "gender": this.createLoan.controls.coapplicants.value[i].coapplicantgender,
         // "maritalStatus": this.createLoan.controls.coapplicants.value[i].coapplicantphone,
         "currentAddress1": this.createLoan.controls.coapplicants.value[i].coapplicantcurrentaddress1,
