@@ -32,6 +32,7 @@ export class FilterComponent implements OnInit {
         this.filter[element.field + '-' + element.filterType] = '';
       });
     }
+    this.filter['branch-eq'] = 0;
     let api_filter = {};
     api_filter['from'] = 0;
     api_filter['count'] = 10;
@@ -45,15 +46,19 @@ export class FilterComponent implements OnInit {
 
     this.filterConfig.forEach(element => {
       if (this.filter[element.field + '-' + element.filterType] && this.filter[element.field + '-' + element.filterType] != "") {
-        if (element.type == 'text') {
-          api_filter[element.field + '-' + element.filterType] = this.filter[element.field + '-' + element.filterType];
-        }
-        else if (element.type == 'date') {
+        if (element.type == 'date') {
           api_filter[element.field + '-' + element.filterType] = moment(this.filter[element.field + '-' + element.filterType]).format("YYYY-MM-DD");
+        }
+        else {
+          api_filter[element.field + '-' + element.filterType] = this.filter[element.field + '-' + element.filterType];
         }
       }
 
     });
+    if (Object.keys(api_filter).length == 0) {
+      api_filter['from'] = 0;
+      api_filter['count'] = 10;
+    }
     this.filterEvent.emit(api_filter);
     this.sidebarVisible = false;
   }

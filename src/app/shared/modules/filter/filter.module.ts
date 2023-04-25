@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [FilterComponent],
@@ -16,7 +17,8 @@ import { CalendarModule } from 'primeng/calendar';
     SidebarModule,
     ButtonModule,
     InputTextModule,
-    CalendarModule
+    CalendarModule,
+    DropdownModule
   ],
   exports: [
     FilterComponent

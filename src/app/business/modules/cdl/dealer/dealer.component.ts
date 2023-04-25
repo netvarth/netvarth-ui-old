@@ -135,7 +135,7 @@ export class DealerComponent implements OnInit {
   }
 
   loadDealers(event) {
-    this.getTotalDealersCount()
+    // this.getTotalDealersCount()
     let api_filter = this.cdlservice.setFiltersFromPrimeTable(event);
     if (this.statusDropdownClicked) {
       if (this.statusDisplayName && this.statusDisplayName.name) {

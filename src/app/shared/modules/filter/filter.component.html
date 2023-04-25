@@ -15,14 +15,19 @@
                 </div>
             </div>
             <div class="mt-3" *ngFor="let field of filterConfig">
-                <div class="flex flex-column gap-2">
+                <div>
                     <label [htmlFor]="field.field">{{field.title}}</label>
                     <input pInputText [id]="field.field" [placeholder]="'Enter ' + field.title" autocomplete="off"
                         [(ngModel)]="filter[field.field + '-' + field.filterType]"
                         *ngIf="field && field.type=='text'" />
                     <div *ngIf="field && field.type=='date'">
-                        <p-calendar [touchUI]="true"
-                            [(ngModel)]="filter[field.field + '-' + field.filterType]"></p-calendar>
+                        <p-calendar appendTo="body" [(ngModel)]="filter[field.field + '-' + field.filterType]"></p-calendar>
+                    </div>
+                    <div *ngIf="field && field.type=='dropdown'">
+                        <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="field.options"
+                            [optionValue]="field.value" [(ngModel)]="filter[field.field + '-' + field.filterType]"
+                            [optionLabel]="field.label" appendTo="body" [dropdownIcon]="'fa fa-caret-down'" [autoDisplayFirst]="false">
+                        </p-dropdown>
                     </div>
                 </div>
             </div>

@@ -54,7 +54,8 @@ export class LoansComponent implements OnInit {
   cols: any[];
   _selectedColumns: any[];
   filterConfig: any;
-  capabilities: { canCreateLoan: any; canUpdateLoan: any; canViewLoan: any; canCreatePartner: any; canUpdatePartner: any; canViewPartner: any; canViewSchemes: any; canApprovePartnerLoan: any; canRejectLoan: any; canApprovePartner: any; canApproveLoan: any; canContactPartner: any; canActionRequired: any; canCreditScoreCheck: any; canAnalyseBankStatement: any; canGenerateMafilScore: any; canLoanDisbursement: any; canUpdateCreditOfficer: any; canUpdateSalesOfficer: any; canUpdatePartnerSettings: any; canMakePartnerInactive: any; canCreateLocation: any; canUpdateLocation: any; canCreateBranch: any; canUpdateBranch: any; canCreateUser: any; canUpdateUser: any; canSuspendPartner: any; canDisableUser: any; canDisablePartner: any; canEnablePartner: any; canVerification: any; canCreditVerification: any; canDocumentVerification: any; canInvoiceUpdation: any; canCreateLead: any; canUpdateLead: any; canViewLead: any; canTransformLeadtoLoan: any; canLoanApplicationOperationsVerification: any; canViewCustomerPhoneNumber: any; canViewKycReport: any; canLoanApplicationBranchVerification: any; };
+  capabilities: any;
+  branches: any;
   constructor(
     private groupService: GroupStorageService,
     private router: Router,
@@ -80,13 +81,19 @@ export class LoansComponent implements OnInit {
       totalItems: 0
     };
 
-    this.filterConfig = [
-      { field: 'referenceNo', title: 'Loan Id', type: 'text', filterType: 'like' },
-      { field: 'customerFirstName', title: 'Customer First Name', type: 'text', filterType: 'like' },
-      { field: 'customerLastName', title: 'Customer Last Name', type: 'text', filterType: 'like' },
-      { field: 'partnerName', title: 'Dealer Name', type: 'text', filterType: 'like' },
-      { field: 'createdDate', title: 'Created Date', type: 'date', filterType: 'eq' }
-    ]
+    this.getBranchesByFilter().then((data) => {
+      this.branches = data;
+      this.filterConfig = [
+        { field: 'referenceNo', title: 'Loan Id', type: 'text', filterType: 'like' },
+        { field: 'customerFirstName', title: 'Customer First Name', type: 'text', filterType: 'like' },
+        { field: 'customerLastName', title: 'Customer Last Name', type: 'text', filterType: 'like' },
+        { field: 'partnerName', title: 'Dealer Name', type: 'text', filterType: 'like' },
+        { field: 'createdDate', title: 'Created Date', type: 'date', filterType: 'eq' },
+        { field: 'branch', title: 'Branch', type: 'dropdown', filterType: 'eq', options: this.branches, value: 'id', label: 'branchName' }
+      ]
+    })
+
+
 
   }
 
@@ -119,6 +126,15 @@ export class LoansComponent implements OnInit {
     this._selectedColumns = this.cols.filter(col => val.includes(col));
   }
 
+
+  getBranchesByFilter(api_filter = {}) {
+    return new Promise((resolve, reject) => {
+      this.cdlservice.getBranchesByFilter(api_filter).subscribe((data: any) => {
+        resolve(data);
+      });
+    })
+
+  }
 
   showColumn(column) {
     if (this.selectedColumns) {
@@ -223,6 +239,7 @@ export class LoansComponent implements OnInit {
             api_filter['isActionRequired-eq'] = true;
           }
           else {
+            api_filter['isRejected-eq'] = false;
             api_filter['spInternalStatus-eq'] = this.statusDisplayName.name;
           }
         }
