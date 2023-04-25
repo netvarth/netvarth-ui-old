@@ -3,52 +3,69 @@
         <div>
             <span class="text-capitalize font-weight-bold">{{title}}</span>
         </div>
-        <div *ngFor="let booking of bookings;let i=index" class="mt-3">
-            <p-card *ngIf="i<2">
-                <div class="d-md-flex justify-content-between">
-                    <div class="d-flex">
-                        <div class="mr-2">
-                            <img src="../../../../assets/images/dashboard/profile.png" width="50" height="50">
-                        </div>
-                        <div>
-                            <div class="font-medium" *ngIf="type=='appointments' && booking.appmtFor && booking.appmtFor[0]">
-                              <span *ngIf="booking.appmtFor[0].firstName">{{booking.appmtFor[0].firstName}}</span>&nbsp;
-                              <span *ngIf="booking.appmtFor[0].lastName">{{booking.appmtFor[0].lastName}}</span>
+        <div *ngIf="bookings && bookings.length>0">
+            <div *ngFor="let booking of bookings;let i=index" class="mt-3">
+                <p-card *ngIf="i<2">
+                    <div class="d-md-flex justify-content-between">
+                        <div class="d-flex">
+                            <div class="mr-2">
+                                <img src="../../../../assets/images/dashboard/profile.png" width="50" height="50">
                             </div>
-                            <div class="font-medium" *ngIf="type=='tokens' && booking.waitlistingFor && booking.waitlistingFor[0]">
-                              <span *ngIf="booking.waitlistingFor[0].firstName">{{booking.waitlistingFor[0].firstName}}</span>&nbsp;
-                              <span *ngIf="booking.waitlistingFor[0].lastName">{{booking.waitlistingFor[0].lastName}}</span>
+                            <div>
+                                <div class="font-medium"
+                                    *ngIf="type=='appointments' && booking.appmtFor && booking.appmtFor[0]">
+                                    <span
+                                        *ngIf="booking.appmtFor[0].firstName">{{booking.appmtFor[0].firstName}}</span>&nbsp;
+                                    <span *ngIf="booking.appmtFor[0].lastName">{{booking.appmtFor[0].lastName}}</span>
+                                </div>
+                                <div class="font-medium"
+                                    *ngIf="type=='tokens' && booking.waitlistingFor && booking.waitlistingFor[0]">
+                                    <span
+                                        *ngIf="booking.waitlistingFor[0].firstName">{{booking.waitlistingFor[0].firstName}}</span>&nbsp;
+                                    <span
+                                        *ngIf="booking.waitlistingFor[0].lastName">{{booking.waitlistingFor[0].lastName}}</span>
+                                </div>
+                                <div class="text-grey"
+                                    *ngIf="type=='appointments' && booking.providerConsumer && booking.providerConsumer.phoneNo">
+                                    {{booking.providerConsumer.countryCode}} {{booking.providerConsumer.phoneNo}}</div>
+                                <div class="text-grey"
+                                    *ngIf="type=='tokens' && booking.consumer && booking.consumer.phoneNo">
+                                    {{booking.consumer.countryCode}} {{booking.consumer.phoneNo}}</div>
                             </div>
-                            <div class="text-grey" *ngIf="type=='appointments' && booking.providerConsumer && booking.providerConsumer.phoneNo">{{booking.providerConsumer.countryCode}} {{booking.providerConsumer.phoneNo}}</div>
-                            <div class="text-grey" *ngIf="type=='tokens' && booking.consumer && booking.consumer.phoneNo">{{booking.consumer.countryCode}} {{booking.consumer.phoneNo}}</div>
+                        </div>
+                        <div class="d-flex align-items-center my-sm-3" *ngIf="booking.service">
+                            <div *ngIf="booking.service.name">{{booking.service.name}}</div>
+                        </div>
+                        <div class="d-flex align-items-center my-sm-3"
+                            *ngIf="type=='appointments' && booking.appmtFor && booking.appmtFor[0]">
+                            <span *ngIf="booking.appmtFor[0].apptTime">{{booking.appmtFor[0].apptTime}}</span>
+                        </div>
+                        <div class="d-flex align-items-center my-sm-3" *ngIf="type=='tokens'">
+                            <span *ngIf="booking.checkInTime">{{booking.checkInTime}}</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="font-weight-bold mr-2">
+                                <button pButton type="button" *ngIf="type=='appointments'"
+                                    (click)="goToBooking(booking.uid)" class="p-button-raised p-button-primary"
+                                    label="View"></button>
+                                <button pButton type="button" *ngIf="type=='tokens'"
+                                    (click)="goToBooking(booking.ynwUuid)" class="p-button-raised p-button-primary"
+                                    label="View"></button>
+                            </div>
+                            <!-- <div class="font-weight-bold">
+                                        <button pButton type="button" class="p-button-raised p-button-light"
+                                            label="Reschedule"></button>
+                                    </div> -->
                         </div>
                     </div>
-                    <div class="d-flex align-items-center my-sm-3" *ngIf="booking.service">
-                        <div *ngIf="booking.service.name">{{booking.service.name}}</div>
-                    </div>
-                    <div class="d-flex align-items-center my-sm-3" *ngIf="type=='appointments' && booking.appmtFor && booking.appmtFor[0]">
-                      <span *ngIf="booking.appmtFor[0].apptTime">{{booking.appmtFor[0].apptTime}}</span>
-                    </div>
-                    <div class="d-flex align-items-center my-sm-3" *ngIf="type=='tokens'">
-                      <span *ngIf="booking.checkInTime">{{booking.checkInTime}}</span>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div class="font-weight-bold mr-2">
-                            <button pButton type="button" *ngIf="type=='appointments'" (click)="goToBooking(booking.uid)" class="p-button-raised p-button-primary"
-                                label="View"></button>
-                            <button pButton type="button" *ngIf="type=='tokens'" (click)="goToBooking(booking.ynwUuid)" class="p-button-raised p-button-primary"
-                              label="View"></button>
-                        </div>
-                        <!-- <div class="font-weight-bold">
-                            <button pButton type="button" class="p-button-raised p-button-light"
-                                label="Reschedule"></button>
-                        </div> -->
-                    </div>
-                </div>
-            </p-card>
+                </p-card>
+            </div>
+            <div class="text-center mt-3 pointer-cursor">
+                <span class="text-capitalize font-weight-bold" (click)="viewAllBookings()">View All</span>
+            </div>
         </div>
-        <div class="text-center mt-3 pointer-cursor">
-          <span class="text-capitalize font-weight-bold" (click)="viewAllBookings()">View All</span>
+        <div class="text-center my-3" *ngIf="bookings && bookings.length==0">
+            <span class="text-capitalize font-weight-bold">No {{title}}</span>
         </div>
     </p-card>
 </div>

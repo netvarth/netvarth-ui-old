@@ -456,6 +456,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.statusAction = this.groupService.getitemFromGroupStorage('appt_action');
         }
       }
+      if (params.source && params.source == "calendarView") {
+        this.SelectedView = {
+          name: "calendar",
+          displayName: "Calendar View"
+        }
+      }
     });
   }
 

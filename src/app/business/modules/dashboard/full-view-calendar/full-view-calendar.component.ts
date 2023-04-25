@@ -45,10 +45,7 @@ export class FullViewCalendarComponent implements OnInit {
   // };
 
   calendarOptions: CalendarOptions = {
-    plugins: [
-      interactionPlugin,
-      dayGridPlugin,
-      timeGridPlugin,
+    plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin,
       // listPlugin,
     ],
     headerToolbar: {
@@ -59,25 +56,33 @@ export class FullViewCalendarComponent implements OnInit {
     initialView: 'dayGridMonth',
     // initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
-    editable: true,
-    selectable: true,
+    // editable: true,
+    // selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
+    dayMaxEventRows: true,
     events: [],
+    datesSet: this.handleMonthChange.bind(this),
+    eventOverlap: function(stillEvent, movingEvent) {
+      return stillEvent.allDay && movingEvent.allDay;
+    },
     eventTimeFormat: { // like '14:30:00'
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    meridiem: false
-  },
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      meridiem: false
+    },
+    views: {
+      dayGrid: {
+        dayMaxEventRows: 1 // adjust to 6 only for timeGridWeek/timeGridDay
+      },
+      timeGridWeek: {
+        dayMaxEventRows: 1 // adjust to 6 only for timeGridWeek/timeGridDay
+      }
+    },
     select: this.handleDateSelect.bind(this),
-    eventClick: this.handleEventClick.bind(this),
+    // eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this)
-    /* you can update a remote database when these fire:
-    eventAdd:
-    eventChange:
-    eventRemove:
-    */
   };
 
   eventsPromise: Promise<EventInput>;
@@ -114,30 +119,32 @@ export class FullViewCalendarComponent implements OnInit {
 
   handleMonthChange(event) {
     if (event.endStr) {
-      const currentDateEnd = new Date(event.endStr);
-      let currentMonth = currentDateEnd.getMonth() == 0 ? 12 : ('0' + currentDateEnd.getMonth()).slice(-2);
-      let nextMonth = currentDateEnd.getMonth() + 1 == 0 ? 12 : ('0' + (currentDateEnd.getMonth() + 1)).slice(-2);
-      currentDateEnd.setMonth(currentDateEnd.getMonth() - 1);
-      let currentYear = currentDateEnd.getFullYear();
-      let nextYear = currentMonth == 12 ? currentDateEnd.getFullYear() + 1 : currentDateEnd.getFullYear();
-      let currentMonthDate = currentYear + '-' + currentMonth + '-' + '01';
-      let nextMonthDate = nextYear + '-' + nextMonth + '-' + '01';
+      console.log('event.endStr', event)
+      let currentDateStart = event.startStr.split('T')[0];
+      let currentDateEnd = event.endStr.split('T')[0];
+      console.log('currentDateStart', currentDateStart);
+      console.log('currentDateEnd', currentDateEnd);
+      // let currentMonth = currentDateEnd.getMonth() == 0 ? 12 : ('0' + currentDateEnd.getMonth()).slice(-2);
+      // let nextMonth = currentDateEnd.getMonth() + 1 == 0 ? 12 : ('0' + (currentDateEnd.getMonth() + 1)).slice(-2);
+      // currentDateEnd.setMonth(currentDateEnd.getMonth() - 1);
+      // let currentYear = currentDateEnd.getFullYear();
+      // let nextYear = currentMonth == 12 ? currentDateEnd.getFullYear() + 1 : currentDateEnd.getFullYear();
+      // let currentMonthDate = currentYear + '-' + currentMonth + '-' + '01';
+      // let nextMonthDate = nextYear + '-' + nextMonth + '-' + '01';
       let api_filter = {};
-      api_filter['date-ge'] = currentMonthDate;
-      api_filter['date-le'] = nextMonthDate;
+      api_filter['date-ge'] = currentDateStart;
+      api_filter['date-le'] = currentDateEnd;
 
-      var date = new Date(currentMonthDate);
+      var date = new Date(currentDateStart);
       var varDate = new Date(date); //dd-mm-YYYY
       var today = new Date();
       today.setHours(0, 0, 0, 0);
       let history_filter = {};
       if (!(varDate >= today)) {
-        history_filter['date-ge'] = currentMonthDate;
-        history_filter['date-le'] = nextMonthDate;
+        history_filter['date-ge'] = currentDateStart;
+        history_filter['date-le'] = currentDateEnd;
       }
       this.handleBookings(api_filter, history_filter);
-
-
     }
   }
 
@@ -226,13 +233,18 @@ export class FullViewCalendarComponent implements OnInit {
         if (this.type == 'appointments') {
           this.bookingsForCalendar.push(
             {
-              title: this.totalBookings[i].appointmentEncId,
+              // title: this.totalBookings[i].appointmentEncId,
+              title: this.totalBookings[i].consumer.userProfile.firstName + ' ' + this.totalBookings[i].consumer.userProfile.lastName,
               date: this.totalBookings[i].appmtDate,
+              start: this.totalBookings[i].appmtDate + 'T' + this.totalBookings[i].appmtTime.split('-')[0] + ":00",
+              end: this.totalBookings[i].appmtDate + 'T' + this.totalBookings[i].appmtTime.split('-')[1] + ":00",
               bookingData: this.totalBookings[i],
               time: this.totalBookings[i].appmtTime,
               status: this.totalBookings[i].apptStatus,
+              allDay: false,
+              display: 'block',
               backgroundColor: randomColor,
-              borderColor: randomColor
+              borderColor: randomColor,
             })
         }
         else if (this.type == 'tokens') {
@@ -266,7 +278,7 @@ export class FullViewCalendarComponent implements OnInit {
   }
 
   bookingClicked(event) {
-    console.log("event", event.event.extendedProps)
+    console.log("event.event.context", event.event._context.calendarApi.currentData.currentViewType)
     let checkin;
     let type;
     if (this.type == "appointments") {
@@ -297,10 +309,15 @@ export class FullViewCalendarComponent implements OnInit {
     // });
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        timetype: 2
+        timetype: 2,
+        source: 'calendarView'
       }
     };
     this.router.navigate(['provider', type, checkin], navigationExtras)
+  }
+
+  getCalendarType(event) {
+    return event.event._context.calendarApi.currentData.currentViewType;
   }
 
   randomIntFromInterval(min, max) {
@@ -309,13 +326,15 @@ export class FullViewCalendarComponent implements OnInit {
 
 
   handleDateSelect(selectInfo) {
-
+    console.log("selectInfo", selectInfo)
   }
 
   handleEventClick(clickInfo) {
+    console.log("Event Clicked", clickInfo)
   }
 
   handleEvents(events) {
+    console.log("events", events)
   }
 
 }

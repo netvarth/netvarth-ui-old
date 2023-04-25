@@ -5,14 +5,24 @@
     <full-calendar [options]="calendarOptions" [events]="eventsPromise | async" #calendar>
         <ng-template #eventContent let-arg>
             <div (click)="bookingClicked(arg)" class="text-center text-dark">
-                <div>
-                    <b>{{ arg.event.title }}</b>
+                <div *ngIf="getCalendarType(arg) == 'dayGridMonth'">
+                    <div>
+                        <b>{{ arg.event.title }}</b>
+                    </div>
+                    <div>
+                        <b>{{ arg.event.extendedProps.time }}</b>
+                    </div>
+                    <div [class]="arg.event.extendedProps.status">
+                        <b class="text-capitalize">{{ arg.event.extendedProps.status }}</b>
+                    </div>
                 </div>
-                <div>
-                    <b>{{ arg.event.extendedProps.time }}</b>
+                <div *ngIf="getCalendarType(arg) == 'timeGridWeek'">
+                    <div>
+                        <b>{{ arg.event.title }}</b>
+                    </div>
                 </div>
-                <div [class]="arg.event.extendedProps.status">
-                    <b class="text-capitalize">{{ arg.event.extendedProps.status }}</b>
+                <div *ngIf=" getCalendarType(arg)=='timeGridDay'">
+                    <b>{{ arg.event.title }}</b>&nbsp;<b>( {{ arg.event.extendedProps.time }} )</b>
                 </div>
             </div>
         </ng-template>

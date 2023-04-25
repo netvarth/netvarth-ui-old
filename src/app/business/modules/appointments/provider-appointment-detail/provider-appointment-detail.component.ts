@@ -102,6 +102,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   questionnaires: any = [];
   spName: any;
   teams: any;
+  source: any;
   @Input() widget;
   appointmentModes = [
     { mode: "WALK_IN_APPOINTMENT", value: "Walk in " },
@@ -137,6 +138,9 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     });
     this.activated_route.queryParams.subscribe(params => {
       this.timetype = JSON.parse(params.timetype);
+      if (params && params.source) {
+        this.source = params.source;
+      }
     });
     this.customer_label = this.wordProcessor.getTerminologyTerm("customer");
     this.provider_label = this.wordProcessor.getTerminologyTerm("provider");
@@ -210,7 +214,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     const navigationExtras: NavigationExtras = {
       queryParams: { action: 'edit', id: this.waitlist_data.appmtFor[0].id }
     };
-    console.log("Parmassss :",this.waitlist_data.appmtFor[0].id )
+    console.log("Parmassss :", this.waitlist_data.appmtFor[0].id)
     this.router.navigate(['/provider/customers/create'], navigationExtras);
   }
 
@@ -437,7 +441,17 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
 
   goBack() {
     this.api_loading = false;
-    this.router.navigate(["provider"]);
+    if (this.source) {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          source: this.source
+        }
+      }
+      this.router.navigate(["provider", "appointments"], navigationExtras);
+    }
+    else {
+      this.router.navigate(["provider"]);
+    }
   }
 
   addProviderNote(checkin) {
@@ -499,7 +513,17 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       );
   }
   gotoPrev() {
-    this.locationobj.back();
+    if (this.source) {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          source: this.source
+        }
+      }
+      this.router.navigate(["provider", "appointments"], navigationExtras);
+    }
+    else {
+      this.locationobj.back();
+    }
   }
   // getTimeSlots() {
   //   this.provider_services.getAppointmentSlotsByDate(this.waitlist_data.schedule.id, this.waitlist_data.appmtDate).subscribe(data => {
@@ -870,7 +894,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         multiSelection: this.apptMultiSelection,
         timetype: this.timetype,
         NoViewDetail: "true",
-        src : 'detail'
+        src: 'detail'
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
@@ -894,8 +918,8 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         multiSelection: this.apptMultiSelection,
         timetype: this.timetype,
         NoViewDetail: "true",
-        status : true,
-        src : 'detail'
+        status: true,
+        src: 'detail'
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
@@ -974,9 +998,8 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     return currentmode[0].value;
   }
 
-  gotoCustomerDetails()
-  {
-    this.router.navigate(['provider','customers',this.waitlist_data.appmtFor[0].id])
+  gotoCustomerDetails() {
+    this.router.navigate(['provider', 'customers', this.waitlist_data.appmtFor[0].id])
   }
 
   openbookinghistory() {
