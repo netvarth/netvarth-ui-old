@@ -6,7 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import { CdlService } from '../cdl.service';
 // import { projectConstants } from '../../../../app.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 // import { ColumnFilterFormElement } from 'primeng/table';
 
@@ -36,16 +35,11 @@ export class LoansComponent implements OnInit {
     lastName: '',
     date: ''
   };
-  filters: any;
+  filters: any = {};
   minday = new Date(1900, 0, 1);
   maxday = new Date();
   loading: any;
   config: any;
-  pagination: any = {
-    startpageval: 1,
-    totalCnt: 0,
-    perPage: 10
-  };
   spInternalStatus: any;
   totalLoansCount: any;
   statusDropdownClicked: any = false;
@@ -62,8 +56,7 @@ export class LoansComponent implements OnInit {
     // private location: Location,
     private activated_route: ActivatedRoute,
     private cdlservice: CdlService,
-    private statusListFormBuilder: UntypedFormBuilder,
-    private dateTimeProcessor: DateTimeProcessor
+    private statusListFormBuilder: UntypedFormBuilder
   ) {
     this.statusList = this.statusListFormBuilder.group({
       status: [null]
@@ -83,15 +76,17 @@ export class LoansComponent implements OnInit {
 
     this.getBranchesByFilter().then((data) => {
       this.branches = data;
-      this.filterConfig = [
-        { field: 'referenceNo', title: 'Loan Id', type: 'text', filterType: 'like' },
-        { field: 'customerFirstName', title: 'Customer First Name', type: 'text', filterType: 'like' },
-        { field: 'customerLastName', title: 'Customer Last Name', type: 'text', filterType: 'like' },
-        { field: 'partnerName', title: 'Dealer Name', type: 'text', filterType: 'like' },
-        { field: 'createdDate', title: 'Created Date', type: 'date', filterType: 'eq' },
-        { field: 'branch', title: 'Branch', type: 'dropdown', filterType: 'eq', options: this.branches, value: 'id', label: 'branchName' }
-      ]
-    })
+    });
+
+    this.filterConfig = [
+      { field: 'referenceNo', title: 'Loan Id', type: 'text', filterType: 'like' },
+      { field: 'customerFirstName', title: 'Customer First Name', type: 'text', filterType: 'like' },
+      { field: 'customerLastName', title: 'Customer Last Name', type: 'text', filterType: 'like' },
+      { field: 'customerMobile', title: 'Customer Phone', type: 'text', filterType: 'like' },
+      { field: 'partnerName', title: 'Dealer Name', type: 'text', filterType: 'like' },
+      { field: 'createdDate', title: 'Created Date', type: 'date', filterType: 'eq' },
+      // { field: 'branch', title: 'Branch', type: 'dropdown', filterType: 'eq', options: this.branches, value: 'id', label: 'branchName' }
+    ]
 
 
 
@@ -215,6 +210,7 @@ export class LoansComponent implements OnInit {
   applyFilters(event) {
     console.log("event", event)
     let api_filter = event;
+    this.filters = api_filter;
     if (api_filter) {
       this.getTotalLoansCount(api_filter)
       this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
@@ -226,6 +222,9 @@ export class LoansComponent implements OnInit {
   loadLoans(event) {
     // this.getTotalLoansCount()
     let api_filter = this.cdlservice.setFiltersFromPrimeTable(event);
+    if (this.filters && Object.keys(this.filters).length > 0) {
+      api_filter = { ...this.filters, ...api_filter }
+    }
     if (this.statusDropdownClicked) {
       if (this.statusDisplayName && this.statusDisplayName.name) {
         console.log("this.statusDisplayName.name", this.statusDisplayName.name)
@@ -300,9 +299,7 @@ export class LoansComponent implements OnInit {
       const api_filter = {};
       api_filter['spInternalStatus-eq'] = this.spInternalStatus;
       this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
-        this.loansList = data;
-        this.loans = this.loansList;
-        this.pagination.totalCnt = data.length;
+        this.loans = data;
         this.loading = false;
       });
     }
@@ -351,14 +348,12 @@ export class LoansComponent implements OnInit {
               }
               this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
                 this.loans = data;
-                this.pagination.totalCnt = data.length;
                 console.log("Loans List : ", this.loans);
                 this.loading = false;
               })
             }
             else {
               this.loans = this.loansList;
-              this.pagination.totalCnt = this.loansList.length;
               this.loading = false;
             }
           });
@@ -411,21 +406,6 @@ export class LoansComponent implements OnInit {
     }
   }
 
-  setFilterForApi() {
-    const api_filter = {};
-    if (this.filter.firstName !== '') {
-      api_filter['customerFirstName-eq'] = this.filter.firstName;
-    }
-    if (this.filter.id !== '') {
-      api_filter['id-eq'] = this.filter.id;
-    }
-
-    if (this.filter.date !== '') {
-      api_filter['createdDate-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.date);
-    }
-    return api_filter;
-  }
-
   getTotalLoansCount(filter?) {
     if (!filter) {
       filter = {}
@@ -440,47 +420,6 @@ export class LoansComponent implements OnInit {
   }
   hideFilterSidebar() {
     this.filter_sidebar = false;
-  }
-
-  resetFilter() {
-    this.labelFilterData = '';
-    this.selectedLabels = [];
-    this.filters = {
-      'firstName': false,
-      'id': false,
-      'lastName': false,
-      'date': false
-    };
-    this.filter = {
-      id: '',
-      firstName: '',
-      lastName: '',
-      date: ''
-    };
-    this.getLoans()
-  }
-
-
-
-  clearFilter() {
-    this.resetFilter();
-    this.filterapplied = false;
-  }
-
-
-  keyPress() {
-    if (this.filter.id || this.filter.firstName || this.filter.lastName || this.filter.date) {
-      this.filterapplied = true;
-    } else {
-      this.filterapplied = false;
-    }
-  }
-
-
-
-  doSearch() {
-    let api_filter = this.setFilterForApi();
-    this.getLoansByFilter(api_filter);
   }
 
 
