@@ -12,11 +12,14 @@
           *ngIf="dealerData && dealerData.partnerAttachments && dealerData.partnerAttachments[0] && dealerData.partnerAttachments[0].s3path">
           <img [src]="dealerData.partnerAttachments[0].s3path" alt="Dealer Photo" width="100" height="100">
         </div>
-        <div>
-          <div class="ml-4">
+        <div class="ml-4">
+          <div>
             <span class="dealer-tag">Dealer</span><br>
             <span class="dealer-name mt-4"
               *ngIf="dealerData && dealerData.partnerName">{{dealerData.partnerName}}</span>
+          </div>
+          <div *ngIf="dealerData && dealerData.referenceNo" class="font-medium">
+            <span>Dealer Id : <span class="font-weight-bold">{{dealerData.referenceNo}}</span></span>
           </div>
         </div>
       </div>
@@ -711,8 +714,8 @@
                   </div>
                 </div><br>
                 <span class="font-weight-bold">Agreement Valid Date</span><br>
-                <div class="d-flex">
-                  <div>
+                <div class="row no-padding">
+                  <div class="col-md-4 col-xs-6">
                     <div class="bggrey my-2">
                       <div>
                         <div class="fieldPadding">
@@ -726,7 +729,7 @@
                     </div>
                   </div>
 
-                  <div>
+                  <div class="col-md-4 col-xs-6">
                     <div class="bggrey my-2">
                       <div>
                         <div class="fieldPadding">
@@ -735,14 +738,51 @@
                             <div class="d-flex">
                               <p-calendar class="validDateCalendar" dataType="date" inputId="to" [(ngModel)]="toDate"
                                 [minDate]="fromDate"></p-calendar>
-                              <button pButton type="button" class="btn-primary px-2 py-0"
-                                (click)="updatePartnervalidDate()">Update</button>
+
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
+                  <div class="col-md-4 col-xs-12">
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="fieldPadding">
+                          <div>
+                            <label for="to" class="form-title">Integration Id</label>
+                            <div class="d-flex">
+                              <div>
+                                <input pInputText type="text" class="search-field" placeholder="Integration Id"
+                                  style="width:100%" [(ngModel)]="integrationId" />
+                              </div>
+                              <!-- <div>
+                                <button pButton type="button" class="btn-primary" (click)="updatePartnervalidDate()">Update</button>
+                              </div> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-xs-6">
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="fieldPadding">
+                          <div>
+                            <div class="d-flex">
+                              <div>
+                                <button pButton type="button" class="btn-primary" (click)="updatePartnervalidDate()">Update</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
                 </div>
               </div>
             </div>

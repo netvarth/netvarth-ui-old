@@ -55,6 +55,7 @@ export class ViewDealerComponent implements OnInit {
   minDate = new Date();
   maxDate: any;
   roleId: any;
+  integrationId: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -93,26 +94,29 @@ export class ViewDealerComponent implements OnInit {
         this.getBarChartData();
         this.getTotalLoanAmount();
       }
-      if (data && this.dealerData.active) {
-        this.status = this.dealerData.active;
+      if (data && data.active) {
+        this.status = data.active;
       }
-      if (data && this.dealerData.districtWiseRestriction) {
-        this.districtWiseStatus = this.dealerData.districtWiseRestriction;
+      if (data && data.districtWiseRestriction) {
+        this.districtWiseStatus = data.districtWiseRestriction;
       }
-      if (data && this.dealerData.autoApproval) {
-        this.autoApprovalStatus = this.dealerData.autoApproval;
+      if (data && data.autoApproval) {
+        this.autoApprovalStatus = data.autoApproval;
       }
-      if (data && this.dealerData.subventionSchemeEnabled) {
-        this.subventionStatus = this.dealerData.subventionSchemeEnabled;
+      if (data && data.subventionSchemeEnabled) {
+        this.subventionStatus = data.subventionSchemeEnabled;
       }
-      if (data && this.dealerData.salesOfficerVerificationRequired) {
-        this.salesOfficerVerificationstatus = this.dealerData.salesOfficerVerificationRequired;
+      if (data && data.salesOfficerVerificationRequired) {
+        this.salesOfficerVerificationstatus = data.salesOfficerVerificationRequired;
       }
-      if (data && this.dealerData.validTo) {
-        this.toDate = new Date(this.dealerData.validTo);
+      if (data && data.validTo) {
+        this.toDate = new Date(data.validTo);
       }
-      if (data && this.dealerData.validFrom) {
-        this.fromDate = new Date(this.dealerData.validFrom);
+      if (data && data.validFrom) {
+        this.fromDate = new Date(data.validFrom);
+      }
+      if (data && data.integrationId) {
+        this.integrationId = data.integrationId;
       }
       console.log("this.dealerData", this.dealerData)
     });
@@ -577,7 +581,8 @@ export class ViewDealerComponent implements OnInit {
   updatePartnervalidDate() {
     let data = {
       "validFrom": moment(this.fromDate + 1).format('YYYY-MM-DD'),
-      "validTo": moment(this.toDate + 1).format('YYYY-MM-DD')
+      "validTo": moment(this.toDate + 1).format('YYYY-MM-DD'),
+      "integrationId": this.integrationId
     };
 
     this.cdlservice.updateDealerValidDates(this.dealerUid, data).subscribe((data) => {
