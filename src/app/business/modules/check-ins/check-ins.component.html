@@ -48,11 +48,11 @@
 </section>
 
 
-<div class="clearfix"></div>
+<!-- <div class="clearfix"></div>
 <div class="pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
   <p-dropdown [dropdownIcon]="'fa fa-caret-down '" [options]="viewOptions" [(ngModel)]="SelectedView"
     optionLabel="displayName"></p-dropdown>
-</div>
+</div> -->
 
 <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
 <section *ngIf="!showDashbard && !apiloading">

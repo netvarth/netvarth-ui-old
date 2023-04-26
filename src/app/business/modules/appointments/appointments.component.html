@@ -3,10 +3,10 @@
     <div class="pull-left pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
       <div class="dash-head">Appointments </div>
     </div>
-    <div class="pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
+    <!-- <div class="pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
       <p-dropdown [dropdownIcon]="'fa fa-caret-down '" (onChange)="viewChange($event)" [options]="viewOptions"
         [(ngModel)]="SelectedView" optionLabel="displayName"></p-dropdown>
-    </div>
+    </div> -->
     <div class="pull-right">
       <!-- *ngIf="time_type !==3" -->
       <nav class="navbar navbar-static-top no-margin" role="navigation" [class.index-zero]="filter_sidebar">
@@ -2699,7 +2699,14 @@
 </section>
 <section class="app-appointments-component dashboard content pro-dash"
   *ngIf="showDashbard && !apiloading && SelectedView && SelectedView.name == 'calendar'">
-  <div class="card">
-    <app-full-view-calendar [type]="'appointments'"></app-full-view-calendar>
+  <div class="card p-0">
+    <app-full-view-calendar [type]="'appointments'" (dateSelected)="dateSelected($event)"></app-full-view-calendar>
   </div>
 </section>
+
+<div>
+  <p-sidebar [(visible)]="showAppointmentCreateSidebar" position="right" styleClass="p-sidebar-md">
+    <h3>Create Appointment</h3>
+    <b>Selected Date : <span *ngIf="selectedDataFromCalendar && selectedDataFromCalendar.startStr">{{selectedDataFromCalendar.startStr}}</span></b>
+  </p-sidebar>
+</div>
