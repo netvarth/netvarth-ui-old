@@ -930,6 +930,7 @@ export class CreateDealerComponent implements OnInit {
             this.uploadAudioVideo(s3urls).then(
               (dataS3Url) => {
                 console.log(dataS3Url);
+                this.filesToUpload = [];
               });
           }
           this.snackbarService.openSnackBar("Dealer Created Successfully")
@@ -967,6 +968,9 @@ export class CreateDealerComponent implements OnInit {
           if (this.filesToUpload[i]["type"] == 'gst') {
             this.dealerData['gstAttachments'].push(this.filesToUpload[i]);
           }
+          if (this.filesToUpload[i]["type"] == 'licenese') {
+            this.dealerData['licenceAttachments'].push(this.filesToUpload[i]);
+          }
         }
         console.log("filesToUpload", this.filesToUpload)
         this.dealerData['uid'] = this.dealerId;
@@ -976,6 +980,9 @@ export class CreateDealerComponent implements OnInit {
               (dataS3Url) => {
                 console.log(dataS3Url);
               });
+          }
+          if (s3urls) {
+            this.filesToUpload = [];
           }
           this.cdlservice.dealerApprovalRequest(this.dealerId).subscribe((s3urls: any) => {
             if (this.from == 'create') {

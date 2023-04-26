@@ -456,7 +456,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.statusAction = this.groupService.getitemFromGroupStorage('appt_action');
         }
       }
-      if (params.source && params.source == "calendarView") {
+      if (params.source && params.source == "calendar") {
         this.SelectedView = {
           name: "calendar",
           displayName: "Calendar View"
@@ -544,6 +544,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(["provider", "appointments", "questionnaires"], {
       queryParams: { source: "appt", uid: appt.uid }
     });
+  }
+
+  viewChange(event) {
+    console.log("event", event);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        source: event.value.name
+      }
+    }
+    this.router.navigate(['provider', 'appointments'], navigationExtras)
   }
 
   getServiceName(serviceName) {

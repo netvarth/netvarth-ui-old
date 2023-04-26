@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-// import listPlugin from '@fullcalendar/list';
+import listPlugin from '@fullcalendar/list';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { DashboardService } from '../dashboard.service';
 import { NavigationExtras, Router } from '@angular/router';
@@ -16,54 +16,31 @@ import { NavigationExtras, Router } from '@angular/router';
 export class FullViewCalendarComponent implements OnInit {
   @Input() type;
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
-  private calendarApi;
+  // private calendarApi;
   showWeekends: any = false;
   bookingsForCalendar: any = [];
   backgroundColors: any = ["#FBFFB1", "#FFEBB4", "#ECF9FF", "#AEE2FF", "#FFF1DC"];
-  // calendarOptions: CalendarOptions = {
-  //   initialView: 'dayGridMonth',
-  //   dateClick: this.handleDateClick.bind(this),
-  //   plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-  //   headerToolbar: {
-  //     // left: 'prev,next today',
-  //     // center: 'title',
-  //     // right: 'dayGridMonth,timeGridWeek,timeGridDay'
-  //   },
-  //   weekends: true,
-  //   datesSet: this.handleMonthChange.bind(this),
-  //   events: [],
-  //   selectable: true,
-  //   // contentHeight: 999,
-  //   selectMirror: true,
-  //   dayMaxEvents: true,
-  //   dayMaxEventRows: true,
-  //   views: {
-  //     dayGrid: {
-  //       dayMaxEventRows: 3 // adjust to 6 only for timeGridWeek/timeGridDay
-  //     }
-  //   }
-  // };
 
   calendarOptions: CalendarOptions = {
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin,
-      // listPlugin,
+      listPlugin,
     ],
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
     },
     initialView: 'dayGridMonth',
-    // initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
-    // editable: true,
+    // editable: true,                
     // selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
     dayMaxEventRows: true,
     events: [],
+    lazyFetching: true,
     datesSet: this.handleMonthChange.bind(this),
-    eventOverlap: function(stillEvent, movingEvent) {
+    eventOverlap: function (stillEvent, movingEvent) {
       return stillEvent.allDay && movingEvent.allDay;
     },
     eventTimeFormat: { // like '14:30:00'
@@ -82,7 +59,8 @@ export class FullViewCalendarComponent implements OnInit {
     },
     select: this.handleDateSelect.bind(this),
     // eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this)
+    eventsSet: this.handleEvents.bind(this),
+    contentHeight: "auto",
   };
 
   eventsPromise: Promise<EventInput>;
@@ -104,13 +82,22 @@ export class FullViewCalendarComponent implements OnInit {
   time_type: number;
   statusAction: any;
   loading = true;
+  config = {
+    show: true,
+    weekOffset: -2,
+    selectedDate: new Date(),
+    DisablePastDays: true
+  };
 
+  onDateChange(date) {
+    console.log(date);
+  }
   constructor(
     private dashboardService: DashboardService,
     // private dialog: MatDialog,
     private router: Router
   ) {
-
+    this.onResize()
   }
 
   handleDateClick(event) {
@@ -225,6 +212,13 @@ export class FullViewCalendarComponent implements OnInit {
 
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if (window.innerWidth <= 567) {
+      this.calendarOptions.initialView = 'listMonth'
+    }
+  }
+
   setTotalBookings() {
     if (this.totalBookings) {
       this.bookingsForCalendar = [];
@@ -268,9 +262,9 @@ export class FullViewCalendarComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.calendarApi = this.calendarComponent.getApi();
-    let currentDate = this.calendarApi.view.currentEnd;
-    this.handleMonthChange({ endStr: currentDate });
+    // this.calendarApi = this.calendarComponent.getApi();
+    // let currentDate = this.calendarApi.view.currentEnd;
+    // this.handleMonthChange({ endStr: currentDate });
   }
 
   toggleWeekends() {
@@ -310,7 +304,7 @@ export class FullViewCalendarComponent implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         timetype: 2,
-        source: 'calendarView'
+        source: 'calendar'
       }
     };
     this.router.navigate(['provider', type, checkin], navigationExtras)
