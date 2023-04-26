@@ -33,7 +33,7 @@
         </div>
 
         <div *ngIf="loanData && loanData.applicationStatus =='Rejected'" class="text-red mt-2">
-          <span><b>Sorry,your loan was rejected</b></span>
+          <span><b>Loan is rejected</b></span>
         </div>
       </div>
     </div>
@@ -120,7 +120,7 @@
                   <th style=" width: 50%;" class="details-sub-title">{{loanData.customer.email}}</th>
                 </tr>
 
-                
+
                 <tr style="width: 100%;" *ngIf="loanData && loanData.customer && loanData.customer.gender">
                   <td style="width: 50%;" class="details-title">Gender</td>
                   <th style=" width: 50%;" class="details-sub-title">{{loanData.customer.gender}}</th>
