@@ -102,6 +102,14 @@
           <div class="table-responsive">
             <table class="table table-borderless">
               <tbody>
+
+                <tr style="width: 100%;"
+                  *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerIntegrationId">
+                  <td style="width: 50%;" class="details-title">Customer Integration Id</td>
+                  <th style=" width: 50%;" class="details-sub-title">
+                    {{loanData.loanApplicationKycList[0].customerIntegrationId}}</th>
+                </tr>
+
                 <tr style="width: 100%;" *ngIf="loanData && loanData.customer && loanData.customer.phoneNo">
                   <td style="width: 50%;" class="details-title">Phone Number</td>
                   <th style=" width: 50%;" class="details-sub-title">{{loanData.customer.phoneNo}}</th>

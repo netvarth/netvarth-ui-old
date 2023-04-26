@@ -270,6 +270,7 @@ export class CreateComponent implements OnInit {
       subventionLoan: [null],
       referralCode: [null],
       bankbranch: [null],
+      customerIntegrationId: [null],
       coapplicants: this.createLoanFormBuilder.array([])
     });
 
@@ -447,6 +448,9 @@ export class CreateComponent implements OnInit {
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].id) {
               this.loanApplicationKycId = this.loanData.loanApplicationKycList[0].id;
               this.getAccountAggregatorStatus(this.loanId, this.loanApplicationKycId);
+            }
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].customerIntegrationId) {
+              this.createLoan.controls.customerIntegrationId.setValue(this.loanData.loanApplicationKycList[0].customerIntegrationId);
             }
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].nomineeName) {
               this.createLoan.controls.nomineename.setValue(this.loanData.loanApplicationKycList[0].nomineeName);
@@ -1193,6 +1197,7 @@ export class CreateComponent implements OnInit {
       "loanApplicationKycList": [
         {
           "isCoApplicant": false,
+          "customerIntegrationId": this.createLoan.controls.customerIntegrationId.value,
           "maritalStatus": this.createLoan.controls.martialstatus.value,
           "pan": this.createLoan.controls.pannumber.value,
           "aadhaar": this.createLoan.controls.aadharnumber.value,
@@ -2142,6 +2147,7 @@ export class CreateComponent implements OnInit {
       "employeeCode": this.createLoan.controls.employeeCode.value,
       "loanApplicationKycList": [
         {
+          "customerIntegrationId": this.createLoan.controls.customerIntegrationId.value,
           "employmentStatus": this.createLoan.controls.employmenttype.value,
           "monthlyIncome": this.createLoan.controls.salary.value,
           "nomineeType": this.createLoan.controls.nomineetype.value,
