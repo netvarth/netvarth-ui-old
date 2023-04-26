@@ -731,20 +731,23 @@ export class BranchUserDetailComponent implements OnInit {
       }
     });
   }
-  getDepartments() {
-    this.provider_services.getDepartments().subscribe(
-      data => {
-        this.departments = data["departments"];
-        if (this.actionparam.type !== "edit") {
-          this.userForm
-            .get("selectedDepartment")
-            .setValue(this.departments[0].departmentId);
-        }
-        this.deptLength = this.departments.length;
-        this.api_loading = false;
-      },
-      error => { }
-    );
+    getDepartments() {
+      this.provider_services.getDepartments()
+          .subscribe(
+              (data: any) => {
+                  this.departments = data.departments.filter(depart => depart.departmentStatus === 'ACTIVE');
+                  if (this.actionparam.type !== "edit") {
+                    this.userForm
+                      .get("selectedDepartment")
+                      .setValue(this.departments[0].departmentId);
+                  }
+                  this.deptLength = this.departments.length;
+                  this.api_loading = false; 
+              },
+              error => {
+                  
+              }
+          );
   }
   redirecToUsersl() {
     this.router.navigate(["provider", "settings", "general", "users"]);
