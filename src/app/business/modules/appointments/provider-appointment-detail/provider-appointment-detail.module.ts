@@ -18,6 +18,7 @@ import { NotesSectionModule } from "../../bookings/notes-section/notes-section.m
 import { HistorySectionModule } from "../../bookings/history-section/history-section.module";
 import { CommunicationPopupModule } from "../../bookings/communication-popup/communication-popup.module";
 import { AppointmentActionsModule } from "../appointment-actions/appointment-actions.module";
+import { BookingDetailsModule } from "../../bookings/booking-details/booking-details.module";
 
 const routes: Routes= [
     { path: '', component: ProviderAppointmentDetailComponent }
@@ -42,6 +43,7 @@ const routes: Routes= [
         HistorySectionModule,
         CommunicationPopupModule,
         AppointmentActionsModule,
+        BookingDetailsModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [

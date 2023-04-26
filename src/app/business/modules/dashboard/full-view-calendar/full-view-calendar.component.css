@@ -2,6 +2,13 @@
   background-color: #1E4079 !important;
 }
 
+::ng-deep .full-view-calendar .fc.fc-theme-standard .fc-toolbar .fc-button
+{
+  background-color: #262A37!important;
+  border-color:#262A37!important;
+  color: #fff!important;
+}
+
 .Completed,
 .done {
   color: rgb(18, 104, 18) !important;

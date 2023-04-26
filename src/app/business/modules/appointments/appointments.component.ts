@@ -400,7 +400,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   apptData: any;
   futureAppointmentsForCalendar: any = [];
   todayAppointmentsForCalendar: any = [];
-
+  showAppointmentCreateSidebar: any = false;
+  selectedDataFromCalendar: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -544,6 +545,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(["provider", "appointments", "questionnaires"], {
       queryParams: { source: "appt", uid: appt.uid }
     });
+  }
+
+  dateSelected(event) {
+    this.showAppointmentCreateSidebar = true;
+    this.selectedDataFromCalendar = event;
   }
 
   viewChange(event) {

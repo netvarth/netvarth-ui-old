@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -15,6 +15,7 @@ import { NavigationExtras, Router } from '@angular/router';
 })
 export class FullViewCalendarComponent implements OnInit {
   @Input() type;
+  @Output() dateSelected = new EventEmitter();
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
   // private calendarApi;
   showWeekends: any = false;
@@ -23,7 +24,7 @@ export class FullViewCalendarComponent implements OnInit {
 
   calendarOptions: CalendarOptions = {
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin,
-      listPlugin,
+      listPlugin
     ],
     headerToolbar: {
       left: 'prev,next today',
@@ -32,8 +33,8 @@ export class FullViewCalendarComponent implements OnInit {
     },
     initialView: 'dayGridMonth',
     weekends: true,
-    // editable: true,                
-    // selectable: true,
+    editable: true,
+    selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
     dayMaxEventRows: true,
@@ -43,18 +44,30 @@ export class FullViewCalendarComponent implements OnInit {
     eventOverlap: function (stillEvent, movingEvent) {
       return stillEvent.allDay && movingEvent.allDay;
     },
-    eventTimeFormat: { // like '14:30:00'
+    eventTimeFormat: {
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
       meridiem: false
     },
     views: {
-      dayGrid: {
-        dayMaxEventRows: 1 // adjust to 6 only for timeGridWeek/timeGridDay
+      dayGridMonth: {
+        dayMaxEventRows: 2,
+        eventMaxStack: 1
       },
       timeGridWeek: {
-        dayMaxEventRows: 1 // adjust to 6 only for timeGridWeek/timeGridDay
+        dayMaxEventRows: 1,
+        slotEventOverlap: false,
+        eventMinHeight: 25,
+        expandRows: true,
+        // eventMaxStack: 1,
+        // moreLinkClick: 'day'
+      }, timeGridDay: {
+        dayMaxEventRows: 1,
+        slotEventOverlap: false,
+        eventMinHeight: 25,
+        expandRows: true,
+        // eventMaxStack: 4
       }
     },
     select: this.handleDateSelect.bind(this),
@@ -181,7 +194,6 @@ export class FullViewCalendarComponent implements OnInit {
           else {
             resolve([todayData, futureData]);
           }
-
         })
       })
     })
@@ -202,7 +214,6 @@ export class FullViewCalendarComponent implements OnInit {
           else {
             resolve([todayData, futureData]);
           }
-
         })
       })
     })
@@ -237,8 +248,9 @@ export class FullViewCalendarComponent implements OnInit {
               status: this.totalBookings[i].apptStatus,
               allDay: false,
               display: 'block',
-              backgroundColor: randomColor,
-              borderColor: randomColor,
+              backgroundColor: '#33009C',
+              borderColor: '#33009C',
+              color: '#fff'
             })
         }
         else if (this.type == 'tokens') {
@@ -319,8 +331,17 @@ export class FullViewCalendarComponent implements OnInit {
   }
 
 
-  handleDateSelect(selectInfo) {
-    console.log("selectInfo", selectInfo)
+  handleDateSelect(dateInfo) {
+    console.log("selectInfo", dateInfo);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        checkinType: 'WALK_IN_APPOINTMENT',
+        source:'calendar'
+      }
+    }
+    this.router.navigate(['provider', 'appointments', 'appointment'], navigationExtras)
+    // this.dateSelected.emit(dateInfo);
+
   }
 
   handleEventClick(clickInfo) {

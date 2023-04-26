@@ -3,26 +3,20 @@
         onIcon="pi&nbsp;pi-eye" offIcon="pi pi-eye-slash" (onChange)="toggleWeekends()"></p-toggleButton> -->
     <full-calendar [options]="calendarOptions" [events]="eventsPromise | async" #calendar>
         <ng-template #eventContent let-arg>
-            <div (click)="bookingClicked(arg)" class="text-center text-dark">
-                <div *ngIf="getCalendarType(arg) == 'dayGridMonth'">
+            <div (click)="bookingClicked(arg)" class="text-center pointer-cursor text-light"
+                [class.text-dark]="getCalendarType(arg)=='listMonth'">
+                <div
+                    *ngIf="getCalendarType(arg) == 'dayGridMonth' || getCalendarType(arg) == 'timeGridWeek' || getCalendarType(arg)=='timeGridDay'">
                     <div *ngIf="arg.event && arg.event.title">
                         <b>{{ arg.event.title }}</b>
                     </div>
-                    <div *ngIf="arg.event && arg.event.extendedProps && arg.event.extendedProps.time">
+                    <!-- <div *ngIf="arg.event && arg.event.extendedProps && arg.event.extendedProps.time">
                         <b>{{ arg.event.extendedProps.time }}</b>
                     </div>
                     <div [class]="arg.event.extendedProps.status"
                         *ngIf="arg.event && arg.event.extendedProps && arg.event.extendedProps.status">
                         <b class="text-capitalize">{{ arg.event.extendedProps.status }}</b>
-                    </div>
-                </div>
-                <div *ngIf="getCalendarType(arg) == 'timeGridWeek'">
-                    <div>
-                        <b>{{ arg.event.title }}</b>
-                    </div>
-                </div>
-                <div *ngIf="getCalendarType(arg)=='timeGridDay'">
-                    <b>{{ arg.event.title }}</b>&nbsp;<b>( {{ arg.event.extendedProps.time }} )</b>
+                    </div> -->
                 </div>
                 <div *ngIf="getCalendarType(arg)=='listMonth'" class="text-capitalize font-weight-bold text-left">
                     <div>

@@ -870,3 +870,8 @@
 ::ng-deep .appointments-dashboard-card .p-tabview .p-tabview-panels {
   padding: 0px !important;
 }
+
+
+::ng-deep .p-component-overlay {
+  width: 0 !important;
+}

@@ -31,6 +31,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FullViewCalendarModule } from '../dashboard/full-view-calendar/full-view-calendar.module';
 import { TabViewModule } from 'primeng/tabview';
 import { DropdownModule } from 'primeng/dropdown';
+import { SidebarModule } from 'primeng/sidebar';
 
 const routes: Routes = [
   { path: '', component: AppointmentsComponent },
@@ -81,6 +82,7 @@ const routes: Routes = [
     FullViewCalendarModule,
     TabViewModule,
     DropdownModule,
+    SidebarModule,
     [RouterModule.forChild(routes)]
   ],
   declarations: [
