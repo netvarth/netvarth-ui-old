@@ -88,7 +88,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   dialogMode = 'edit';
   customer_label = '';
   hidemeItems = true;
-  maxdiscountRequired=false;
+  maxdiscountRequired = false;
   public keepOriginalOrder = (a, b) => a.key;
   constructor(private formbuilder: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -100,7 +100,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     private sharedfunctionObj: SharedFunctions,
     private activated_route: ActivatedRoute,
     private dateTimeProcessor: DateTimeProcessor,
-    public dialog: MatDialog, ) {
+    public dialog: MatDialog,) {
     this.subscriptions.sink = this.activated_route.params.subscribe(params => {
       this.couponId = params.id;
     });
@@ -132,7 +132,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   createForm() {
     this.couponForm = this.formbuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-      couponCode: ['', Validators.compose([Validators.required,  Validators.maxLength(this.maxChars)])],
+      couponCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
       description: [''],
       calculationType: ['', [Validators.required]],
       amount: ['', [Validators.required]],
@@ -143,7 +143,9 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         minBillAmount: ['', [Validators.required]],
         maxDiscountValue: [''],
         isproviderAcceptCoupon: [''],
+        isconsumerAcceptCoupon: [''],
         maxProviderUseLimit: [''],
+        maxConsumerUseLimit: [''],
         validTimeRange: [''],
         policies: this.formbuilder.group({
           departments: [[]],
@@ -210,10 +212,10 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       maxDiscountValue: coupon.couponRules.maxDiscountValue,
       maxConsumerUseLimitPerProvider: coupon.couponRules.maxConsumerUseLimitPerProvider,
       maxProviderUseLimit: coupon.couponRules.maxProviderUseLimit,
+      maxConsumerUseLimit: coupon.couponRules.maxConsumerUseLimit,
       firstCheckinOnly: coupon.couponRules.firstCheckinOnly,
       isproviderAcceptCoupon: (coupon.couponRules.maxProviderUseLimit ? true : false),
-
-
+      isconsumerAcceptCoupon: (coupon.couponRules.maxConsumerUseLimit ? true : false)
     });
     this.couponForm.get('couponRules').get('policies').patchValue({
       isDepartment: (coupon.couponRules.policies.departments && coupon.couponRules.policies.departments.length > 0) ? true : false,
@@ -329,7 +331,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     this.endDateInvalidError = false;
     this.weekdayError = false;
     this.minbillamountError = false;
-    this.maxdiscountRequired=false;
+    this.maxdiscountRequired = false;
     if (this.action === 'edit' && this.couponDetails.couponRules.published) {
       this.step = this.step + 1;
     } else {
@@ -344,16 +346,16 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         calmodeControl.markAsTouched();
 
         if (nameControl.valid && codeControl.valid && amountControl.valid && calmodeControl.valid &&
-           this.couponForm.get('name').value.trim()!=='' &&this.couponForm.get('couponCode').value.trim()!=''
-           && this.couponForm.get('amount').value!==0){
+          this.couponForm.get('name').value.trim() !== '' && this.couponForm.get('couponCode').value.trim() != ''
+          && this.couponForm.get('amount').value !== 0) {
           this.step = this.step + 1;
           setTimeout(() => {
             this.startDatePicker.nativeElement.focus();
           }, 100);
 
 
-        }else{
-          this.snackbarService.openSnackBar('Fill all required fields',{ 'panelClass': 'snackbarerror' })
+        } else {
+          this.snackbarService.openSnackBar('Fill all required fields', { 'panelClass': 'snackbarerror' })
         }
       } else if (this.step == 2) {
         const startDateVal = this.couponForm.get('couponRules').get('startDate').value;
@@ -365,7 +367,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         console.log(endDateVal);
         if (calculationType === 'Percentage') {
           const maxdiscountvalue = this.couponForm.get('couponRules').get('maxDiscountValue').value;
-          if (maxdiscountvalue === 0 || maxdiscountvalue == null || maxdiscountvalue === undefined || maxdiscountvalue =='') {
+          if (maxdiscountvalue === 0 || maxdiscountvalue == null || maxdiscountvalue === undefined || maxdiscountvalue == '') {
             this.maxdiscountRequired = true;
           }
         }
@@ -387,7 +389,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
           this.weekdayError = true;
         }
 
-        if (this.startDaterequired == false && this.endDaterequired === false && this.endDateInvalidError == false && this.weekdayError === false &&this.maxdiscountRequired == false&&  this.minbillamountError == false) {
+        if (this.startDaterequired == false && this.endDaterequired === false && this.endDateInvalidError == false && this.weekdayError === false && this.maxdiscountRequired == false && this.minbillamountError == false) {
           this.step = this.step + 1;
         }
       }
@@ -696,18 +698,18 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       policiesEntered = false;
     }
     if (isService) {
-      if(this.active_user.type!=='BRANCH'){
+      if (this.active_user.type !== 'BRANCH') {
         if (this.services.length === 0 && this.customer_groups.length === 0 && this.customer_labels.length == 0) {
-          this.snackbarService.openSnackBar('Please choose  either services/ '+this.customer_label+' labels/ '+this.customer_label+' groups for which this coupon is applied for', { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Please choose  either services/ ' + this.customer_label + ' labels/ ' + this.customer_label + ' groups for which this coupon is applied for', { 'panelClass': 'snackbarerror' });
           policiesEntered = false;
         }
-      }else if(this.active_user.type==='BRANCH'){
+      } else if (this.active_user.type === 'BRANCH') {
         if (this.services.length === 0 && this.departments.length === 0 && this.users.length == 0 && this.customer_groups.length === 0 && this.customer_labels.length == 0) {
-          this.snackbarService.openSnackBar('Please choose  either services/departments/users/'+this.customer_label+' labels /'+this.customer_label+' groups for which this coupon is applied for', { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Please choose  either services/departments/users/' + this.customer_label + ' labels /' + this.customer_label + ' groups for which this coupon is applied for', { 'panelClass': 'snackbarerror' });
           policiesEntered = false;
         }
       }
-      
+
     }
     if (isCatalog) {
 

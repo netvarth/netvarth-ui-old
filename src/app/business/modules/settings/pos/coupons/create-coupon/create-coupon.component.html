@@ -247,6 +247,25 @@
                       </div>
                     </div>
                     <div class="row">
+                      <div class="col-xl-12">
+                        <div class="form-group">
+                          <mat-checkbox class="example-margin" formControlName="isconsumerAcceptCoupon"> Limit number of coupons
+                            consumer can accept
+                          </mat-checkbox>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" [hidden]="this.couponForm.get('couponRules').get('isconsumerAcceptCoupon').value==false">
+                      <div class="col-xl-6 col-lg-6 col-md-6">
+                        <div class="form-group">
+                          <label>Max Coupons #</label>
+                          <input type="text" (keypress)="isNumeric($event)" min="0" max="1000000" (keyup)="isvalid($event)"
+                            class="form-control1 form-control-solid form-control-lg" id="maxConsumerUseLimit"
+                            placeholder="Max coupon apply limit" formControlName="maxConsumerUseLimit" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
                       <div class="col-xl-6 col-lg-6 col-md-6">
                         <div class="form-group">
                           <label class="rupee-font">Minimum Bill Amount(₹) <span class="red">*</span></label>
