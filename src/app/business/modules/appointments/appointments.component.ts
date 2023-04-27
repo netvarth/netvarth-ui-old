@@ -654,10 +654,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getTodayAppointments();
     }
     if (this.time_type === 2) {
-      this.getFutureAppointments();
+      this.getAppointmentRequests();
     }
     if (this.time_type === 3) {
-      this.getAppointmentRequests();
+      this.getFutureAppointments();
     }
 
   }
@@ -679,7 +679,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.time_type === 1) {
       this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
-    } else if (this.time_type === 2) {
+    } else if (this.time_type === 3) {
       this.groupService.setitemToGroupStorage('appt_future_selQ', this.selQIds);
     } else {
       this.groupService.setitemToGroupStorage('appt_history_selQ', this.selQIds);
@@ -914,7 +914,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       for (const q of this.activeSchedules) {
         qids.push(q.id);
       }
-      if (!type && this.time_type === 2 && this.groupService.getitemFromGroupStorage('appt_future_selQ')) {
+      if (!type && this.time_type === 3 && this.groupService.getitemFromGroupStorage('appt_future_selQ')) {
         this.selQIds = this.groupService.getitemFromGroupStorage('appt_future_selQ');
       } else if (!type && this.time_type === 1 && this.groupService.getitemFromGroupStorage('appt_selQ')) {
         this.selQIds = this.groupService.getitemFromGroupStorage('appt_selQ');
@@ -927,7 +927,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.time_type === 1) {
           this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
         }
-        if (this.time_type === 2) {
+        if (this.time_type === 3) {
           this.groupService.setitemToGroupStorage('appt_future_selQ', this.selQIds);
         }
       }
@@ -1026,9 +1026,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     switch (this.time_type) {
       case 1: this.getTodayAppointments();
         break;
-      case 2: this.getFutureAppointments();
+      case 2: this.getAppointmentRequests();//request
         break;
-      case 3: this.getAppointmentRequests();//request
+      case 3: this.getFutureAppointments();
         break;
       case 4: this.getHistoryAppmts();
         break;
@@ -1064,9 +1064,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     switch (this.time_type) {
       case 1: this.getTodayAppointments();
         break;
-      case 2: this.getFutureAppointments();
+      case 2: this.getAppointmentRequests();
         break;
-      case 3: this.getAppointmentRequests();
+      case 3: this.getFutureAppointments();
         break;
       case 4: this.getHistoryAppmts();
         break;
@@ -1074,11 +1074,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getCounts();
   }
   setTimeType(time_type) {
+    console.log("time_type", time_type)
     this.showSlotsN = false;
     this.statusMultiCtrl = [];
     this.hideFilterSidebar();
     this.resetCheckList();
-    if (time_type === 2) {
+    if (time_type === 3) {
       this.getTomorrowDate();
       if (this.statusAction === 'completed' || this.statusAction === 'started') {
         this.statusAction = 'new';
@@ -1090,7 +1091,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.appt_list = this.check_in_filtered_list = [];
     this.time_type = time_type;
     this.groupService.setitemToGroupStorage('apptType', this.time_type);
-    if (time_type !== 4 || time_type !== 3) {
+    if (time_type !== 4 || time_type !== 2) {
       this.resetPaginationData();
     } else {
       const selectedView = this.groupService.getitemFromGroupStorage('appt-selectedView');
@@ -1124,14 +1125,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filter_date_end_max = null;
     if (this.time_type === 0) {
       this.filter_date_start_max = moment(new Date()).add(-1, 'days');
-    } else if (this.time_type === 2) {
+    } else if (this.time_type === 3) {
       this.filter_date_start_min = moment(new Date()).add(+1, 'days');
       this.filter_date_end_min = moment(new Date()).add(+1, 'days');
     }
   }
   getCounts() {
     const _this = this;
-    if (this.time_type !== 2 && this.activeSchedules.length > 0) {
+    if (this.time_type !== 3 && this.activeSchedules.length > 0) {
       this.getFutureAppointmentsCount()
         .then(
           (result) => {
@@ -2817,7 +2818,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log("TimeType:" + this.time_type);
     if (this.time_type === 1) {
       this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
-    } else if (this.time_type === 2) {
+    } else if (this.time_type === 3) {
       this.groupService.setitemToGroupStorage('appt_future_selQ', this.selQIds);
     } else {
       this.groupService.setitemToGroupStorage('appt_history_selQ', this.selQIds);

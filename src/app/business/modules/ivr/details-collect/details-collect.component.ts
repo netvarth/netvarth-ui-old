@@ -25,11 +25,13 @@ export class DetailsCollectComponent implements OnInit {
   confirmBoxRef: any;
   customerDetailsPanel: any;
   callHistoryPanel: any;
+  subCallHistoryPanel: any;
   remarksPanel: any;
   customerCallHistory: any;
   type: any;
   ivrQuestionnaire: any;
   questionAnswers: any;
+  subCallQuestionAnswers: any;
   qnr: any;
   showEditQnr: any = false;
   constructor(
@@ -104,6 +106,10 @@ export class DetailsCollectComponent implements OnInit {
     this.questionAnswers = event;
   }
 
+  getSubCallQuestionAnswers(event) {
+    this.subCallQuestionAnswers = event;
+  }
+
   getCallBack(uid) {
     this.ivrService.createCallBack(uid).subscribe((response: any) => {
       if (response) {
@@ -120,9 +126,19 @@ export class DetailsCollectComponent implements OnInit {
 
   }
 
+  calculateAge(date) {
+    const dob = date.toDate();
+    const today = Date.now();
+    const diffTime = Math.abs(dob - today);
+    const diffyears = Math.floor((diffTime / (1000 * 60 * 60 * 24)) / 365);
+    // const diffMonths = Math.floor((diffTime / (1000 * 60 * 60 * 24)) / 365 * 12);
+    console.log("diffYears", diffyears)
+    return diffyears;
+  }
+
   goBack() {
     // this.location.back()
-    this.router.navigate(['provider','ivr'])
+    this.router.navigate(['provider', 'ivr'])
   }
 
   saveCustomerDetails() {
@@ -182,8 +198,8 @@ export class DetailsCollectComponent implements OnInit {
         type: 'details'
       }
     };
-    this.router.navigate(['provider', 'ivr']).then(()=>{
-    this.router.navigate(['provider', 'ivr', 'details', uid], navigationExtras)
+    this.router.navigate(['provider', 'ivr']).then(() => {
+      this.router.navigate(['provider', 'ivr', 'details', uid], navigationExtras)
     })
   }
 
@@ -220,7 +236,7 @@ export class DetailsCollectComponent implements OnInit {
       queryParams: {
         action: "edit",
         id: id,
-        source:"ivr"
+        source: "ivr"
       }
     };
     this.router.navigate(['provider', 'customers', 'create'], navigationExtras);
@@ -291,6 +307,45 @@ export class DetailsCollectComponent implements OnInit {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
     }
+  }
+
+  validateSubCallQuestionnaire(id,src?) {
+    if (!this.subCallQuestionAnswers) {
+      this.subCallQuestionAnswers = {
+        answers: {
+          answerLine: [],
+          questionnaireId: this.ivrQuestionnaire.id
+        }
+      }
+    }
+    if (this.subCallQuestionAnswers.answers) {
+      this.ivrService.validateProviderQuestionnaire(this.subCallQuestionAnswers.answers).subscribe((data: any) => {
+        if (data.length === 0) {
+          this.submitSubCallQuestionnaire(this.subCallQuestionAnswers.answers, src);
+        }
+        else {
+          this.snackbarService.openSnackBar("Please Fill All Required Fields", { 'panelClass': 'snackbarerror' });
+        }
+        // this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
+      }, (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+    }
+  }
+
+  submitSubCallQuestionnaire(id, data, src?) {
+    this.ivrService.submitQuestionnaire(id, this.subCallQuestionAnswers.answers).subscribe((data: any) => {
+      this.snackbarService.openSnackBar("Details Saved Successfully");
+      if (!src) {
+        this.callDetails(this.callUid);
+      }
+      else if (src && src == 'details') {
+        this.ngOnInit();
+        this.showEditQnr = !this.showEditQnr;
+      }
+    }, (error) => {
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    });
   }
 
   submitQuestionnaire(data, src?) {

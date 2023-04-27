@@ -3,10 +3,10 @@
     <div class="pull-left pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
       <div class="dash-head">Appointments </div>
     </div>
-    <div class="pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
+    <!-- <div class="pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
       <p-dropdown [dropdownIcon]="'fa fa-caret-down '" (onChange)="viewChange($event)" [options]="viewOptions"
         [(ngModel)]="SelectedView" optionLabel="displayName"></p-dropdown>
-    </div>
+    </div> -->
     <div class="pull-right">
       <!-- *ngIf="time_type !==3" -->
       <nav class="navbar navbar-static-top no-margin" role="navigation" [class.index-zero]="filter_sidebar">
@@ -1418,7 +1418,7 @@
             <i class="fa fa-refresh" (click)="refresh()"></i>
           </a>
           <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
-            <img src="../../../assets/image s/provider-filter-icon.png" (click)="showFilterSidebar()"
+            <img src="../../../assets/images/provider-filter-icon.png" (click)="showFilterSidebar()"
               [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
               style="width: 22px !important; margin-top: -6px !important;">
           </a>
@@ -1999,7 +1999,6 @@
         </table>
       </div>
     </mat-tab>
-
     <mat-tab label="History ({{history_waitlist_count}})">
       <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
       <div *ngIf="!loading">

@@ -8,49 +8,11 @@
 </section>
 
 <div *ngIf="type && type == 'details'">
-  <div class="card">
-    <div *ngIf="customerDetails">
-      <div class="d-flex justify-content-between">
-        <div>
-          <div class="d-flex align-items-center">
-            <div class="profile-pic">
-              <span *ngIf="customerDetails.firstName" class="text-uppercase">{{customerDetails.firstName[0]}}</span>
-              <span *ngIf="customerDetails.lastName" class="text-uppercase">{{customerDetails.lastName[0]}}</span>
-              <span *ngIf="!customerDetails.firstName" class="text-uppercase"><i class="fa fa-ban"></i></span>
-            </div>
-            <div class="approvedColor text-capitalize mx-3 my-1 font-weight-bold">
-              <span *ngIf="customerDetails.firstName">{{customerDetails.firstName}}</span><span
-                *ngIf="customerDetails.lastName">&nbsp;{{customerDetails.lastName}}</span><br>
-              <span *ngIf="customerDetails.id" class="text-grey">Id : {{customerDetails.id}}</span>
-            </div>
-          </div>
-        </div>
-        <div class="d-flex align-items-center">
-          <a class="btn btn-primary" (click)="editCustomer(customerDetails.id)"><i class="fa fa-edit"></i>&nbsp;Edit</a>
-        </div>
-      </div>
-      <div class="my-2">
-        ( <span *ngIf="customerDetails.countryCode">{{customerDetails.countryCode}}</span>
-        <span *ngIf="customerDetails.phoneNo">{{customerDetails.phoneNo}}</span> )
-      </div>
-      <div class="row font-small">
-        <div class="col-md-3 col-sm-6 no-padding-small" *ngIf="customerDetails.gender">
-          <span class="font-weight-bold">Gender : </span>
-          <span>{{customerDetails.gender}}</span>
-        </div>
-        <div class="col-md-3 col-sm-6 no-padding-small" *ngIf="customerDetails.dob">
-          <span class="font-weight-bold">Dob : </span>
-          <span>{{customerDetails.dob}}</span>
-        </div>
-        <div class="col-md-6 no-padding-small" *ngIf="customerDetails.email">
-          <span class="font-weight-bold">Email : </span>
-          <span>{{customerDetails.email}}</span>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="card  my-1 p-1 py-2" *ngIf="callData">
+    <div class="font-weight-bold px-3 text-success">
+      <span>Call Details For</span>
+    </div>
     <div class="row px-1">
       <div class="col-md-3 col-xs-5 mt-2">
         <div class="font-weight-bold">
@@ -93,8 +55,8 @@
             </button>
 
             <button type="button" mat-menu-item class="font-weight-600" (click)="unassignToCall(callData.uid)"
-              *ngIf="callData && callData.userId && (callData.callStatus && callData.callStatus!='callCompleted')"><img width="15"
-                src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Unassign
+              *ngIf="callData && callData.userId && (callData.callStatus && callData.callStatus!='callCompleted')"><img
+                width="15" src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Unassign
             </button>
 
             <button type="button" mat-menu-item class="font-weight-600" (click)="markAsComplete(callData.uid)"
@@ -108,51 +70,99 @@
     </div>
   </div>
 
-  <div class="mt-2">
-    <div class="row px-md-2">
-      <div class="col-md-12 no-padding remarksPanel mt-2">
-        <mat-accordion>
-          <mat-expansion-panel [expanded]="remarksPanel" (opened)="remarksPanel = true" (closed)="remarksPanel = false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <div class="d-flex justify-content-center">
-                  <div class="d-flex align-items-center text-primary font-weight-bold">
-                    Remarks
-                  </div>
-                </div>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div>
-              <div class="mt-2">
-                <div class="d-flex justify-content-between">
-                  <div class="d-flex justify-content-center">
-                    <span class="font-weight-bold"></span>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <a class="btn btn-primary" (click)="addRemarks()"><i class="fa fa-edit"></i>&nbsp;Add Remarks</a>
-                  </div>
-                </div>
-                <div *ngIf="callData && callData.notes && callData.notes.length > 0">
-                  <div class="card mt-2" *ngFor="let note of callData.notes">
-                    {{note.note}}
-                    <div>
-                      <span class="font-too-small text-primary" *ngIf="note.createdDate">( Added on
-                        {{note.createdDate}} )</span>
+
+  <div class="card">
+    <div *ngIf="customerDetails">
+      <div class="d-flex justify-content-between">
+        <div>
+          <div class="d-flex align-items-center">
+            <div class="profile-pic">
+              <span *ngIf="customerDetails.firstName" class="text-uppercase">{{customerDetails.firstName[0]}}</span>
+              <span *ngIf="customerDetails.lastName" class="text-uppercase">{{customerDetails.lastName[0]}}</span>
+              <span *ngIf="!customerDetails.firstName" class="text-uppercase"><i class="fa fa-ban"></i></span>
+            </div>
+            <div class="approvedColor text-capitalize mx-3 my-1 font-weight-bold">
+              <span *ngIf="customerDetails.firstName">{{customerDetails.firstName}}</span><span
+                *ngIf="customerDetails.lastName">&nbsp;{{customerDetails.lastName}}</span><br>
+              <span *ngIf="customerDetails.id" class="text-grey">Id : {{customerDetails.id}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex align-items-center">
+          <a class="btn btn-primary" (click)="editCustomer(customerDetails.id)"><i class="fa fa-edit"></i>&nbsp;Edit</a>
+        </div>
+      </div>
+      <div class="my-2">
+        ( <span *ngIf="customerDetails.countryCode">{{customerDetails.countryCode}}</span>
+        <span *ngIf="customerDetails.phoneNo">{{customerDetails.phoneNo}}</span> )
+      </div>
+      <div class="row font-small">
+        <div class="col-md-3 col-sm-6 no-padding-small" *ngIf="customerDetails.gender">
+          <span class="font-weight-bold">Gender : </span>
+          <span>{{customerDetails.gender}}</span>
+        </div>
+        <div class="col-md-3 col-sm-6 no-padding-small" *ngIf="customerDetails.age">
+          <span class="font-weight-bold">Age : </span>
+          <span *ngIf="customerDetails.age">{{customerDetails.age.year}} Years</span>
+        </div>
+        <div class="col-md-6 no-padding-small" *ngIf="customerDetails.email">
+          <span class="font-weight-bold">Email : </span>
+          <span>{{customerDetails.email}}</span>
+        </div>
+      </div>
+      <div class="mt-2">
+        <div class="row px-md-2">
+          <div class="col-md-12 no-padding remarksPanel mt-2">
+            <mat-accordion>
+              <mat-expansion-panel [expanded]="remarksPanel" (opened)="remarksPanel = true"
+                (closed)="remarksPanel = false">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <div class="d-flex justify-content-center">
+                      <div class="d-flex align-items-center text-primary font-weight-bold">
+                        Remarks
+                      </div>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div>
+                  <div class="mt-2">
+                    <div class="d-flex justify-content-between">
+                      <div class="d-flex justify-content-center">
+                        <span class="font-weight-bold"></span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <a class="btn btn-primary" (click)="addRemarks()"><i class="fa fa-edit"></i>&nbsp;Add
+                          Remarks</a>
+                      </div>
+                    </div>
+                    <div *ngIf="callData && callData.notes && callData.notes.length > 0">
+                      <div class="card mt-2" *ngFor="let note of callData.notes">
+                        {{note.note}}
+                        <div>
+                          <span class="font-too-small text-primary" *ngIf="note.createdDate">( Added on
+                            {{note.createdDate}} )</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="callData && callData.notes && callData.notes.length == 0">
+                      <div class="card mt-2">
+                        No Notes Added
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div *ngIf="callData && callData.notes && callData.notes.length == 0">
-                  <div class="card mt-2">
-                    No Notes Added
-                  </div>
-                </div>
-              </div>
-            </div>
-          </mat-expansion-panel>
-        </mat-accordion>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+
+
+
 
 
   <div class="mt-2">
@@ -177,7 +187,7 @@
                 <span *ngIf="showEditQnr"><i class="fa fa-eye"></i>&nbsp;View</span>
               </a>
             </div>
-            <div *ngIf="callData && callData.questionnaires && !callData.questionnaires[0]">
+            <div *ngIf="callData && callData.questionnaires && !callData.questionnaires[0] && !showEditQnr">
               <div>
                 <a class="btn btn-primary" (click)="editQnr()">
                   <span><i class="fa fa-edit"></i>&nbsp;Fill Form</span>
@@ -227,46 +237,93 @@
             </mat-expansion-panel-header>
             <div>
               <div *ngIf="customerCallHistory && customerCallHistory.length>0">
-                <div class="card my-1 p-1 py-2" *ngFor="let call of customerCallHistory">
-                  <div class="row px-1">
-                    <div class="col-md-6 col-xs-6 mt-2" (click)="viewCall(call.uid)">
-                      <div class="font-weight-bold">
-                        <!-- <span *ngIf="call && call.consumerPhone && call.consumerPhone.countryCode">
-                                                          {{call.consumerPhone.countryCode}}
-                                                        </span> -->
-                        <span *ngIf="call && call.consumerPhone && call.consumerPhone.number">
-                          {{call.consumerPhone.number}}
-                        </span>
-                      </div>
+                <div class="my-1 p-1" *ngFor="let call of customerCallHistory">
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <div class="row">
+                          <div class="col-md-6 col-xs-6 mt-2">
+                            <div class="font-weight-bold">
+                              <!-- <span *ngIf="call && call.consumerPhone && call.consumerPhone.countryCode">
+                                                                                  {{call.consumerPhone.countryCode}}
+                                                                                </span> -->
+                              <span *ngIf="call && call.consumerPhone && call.consumerPhone.number">
+                                {{call.consumerPhone.number}}
+                              </span>
+                            </div>
+                            <div>
+                              <!-- <span *ngIf="call && call.consumerId" class="font-weight-600">#{{call.consumerId}}</span>&nbsp; -->
+                              <span *ngIf="call && call.language" class="text-primary font-weight-600">{{call.language}}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="col-md-6 col-xs-6 mt-2">
+                            <div class="font-weight-bold">
+                              <span>
+                                <span *ngIf="call && call.userName">{{call.userName}}</span>
+                                <span *ngIf="call && !call.userName">Not Assigned</span>
+                              </span>
+                            </div>
+                            <div>
+                              <span [class]="'status-' + call.callStatus"
+                                class="text-capitalize">{{call.callStatus}}</span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="px-4">
                       <div>
-                        <!-- <span *ngIf="call && call.consumerId" class="font-weight-600">#{{call.consumerId}}</span>&nbsp; -->
-                        <span *ngIf="call && call.language" class="text-primary font-weight-600">{{call.language}}
-                        </span>
+                        <div class="col-md-12 col-xs-12 no-padding" (click)="viewCall(call.uid)">
+                          <div class="font-weight-bold col-md-6 col-xs-6">
+                            <span *ngIf="call && call.createdDate">{{call.createdDate}}</span>
+                          </div>
+                          <div class="font-weight-bold col-md-6 col-xs-6">
+                            <span *ngIf="call && call.Callduration">{{call.Callduration}}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="mt-4">
+                        <div class="d-flex justify-content-end">
+                          <a class="btn btn-primary" (click)="viewCall(call.uid)">
+                            <span><i class="fa fa-eye"></i>&nbsp;View</span>
+                          </a>
+                        </div>
+                        <div *ngIf="(call && call.questionnaires && !call.questionnaires[0]) && !showEditQnr">
+                          <div class="text-center">
+                            Questionnare Not Filled
+                          </div>
+                        </div>
+                        <div class="mt-3">
+                          <div *ngIf="showEditQnr">
+                            <app-questionnaire [questionnaireList]="ivrQuestionnaire" [source]="'ivr'"
+                              *ngIf="call && call.questionnaires && call.questionnaires[0] && call.questionnaires[0].questionAnswers"
+                              [questionAnswers]="call.questionnaires[0].questionAnswers"
+                              (returnAnswers)="getSubCallQuestionAnswers($event)" [type]="'details'" [mode]="'edit'">
+                            </app-questionnaire>
+                            <div>
+                              <button type="button" class="btn btn-primary open-all-btn"
+                                (click)="validateSubCallQuestionnaire(call.uid,'details')">Save</button>
+                            </div>
+                          </div>
+
+                          <div *ngIf="call.questionnaires && call.questionnaires[0]">
+                            <app-questionaire-view id="{{call.questionnaires[0].questionnaireId}}"
+                              [questionaire]="call.questionnaires[0]" [source]="'ivr'"
+                              *ngIf="!showEditQnr"></app-questionaire-view>
+                          </div>
+                        </div>
                       </div>
                     </div>
+                  </mat-expansion-panel>
 
-                    <div class="col-md-6 col-xs-6 mt-2" (click)="viewCall(call.uid)">
-                      <div class="font-weight-bold">
-                        <span>
-                          <span *ngIf="call && call.userName">{{call.userName}}</span>
-                          <span *ngIf="call && !call.userName">Not Assigned</span>
-                        </span>
-                      </div>
-                      <div>
-                        <span [class]="'status-' + call.callStatus" class="text-capitalize">{{call.callStatus}}</span>
-                      </div>
-                    </div>
 
-                    <div class="col-md-12 col-xs-12 no-padding" (click)="viewCall(call.uid)">
-                      <div class="font-weight-bold col-md-6 col-xs-6">
-                        <span *ngIf="call && call.createdDate">{{call.createdDate}}</span>
-                      </div>
-                      <div class="font-weight-bold col-md-6 col-xs-6">
-                        <span *ngIf="call && call.Callduration">{{call.Callduration}}</span>
-                      </div>
-                    </div>
 
-                  </div>
+
+
                 </div>
               </div>
               <div class="text-center"

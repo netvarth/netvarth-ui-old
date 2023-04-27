@@ -1192,6 +1192,14 @@ export class ProviderServices {
     const url = 'provider/appointment/update';
     return this.servicemeta.httpPut(url, post_data);
   }
+
+  updateBooking(data, type) {
+    let url = 'provider/waitlist/update';
+    if (type == 'appointment') {
+      url = 'provider/appointment/update';
+    }
+    return this.servicemeta.httpPut(url, data);
+  }
   updateUserOrder(post_data) {
     const url = 'provider/orders/update';
     return this.servicemeta.httpPut(url, post_data);
@@ -2933,9 +2941,9 @@ export class ProviderServices {
     const url = 'provider/user/' + id + '/available/' + status;
     return this.servicemeta.httpPut(url, null);
   }
-  addLabeltoService(serviceid ,data) {
-    const url = 'provider/services/applyLabel/' + serviceid ;
-    return this.servicemeta.httpPut(url,data);
+  addLabeltoService(serviceid, data) {
+    const url = 'provider/services/applyLabel/' + serviceid;
+    return this.servicemeta.httpPut(url, data);
   }
 
   getBusinessProfileFromCustomId(id) {
