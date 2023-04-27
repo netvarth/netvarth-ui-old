@@ -429,8 +429,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
   print(divName, signatureInfo) {
   let manualPresSignature: any;
-  if (this.manualSignInfo !== undefined && this.manualSignInfo.url) {
-  manualPresSignature = this.manualSignInfo.url;
+  if (signatureInfo !== undefined && signatureInfo.url) {
+  manualPresSignature = signatureInfo.url;
   console.log('manualPresSignature:', manualPresSignature)
   }
   console.log('manualPresSignature:', manualPresSignature)
@@ -473,11 +473,11 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   checkin_html += '<br>';
   checkin_html += '</div>';
   if(this.tempMedicalRecord.providerConsumer.firstName){
-  checkin_html += '<div>' + this.customer_label + ' : ' +this.tempMedicalRecord.providerConsumer.firstName; 
+  checkin_html += '<div>' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + ' : ' +this.tempMedicalRecord.providerConsumer.firstName; 
   checkin_html += '</div>'
   }
   else{
-  checkin_html += '<div>' + this.customer_label+ ' ID : ' +this.tempMedicalRecord.providerConsumer.jaldeeId; 
+  checkin_html += '<div>' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase()+ ' ID : ' +this.tempMedicalRecord.providerConsumer.jaldeeId; 
   checkin_html += '</div>'
   }
   if(this.tempMedicalRecord.providerConsumer.gender){
@@ -587,11 +587,11 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   checkin_html += '<br>';
   checkin_html += '</div>';
   if(this.tempMedicalRecord.providerConsumer.firstName){
-  checkin_html += '<div>' + this.customer_label + ' : ' +this.tempMedicalRecord.providerConsumer.firstName; 
+  checkin_html += '<div>' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase()+ ' : ' +this.tempMedicalRecord.providerConsumer.firstName; 
   checkin_html += '</div>'
   }
   else{
-  checkin_html += '<div>' + this.customer_label+ ' ID : ' +this.tempMedicalRecord.providerConsumer.jaldeeId; 
+  checkin_html += '<div>' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + ' ID : ' +this.tempMedicalRecord.providerConsumer.jaldeeId; 
   checkin_html += '</div>'
   }
   if(this.tempMedicalRecord.providerConsumer.gender){
