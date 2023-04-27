@@ -1,87 +1,46 @@
-/* .date-as-calendar {
-    font-variant: normal;
-    font-style: normal;
-    font-weight: normal;
-    font-family: "Helvetica", "Arial", sans-serif;
-    vertical-align: top;
- 
-    color: black;
-    background: white;
-    background: linear-gradient(to bottom right, #FFF 0%, #EEE 100%);
-
-    border: 1px solid #888;
-    border-radius: 3px;
-    overflow: hidden;
-
-    box-shadow: 2px 2px 2px -2px black;
+::ng-deep .booking-details .p-card .p-card-content {
+    padding: 0 !important;
 }
 
-.date-as-calendar .weekday,
-.date-as-calendar .day,
-.date-as-calendar .month,
-.date-as-calendar .year {
-    text-align: center;
-    line-height: 1.0;
+.booking-date,
+.booking-time {
+    font-size: 17px;
+    font-weight: 600;
+    color: #5A5F66;
 }
 
-.date-as-calendar .month {
-    font-family: "Oswald", sans-serif;
+.fa-icons {
+    border-radius: 50% !important;
+}
+
+.booking-service-name {
+    font-size: 18px;
+    font-weight: 700 !important;
+}
+
+.booking-status {
+    font-weight: 700 !important;
     text-transform: uppercase;
-    background: #B11;
-    background: linear-gradient(to bottom right, #D66 0%, #A00 100%);
-    color: white;
 }
 
-.position-pixels.date-as-calendar {
-    display: inline-block;
-    position: relative;
-    width: 65px;
-    height: 65px;
+.Confirmed {
+    color: #16A085 !important;
 }
 
-.position-pixels.date-as-calendar .weekday,
-.position-pixels.date-as-calendar .day,
-.position-pixels.date-as-calendar .month,
-.position-pixels.date-as-calendar .year {
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 1em;
+.Cancelled {
+    color: #AC2925 !important;
 }
 
-.position-pixels.date-as-calendar .month {
-    top: 0px;
-    font-size: 12px;
+.Completed {
+    color: green !important;
 }
 
-.position-pixels.date-as-calendar .weekday {
-    top: 16px;
-    font-size: 14px;
-}
-
-.position-pixels.date-as-calendar .day {
-    top: 26px;
-    margin-top: 5px;
-    font-size: 24px;
-}
-
-.position-pixels.date-as-calendar .year {
-    top: 50px;
-    font-size: 14px;
-} */
-
-
-.date-as-calendar {
-    border: 1px solid black !important;
-    border-radius: 5px!important;
-    text-align: center;
-}
-
-.date-as-calendar {
-    display: inline-block;
-    position: relative;
-    width: 65px;
-    height: 65px;
+.more-actions-btn
+{
+    border: 1px solid #000000cc;
+    border-radius: 3px;
+    padding: 10px;
+    color: #262626cc;
+    background-color: #fff;
+    font-weight: 500;
 }

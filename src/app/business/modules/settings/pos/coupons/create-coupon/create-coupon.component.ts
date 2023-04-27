@@ -145,7 +145,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         isproviderAcceptCoupon: [''],
         isconsumerAcceptCoupon: [''],
         maxProviderUseLimit: [''],
-        maxConsumerUseLimit: [''],
+        maxConsumerConsumeLimit: [''],
         validTimeRange: [''],
         policies: this.formbuilder.group({
           departments: [[]],
@@ -212,10 +212,10 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       maxDiscountValue: coupon.couponRules.maxDiscountValue,
       maxConsumerUseLimitPerProvider: coupon.couponRules.maxConsumerUseLimitPerProvider,
       maxProviderUseLimit: coupon.couponRules.maxProviderUseLimit,
-      maxConsumerUseLimit: coupon.couponRules.maxConsumerUseLimit,
+      maxConsumerConsumeLimit: coupon.couponRules.maxConsumerConsumeLimit,
       firstCheckinOnly: coupon.couponRules.firstCheckinOnly,
       isproviderAcceptCoupon: (coupon.couponRules.maxProviderUseLimit ? true : false),
-      isconsumerAcceptCoupon: (coupon.couponRules.maxConsumerUseLimit ? true : false)
+      isconsumerAcceptCoupon: (coupon.couponRules.maxConsumerConsumeLimit ? true : false)
     });
     this.couponForm.get('couponRules').get('policies').patchValue({
       isDepartment: (coupon.couponRules.policies.departments && coupon.couponRules.policies.departments.length > 0) ? true : false,

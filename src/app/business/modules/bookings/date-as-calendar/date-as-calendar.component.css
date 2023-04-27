@@ -1,0 +1,38 @@
+.date-as-calendar .date-values {
+    border: 2px solid #5F5B7C !important;
+    border-radius: 5px !important;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.date-as-calendar {
+    display: inline-block;
+    position: relative;
+    width: 70px;
+}
+
+.week {
+    background-color: #5F5B7C;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.day {
+    font-size: 24px;
+    font-weight: bold;
+    height: 25px;
+}
+
+.month {
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.calendar-pins {
+    height: 13px;
+    font-size: 20px;
+    display: block;
+    font-weight: bold;
+    color: #5F5B7C;
+}

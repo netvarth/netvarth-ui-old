@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookingDetailsComponent } from './booking-details.component';
 import { CardModule } from 'primeng/card';
+import { DateAsCalendarModule } from '../date-as-calendar/date-as-calendar.module';
 
 
 
@@ -11,7 +12,8 @@ import { CardModule } from 'primeng/card';
   ],
   imports: [
     CommonModule,
-    CardModule
+    CardModule,
+    DateAsCalendarModule,
   ],
   exports: [
     BookingDetailsComponent

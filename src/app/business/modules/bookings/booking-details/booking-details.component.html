@@ -1,15 +1,67 @@
-<p-card>
-    <p>{{bookingType}}</p>
-    <div>
-        <!-- <time datetime="2014-09-24" class="date-as-calendar position-pixels">
-            <span class="weekday">Wed</span>
-            <span class="day">24</span>
-            <span class="month">Sep</span>
-        </time> -->
-        <div class="date-as-calendar">
-            <div class="week">Wed</div>
-            <div class="day">24</div>
-            <div class="month">Sep</div>
+<div class="booking-details">
+    <p-card>
+        <div class="d-flex">
+            <div class="mr-2">
+                <app-date-as-calendar *ngIf="bookingDate" [bookingDate]="bookingDate"></app-date-as-calendar>
+            </div>
+            <div class="d-flex align-items-center">
+                <div>
+                    <div>
+                        <span class="booking-date" *ngIf="bookingDate">
+                            {{bookingDate | date : 'EE, MMMM d'}}
+                        </span>
+                        <span class="booking-time" *ngIf="bookingTime">
+                            ,&nbsp;{{bookingTime}}
+                        </span>
+                    </div>
+                    <div class="booking-service-name">
+                        <span>
+                            <i *ngIf="bookingData && bookingData.service && bookingData.service.serviceType && bookingData.service.serviceType === 'virtualService'"
+                                [class]="iconClass" class="fa-icons"></i>
+                        </span>
+                        <span>
+                            {{bookingData.service.name}}
+                        </span>
+                    </div>
+                    <div>
+                        <span *ngIf="bookingStatus" class="booking-status" [class]="bookingStatus">
+                            {{bookingStatus}}
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</p-card>
+        <div class="mt-2">
+            <div>
+                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/change.png"
+                        alt="Change Status" width="25px"> Change Status</button>
+                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/followup.png"
+                        alt="Follow Up" width="25px"> Follow Up</button>
+                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/assign-myself.png"
+                        alt="Follow Up" width="25px"> Assign Myself</button>
+                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/assign-doctor.png"
+                        alt="Assign Doctor" width="25px"> Assign Doctor</button>
+                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/assign-team.png"
+                        alt="Assign Team" width="25px"> Assign Team</button>
+                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/reschedule.png"
+                        alt="Reschedule" width="25px"> Reschedule</button>
+                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/share.png"
+                        alt="Share Booking Info" width="25px"> Share Booking Info</button>
+                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/print.png" alt="Print"
+                        width="25px"> Print</button>
+                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/user-details.png"
+                        alt="Patient Details" width="25px"> Patient Details</button>
+                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/notes.png"
+                        alt="Private Notes" width="25px"> Private Notes</button>
+                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/message.png"
+                        alt="Send Message" width="22px"> Send Message</button>
+                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/attachments.png"
+                        alt="Send Attachments" width="25px"> Send Attachments</button>
+                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/bill.png"
+                        alt="Generate Bill" width="25px"> Generate Bill</button>
+                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/labels.png" alt="Labels"
+                        width="25px"> Labels</button>
+            </div>
+        </div>
+    </p-card>
+</div>

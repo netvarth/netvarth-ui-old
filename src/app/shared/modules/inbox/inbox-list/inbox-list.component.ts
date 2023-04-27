@@ -142,7 +142,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   formatDateDisplay(dateStr) {
     dateStr = JSON.parse(dateStr);
-    console.log("Inbox Time :",dateStr)
     let retdate = '';
     const pubDate = new Date(dateStr);
     const obtdate = new Date(pubDate.getFullYear() + '-' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(pubDate.getDate()));

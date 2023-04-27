@@ -1,0 +1,17 @@
+<div>
+    <div class="date-as-calendar">
+        <div class="d-flex justify-content-between">
+            <div>
+                <span class="calendar-pins">|</span>
+            </div>
+            <div>
+                <span class="calendar-pins">|</span>
+            </div>
+        </div>
+        <div class="date-values">
+            <div class="week" *ngIf="week">{{week}}</div>
+            <div class="day" *ngIf="day">{{day}}</div>
+            <div class="month" *ngIf="month">{{month}}</div>
+        </div>
+    </div>
+</div>
