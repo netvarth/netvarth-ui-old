@@ -297,6 +297,7 @@ export class BranchUserDetailComponent implements OnInit {
 
 
   getProviderLocations() {
+ 
     this.api_loading = true;
     this.provider_services.getProviderLocations().subscribe(data => {
       console.log("loc_listdata" + JSON.stringify(data));
@@ -627,10 +628,11 @@ export class BranchUserDetailComponent implements OnInit {
         }
       );
     } else {
+    
       console.log(post_data1);
       this.provider_services.createUser(post_data1).subscribe(
         Id => {
-          if (this.loc_list) {
+          if (this.loc_list[0] && this.loc_list[0].id) {
             let loc = [];
             let userIds = [];
             loc.push(this.loc_list[0].id);
