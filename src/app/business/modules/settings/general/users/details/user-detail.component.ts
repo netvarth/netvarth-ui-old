@@ -175,7 +175,8 @@ export class BranchUserDetailComponent implements OnInit {
     console.log(this.subsector);
     this.userTypesFormfill = [
       { value: "ASSISTANT", name: "Assistant" },
-      { value: "PROVIDER", name: this.provider_label },
+      { value: "PROVIDER", name: this.provider_label.charAt(0).toUpperCase() + this.provider_label.slice(1).toLowerCase()},
+      
       { value: "ADMIN", name: "Admin" }
     ];
     if (bConfig && bConfig.bdata) {
