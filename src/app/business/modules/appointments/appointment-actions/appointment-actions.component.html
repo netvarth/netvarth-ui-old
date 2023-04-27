@@ -154,7 +154,7 @@
                     </div>
                     <div class="icon-text"
                         *ngIf="appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] && appt.service.virtualCallingModes[0].callingMode && (appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp')">
-                        {{appt.apptStatus == 'Started' ? 'Resume' : 'Call'}} Service
+                        {{appt.apptStatus == 'Started' ? 'Resume Service' : 'Video call'}}
                     </div>
                     <div class="icon-text"
                         *ngIf="appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] && appt.service.virtualCallingModes[0].callingMode &&(appt.service.virtualCallingModes[0].callingMode === 'Phone' || appt.service.virtualCallingModes[0].callingMode === 'WhatsApp')">
