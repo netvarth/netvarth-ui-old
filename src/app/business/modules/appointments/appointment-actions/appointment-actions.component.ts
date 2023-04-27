@@ -1966,7 +1966,6 @@ export class AppointmentActionsComponent implements OnInit {
       queryParams: {
         type: "followup",
         followup_uuid: this.appt.uid,
-        // providerId:this.appt.provider.id,
         date: moment(this.sel_checkindate).format("YYYY-MM-DD")
       }
     };

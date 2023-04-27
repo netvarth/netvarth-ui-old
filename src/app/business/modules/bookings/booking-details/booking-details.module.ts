@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BookingDetailsComponent } from './booking-details.component';
 import { CardModule } from 'primeng/card';
 import { DateAsCalendarModule } from '../date-as-calendar/date-as-calendar.module';
+import { ButtonModule } from 'primeng/button';
 
 
 
@@ -13,6 +14,7 @@ import { DateAsCalendarModule } from '../date-as-calendar/date-as-calendar.modul
   imports: [
     CommonModule,
     CardModule,
+    ButtonModule,
     DateAsCalendarModule,
   ],
   exports: [

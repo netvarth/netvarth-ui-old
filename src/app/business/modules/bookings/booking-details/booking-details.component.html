@@ -35,10 +35,14 @@
             <div>
                 <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/change.png"
                         alt="Change Status" width="25px"> Change Status</button>
-                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/followup.png"
-                        alt="Follow Up" width="25px"> Follow Up</button>
-                <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/assign-myself.png"
-                        alt="Follow Up" width="25px"> Assign Myself</button>
+
+                <button class="more-actions-btn mr-3 mt-2" (click)="followUpClicked()"><img
+                        src="../assets/images/bookings/followup.png" alt="Follow Up" width="25px"> Follow Up</button>
+
+                <button class="more-actions-btn mr-3 mt-2"
+                    *ngIf="!bookingData.multiSelection && accountType=='BRANCH' && activeUser == 1 && !bookingData.provider && (bookingData.schedule.provider.id === 0) && (bookingData.apptStatus === 'Arrived' || bookingData.apptStatus === 'Confirmed') && isUserdisable"
+                    (click)="assignMyself()"><img src="../assets/images/bookings/assign-myself.png" alt="Follow Up"
+                        width="25px"> Assign Myself</button>
                 <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/assign-doctor.png"
                         alt="Assign Doctor" width="25px"> Assign Doctor</button>
                 <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/assign-team.png"
