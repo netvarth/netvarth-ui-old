@@ -192,6 +192,15 @@
                         </mat-menu>
                       </div>
                     </div>
+
+                    <div class="col-md-12 col-xs-12 no-padding">
+                      <div class="font-weight-bold col-md-5 col-xs-5">
+                        <span *ngIf="call && call.createdDate">{{call.createdDate | date : 'mediumDate'}}</span>
+                      </div>
+                      <div class="font-weight-bold col-md-5 col-xs-5">
+                        <span *ngIf="call && call.callduration">{{call.callduration}}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <!-- <br class="d-lg-none d-md-none"> -->
@@ -220,7 +229,7 @@
               <ng-template pTemplate="body" let-call>
                 <div class="card my-1 p-1 py-2">
                   <div class="row px-1">
-                    <div class="col-md-3 col-xs-5 mt-2" (click)="viewCall(call.uid)">
+                    <div class="col-md-3 col-xs-5" (click)="viewCall(call.uid)">
                       <div class="font-weight-bold">
                         <!-- <span *ngIf="call && call.consumerPhone && call.consumerPhone.countryCode">
                                                         {{call.consumerPhone.countryCode}}
@@ -236,7 +245,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-3 col-xs-5 mt-2" (click)="viewCall(call.uid)">
+                    <div class="col-md-3 col-xs-5" (click)="viewCall(call.uid)">
                       <div class="font-weight-bold">
                         <span>
                           <span *ngIf="call && call.userName">{{call.userName}}</span>
@@ -284,9 +293,18 @@
                         </mat-menu>
                       </div>
                     </div>
+
+                    <div class="col-md-12 col-xs-12 no-padding">
+                      <div class="font-weight-bold col-md-5 col-xs-5">
+                        <span *ngIf="call && call.createdDate">{{call.createdDate | date : 'mediumDate'}}</span>
+                      </div>
+                      <div class="font-weight-bold col-md-5 col-xs-5">
+                        <span *ngIf="call && call.callduration">{{call.callduration}}</span>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
-                <br class="d-lg-none d-md-none">
               </ng-template>
               <ng-template pTemplate="emptymessage">
                 <tr>
