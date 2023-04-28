@@ -1212,6 +1212,23 @@ export class ProviderServices {
     const url = 'provider/appointment/unassign';
     return this.servicemeta.httpPut(url, post_data);
   }
+
+  unassignUserForBooking(data, type) {
+    let url = 'provider/waitlist/unassign';
+    if (type == 'appointment') {
+      url = 'provider/appointment/unassign';
+    }
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  unassignTeamForBooking(data, type) {
+    let url = 'provider/waitlist/unassignTeam';
+    if (type == 'appointment') {
+      url = 'provider/appointment/unassignTeam';
+    }
+    return this.servicemeta.httpPut(url, data);
+  }
+
   getUsersCount(filter = {}) {
     const url = 'provider/user/count?status-eq=ACTIVE';
     return this.servicemeta.httpGet(url, null, filter);

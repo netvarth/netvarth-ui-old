@@ -1,10 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { ProviderServices } from '../../../services/provider-services.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
-import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-booking-details',
@@ -14,6 +10,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 export class BookingDetailsComponent implements OnInit {
   @Input() bookingData;
   @Input() bookingType;
+  @Output() refreshParent = new EventEmitter();
   bookingDate: any;
   bookingTime: any;
   bookingStatus: any;
@@ -28,31 +25,42 @@ export class BookingDetailsComponent implements OnInit {
   isAppointment: any = false;
   isCheckin: any = false;
   constructor(
-    private router: Router,
     private groupService: GroupStorageService,
-    private providerServices: ProviderServices,
-    private dialog: MatDialog,
-    private snackbarService: SnackbarService
-  ) {
-    if (this.bookingType == 'appointment') {
-      this.isAppointment = true;
-    }
-    else {
-      this.isCheckin = true;
-    }
-  }
+    private providerServices: ProviderServices
+  ) { }
 
   ngOnInit(): void {
+
+
     this.user = this.groupService.getitemFromGroupStorage("ynw-user");
     this.accountType = this.user.accountType;
     this.activeUser = this.user.userType;
     this.getUser(this.user.id);
-    console.log("bookingData", this.bookingData)
-    this.bookingDate = this.isAppointment ? this.bookingData && this.bookingData.appmtDate : this.bookingData && this.bookingData.date;
-    this.bookingTime = this.isAppointment ? this.bookingData && this.bookingData.appmtTime : this.bookingData && this.bookingData.checkInTime;
-    this.bookingStatus = this.isAppointment ? this.bookingData && this.bookingData.apptStatus : this.bookingData && this.bookingData.waitlistStatus;
-    this.bookingUid = this.isAppointment ? this.bookingData && this.bookingData.uid : this.bookingData && this.bookingData.ynwUuid;
+    console.log("bookingData", this.bookingData);
+
+    this.checkBookingType().then((data) => {
+      if (data) {
+        this.bookingDate = this.isAppointment ? this.bookingData && this.bookingData.appmtDate : this.bookingData && this.bookingData.date;
+        this.bookingTime = this.isAppointment ? this.bookingData && this.bookingData.appmtTime : this.bookingData && this.bookingData.checkInTime;
+        this.bookingStatus = this.isAppointment ? this.bookingData && this.bookingData.apptStatus : this.bookingData && this.bookingData.waitlistStatus;
+        this.bookingUid = this.isAppointment ? this.bookingData && this.bookingData.uid : this.bookingData && this.bookingData.ynwUuid;
+      }
+    })
+
     this.getIconClass();
+  }
+
+
+  checkBookingType() {
+    return new Promise((resolve, reject) => {
+      if (this.bookingType && this.bookingType == 'appointment') {
+        this.isAppointment = true;
+      }
+      else {
+        this.isCheckin = true;
+      }
+      resolve(true)
+    })
   }
 
 
@@ -71,42 +79,6 @@ export class BookingDetailsComponent implements OnInit {
         error => { }
       );
     }
-  }
-
-  assignMyself() {
-    let msg = "";
-    msg = "Are you sure you want to assign this appointment to yourself ?";
-    const dialogref = this.dialog.open(ConfirmBoxComponent, {
-      width: "50%",
-      panelClass: ["commonpopupmainclass", "confirmationmainclass"],
-      disableClose: true,
-      data: {
-        message: msg,
-        type: "yes/no"
-      }
-    });
-    dialogref.afterClosed().subscribe(result => {
-      if (result) {
-        let data = {
-          provider: {
-            id: this.user.id
-          }
-        };
-        if (this.isAppointment)
-          this.updateBooking(data, this.bookingType)
-      }
-    });
-  }
-
-
-  updateBooking(data, type) {
-    this.providerServices.updateBooking(data, type).subscribe((data: any) => {
-      console.log(data);
-    },
-      (error: any) => {
-        this.snackbarService.openSnackBar(error, { panelClass: "snackbarerror" });
-      }
-    );
   }
 
 
@@ -146,20 +118,8 @@ export class BookingDetailsComponent implements OnInit {
   }
 
 
-  followUpClicked() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        type: "followup",
-        followup_uuid: this.bookingData.uid,
-        date: this.bookingDate
-      }
-    };
-    if (this.isAppointment) {
-      this.router.navigate(["provider", "appointments", "appointment"], navigationExtras);
-    }
-    else {
-      this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
-    }
+  refreshComponent(event) {
+    this.refreshParent.emit();
   }
 
 }

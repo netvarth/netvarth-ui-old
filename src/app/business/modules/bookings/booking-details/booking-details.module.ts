@@ -4,6 +4,7 @@ import { BookingDetailsComponent } from './booking-details.component';
 import { CardModule } from 'primeng/card';
 import { DateAsCalendarModule } from '../date-as-calendar/date-as-calendar.module';
 import { ButtonModule } from 'primeng/button';
+import { BookingActionsModule } from '../booking-actions/booking-actions.module';
 
 
 
@@ -16,6 +17,7 @@ import { ButtonModule } from 'primeng/button';
     CardModule,
     ButtonModule,
     DateAsCalendarModule,
+    BookingActionsModule
   ],
   exports: [
     BookingDetailsComponent

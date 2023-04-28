@@ -1,0 +1,13 @@
+.more-actions-btn {
+    border: 1px solid #000000cc;
+    border-radius: 3px;
+    padding: 10px;
+    color: #262626cc;
+    background-color: #fff;
+    font-weight: 500;
+}
+
+.more-actions-btn:hover {
+    background-color: #F0F0F0 !important;
+    transition: 0.3s;
+}

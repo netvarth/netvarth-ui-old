@@ -1030,4 +1030,8 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['provider', 'telehealth'], navigationExtras);
   }
+
+  refreshComponent(event) {
+    this.ngOnInit();
+  }
 }
