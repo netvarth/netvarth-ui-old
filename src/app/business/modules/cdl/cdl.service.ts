@@ -384,6 +384,11 @@ export class CdlService {
     return this.servicemeta.httpPut(url, null);
   }
 
+  pushToLms(id) {
+    const url = 'provider/loanapplication/' + id + '/webhookloanrequestresent';
+    return this.servicemeta.httpPut(url, null);
+  }
+
   refreshAadharVerify(id) {
     const url = 'provider/loanapplication/aadhar/status/' + id;
     return this.servicemeta.httpPut(url, null);
@@ -816,7 +821,8 @@ export class CdlService {
         'canLoanApplicationOperationsVerification': roleCapabilities.includes('loanApplicationOperationsVerification'),
         'canViewCustomerPhoneNumber': roleCapabilities.includes('viewCustomerPhoneNumber'),
         'canViewKycReport': roleCapabilities.includes('viewKycReport'),
-        'canLoanApplicationBranchVerification': roleCapabilities.includes('loanApplicationBranchVerification')
+        'canLoanApplicationBranchVerification': roleCapabilities.includes('loanApplicationBranchVerification'),
+        'canPushtoLms': roleCapabilities.includes('lmsPush')
       }
       return capabilities;
     }

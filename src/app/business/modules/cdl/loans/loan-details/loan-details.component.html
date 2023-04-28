@@ -1168,4 +1168,11 @@
     </div>
 
   </section>
+
+  <section class="d-flex justify-content-center m-2 my-4"
+    *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus == 'OperationsVerified'  && capabilities && capabilities.canPushtoLms">
+    <div class="btn-sanctioned mr-2 pointer-cursor" (click)="pushToLms()">
+      Push to LMS
+    </div>
+  </section>
 </div>

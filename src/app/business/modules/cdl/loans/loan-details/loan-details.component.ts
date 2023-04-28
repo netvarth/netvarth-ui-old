@@ -616,6 +616,14 @@ export class LoanDetailsComponent implements OnInit {
     });
   }
 
+  pushToLms() {
+    this.cdlservice.pushToLms(this.loanId).subscribe((data: any) => {
+      if (data) {
+        this.snackbarService.openSnackBar("Loan Pushed to LMS Successfully");
+      }
+    });
+  }
+
   approveLoanByBranchManager() {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
