@@ -239,9 +239,9 @@
               <div *ngIf="customerCallHistory && customerCallHistory.length>0">
                 <div class="my-1 p-1" *ngFor="let call of customerCallHistory">
                   <mat-expansion-panel>
-                    <mat-expansion-panel-header>
+                    <mat-expansion-panel-header  [collapsedHeight]="'100px'">
                       <mat-panel-title>
-                        <div class="row">
+                        <div class="row my-2">
                           <div class="col-md-6 col-xs-6 mt-2">
                             <div class="font-weight-bold">
                               <!-- <span *ngIf="call && call.consumerPhone && call.consumerPhone.countryCode">
@@ -271,20 +271,22 @@
                             </div>
                           </div>
 
+                          <div>
+                            <div class="col-md-12 col-xs-12 no-padding" (click)="viewCall(call.uid)">
+                              <div class="font-weight-bold col-md-6 col-xs-6">
+                                <span *ngIf="call && call.createdDate">{{call.createdDate | date : 'mediumDate'}}</span>
+                              </div>
+                              <div class="font-weight-bold col-md-6 col-xs-6">
+                                <span *ngIf="call && call.callduration">{{call.callduration}}</span>
+                              </div>
+                            </div>
+                          </div>
+
                         </div>
                       </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div class="px-4">
-                      <div>
-                        <div class="col-md-12 col-xs-12 no-padding" (click)="viewCall(call.uid)">
-                          <div class="font-weight-bold col-md-6 col-xs-6">
-                            <span *ngIf="call && call.createdDate">{{call.createdDate}}</span>
-                          </div>
-                          <div class="font-weight-bold col-md-6 col-xs-6">
-                            <span *ngIf="call && call.Callduration">{{call.Callduration}}</span>
-                          </div>
-                        </div>
-                      </div>
+
                       <div class="clearfix"></div>
                       <div class="mt-4">
                         <div class="d-flex justify-content-end">
