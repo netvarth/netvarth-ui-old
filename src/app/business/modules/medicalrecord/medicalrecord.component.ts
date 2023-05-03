@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
@@ -141,6 +141,7 @@ export class MedicalrecordComponent implements OnInit {
   customerDetailsAge: any;
   tempPhoneNumber: any;
   suggestions: any = [];
+  small_device_display = false;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -173,7 +174,8 @@ export class MedicalrecordComponent implements OnInit {
       }
     });
   }
-  ngOnInit() {
+  ngOnInit(): void {
+    this.onResize();
     // console.log('tempClinicalNOtes::',this.tempClinicalNOtes)
     const uniqueId = this.groupService.getitemFromGroupStorage('uniqueId');
     this.provider_services.getClinicalSuggestions(uniqueId).subscribe(
@@ -233,9 +235,17 @@ export class MedicalrecordComponent implements OnInit {
       // console.log('res',res);
       this.creteTypeMr = res;
     })
-
+   
   }
-
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 767) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
+  }
 
   ngOnDestroy() {
     if (this.someSubscription) {
@@ -689,6 +699,29 @@ export class MedicalrecordComponent implements OnInit {
     }
   }
   uploadFileforMr() {
+  
+    if( this.small_device_display){
+     
+      this.uploadfiledialogRef = this.dialog.open(UploadPrescriptionComponent, {
+        width: '100%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          mrid: this.mrId,
+          patientid: this.patientId,
+          bookingid: this.bookingId,
+          bookingtype: this.bookingType
+        }
+      });
+      this.uploadfiledialogRef.afterClosed().subscribe(result => {
+        // console.log(result)
+        if (result) {
+          this.getMedicalRecordUsingId(result);
+        }
+      });
+    }
+   else{
+   
     this.uploadfiledialogRef = this.dialog.open(UploadPrescriptionComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -706,6 +739,8 @@ export class MedicalrecordComponent implements OnInit {
         this.getMedicalRecordUsingId(result);
       }
     });
+   }
+    
   }
 
 

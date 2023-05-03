@@ -219,6 +219,12 @@ export class PrescriptionComponent implements OnInit, OnChanges {
  this.small_device_display = false;
  this.printText = 'Print'
  }
+ const screenWidth = window.innerWidth;
+ if (screenWidth <= 767) {
+   this.small_device_display = true;
+ } else {
+   this.small_device_display = false;
+ }
  }
  ngOnChanges(changes: SimpleChanges): void {
  // this. onReSize()
@@ -357,34 +363,66 @@ export class PrescriptionComponent implements OnInit, OnChanges {
  // console.log('data',data)
  this.disableFromControl()
  // this.disable = true;
- this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
- // width: '100%',
- panelClass: ['popup-class'],
- disableClose: true,
- data: {
- mrid: this.mrId,
- patientid: this.patientId,
- bookingid: this.bookingId,
- bookingtype: this.bookingType
+ if( this.small_device_display){
+  this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
+    width: '100%',
+    panelClass: ['popup-class'],
+    disableClose: true,
+    data: {
+    mrid: this.mrId,
+    patientid: this.patientId,
+    bookingid: this.bookingId,
+    bookingtype: this.bookingType
+    }
+    });
+    this.uploadprescriptionRef.afterClosed().subscribe((res) => {
+    // console.log('res',res)
+    this.enableFormControl()
+    if (res === true) {
+    this.uploadprescriptionRef.close();
+    this.enableFormControl()
+    }
+    if (res = '') {
+    this.enableFormControl()
+    }
+    if (this.mrId) {
+    this.enableFormControl()
+    this.getMrprescription(this.mrId);
+    }
+    // this.getMrprescription(this.mrId);
+    }
+    );
  }
- });
- this.uploadprescriptionRef.afterClosed().subscribe((res) => {
- // console.log('res',res)
- this.enableFormControl()
- if (res === true) {
- this.uploadprescriptionRef.close();
- this.enableFormControl()
- }
- if (res = '') {
- this.enableFormControl()
- }
- if (this.mrId) {
- this.enableFormControl()
- this.getMrprescription(this.mrId);
- }
- // this.getMrprescription(this.mrId);
- }
- );
+else{
+  this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
+    width: '30%',
+    panelClass: ['popup-class'],
+    disableClose: true,
+    data: {
+    mrid: this.mrId,
+    patientid: this.patientId,
+    bookingid: this.bookingId,
+    bookingtype: this.bookingType
+    }
+    });
+    this.uploadprescriptionRef.afterClosed().subscribe((res) => {
+    // console.log('res',res)
+    this.enableFormControl()
+    if (res === true) {
+    this.uploadprescriptionRef.close();
+    this.enableFormControl()
+    }
+    if (res = '') {
+    this.enableFormControl()
+    }
+    if (this.mrId) {
+    this.enableFormControl()
+    this.getMrprescription(this.mrId);
+    }
+    // this.getMrprescription(this.mrId);
+    }
+    );
+}
  }
  disableFromControl() {
   this.amForm.controls.medicine_name.disable();
@@ -1198,26 +1236,52 @@ export class PrescriptionComponent implements OnInit, OnChanges {
       }
       updatePaperPrescription() {
       this.disable = true;
+      if( this.small_device_display){
+       
+        this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
+          width: '100%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+          mrid: this.mrId,
+          patientid: this.patientId,
+          bookingid: this.bookingId,
+          bookingtype: this.bookingType,
+          mode: 'view'
+          }
+          });
+          this.uploadprescriptionRef.afterClosed().subscribe(() => {
+          this.loading = true;
+          setTimeout(() => {
+          this.loading = false;
+          this.ngOnInit();
+          }, 100);
+          }
+          );
+      }
+    else{
+     
       this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-      mrid: this.mrId,
-      patientid: this.patientId,
-      bookingid: this.bookingId,
-      bookingtype: this.bookingType,
-      mode: 'view'
-      }
-      });
-      this.uploadprescriptionRef.afterClosed().subscribe(() => {
-      this.loading = true;
-      setTimeout(() => {
-      this.loading = false;
-      this.ngOnInit();
-      }, 100);
-      }
-      );
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+        mrid: this.mrId,
+        patientid: this.patientId,
+        bookingid: this.bookingId,
+        bookingtype: this.bookingType,
+        mode: 'view'
+        }
+        });
+        this.uploadprescriptionRef.afterClosed().subscribe(() => {
+        this.loading = true;
+        setTimeout(() => {
+        this.loading = false;
+        this.ngOnInit();
+        }, 100);
+        }
+        );
+    }
       }
       imageSize(val) {
       let imgsize;
