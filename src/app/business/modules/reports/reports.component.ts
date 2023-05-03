@@ -37,6 +37,8 @@ export class ReportsComponent implements OnInit {
   paymentReports = [];
   checkinReports = [];
   orderReports = [];
+  cdlPartialReports= [];
+  cdlReports= [];
   crmReports = [];
   leadStatusReports = [];
   processingFilesReports = [];
@@ -59,6 +61,8 @@ export class ReportsComponent implements OnInit {
   loan_user_criteria: any[];
   loanUserReports = [];
   loan_partner_wise_criteria: any[];
+  loan_application_cdl_criteria: any[];
+  loan_application_partial_cdl_criteria: any[];
   loanPartnerWiseReports = [];
   customer_crif_Status_criteria: any;
   customerCrifStatusReports = [];
@@ -138,6 +142,8 @@ export class ReportsComponent implements OnInit {
     this.document_collection_criteria = [];
     this.loan_application_criteria = [];
     this.loan_partner_wise_criteria = [];
+    this.loan_application_cdl_criteria = [];
+    this.loan_application_partial_cdl_criteria = [];
     this.loan_user_criteria = [];
     this.customer_crif_Status_criteria = [];
     this.payment_criteria = [];
@@ -254,7 +260,14 @@ export class ReportsComponent implements OnInit {
             this.loan_partner_wise_criteria.push(this.criteria_list[i]);
             break;
           }
-
+          case 'LOAN_APPLICATION_STATUS': {
+            this.loan_application_cdl_criteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'LOAN_APPLICATION_PARTIAL_STATUS': {
+            this.loan_application_partial_cdl_criteria.push(this.criteria_list[i]);
+            break;
+          }
         }
       }
     });

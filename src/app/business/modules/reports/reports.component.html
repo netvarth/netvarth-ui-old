@@ -237,13 +237,27 @@
               <mat-expansion-panel-header>
                 <mat-panel-title class="report_title">
                   Loan Application Status
-                  <div class="width100pc">
+                  <div class="width100pc" > 
                     <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
                       [queryParams]="{report_type:'LOAN_APPLICATION_STATUS'}">Create New Report</a>
                   </div>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-
+              <ng-container *ngIf="cdlReports.length===0">
+                <div *ngIf="loan_application_cdl_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                 
+                </div>
+                <table *ngIf="loan_application_cdl_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let cdl_cr of loan_application_cdl_criteria">
+                    <td>{{cdl_cr.reportName}}</td>
+                    <td><a (click)="recreateReport(cdl_cr)">Generate</a></td>
+                    <td><a (click)="viewCriteria(cdl_cr)">View</a></td>
+                    <td><a (click)="deletCriteria(cdl_cr)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
             </mat-expansion-panel>
           </mat-accordion>
         </div>
@@ -262,7 +276,21 @@
                   </div>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-
+              <ng-container *ngIf="cdlPartialReports.length===0">
+                <div *ngIf="loan_application_partial_cdl_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                 
+                </div>
+                <table *ngIf="loan_application_partial_cdl_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let cdl_partial_cr of loan_application_partial_cdl_criteria">
+                    <td>{{cdl_partial_cr.reportName}}</td>
+                    <td><a (click)="recreateReport(cdl_partial_cr)">Generate</a></td>
+                    <td><a (click)="viewCriteria(cdl_partial_cr)">View</a></td>
+                    <td><a (click)="deletCriteria(cdl_partial_cr)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
             </mat-expansion-panel>
           </mat-accordion>
         </div>
