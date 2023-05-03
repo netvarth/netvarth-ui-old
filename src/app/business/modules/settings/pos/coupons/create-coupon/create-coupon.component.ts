@@ -693,10 +693,10 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     const isCatalog = this.couponForm.get('couponRules').get('policies').get('isCatalogBased').value;
 
 
-    if (isService === false && isCatalog === false) {
-      this.snackbarService.openSnackBar('Limit coupon to either Services or Catalog', { 'panelClass': 'snackbarerror' });
-      policiesEntered = false;
-    }
+    // if (isService === false && isCatalog === false) {
+    //   this.snackbarService.openSnackBar('Limit coupon to either Services or Catalog', { 'panelClass': 'snackbarerror' });
+    //   policiesEntered = false;
+    // }
     if (isService) {
       if (this.active_user.type !== 'BRANCH') {
         if (this.services.length === 0 && this.customer_groups.length === 0 && this.customer_labels.length == 0) {
