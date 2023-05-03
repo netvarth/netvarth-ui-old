@@ -78,6 +78,9 @@
                 <mat-checkbox [checked]="earlyWLNotificatonSettings.pushNotification"
                   (change)="showSubmit('EARLY_WL', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
+                  <mat-checkbox [checked]="earlyWLNotificatonSettings.whatsApp"
+                  (change)="showSubmit('EARLY_WL', 'whatsApp', $event)" class="mgn-rt-20">
+                  Via WhatsApp</mat-checkbox>
                 <span *ngIf="showButton['EARLY_WL'] && earlyWLNotificatonSettings.personsAhead && !small_device_display"
                   (click)="changeNotificationSettings('EARLY_WL')" class="notify-ok-btn">OK</span>
                 <div class="mgn-up-10"
@@ -102,6 +105,9 @@
                 <mat-checkbox [checked]="prefinalWLNotificationSettings.pushNotification"
                   (change)="showSubmit('PREFINAL_WL', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
+                  <mat-checkbox [checked]="prefinalWLNotificationSettings.whatsApp"
+                  (change)="showSubmit('PREFINAL_WL', 'whatsApp', $event)" class="mgn-rt-20">
+                  Via WhatsApp</mat-checkbox>
                 <span *ngIf="showButton['PREFINAL_WL'] && !small_device_display"
                   (click)="changeNotificationSettings('PREFINAL_WL')" class="notify-ok-btn">OK</span>
                 <div class="mgn-up-10" *ngIf="showButton['PREFINAL_WL'] && small_device_display">
@@ -125,6 +131,9 @@
                 <mat-checkbox [checked]="finalWLNotificationSettings.pushNotification"
                   (change)="showSubmit('FINAL_WL', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
+                  <mat-checkbox [checked]="finalWLNotificationSettings.whatsApp"
+                  (change)="showSubmit('FINAL_WL', 'whatsApp', $event)" class="mgn-rt-20">
+                  Via WhatsApp</mat-checkbox>
                 <span *ngIf="showButton['FINAL_WL'] && !small_device_display"
                   (click)="changeNotificationSettings('FINAL_WL')" class="notify-ok-btn">OK</span>
                 <div class="mgn-up-10" *ngIf="showButton['FINAL_WL'] && small_device_display">
@@ -151,6 +160,9 @@
                 <mat-checkbox [checked]="wlAddNotificationSettings.pushNotification"
                   (change)="showSubmit('WAITLISTADD', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
+                  <mat-checkbox [checked]="wlAddNotificationSettings.whatsApp"
+                  (change)="showSubmit('WAITLISTADD', 'whatsApp', $event)" class="mgn-rt-20">
+                  Via WhatsApp</mat-checkbox>
                 <span *ngIf="showButton['WAITLISTADD'] && !small_device_display"
                   (click)="changeNotificationSettings('WAITLISTADD')" class="notify-ok-btn">OK</span>
                 <div class="mgn-up-10" *ngIf="showButton['WAITLISTADD'] && small_device_display">
@@ -188,6 +200,9 @@
                     <mat-checkbox [checked]="apptAddNotificationSettings.pushNotification"
                       (change)="showSubmit('APPOINTMENTADD', 'pushNotification', $event)" class="mgn-rt-20">
                       Via App</mat-checkbox>
+                      <mat-checkbox [checked]="apptAddNotificationSettings.whatsApp"
+                      (change)="showSubmit('APPOINTMENTADD', 'whatsApp', $event)" class="mgn-rt-20">
+                      Via WhatsApp</mat-checkbox>
                     <span *ngIf="showButton['APPOINTMENTADD'] && !small_device_display"
                       (click)="changeNotificationSettings('APPOINTMENTADD')" class="notify-ok-btn">OK</span>
                     <div class="mgn-up-10" *ngIf="showButton['APPOINTMENTADD'] && small_device_display">
