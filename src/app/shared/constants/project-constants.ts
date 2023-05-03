@@ -876,6 +876,17 @@ export const projectConstantsLocal = {
     { displayName: 'Phone-in', value: 'PHONE_IN_APPOINTMENT' },
 
   ],
+  RESPONSE_TYPE : [
+    { displayName: 'INLINE ', value: 'INLINE' },
+    { displayName: 'NOT_INLINE', value: 'NOT_INLINE' },
+
+  ],
+  CDL_STATUS_LIST : [
+    { displayName: 'unconverged ', value: 'unconverged' },
+    { displayName: 'converged', value: 'converged' },
+
+  ],
+  
   APPOINTMENT_STATUS: [
     // {displayName: 'Pre Payment Pending ', value: 'prepaymentPending'},
     { displayName: 'Confirmed', value: 'Confirmed' },

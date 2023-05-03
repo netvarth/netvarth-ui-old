@@ -229,6 +229,44 @@
           </mat-accordion>
         </div>
       </div>
+       <!-- CDL Reports -->
+       <div class="row">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Loan Application Status
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'LOAN_APPLICATION_STATUS'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+       <!-- CDL Partial payment Reports -->
+       <div class="row">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Loan Application Partial Status
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'LOAN_APPLICATION_PARTIAL_STATUS'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
       <!-- CRM Reports -->
       <div class="row" *ngIf="taskStatus">
         <div class="card p0">

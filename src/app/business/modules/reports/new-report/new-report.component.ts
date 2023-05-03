@@ -80,6 +80,8 @@ export class NewReportComponent implements OnInit {
   appointment_status_list: { displayName: string; value: string; }[];
   appointment_intstatus_list: { displayName: string; value: string; }[];
   appointment_mode_list: { displayName: string; value: string; }[];
+  response_list: { displayName: string; value: string; }[];
+  cdl_status_list: { displayName: string; value: string; }[];
   payment_purpose: { value: string; displayName: string; }[];
   donation_timePeriod: string;
   appointment_timePeriod: string;
@@ -137,6 +139,7 @@ export class NewReportComponent implements OnInit {
   payment_timePeriod: any;
   customer: string;
   order_status: any;
+  sta_s: any;
   order_status_list: any;
   payment_amount: any;
   payment_paymentPurpose: any;
@@ -162,6 +165,8 @@ export class NewReportComponent implements OnInit {
   monthly_StartDate;
   monthly_EndDate;
   user_timePeriod;
+  cdlpayment_timePeriod;
+  cdlpayment_partial_timePeriod;
   consolidate_StartDate;
   consolidate_EndDate;
   tat_StartDate;
@@ -199,6 +204,10 @@ export class NewReportComponent implements OnInit {
   loan_partner_application_timePeriod: string;
   loan_partner_application_StartDate: any;
   loan_partner_application_EndDate: any;
+  cdlpayment_startDate: any;
+  cdlpayment_endDate: any;
+  cdlpayment_partial_startDate: any;
+  cdlpayment_partial_endDate: any;
   public reportForm: UntypedFormGroup;
   time_period;
   payment_modes;
@@ -233,6 +242,7 @@ export class NewReportComponent implements OnInit {
   locName: any;
   locationFilter: any = [];
   accountType;
+  response_mode: any;
   constructor(
     private router: Router,
     private activated_route: ActivatedRoute,
@@ -327,7 +337,7 @@ export class NewReportComponent implements OnInit {
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
-    this.payment_timePeriod = this.loan_application_timePeriod = this.loan_partner_application_timePeriod = this.loan_user_application_timePeriod = this.customer_timePeriod = this.customer_wise_timePeriod = this.document_collected_timePeriod = this.customer_crif_status_timePeriod = this.crm_timePeriod = this.employee_Activity_timePeriod = this.daily_Activity_timePeriod = this.sanctioned_timePeriod = this.HO_lead_timePeriod = this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod = this.consolidated_timePeriod = this.tat_timePeriod = this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
+    this.payment_timePeriod = this.loan_application_timePeriod = this.loan_partner_application_timePeriod = this.loan_user_application_timePeriod = this.customer_timePeriod = this.customer_wise_timePeriod = this.document_collected_timePeriod = this.customer_crif_status_timePeriod = this.crm_timePeriod = this.employee_Activity_timePeriod = this.daily_Activity_timePeriod = this.sanctioned_timePeriod = this.HO_lead_timePeriod = this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod = this.consolidated_timePeriod = this.tat_timePeriod = this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = this.cdlpayment_timePeriod = this.cdlpayment_partial_timePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
     this.payment_status = projectConstantsLocal.PAYMENT_STATUS;
@@ -346,13 +356,13 @@ export class NewReportComponent implements OnInit {
     this.payment_paymentMode = 0;
     this.customer_location = 0;
     this.appointment_mode = this.waitlist_mode = this.delivery_mode = 0;
-    this.appointment_status = this.waitlist_status = this.order_status = 0;
+    this.appointment_status = this.waitlist_status = this.order_status = this.sta_s= 0;
     this.payment_customer = this.appointment_customer = this.waitlist_customer = this.donation_customer = 'Any';
     this.payment_transactionType = 0;
     this.waitlist_billpaymentstatus = this.appointment_billpaymentstatus = 0;
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-
-
+    this.response_list = projectConstantsLocal.RESPONSE_TYPE;
+    this.cdl_status_list = projectConstantsLocal.CDL_STATUS_LIST;
     if (this.report_type === 'token' || this.report_type === 'appointment') {
       this.provider_services.getAllQuestionnaire().subscribe(
         (questionaires: any) => {
@@ -660,6 +670,22 @@ export class NewReportComponent implements OnInit {
             this.hide_dateRange = false;
             this.loan_partner_application_StartDate = res.startDate;
             this.loan_partner_application_EndDate = res.endDate;
+          }
+        }
+        case 'LOAN_APPLICATION_STATUS': {
+          this.cdlpayment_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if (res.dateRange === 'DATE_RANGE') {
+            this.hide_dateRange = false;
+            this.cdlpayment_startDate = res.startDate;
+            this.cdlpayment_endDate = res.endDate;
+          }
+        }
+        case 'LOAN_APPLICATION_PARTIAL_STATUS': {
+          this.cdlpayment_partial_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if (res.dateRange === 'DATE_RANGE') {
+            this.hide_dateRange = false;
+            this.cdlpayment_partial_startDate = res.startDate;
+            this.cdlpayment_partial_endDate = res.endDate;
           }
         }
       }
@@ -3139,7 +3165,63 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } else if (reportType === 'user') {
+    } 
+    else if (reportType === 'LOAN_APPLICATION_STATUS') {
+      if (this.cdlpayment_timePeriod === 'DATE_RANGE' && (this.cdlpayment_startDate === undefined || this.cdlpayment_endDate  === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+         
+          'status': this.sta_s
+        };
+        if (this.sta_s === 0) {
+          delete this.filterparams.status;
+        }
+        
+       
+        if (this.sta_s === 'Any') {
+          delete this.filterparams.status;
+        }
+       
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.cdlpayment_timePeriod === 'DATE_RANGE') {
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.cdlpayment_startDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.cdlpayment_endDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = this.report_type;
+        request_payload.reportDateCategory = this.cdlpayment_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    } 
+    else if (reportType === 'LOAN_APPLICATION_PARTIAL_STATUS') {
+      if (this.cdlpayment_partial_timePeriod === 'DATE_RANGE' && (this.cdlpayment_partial_startDate === undefined || this.cdlpayment_partial_endDate  === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        const filter = {};
+        if (this.cdlpayment_partial_timePeriod === 'DATE_RANGE') {
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.cdlpayment_partial_startDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.cdlpayment_partial_endDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = this.report_type;
+        request_payload.reportDateCategory = this.cdlpayment_partial_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    } 
+    else if (reportType === 'user') {
       console.log("Report Type :", reportType)
       if (this.user_timePeriod === 'DATE_RANGE' && (this.user_startDate === undefined || this.user_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
