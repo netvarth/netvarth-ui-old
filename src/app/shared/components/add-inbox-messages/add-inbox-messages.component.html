@@ -45,7 +45,12 @@
                     class="mgright25 example-margin" [(ngModel)]="telegram" [ngModelOptions]="{standalone: true}">
                     Telegram
                 </mat-checkbox>
-
+                <mat-checkbox
+                [disabled]="selectedMessage.files.length !== 0 || (typeOfMsg === 'single' && (((!phone)|| phone === 'null' || phone === '' )))"
+                class="mgright25 example-margin" [(ngModel)]="whatsApp" [ngModelOptions]="{standalone: true}">
+                Whatsapp
+            </mat-checkbox>
+                
                 <!-- *ngIf="!IsTelegramDisable"  || IsTelegramDisable-->
                 <!-- typeOfMsg !== 'multiple' && -->
             </div>

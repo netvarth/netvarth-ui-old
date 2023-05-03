@@ -51,6 +51,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   email = true;
   pushnotify = true;
   telegram = true;
+  whatsApp = false;
   typeOfMsg;
   type;
   email_id: any;
@@ -575,7 +576,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 email: this.email,
                 sms: this.sms,
                 pushNotification: this.pushnotify,
-                telegram: this.telegram
+                telegram: this.telegram,
+                whatsApp: this.whatsApp,
               },
               communicationMessage: form_data.message,
               uuid: [this.uuid]
@@ -609,7 +611,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 email: this.email,
                 sms: this.sms,
                 pushNotification: this.pushnotify,
-                telegram: this.telegram
+                telegram: this.telegram,
+                whatsApp: this.whatsApp,
               },
               communicationMessage: form_data.message,
               uuid: [this.uuid]
