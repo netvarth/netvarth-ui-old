@@ -18,18 +18,23 @@ import { AddproviderAddonComponent } from '../../../add-provider-addons/add-prov
 export class UpdateProviderNotificationsComponent implements OnInit {
   @Input() type;
   telegram = false;
+  whatspp= false;
   sms = false;
   email = false;
   cheknPushph = false;
   cheknCancelPushph = false;
   cancelsms = false;
   cancelTelegram = false;
+  cancelWhatsapp= false;
   cancelemail = false;
   cancelpush = false;
   notifyphonenumber = '';
+  notifyWhatsapp= '';
   notifyTele = '';
   teleCountrycode = '+91';
   tele1Countrycode = '+91';
+  whatspp_Countrycode = '+91';
+  whatspp1_Countrycode = '+91';
   smsCountrycode = '+91';
   sms1Countrycode = '+91';
   pushCountrycode = '+91';
@@ -38,15 +43,18 @@ export class UpdateProviderNotificationsComponent implements OnInit {
   notifycheknCancelPushphonenumber = '';
   notifyemail = '';
   notifycanclphonenumber = '';
+  notifycanclwhasapp= '';
   notifycancltelegram = '';
   notifycanclemail = '';
   ph_arr: any = [];
+  whatsapp_arr: any = [];
   tele_arr: any = [];
   cheknPushph_arr: any = [];
   cheknCancelPushph_arr: any = [];
   em_arr: any = [];
   ph1_arr: any = [];
   tele1_arr: any = [];
+  whatspp1_arrr: any = [];
   em1_arr: any = [];
   savechekinNotification_json: any = {};
   savecancelNotification_json: any = {};
@@ -157,6 +165,11 @@ export class UpdateProviderNotificationsComponent implements OnInit {
 
           // this.SelchkinNotify = true;
         }
+        if (addList[0].whatsAppNumbers && addList[0].whatsAppNumbers.length !== 0) {
+          this.whatsapp_arr = addList[0].whatsAppNumbers;
+
+          // this.SelchkinNotify = true;
+        }
         if (addList[0].pushMsg && addList[0].pushMsg.length !== 0) {
           this.cheknPushph_arr = addList[0].pushMsg;
           // this.SelchkinNotify = true;
@@ -184,6 +197,10 @@ export class UpdateProviderNotificationsComponent implements OnInit {
           this.tele1_arr = cancelList[0].telegramPhone;
           // this.SelchkincnclNotify = true;
         }// 
+        if (cancelList[0].whatsAppNumbers && cancelList[0].whatsAppNumbers.length !== 0) {
+          this.whatspp1_arrr = cancelList[0].whatsAppNumbers;
+          // this.SelchkincnclNotify = true;
+        }//
         if (cancelList[0].pushMsg && cancelList[0].pushMsg.length !== 0) {
           this.cheknCancelPushph_arr = cancelList[0].pushMsg;
           // this.SelchkincnclNotify = true;
@@ -318,6 +335,60 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       // }
       this.okCheckinStatus = true;
       this.notifyphonenumber = '';
+    
+     
+    }
+  }
+  addWhatsapp() {
+    if (this.notifyWhatsapp === '') {
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.notifyWhatsapp !== '') {
+      const curphone = this.notifyWhatsapp;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curphone);
+      if (!result) {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curphone);
+      if (!result1) {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+      if (this.whatsapp_arr.length === 0) {
+        if (this.whatspp_Countrycode) {
+          const val = {
+            'number': curphone,
+            'countryCode': this.whatspp_Countrycode
+          }
+          this.whatsapp_arr.push(val);
+        }
+        else {
+          const val = {
+            'number': curphone,
+            'countryCode': '+91'
+          }
+          this.whatsapp_arr.push(val);
+        }
+      }
+      else {
+        this.isSmsWhatsppNumExists(curphone)
+      }
+      // if (this.ph_arr.indexOf(curphone) === -1) {
+      //   this.ph_arr.push(curphone);
+
+      // } else {
+      //   this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+      //   // 'Phone number already exists'
+      // }
+      this.okCheckinStatus = true;
+      this.notifyWhatsapp = '';
     
      
     }
@@ -466,7 +537,28 @@ export class UpdateProviderNotificationsComponent implements OnInit {
 
     }
   }
+  isSmsWhatsppNumExists(curphone) {
+    if (this.whatspp_Countrycode) {
+      this.val = {
+        'number': curphone,
+        'countryCode': this.whatspp_Countrycode
+      }
+    }
+    else {
+      this.val = {
+        'number': curphone,
+        'countryCode': '+91'
+      }
+    }
+    const indx = this.whatsapp_arr.filter(vale => (vale.number === this.val.number));
+    if (indx.length > 0) {
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+    } else {
+      this.whatsapp_arr.push(this.val);
+      // this.tele_arr.splice(indx, 1);
 
+    }
+  }
   telegramInfo() {
     const dialogref = this.dialog.open(TelegramInfoComponent, {
       width: '70%',
@@ -636,6 +728,54 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.notifycanclphonenumber = '';
     }
   }
+  addCheknCanclwhasapp() {
+    if (this.notifycanclwhasapp === '') {
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.notifycanclwhasapp !== '') {
+      const curphone1 = this.notifycanclwhasapp;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curphone1);
+      if (!result) {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curphone1);
+      if (!result1) {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+      if (this.whatspp1_arrr.length === 0) {
+        if (this.whatspp1_Countrycode) {
+          const val = {
+            'number': curphone1,
+            'countryCode': this.whatspp1_Countrycode
+          }
+          this.whatspp1_arrr.push(val);
+        }
+        else {
+          const val = {
+            'number': curphone1,
+            'countryCode': '+91'
+          }
+          this.whatspp1_arrr.push(val);
+        }
+      }
+      else {
+        this.isWhatsappCancelNumExists(curphone1)
+      }
+
+      // this.ph1_arr.push(curphone1);
+      this.okCancelStatus = true;
+    
+      this.notifycanclwhasapp = '';
+    }
+  }
   addCheknCancltelegram() {
     if (this.notifycancltelegram === '') {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
@@ -792,6 +932,27 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       // this.tele_arr.splice(indx, 1);
     }
   }
+  isWhatsappCancelNumExists(curphone1) {
+    if (this.whatspp1_Countrycode) {
+      this.val = {
+        'number': curphone1,
+        'countryCode': this.whatspp1_Countrycode
+      }
+    }
+    else {
+      this.val = {
+        'number': curphone1,
+        'countryCode': '+91'
+      }
+    }
+    const indx = this.whatspp1_arrr.filter(vale => (vale.number === this.val.number));
+    if (indx.length > 0) {
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+    } else {
+      this.whatspp1_arrr.push(this.val);
+      // this.tele_arr.splice(indx, 1);
+    }
+  }
   isteleCancelNumExists(curtele1) {
     this.provider_services.telegramChat(this.removePlus(this.tele1Countrycode), curtele1).subscribe(data => {
       this.chatId = data;
@@ -890,6 +1051,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.savechekinNotification_json.eventType = 'ORDERCONFIRM';
     }
     this.savechekinNotification_json.sms = this.ph_arr;
+    this.savechekinNotification_json.whatsAppNumbers = this.whatsapp_arr;
     this.savechekinNotification_json.telegramPhone = this.tele_arr;
     this.savechekinNotification_json.email = this.em_arr;
     this.savechekinNotification_json.pushMsg = this.cheknPushph_arr;
@@ -926,6 +1088,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.savecancelNotification_json.eventType = 'ORDERCANCEL';
     }
     this.savecancelNotification_json.sms = this.ph1_arr;
+    this.savecancelNotification_json.whatsAppNumbers = this.whatspp1_arrr;
     this.savecancelNotification_json.telegramPhone = this.tele1_arr;
     this.savecancelNotification_json.email = this.em1_arr;
     this.savecancelNotification_json.pushMsg = this.cheknCancelPushph_arr;
@@ -941,6 +1104,8 @@ export class UpdateProviderNotificationsComponent implements OnInit {
     this.cancelemail = false;
     this.cancelsms = false;
     this.cancelTelegram = false;
+    this.cancelWhatsapp = false;
+    
     if (mode === 'ADD') {
       this.provider_services.addNotificationList(saveNotification_json)
         .subscribe(
@@ -1013,6 +1178,13 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.telegram = true;
     }
   }
+  whatsappAddClicked() {
+    if (this.whatspp) {
+      this.whatspp = false;
+    } else {
+      this.whatspp = true;
+    }
+  }
   cheknPushAddClicked() {
     if (this.cheknPushph) {
       this.cheknPushph = false;
@@ -1034,6 +1206,14 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.cancelTelegram = true;
     }
   }
+  cancelledCheckinWhatsappAddClicked(){
+    if (this.cancelWhatsapp) {
+      this.cancelWhatsapp = false;
+    } else {
+      this.cancelWhatsapp = true;
+    }
+  }
+  
   cheknCancelPushAddClicked() {
     if (this.cheknCancelPushph) {
       this.cheknCancelPushph = false;
