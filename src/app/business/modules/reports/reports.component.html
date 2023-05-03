@@ -230,7 +230,7 @@
         </div>
       </div>
        <!-- CDL Reports -->
-       <div class="row">
+       <div class="row" *ngIf="cdlStatus">
         <div class="card p0">
           <mat-accordion class="report">
             <mat-expansion-panel [expanded]="true">
@@ -263,7 +263,7 @@
         </div>
       </div>
        <!-- CDL Partial payment Reports -->
-       <div class="row">
+       <div class="row" *ngIf="cdlStatus">
         <div class="card p0">
           <mat-accordion class="report">
             <mat-expansion-panel [expanded]="true">

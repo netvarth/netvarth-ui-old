@@ -77,6 +77,7 @@ export class ReportsComponent implements OnInit {
   reprtdialogRef: any;
   active_user: any;
   taskStatus;
+  cdlStatus;
   constructor(private router: Router, private report_dataService: ReportDataService,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
@@ -102,6 +103,7 @@ export class ReportsComponent implements OnInit {
       (data: any) => {
         console.log("Global settings :", data)
         this.taskStatus = data.enableTask;
+        this.cdlStatus = data.enableCdl;
       });
   }
   getProviderSettings() {
