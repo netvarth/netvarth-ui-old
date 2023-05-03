@@ -3263,7 +3263,6 @@ export class NewReportComponent implements OnInit {
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
     }
-
   }
   changeTimePeriod(event) {
     if (event.value === 'DATE_RANGE') {
