@@ -457,7 +457,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         const _this = this;
         _this.onResize();
-        this.getCoupons()
+       
         _this.serverDate = _this.lStorageService.getitemfromLocalStorage('sysdate');
         if (_this.checkin_date) {
             _this.isFutureDate = _this.dateTimeProcessor.isFutureDate(_this.serverDate, _this.checkin_date);
@@ -2021,6 +2021,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
 
     addWaitlistAdvancePayment() {
+        this.getCoupons()
         let post_Data = this.generateInputforCheckin();
         const param = { 'account': this.account_id };
         this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)

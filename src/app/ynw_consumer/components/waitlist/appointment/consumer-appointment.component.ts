@@ -305,7 +305,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     
     const _this = this;
     this.onResize();
-    this.getCoupons()
+  
     this.serverDate = this.lStorageService.getitemfromLocalStorage('sysdate');
     this.selectedDay = this.dateTimeProcessor.getStringFromDate_YYYYMMDD(this.serverDate);
     console.log("Selected Date :", this.selectedDay);
@@ -1912,6 +1912,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
   }
   addApptAdvancePayment(appmtSlot) {
+    this.getCoupons()
     let serviceOPtionInfo = this.lStorageService.getitemfromLocalStorage('serviceOPtionInfo');
     let itemArray = this.lStorageService.getitemfromLocalStorage('itemArray');
 
