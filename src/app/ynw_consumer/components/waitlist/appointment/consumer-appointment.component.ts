@@ -200,6 +200,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
   login_details: any;
   login_countryCode: any;
   serviceOptDetails: any;
+  results: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private lStorageService: LocalStorageService,
@@ -304,6 +305,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     
     const _this = this;
     this.onResize();
+    this.getCoupons()
     this.serverDate = this.lStorageService.getitemfromLocalStorage('sysdate');
     this.selectedDay = this.dateTimeProcessor.getStringFromDate_YYYYMMDD(this.serverDate);
     console.log("Selected Date :", this.selectedDay);
@@ -315,6 +317,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
       (uiconfig: any) => {
         _this.accountConfig = uiconfig;
       });
+     
     // Collecting informations from s3 businessProfile, settings etc.
     this.gets3urls().then(
       () => {
@@ -328,6 +331,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     );
     this.serviceOPtionInfo = this.lStorageService.getitemfromLocalStorage('serviceOPtionInfo');
     this.getServiceOptions()
+    
   }
   dateClass(date: Date): MatCalendarCellCssClasses {
     return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
@@ -389,6 +393,33 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     })
 
   }
+  getCoupons(){
+       
+    this.sharedServices.getApptCoupons(this.selectedServiceId,this.locationId )
+        .subscribe(
+            (res: any) => {
+              this.results = res;  
+              if(this.results && this.results.jaldeeCoupons){
+                this.s3CouponsList.JC = this.results.jaldeeCoupons;
+                if (this.s3CouponsList.JC.length > 0){
+                  this.showCouponWB = true;
+                }
+              }
+              if(this.results && this.results.providerCoupons){
+                this.s3CouponsList.OWN = this.results.providerCoupons;
+                if (this.s3CouponsList.OWN.length > 0){
+                  this.showCouponWB = true;
+                }
+              }
+            
+            },
+            error => {
+              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+              this.btnClicked = false;
+            }
+        );
+
+}
   processS3s(type, res) {
     // const _this = this;
     let result = this.s3Processor.getJson(res);
@@ -435,20 +466,23 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         // this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
         break;
       }
-      case 'coupon': {
-        this.s3CouponsList.JC = result;
-        if (this.s3CouponsList.JC.length > 0) {
-          this.showCouponWB = true;
-        }
-        break;
-      }
-      case 'providerCoupon': {
-        this.s3CouponsList.OWN = result;
-        if (this.s3CouponsList.OWN.length > 0) {
-          this.showCouponWB = true;
-        }
-        break;
-      }
+      // case 'coupon': {
+      //   alert('coupon;')
+      //   console.log('this.resulthhhs;',this.results)
+      //   this.s3CouponsList.JC = this.results.jaldeeCoupons;
+      //   alert(this.results)
+      //   // if (this.s3CouponsList.JC.length > 0) {
+      //   //   this.showCouponWB = true;
+      //   // }
+      //   break;
+      // }
+      // case 'providerCoupon': {
+      //   this.s3CouponsList.OWN = result;
+      //   if (this.s3CouponsList.OWN.length > 0) {
+      //     this.showCouponWB = true;
+      //   }
+      //   break;
+      // }
       case 'departmentProviders': {
         let deptProviders: any = [];
         this.users = [];

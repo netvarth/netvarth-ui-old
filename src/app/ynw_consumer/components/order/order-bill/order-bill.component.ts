@@ -138,7 +138,6 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     non_indian_modes: any;
     provider_label = ''
     customId: any;
-    results: any;
     constructor(
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -226,7 +225,6 @@ export class OrderBillComponent implements OnInit, OnDestroy {
 
                     //   this.getCouponList();
                     //   this.getproviderCouponList();
-                    this.getCoupons();
                     this.getWaitlistBill();
                     this.getPrePaymentDetails();
                     this.getPaymentModes();
@@ -240,28 +238,6 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                     // }
                 });
     }
-    getCoupons(){
-       
-        this.sharedServices.getApptCoupons(this.checkin.serviceData.id,this.checkin.location.id)
-            .subscribe(
-                (res: any) => {
-                  this.results = res; 
-                  if(this.results && this.results.jaldeeCoupons){
-                    this.couponList.JC = this.results.jaldeeCoupons;
-                   
-                  }
-                  if(this.results && this.results.providerCoupons){
-                    this.couponList.OWN = this.results.providerCoupons;
-                  }
-                
-                },
-                error => {
-                  this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                  
-                }
-            );
-    
-    }
     processS3s(type, res) {
         let result = this.s3Processor.getJson(res);
         switch (type) {
@@ -270,14 +246,14 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                 this.wordProcessor.setTerminologies(this.terminologiesjson);
                 break;
             }
-            // case 'coupon': {
-            //     this.couponList.JC = result;
-            //     break;
-            // }
-            // case 'providerCoupon': {
-            //     this.couponList.OWN = result;
-            //     break;
-            // }
+            case 'coupon': {
+                this.couponList.JC = result;
+                break;
+            }
+            case 'providerCoupon': {
+                this.couponList.OWN = result;
+                break;
+            }
         }
     }
     getImageSrc(mode) {

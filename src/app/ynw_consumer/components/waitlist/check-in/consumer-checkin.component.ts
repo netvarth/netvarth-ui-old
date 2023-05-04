@@ -302,6 +302,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     login_details: any;
     login_countryCode: any;
     serviceOptDetails: any;
+    results: any;
     constructor(public fed_service: FormMessageDisplayService,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
@@ -456,6 +457,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         const _this = this;
         _this.onResize();
+        this.getCoupons()
         _this.serverDate = _this.lStorageService.getitemfromLocalStorage('sysdate');
         if (_this.checkin_date) {
             _this.isFutureDate = _this.dateTimeProcessor.isFutureDate(_this.serverDate, _this.checkin_date);
@@ -583,7 +585,33 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             });
         })
     }
-
+    getCoupons(){
+       
+        this.sharedServices.getCheckinCoupons(this.selectedServiceId,this.sel_loc )
+            .subscribe(
+                (res: any) => {
+                  this.results = res;  
+                  if(this.results && this.results.jaldeeCoupons){
+                    this.s3CouponsList.JC = this.results.jaldeeCoupons;
+                    if (this.s3CouponsList.JC.length > 0){
+                      this.showCouponWB = true;
+                    }
+                  }
+                  if(this.results && this.results.providerCoupons){
+                    this.s3CouponsList.OWN = this.results.providerCoupons;
+                    if (this.s3CouponsList.OWN.length > 0){
+                      this.showCouponWB = true;
+                    }
+                  }
+                
+                },
+                error => {
+                  this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                  this.btnClicked = false;
+                }
+            );
+    
+    }
     checkinDateChanged(checkinDate) {
         const _this = this;
         this.queuejson = [];
@@ -1769,30 +1797,30 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
                 break;
             }
-            case 'coupon': {
-                if (result != undefined) {
-                    this.s3CouponsList.JC = result;
-                } else {
-                    this.s3CouponsList.JC = [];
-                }
+            // case 'coupon': {
+            //     if (result != undefined) {
+            //         this.s3CouponsList.JC = result;
+            //     } else {
+            //         this.s3CouponsList.JC = [];
+            //     }
 
-                if (this.s3CouponsList.JC.length > 0) {
-                    this.showCouponWB = true;
-                }
-                break;
-            }
-            case 'providerCoupon': {
-                if (result != undefined) {
-                    this.s3CouponsList.OWN = result;
-                } else {
-                    this.s3CouponsList.OWN = [];
-                }
+            //     if (this.s3CouponsList.JC.length > 0) {
+            //         this.showCouponWB = true;
+            //     }
+            //     break;
+            // }
+            // case 'providerCoupon': {
+            //     if (result != undefined) {
+            //         this.s3CouponsList.OWN = result;
+            //     } else {
+            //         this.s3CouponsList.OWN = [];
+            //     }
 
-                if (this.s3CouponsList.OWN.length > 0) {
-                    this.showCouponWB = true;
-                }
-                break;
-            }
+            //     if (this.s3CouponsList.OWN.length > 0) {
+            //         this.showCouponWB = true;
+            //     }
+            //     break;
+            // }
             case 'departmentProviders': {
                 let deptProviders: any = [];
                 deptProviders = result;

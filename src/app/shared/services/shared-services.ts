@@ -1410,5 +1410,9 @@ export class SharedServices {
     const url = 'consumer/appointment/service/' + servId + '/location/' + locId + '/coupons';
     return this.servicemeta.httpGet(url);
   }
+  getCheckinCoupons(servId,locId) {
+    const url = 'consumer/waitlist/service/' + servId + '/location/' + locId + '/coupons';
+    return this.servicemeta.httpGet(url);
+  }
 
 }

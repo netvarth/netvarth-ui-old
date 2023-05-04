@@ -271,7 +271,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
     }
     getCoupons(){
        
-        this.sharedServices.getApptCoupons(this.checkin.serviceData.id,this.checkin.location.id)
+        this.sharedServices.getCheckinCoupons(this.checkin.serviceData.id,this.checkin.location.id)
             .subscribe(
                 (res: any) => {
                   this.results = res; 
