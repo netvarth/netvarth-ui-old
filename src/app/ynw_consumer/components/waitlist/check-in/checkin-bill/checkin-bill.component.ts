@@ -139,6 +139,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
     selected_payment_mode: any;
     isInternatonal: boolean;
     customId: any;
+    results: any;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -205,14 +206,14 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                 this.wordProcessor.setTerminologies(this.terminologiesjson);
                 break;
             }
-            case 'coupon': {
-                this.couponList.JC = result;
-                break;
-            }
-            case 'providerCoupon': {
-                this.couponList.OWN = result;
-                break;
-            }
+            // case 'coupon': {
+            //     this.couponList.JC = result;
+            //     break;
+            // }
+            // case 'providerCoupon': {
+            //     this.couponList.OWN = result;
+            //     break;
+            // }
         }
     }
 
@@ -261,11 +262,34 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                     this.provider_id = this.checkin.providerAccount.uniqueId;
                     this.gets3curl();
                     this.getWaitlistBill();
+                    this.getCoupons();
                     this.getPrePaymentDetails();
                     this.getPaymentModes();
                     const credentials = this.sharedfunctionObj.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
                     this.customer_countrycode = credentials.countryCode;
                 });
+    }
+    getCoupons(){
+       
+        this.sharedServices.getApptCoupons(this.checkin.serviceData.id,this.checkin.location.id)
+            .subscribe(
+                (res: any) => {
+                  this.results = res; 
+                  if(this.results && this.results.jaldeeCoupons){
+                    this.couponList.JC = this.results.jaldeeCoupons;
+                   
+                  }
+                  if(this.results && this.results.providerCoupons){
+                    this.couponList.OWN = this.results.providerCoupons;
+                  }
+                
+                },
+                error => {
+                  this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                  
+                }
+            );
+    
     }
     getBillDateandTime() {
         if (this.bill_data.hasOwnProperty('createdDate')) {

@@ -141,6 +141,7 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
     indian_payment_modes: any;
     non_indian_modes: any;
     customId: any;
+    results: any;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -164,6 +165,7 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
     ) {
         this.subs.sink = this.activated_route.queryParams.subscribe(
             params => {
+                console.log(params)
                 if (params.accountId) {
                     this.accountId = params.accountId;
                 }
@@ -200,6 +202,7 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
         this.location.back();
     }
     ngOnInit() {
+       
     }
     ngOnDestroy(): void {
         this.subs.unsubscribe();
@@ -212,9 +215,11 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.checkin = data;
+                    console.log( this.checkin)
                     this.provider_id = this.checkin.providerAccount.uniqueId;
                     this.gets3curl();
                     this.getAppointmentBill();
+                     this.getCoupons();
                     this.getPrePaymentDetails();
                     this.getPaymentModes();
                     const credentials = this.sharedfunctionObj.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
@@ -237,6 +242,29 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
             this.billnumber = this.bill_data.billId;
         }
     }
+    getCoupons(){
+       
+        this.sharedServices.getApptCoupons(this.checkin.serviceData.id,this.checkin.location.id)
+            .subscribe(
+                (res: any) => {
+                  this.results = res;
+                  console.log(this.results) 
+                  if(this.results && this.results.jaldeeCoupons){
+                    this.couponList.JC = this.results.jaldeeCoupons;
+                   
+                  }
+                  if(this.results && this.results.providerCoupons){
+                    this.couponList.OWN = this.results.providerCoupons;
+                  }
+                
+                },
+                error => {
+                  this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                  
+                }
+            );
+    
+    }
     processS3s(type, res) {
         let result = this.s3Processor.getJson(res);
         switch (type) {
@@ -245,14 +273,14 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
                 this.wordProcessor.setTerminologies(this.terminologiesjson);
                 break;
             }
-            case 'coupon': {
-                this.couponList.JC = result;
-                break;
-            }
-            case 'providerCoupon': {
-                this.couponList.OWN = result;
-                break;
-            }
+            // case 'coupon': {
+            //     this.couponList.JC = result;
+            //     break;
+            // }
+            // case 'providerCoupon': {
+            //     this.couponList.OWN = result;
+            //     break;
+            // }
         }
     }
     gets3curl() {
@@ -310,6 +338,7 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.bill_data = data;
+                    console.log(this.bill_data)
                     for (let i = 0; i < this.bill_data.discount.length; i++) {
                         if (this.bill_data.discount[i].displayNote) {
                             this.discountDisplayNotes = true;
@@ -995,7 +1024,9 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
     checkCouponValid(couponCode) {
         let found = false;
         for (let couponIndex = 0; couponIndex < this.couponList.JC.length; couponIndex++) {
+           
             if (this.couponList.JC[couponIndex].jaldeeCouponCode.trim() === couponCode.trim()) {
+             
                 found = true;
                 break;
             }
@@ -1007,6 +1038,7 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
             }
         }
         if (found) {
+           
             return true;
         } else {
             return false;
