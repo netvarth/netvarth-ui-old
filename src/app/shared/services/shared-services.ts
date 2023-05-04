@@ -1406,5 +1406,9 @@ export class SharedServices {
     // return this.servicemeta.httpDelete(url);
     return this.servicemeta.httpDelete(url);
   }
+  getApptCoupons(servId,locId) {
+    const url = 'consumer/appointment/service/' + servId + '/location/' + locId + '/coupons';
+    return this.servicemeta.httpGet(url);
+  }
 
 }
