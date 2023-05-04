@@ -321,7 +321,7 @@
                           </div>
                         </div>
                         <div
-                          [hidden]="active_user.accountType!=='BRANCH'">
+                          [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false || active_user.accountType!=='BRANCH'">
                           <div class="row">
                             <div class="col-xl-12">
                               <div class="form-group">
@@ -332,7 +332,7 @@
                             </div>
                           </div>
                           <div class="row"
-                            [hidden]="this.couponForm.get('couponRules').get('policies').get('isDepartment').value==false">
+                            [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false || this.couponForm.get('couponRules').get('policies').get('isDepartment').value==false">
                             <div class="col-xl-12">
                               <div class="form-group">
                                 <button mat-raised-button class="dialogbtn" type="button"
@@ -347,7 +347,7 @@
                           </div>
                         </div>
                         <div
-                          [hidden]="active_user.accountType!=='BRANCH'">
+                          [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false  || active_user.accountType!=='BRANCH'">
                           <div class="row">
                             <div class="col-xl-12">
                               <div class="form-group">
@@ -372,7 +372,7 @@
                           </div>
                         </div>
                         <div
-                          >
+                          [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false">
                           <div class="row">
                             <div class="col-xl-12">
                               <div class="form-group">
@@ -398,7 +398,7 @@
                           </div>
                         </div>
                         <div
-                          >
+                          [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false">
                           <div class="row">
                             <div class="col-xl-12">
                               <div class="form-group">
@@ -450,7 +450,7 @@
                           </div>
                         </div>
                         <div
-                          >
+                          [hidden]="this.couponForm.get('couponRules').get('policies').get('isCatalogBased').value==false">
                           <div class="row">
                             <div class="col-xl-12">
                               <div class="form-group">
