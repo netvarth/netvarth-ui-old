@@ -52,6 +52,17 @@
   min-height: 110px !important;
   
 }
+.greenborders {
+  /* margin-right: 12px; */
+  border-radius: 5px;
+  /* border: 4px solid #ad; */
+  padding: 20px 5px 20px 5px;
+  /* width: 350px !important; */
+  width: 32% ;
+  margin-bottom: 10px;
+  min-height: 110px !important;
+  
+}
 .greenborder .notification{
   color: #ffd399 !important;
   font-size: 18px !important;
@@ -108,4 +119,13 @@
     padding-right: 0px !important;
     
 }
+.redborders {
+  /* margin-right: 12px; */
+  border-radius: 5px;
+  /* border: 4px solid #ad; */
+  padding: 20px 5px 20px 5px;
+  width: 32% ;
+  margin-bottom: 10px;
+  
+} 
 }
