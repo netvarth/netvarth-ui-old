@@ -740,7 +740,7 @@ if(vaccination.length>0){
           this.clinicalNotesNotes, this.clinicalNotesAllergies, this.clinicalNotesComplaints, this.clinicalNotesVaccinationNotes)
       }
       else if (this.medicalInfo === undefined && this.mrId === 0) {
-        alert(this.medicalInfo)
+      
         this.medicalrecordService.createMR('clinicalNotes', payload).then((res: any) => {
           this.mrId = res;
           console.log('this.mrId::', this.mrId)
