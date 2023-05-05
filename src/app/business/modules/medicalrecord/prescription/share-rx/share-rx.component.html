@@ -73,6 +73,10 @@
                     [ngModelOptions]="{standalone: true}">
                    <span class="labelCheckName"> Telegram</span>
                 </mat-checkbox>
+                <mat-checkbox  class=" example-margin" [ngClass]="{hideClass: (!phon || phon === 'null') || countryCode !='+91'}"  [disabled]="(!phon || phon === 'null')  || countryCode !='+91'" [(ngModel)]="whatsApp"
+                [ngModelOptions]="{standalone: true}">
+               <span class="labelCheckName"> Whatsapp</span>
+            </mat-checkbox>
             </div>
             <!-- <div style="color: red;" class="errorCls" *ngIf="!sms && !email && !pushnotify && !telegram"> 
                 Make sure the options you choose are valid/ enabled

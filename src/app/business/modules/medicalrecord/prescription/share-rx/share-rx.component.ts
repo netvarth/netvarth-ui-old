@@ -64,6 +64,7 @@ export class ShareRxComponent implements OnInit {
   showToken = false;
   pushnotify = false;
   telegram = false;
+  whatsApp = false;
   disableButton;
   sharewith;
   showcustomId = false;
@@ -323,7 +324,7 @@ export class ShareRxComponent implements OnInit {
       }
     }
     if (this.sharewith === 0) {
-      if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
+      if (!this.sms && !this.email && !this.pushnotify && !this.telegram && !this.whatsApp) {
         console.log(this.phon);
         console.log(this.email_id);
         console.log(this.IsTelegramDisable);
@@ -378,7 +379,8 @@ export class ShareRxComponent implements OnInit {
             'email': this.email,
             'sms': this.sms,
             'pushNotification': this.pushnotify,
-            'telegram': this.telegram
+            'telegram': this.telegram,
+            'whatsApp': this.whatsApp
           }
         };
         this.provider_services.shareRx(this.mrId, passData)
@@ -446,7 +448,8 @@ export class ShareRxComponent implements OnInit {
               'email': this.email,
               'sms': this.sms,
               'pushNotification': this.pushnotify,
-              'telegram': this.telegram
+              'telegram': this.telegram,
+              'whatsApp': this.whatsApp
             }
           };
         }
@@ -459,7 +462,8 @@ export class ShareRxComponent implements OnInit {
               'email': this.email,
               'sms': this.sms,
               'pushNotification': this.pushnotify,
-              'telegram': this.telegram
+              'telegram': this.telegram,
+              'whatsApp': this.whatsApp
             }
           }
         }
@@ -836,6 +840,7 @@ export class ShareRxComponent implements OnInit {
       'sms':this.sms,
       'email':this.email,
       'telegram':this.telegram,
+      'whatsApp': this.whatsApp,
       'mrId':this.mrId
     }
     this.onSubmit()
