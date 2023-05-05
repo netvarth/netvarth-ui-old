@@ -16,8 +16,8 @@ import { map, startWith } from 'rxjs/operators';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-
-
+import { CdlService } from '../../cdl/cdl.service';
+import { FileService } from '../../../../../../src/app/shared/services/file-service';
 
 
 @Component({
@@ -33,6 +33,23 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   @Input() type;
   @Input() b_id;
   @Input() suggestions: any = [];
+  selectedMessage = {
+    files: [],
+    base64: [],
+    caption: []
+  };
+selectedFiles = {
+  "Symptoms": { files: [], base64: [], caption: [] },
+  "Observations": { files: [], base64: [], caption: [] },
+  "Diagnosis": { files: [], base64: [], caption: [] },
+  "Notes": { files: [], base64: [], caption: [] },
+  "Allergies": { files: [], base64: [], caption: [] },
+  "Complaints": { files: [], base64: [], caption: [] },
+  "Vaccination Notes": { files: [], base64: [], caption: [] }
+}
+  filesToUpload: any = [];
+  businessId: any;
+  businessDetails: any;
   // @Input() mRListUsingId;
   mrId = 0;
   clinicalNotes: any[];
@@ -94,15 +111,15 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   filteredComplaints: Observable<string[]>;
 
 
-  clinicalNotesTypeSymptoms: string[] = [];
-  clinicalNotesTypeObservations: string[] = [];
-  clinicalNotesNotes: string[] = [];
-  clinicalNotesAllergies: string[] = [];
-  clinicalNotesVaccinationNotes: string[] = [];
-  clinicalNotesComplaints: string[] = [];
-  clinicalNotesTypeDiagnosis: string[] = [];
-
-
+  clinicalNotesTypeSymptoms: string[];
+  clinicalNotesTypeObservations: string[];
+  clinicalNotesNotes: string[];
+  clinicalNotesAllergies: string[];
+  clinicalNotesVaccinationNotes: string[];
+  clinicalNotesComplaints: string[];
+  clinicalNotesTypeDiagnosis: string[];
+  apiloading: any = false;
+  
   @ViewChild('symptomsInput') symptomsInput: ElementRef<HTMLInputElement>;
   @ViewChild('observationsInput') observationsInput: ElementRef<HTMLInputElement>;
   @ViewChild('diagnosisInput') diagnosisInput: ElementRef<HTMLInputElement>;
@@ -110,7 +127,13 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   @ViewChild('allergiesInput') allergiesInput: ElementRef<HTMLInputElement>;
   @ViewChild('vaccinationNotesInput') vaccinationNotesInput: ElementRef<HTMLInputElement>;
   @ViewChild('complaintsInput') complaintsInput: ElementRef<HTMLInputElement>;
-
+  Symptoms: any;
+  Observations: any;
+  Diagnosis: any;
+  Notes: any;
+  Allergies: any;
+  Complaints: any;
+  Vaccination: any;
 
   addSymptoms(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -319,14 +342,21 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private location: Location,
-    private medicalrecordService: MedicalrecordService
+    private medicalrecordService: MedicalrecordService,
+    private fileService: FileService,
+    private cdlservice: CdlService
   ) {
   }
   ngOnInit() {
     console.log(this.suggestions);
     // .asObservable();
     console.log("Suggestions:111", this.suggestions);
-    
+    this.cdlservice.getBusinessProfile().subscribe((data) => {
+      this.businessDetails = data;
+      if (this.businessDetails && this.businessDetails.id) {
+        this.businessId = this.businessDetails.id;
+      }
+    })
     this.filteredSymptoms = new BehaviorSubject(this.suggestions.symptoms);
     this.filteredObservations = new BehaviorSubject(this.suggestions.observations);
     this.filteredAllergies = new BehaviorSubject(this.suggestions.allergies);
@@ -411,6 +441,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
       // }
 
     }
+    
     // console.log('mRListUsingId:::',this.mRListUsingId)
   }
   getClinicalNotes(medicalrecordId) {
@@ -549,7 +580,41 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   saveClinicalNotes(symtopData, observationData, DiagnosisData, NotesData, AllergiesData, ComplaintsData, VaccinationData) {
     if (symtopData || observationData || DiagnosisData || NotesData || AllergiesData || ComplaintsData || VaccinationData) {
       this.api_loading = true;
-      const bookingId = 0;
+     
+    let symptoms=[];
+    let observations=[];
+    let diagnosis=[];
+    let notes=[];
+    let allergies=[];
+    let complaints=[];
+    let vaccination=[];
+    for (let i = 0; i < this.filesToUpload.length; i++) {
+      console.log('clinicalNotesAddListxx', this.filesToUpload);
+      
+      if (this.filesToUpload[i]["type"] == 'Symptoms') {
+        symptoms.push(this.filesToUpload[i])
+      }
+      if (this.filesToUpload[i]["type"] == 'Observations') {
+        observations.push(this.filesToUpload[i]);
+      }
+
+      if (this.filesToUpload[i]["type"] == 'Diagnosis') {
+        diagnosis.push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'Notes') {
+        notes.push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'Allergies') {
+       allergies.push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'Complaints') {
+        complaints.push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'Vaccination Notes') {
+        vaccination.push(this.filesToUpload[i]);
+      }
+    }
+    const bookingId = 0;
       const bookingType = 'FOLLOWUP';
       const patientId = this.customerId;
       let payload: any = []
@@ -583,8 +648,78 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
           'clinicalNotes': VaccinationData
         }
       ]
-
-      console.log(payload);
+if(symptoms.length>0){
+  let newData= {
+    'type': 'Symptoms',
+    'clinicalNotes': symtopData,
+    'attachments':symptoms
+  }
+  payload.splice(payload.findIndex(e => e.type === "Symptoms"),1);
+  payload.push(newData)
+}
+if(observations.length>0){
+  let newData= {
+    'type': 'Observations',
+    'clinicalNotes': observationData,
+    'attachments':observations
+  }
+  payload.splice(payload.findIndex(e => e.type === "Observations"),1);
+  payload.push(newData)
+}
+if(diagnosis.length>0){
+  let newData= {
+    'type': 'Diagnosis',
+    'clinicalNotes': DiagnosisData,
+    'attachments':diagnosis
+  }
+  payload.splice(payload.findIndex(e => e.type === "Diagnosis"),1);
+  payload.push(newData)
+}
+if(notes.length>0){
+  let newData= {
+    'type': 'Notes',
+    'clinicalNotes': NotesData,
+    'attachments':notes
+  }
+  payload.splice(payload.findIndex(e => e.type === "Notes"),1);
+  payload.push(newData)
+}
+if(allergies.length>0){
+  let newData= {
+    'type': 'Allergies',
+    'clinicalNotes': AllergiesData,
+    'attachments':allergies
+  }
+  payload.splice(payload.findIndex(e => e.type === "Allergies"),1);
+  payload.push(newData)
+}if(allergies.length>0){
+  let newData= {
+    'type': 'Allergies',
+    'clinicalNotes': AllergiesData,
+    'attachments':allergies
+  }
+  payload.splice(payload.findIndex(e => e.type === "Allergies"),1);
+  payload.push(newData)
+}
+if(complaints.length>0){
+  let newData= {
+    'type': 'Complaints',
+    'clinicalNotes': ComplaintsData,
+    'attachments':complaints
+  }
+  payload.splice(payload.findIndex(e => e.type === "Complaints"),1);
+  payload.push(newData)
+}
+if(vaccination.length>0){
+  let newData= {
+    'type': 'Vaccination Notes',
+    'clinicalNotes': VaccinationData,
+    'attachments':vaccination
+  }
+  payload.splice(payload.findIndex(e => e.type === "Vaccination Notes"),1);
+  payload.push(newData)
+}
+      console.log('this.payload',payload);
       this.clinicalNotesAddList.push(payload)
       console.log('clinicalNotesAddList', payload);
       console.log(' this.mrId', this.mrId)
@@ -605,7 +740,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
           this.clinicalNotesNotes, this.clinicalNotesAllergies, this.clinicalNotesComplaints, this.clinicalNotesVaccinationNotes)
       }
       else if (this.medicalInfo === undefined && this.mrId === 0) {
-        // alert(this.medicalInfo)
+        alert(this.medicalInfo)
         this.medicalrecordService.createMR('clinicalNotes', payload).then((res: any) => {
           this.mrId = res;
           console.log('this.mrId::', this.mrId)
@@ -626,6 +761,39 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
 
   }
   UpdateClinicalNotesList(symtopData, observationData, DiagnosisData, NotesData, AllergiesData, ComplaintsData, VaccinationData) {
+    let symptoms=[];
+    let observations=[];
+    let diagnosis=[];
+    let notes=[];
+    let allergies=[];
+    let complaints=[];
+    let vaccination=[];
+    for (let i = 0; i < this.filesToUpload.length; i++) {
+      console.log('clinicalNotesAddListxx', this.filesToUpload);
+      
+      if (this.filesToUpload[i]["type"] == 'Symptoms') {
+        symptoms.push(this.filesToUpload[i])
+      }
+      if (this.filesToUpload[i]["type"] == 'Observations') {
+        observations.push(this.filesToUpload[i]);
+      }
+
+      if (this.filesToUpload[i]["type"] == 'Diagnosis') {
+        diagnosis.push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'Notes') {
+        notes.push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'Allergies') {
+       allergies.push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'Complaints') {
+        complaints.push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'Vaccination Notes') {
+        vaccination.push(this.filesToUpload[i]);
+      }
+    }
     let payload: any = []
     payload = [
       {
@@ -657,7 +825,78 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
         'clinicalNotes': VaccinationData
       }
     ]
-    console.log(payload);
+    if(symptoms.length>0){
+      let newData= {
+        'type': 'Symptoms',
+        'clinicalNotes': symtopData,
+        'attachments':symptoms
+      }
+      payload.splice(payload.findIndex(e => e.type === "Symptoms"),1);
+      payload.push(newData)
+    }
+    if(observations.length>0){
+      let newData= {
+        'type': 'Observations',
+        'clinicalNotes': observationData,
+        'attachments':observations
+      }
+      payload.splice(payload.findIndex(e => e.type === "Observations"),1);
+      payload.push(newData)
+    }
+    if(diagnosis.length>0){
+      let newData= {
+        'type': 'Diagnosis',
+        'clinicalNotes': DiagnosisData,
+        'attachments':diagnosis
+      }
+      payload.splice(payload.findIndex(e => e.type === "Diagnosis"),1);
+      payload.push(newData)
+    }
+    if(notes.length>0){
+      let newData= {
+        'type': 'Notes',
+        'clinicalNotes': NotesData,
+        'attachments':notes
+      }
+      payload.splice(payload.findIndex(e => e.type === "Notes"),1);
+      payload.push(newData)
+    }
+    if(allergies.length>0){
+      let newData= {
+        'type': 'Allergies',
+        'clinicalNotes': AllergiesData,
+        'attachments':allergies
+      }
+      payload.splice(payload.findIndex(e => e.type === "Allergies"),1);
+      payload.push(newData)
+    }if(allergies.length>0){
+      let newData= {
+        'type': 'Allergies',
+        'clinicalNotes': AllergiesData,
+        'attachments':allergies
+      }
+      payload.splice(payload.findIndex(e => e.type === "Allergies"),1);
+      payload.push(newData)
+    }
+    if(complaints.length>0){
+      let newData= {
+        'type': 'Complaints',
+        'clinicalNotes': ComplaintsData,
+        'attachments':complaints
+      }
+      payload.splice(payload.findIndex(e => e.type === "Complaints"),1);
+      payload.push(newData)
+    }
+    if(vaccination.length>0){
+      let newData= {
+        'type': 'Vaccination Notes',
+        'clinicalNotes': VaccinationData,
+        'attachments':vaccination
+      }
+      payload.splice(payload.findIndex(e => e.type === "Vaccination Notes"),1);
+      payload.push(newData)
+    }
+    console.log('payload',payload);
     this.clinicalNotesAddList.push(payload)
     console.log('clinicalNotesAddList', payload);
     console.log('this.medicalInfo.id', this.medicalInfo)
@@ -802,32 +1041,53 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     }
   }
   updateClinicalNotes(data) {
-    console.log(data);
+    console.log('data',data);
     this.btnName = 'Save'
     console.log('this.medicalInfo', this.medicalInfo);
     this.medicalInfo = 'MedicalInfoClinicalNotesUpdate'
     this.showClinicalNotesDetails = false;
     this.clinicalNotes.forEach((item) => {
       if (item.type === 'Symptoms') {
-        this.clinicalNotesTypeSymptoms = item.clinicalNotes
+        this.clinicalNotesTypeSymptoms = item.clinicalNotes;
+        if(item.attachments){
+          this.selectedFiles['Symptoms'].files = item.attachments;
+        }
       }
       if (item.type === 'Observations') {
         this.clinicalNotesTypeObservations = item.clinicalNotes
+        if(item.attachments){
+          this.selectedFiles['Observations'].files = item.attachments;
+        }
       }
       if (item.type === 'Diagnosis') {
         this.clinicalNotesTypeDiagnosis = item.clinicalNotes
+        if(item.attachments){
+          this.selectedFiles['Diagnosis'].files = item.attachments;
+        }
       }
       if (item.type === 'Notes') {
         this.clinicalNotesNotes = item.clinicalNotes
+        if(item.attachments){
+          this.selectedFiles['Notes'].files = item.attachments;
+        }
       }
       if (item.type === 'Allergies') {
         this.clinicalNotesAllergies = item.clinicalNotes
+        if(item.attachments){
+          this.selectedFiles['Allergies'].files = item.attachments;
+        }
       }
       if (item.type === 'Complaints') {
         this.clinicalNotesComplaints = item.clinicalNotes
+        if(item.attachments){
+          this.selectedFiles['Complaints'].files = item.attachments;
+        }
       }
       if (item.type === 'Vaccination Notes') {
         this.clinicalNotesVaccinationNotes = item.clinicalNotes
+        if(item.attachments){
+          this.selectedFiles['Vaccination Notes'].files = item.attachments;
+        }
       }
     })
 
@@ -835,4 +1095,210 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   // autoGrowTextZone() {
   //   this.sign = false;
   // }
+  filesSelected(event, type) {
+    this.apiloading = true;
+    console.log("Event ", event, type)
+    const input = event.target.files;
+    console.log("input ", input)
+    let fileUploadtoS3 = [];
+    const _this = this;
+    this.fileService.filesSelected(event, _this.selectedFiles[type]).then(
+      () => {
+        let index = _this.filesToUpload && _this.filesToUpload.length > 0 ? _this.filesToUpload.length : 0;
+        for (const pic of input) {
+          const size = pic["size"] / 1024;
+          let fileObj = {
+            owner: _this.businessId,
+            ownerType: "Provider",
+            fileName: pic["name"],
+            fileSize: size / 1024,
+            caption: "",
+            fileType: pic["type"].split("/")[1],
+            action: 'add'
+          }
+          console.log("pic", pic)
+          fileObj['file'] = pic;
+          fileObj['type'] = type;
+          fileObj['order'] = index;
+          _this.filesToUpload.push(fileObj);
+          fileUploadtoS3.push(fileObj);
+          index++;
+        }
+
+        _this.cdlservice.uploadFilesToS3(fileUploadtoS3).subscribe(
+          (s3Urls: any) => {
+            if (s3Urls && s3Urls.length > 0) {
+              _this.uploadAudioVideo(s3Urls).then(
+                (dataS3Url) => {
+                  console.log(dataS3Url);
+                  _this.apiloading = false;
+                  console.log("Sending Attachment Success");
+                });
+            }
+          }, error => {
+            _this.apiloading = false;
+            _this.snackbarService.openSnackBar(error,
+              { panelClass: "snackbarerror" }
+            );
+          }
+        );
+
+      }).catch((error) => {
+        _this.apiloading = false;
+        _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      })
+
+
+  }
+
+  // filesSelected(event, type) {
+  //   this.apiloading = true;
+  //   console.log("Event ", event, type)
+  //   const input = event.target.files;
+  //   console.log("input ", input)
+  //   let fileUploadtoS3 = [];
+  //   const _this = this;
+  //   this.fileService.filesSelected(event, _this.selectedFiles[type]).then(
+  //     () => {
+  //       let index = _this.filesToUpload && _this.filesToUpload.length > 0 ? _this.filesToUpload.length : 0;
+  //       for (const pic of input) {
+  //         const size = pic["size"] / 1024;
+  //         let fileObj = {
+  //           owner: _this.businessId,
+  //           ownerType: "Provider",
+  //           fileName: pic["name"],
+  //           fileSize: size / 1024,
+  //           caption: "",
+  //           fileType: pic["type"].split("/")[1],
+  //           action: 'add'
+  //         }
+  //         console.log("pic", pic)
+  //         fileObj['file'] = pic;
+  //         fileObj['type'] = type;
+  //         fileObj['order'] = index;
+  //         _this.filesToUpload.push(fileObj);
+  //         fileUploadtoS3.push(fileObj);
+  //         index++;
+  //       }
+
+  //       _this.cdlservice.uploadFilesToS3(fileUploadtoS3).subscribe(
+  //         (s3Urls: any) => {
+  //           if (s3Urls && s3Urls.length > 0) {
+  //             _this.uploadAudioVideo(s3Urls).then(
+  //               (dataS3Url) => {
+  //                 console.log(dataS3Url);
+  //                 _this.apiloading = false;
+  //                 console.log("Sending Attachment Success");
+  //               });
+  //           }
+  //         }, error => {
+  //           _this.apiloading = false;
+  //           _this.snackbarService.openSnackBar(error,
+  //             { panelClass: "snackbarerror" }
+  //           );
+  //         }
+  //       );
+
+  //     }).catch((error) => {
+  //       _this.apiloading = false;
+  //       _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //     })
+
+
+  // }
+  uploadAudioVideo(data) {
+    const _this = this;
+    let count = 0;
+    console.log("DAta:", data);
+    return new Promise(async function (resolve, reject) {
+      for (const s3UrlObj of data) {
+        console.log('_this.filesToUpload', _this.filesToUpload)
+        let file = _this.filesToUpload.filter((fileObj) => {
+          return ((fileObj.order === (s3UrlObj.orderId)) ? fileObj : '');
+        })[0];
+        console.log("File:", file);
+        if (file) {
+          file['driveId'] = s3UrlObj.driveId;
+          await _this.uploadFiles(file['file'], s3UrlObj.url, s3UrlObj.driveId).then(
+            () => {
+              count++;
+              if (count === data.length) {
+                resolve(true);
+                console.log('_this.filesToUpload', _this.filesToUpload)
+              }
+            }
+          );
+        }
+        else {
+          resolve(true);
+        }
+      }
+    })
+  }
+  uploadFiles(file, url, driveId) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.cdlservice.videoaudioS3Upload(file, url)
+        .subscribe(() => {
+          console.log("Final Attchment Sending Attachment Success", file)
+          _this.cdlservice.videoaudioS3UploadStatusUpdate('COMPLETE', driveId).subscribe((data: any) => {
+            resolve(true);
+          })
+        }, error => {
+          console.log('error', error)
+          _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          resolve(false);
+        });
+    })
+  }
+  getImage(url, file) {
+    return this.fileService.getImage(url, file);
+  }
+  deleteTempImage(i, type, file) {
+    console.log("this.selectedFiles[type]", file)
+    console.log('file', file);
+    delete file['s3path'];
+    delete file['uid'];
+    if (file.driveId) {
+      file["action"] = "remove";
+      file["type"] = type;
+      this.filesToUpload.push(file);
+    }
+    let files = this.filesToUpload.filter((fileObj) => {
+      if (fileObj && fileObj.fileName && this.selectedFiles[type] && this.selectedFiles[type].files[i] && this.selectedFiles[type].files[i].name) {
+        if (fileObj.type) {
+          return (fileObj.fileName === this.selectedFiles[type].files[i].name && fileObj.type === type);
+        }
+      }
+    });
+
+    if (files && files.length > 0) {
+      let fileIndex = this.filesToUpload.indexOf(files[0])
+      if (!file.driveId) {
+        this.filesToUpload.splice(fileIndex, 1);
+      }
+    }
+    console.log("this.filesToUpload", this.filesToUpload)
+    this.selectedFiles[type].files.splice(i, 1);
+    this.selectedFiles[type].base64.splice(i, 1);
+    this.selectedFiles[type].caption.splice(i, 1);
+
+  }
+  getImagefromUrl(url, file) {
+    if (file.fileType == 'pdf') {
+      return './assets/images/pdf.png';
+    } else if (file.fileType == 'application/vnd.ms-excel' || file.fileType == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+      return './assets/images/xls.png';
+    } else if (file.fileType == 'audio/mp3' || file.fileType == 'audio/mpeg' || file.fileType == 'audio/ogg') {
+      return './assets/images/audio.png';
+    } else if (file.fileType == 'video/mp4' || file.fileType == 'video/mpeg') {
+      return './assets/images/video.png';
+    } else if (file.fileType == 'application/msword' || file.fileType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.fileType.includes('docx') || file.fileType.includes('doc')) {
+      return './assets/images/ImgeFileIcon/wordDocsBgWhite.jpg';
+    } else if (file.fileType.includes('txt')) {
+      return './assets/images/ImgeFileIcon/docTxt.png';
+    } else {
+      return url;
+    }
+  }
 }

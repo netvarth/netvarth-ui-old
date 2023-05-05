@@ -5,7 +5,8 @@
       <div>
         <span class="table-heading"><b>Clinical Notes</b></span>
         <!-- <span *ngIf="tempClinicalNOtes"> <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/delete.png"  (click)="goback('medical')" /></span> -->
-      </div>
+      </div><br>
+      <div class="section_border">  
       <div class="form-group" *ngIf="!suggestions || !suggestions.symptoms || suggestions.symptoms.length == 0">
         <label>Symptoms</label>
         <div class="input-group">
@@ -15,6 +16,43 @@
             placeholder="Enter Symptoms instructions" maxlength="500"></textarea>
         </div>
       </div>
+      <div>
+        
+          <div>
+            
+            <div class="fieldPadding photo-border">
+              <div class='file file--upload'>
+                <label for='symptomsAttach' (click)="symptomsAttach.click()">
+                  Upload File
+                </label>
+                <input #symptomsAttach type='file' (change)="filesSelected($event,'Symptoms')"
+                  accept="image/*;capture=camera" />
+              </div>
+            </div>
+            <div class="img-section clearfix"
+              *ngIf="selectedFiles['Symptoms'] && selectedFiles['Symptoms'].files && selectedFiles['Symptoms'].files.length > 0">
+              <ul class="galul">
+                <li *ngFor="let file of selectedFiles['Symptoms'].files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img pointer-cursor">
+                      <img [src]="getImage(selectedFiles['Symptoms'].base64[i], file)"
+                        *ngIf="selectedFiles['Symptoms'].base64[i]" width="100px" height="100px">
+                      <a [href]="file.s3path" target="_blank">
+                        <img [src]="getImagefromUrl(file.s3path,file)"
+                          *ngIf="!selectedFiles['Symptoms'].base64[i] && file.s3path" width="100px" height="100px">
+                      </a>
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImage(i, 'Symptoms',file)">
+                      <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        
+      </div>
+     
       <div class="form-group mgn-up-10" *ngIf="suggestions && suggestions.symptoms && suggestions.symptoms.length > 0">
         <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
         <label>Symptoms</label>
@@ -36,8 +74,9 @@
         </mat-autocomplete>
         <!-- </mat-form-field> -->
       </div>
-
-
+    </div>
+    <br> <br>
+    <div  class="section_border">  
       <div class="form-group" *ngIf="!suggestions || !suggestions.observations || suggestions.observations.length == 0">
         <label>Observations</label>
         <div class="input-group">
@@ -47,6 +86,42 @@
             placeholder="Enter Observations instructions" maxlength="500"></textarea>
         </div>
       </div>
+      <div>
+       
+          <div>
+            
+            <div class="fieldPadding photo-border">
+              <div class='file file--upload'>
+                <label for='observationsAttach' (click)="observationsAttach.click()">
+                  Upload File
+                </label>
+                <input #observationsAttach type='file' (change)="filesSelected($event,'Observations')"
+                  accept="image/*;capture=camera" />
+              </div>
+            </div>
+            <div class="img-section clearfix"
+              *ngIf="selectedFiles['Observations'] && selectedFiles['Observations'].files && selectedFiles['Observations'].files.length > 0">
+              <ul class="galul">
+                <li *ngFor="let file of selectedFiles['Observations'].files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img pointer-cursor">
+                      <img [src]="getImage(selectedFiles['Observations'].base64[i], file)"
+                        *ngIf="selectedFiles['Observations'].base64[i]" width="100px" height="100px">
+                      <a [href]="file.s3path" target="_blank">
+                        <img [src]="getImagefromUrl(file.s3path,file)"
+                          *ngIf="!selectedFiles['Observations'].base64[i] && file.s3path" width="100px" height="100px">
+                      </a>
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImage(i, 'Observations',file)">
+                      <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+     
       <div class="form-group mgn-up-10"
         *ngIf="suggestions && suggestions.observations && suggestions.observations.length > 0">
         <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
@@ -71,8 +146,8 @@
         <!-- </mat-form-field> -->
       </div>
 
-
-
+      </div>   <br>
+<div class="section_border">
       <div class="form-group" *ngIf="!suggestions || !suggestions.diagnosis || suggestions.diagnosis.length == 0">
         <label>Diagnosis</label>
         <div class="input-group">
@@ -82,7 +157,42 @@
             placeholder="Enter Diagnosis instructions" maxlength="500"></textarea>
         </div>
       </div>
-
+      <div>
+        
+          <div>
+            
+            <div class="fieldPadding photo-border">
+              <div class='file file--upload'>
+                <label for='diagnosisAttach' (click)="diagnosisAttach.click()">
+                  Upload File
+                </label>
+                <input #diagnosisAttach type='file' (change)="filesSelected($event,'Diagnosis')"
+                  accept="image/*;capture=camera" />
+              </div>
+            </div>
+            <div class="img-section clearfix"
+              *ngIf="selectedFiles['Diagnosis'] && selectedFiles['Diagnosis'].files && selectedFiles['Diagnosis'].files.length > 0">
+              <ul class="galul">
+                <li *ngFor="let file of selectedFiles['Diagnosis'].files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img pointer-cursor">
+                      <img [src]="getImage(selectedFiles['Diagnosis'].base64[i], file)"
+                        *ngIf="selectedFiles['Diagnosis'].base64[i]" width="100px" height="100px">
+                      <a [href]="file.s3path" target="_blank">
+                        <img [src]="getImagefromUrl(file.s3path,file)"
+                          *ngIf="!selectedFiles['Diagnosis'].base64[i] && file.s3path" width="100px" height="100px">
+                      </a>
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImage(i, 'Diagnosis',file)">
+                      <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+     
       <div class="form-group mgn-up-10"
         *ngIf="suggestions && suggestions.diagnosis && suggestions.diagnosis.length > 0">
         <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
@@ -105,7 +215,9 @@
         </mat-autocomplete>
         <!-- </mat-form-field> -->
       </div>
-
+    </div>
+    <br>
+<div class="section_border">
 
 
       <div class="form-group" *ngIf="!suggestions || !suggestions.notes || suggestions.notes.length == 0">
@@ -116,6 +228,43 @@
             type="text" class="form-control" placeholder="Enter Notes instructions" maxlength="500"></textarea>
         </div>
       </div>
+      <div>
+        
+          <div>
+            
+            <div class="fieldPadding photo-border">
+              <div class='file file--upload'>
+                <label for='notesAttach' (click)="notesAttach.click()">
+                  Upload File
+                </label>
+                <input #notesAttach type='file' (change)="filesSelected($event,'Notes')"
+                  accept="image/*;capture=camera" />
+              </div>
+            </div>
+            <div class="img-section clearfix"
+              *ngIf="selectedFiles['Notes'] && selectedFiles['Notes'].files && selectedFiles['Notes'].files.length > 0">
+              <ul class="galul">
+                <li *ngFor="let file of selectedFiles['Notes'].files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img pointer-cursor">
+                      <img [src]="getImage(selectedFiles['Notes'].base64[i], file)"
+                        *ngIf="selectedFiles['Notes'].base64[i]" width="100px" height="100px">
+                      <a [href]="file.s3path" target="_blank">
+                        <img [src]="getImagefromUrl(file.s3path,file)"
+                          *ngIf="!selectedFiles['Notes'].base64[i] && file.s3path" width="100px" height="100px">
+                      </a>
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImage(i, 'Notes',file)">
+                      <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+     
+     
       <div class="form-group mgn-up-10" *ngIf="suggestions && suggestions.notes && suggestions.notes.length > 0">
         <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
         <label>Notes</label>
@@ -137,9 +286,9 @@
         </mat-autocomplete>
         <!-- </mat-form-field> -->
       </div>
-
-
-
+    </div>
+    <br>
+<div class="section_border">
 
       <div class="form-group" *ngIf="!suggestions || !suggestions.allergies || suggestions.allergies.length == 0">
         <label>Allergies</label>
@@ -150,6 +299,43 @@
             placeholder="Enter Allergies instructions" maxlength="500"></textarea>
         </div>
       </div>
+      <div>
+        
+          <div>
+            
+            <div class="fieldPadding photo-border">
+              <div class='file file--upload'>
+                <label for='allergiesAttach' (click)="allergiesAttach.click()">
+                  Upload File
+                </label>
+                <input #allergiesAttach type='file' (change)="filesSelected($event,'Allergies')"
+                  accept="image/*;capture=camera" />
+              </div>
+            </div>
+            <div class="img-section clearfix"
+              *ngIf="selectedFiles['Allergies'] && selectedFiles['Allergies'].files && selectedFiles['Allergies'].files.length > 0">
+              <ul class="galul">
+                <li *ngFor="let file of selectedFiles['Allergies'].files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img pointer-cursor">
+                      <img [src]="getImage(selectedFiles['Allergies'].base64[i], file)"
+                        *ngIf="selectedFiles['Allergies'].base64[i]" width="100px" height="100px">
+                      <a [href]="file.s3path" target="_blank">
+                        <img [src]="getImagefromUrl(file.s3path,file)"
+                          *ngIf="!selectedFiles['Allergies'].base64[i] && file.s3path" width="100px" height="100px">
+                      </a>
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImage(i, 'Allergies',file)">
+                      <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        
+      </div>
+    
       <div class="form-group mgn-up-10"
         *ngIf="suggestions && suggestions.allergies && suggestions.allergies.length > 0">
         <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
@@ -172,7 +358,9 @@
         </mat-autocomplete>
         <!-- </mat-form-field> -->
       </div>
-      <div class="form-group" *ngIf="!suggestions || !suggestions.allergies || suggestions.allergies.length == 0">
+    </div> <br>
+    <div class="section_border">
+      <div class="form-group" *ngIf="!suggestions || !suggestions.complaints || suggestions.complaints.length == 0">
         <label>Complaints</label>
         <div class="input-group">
           <div class="input-group-prepend"></div>
@@ -181,6 +369,43 @@
             placeholder="Enter Complaints instructions" maxlength="500"></textarea>
         </div>
       </div>
+      <div>
+       
+          <div>
+            
+            <div class="fieldPadding photo-border">
+              <div class='file file--upload'>
+                <label for='complaintsAttach' (click)="complaintsAttach.click()">
+                  Upload File
+                </label>
+                <input #complaintsAttach type='file' (change)="filesSelected($event,'Complaints')"
+                  accept="image/*;capture=camera" />
+              </div>
+            </div>
+            <div class="img-section clearfix"
+              *ngIf="selectedFiles['Complaints'] && selectedFiles['Complaints'].files && selectedFiles['Complaints'].files.length > 0">
+              <ul class="galul">
+                <li *ngFor="let file of selectedFiles['Complaints'].files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img pointer-cursor">
+                      <img [src]="getImage(selectedFiles['Complaints'].base64[i], file)"
+                        *ngIf="selectedFiles['Complaints'].base64[i]" width="100px" height="100px">
+                      <a [href]="file.s3path" target="_blank">
+                        <img [src]="getImagefromUrl(file.s3path,file)"
+                          *ngIf="!selectedFiles['Complaints'].base64[i] && file.s3path" width="100px" height="100px">
+                      </a>
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImage(i, 'Allergies',file)">
+                      <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        
+      </div>
+     
       <div class="form-group mgn-up-10"
         *ngIf="suggestions && suggestions.complaints && suggestions.complaints.length > 0">
         <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
@@ -203,6 +428,8 @@
         </mat-autocomplete>
         <!-- </mat-form-field> -->
       </div>
+    </div> <br>
+    <div class="section_border">
       <div class="form-group"
         *ngIf="!suggestions || !suggestions.vaccinationNotes || suggestions.vaccinationNotes.length == 0">
         <label>Vaccination Notes</label>
@@ -213,37 +440,75 @@
             placeholder="Enter Vaccination Notes instructions" maxlength="500"></textarea>
         </div>
       </div>
-      <div class="form-group mgn-up-10"
-        *ngIf="suggestions && suggestions.vaccinationNotes && suggestions.vaccinationNotes.length > 0">
-        <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
-        <label>Vaccination Notes</label>
-        <mat-chip-list #chipVaccinationNotesList aria-label="VaccinationNotes selection" class="mat-wrap">
-          <mat-chip *ngFor="let notes of clinicalNotesVaccinationNotes" (removed)="removeVaccinationNotes(notes)">
-            {{notes}}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip>
-          <input class="form-control" placeholder="Enter vaccination notes instructions" #vaccinationNotesInput
-            [formControl]="vaccinationNotesCtrl" [matAutocomplete]="auto7" [matChipInputFor]="chipVaccinationNotesList"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodesO" (matChipInputTokenEnd)="addVaccinationNotes($event)">
-        </mat-chip-list>
-        <mat-autocomplete #auto7="matAutocomplete" (optionSelected)="selectedVaccinationNotes($event)">
-          <mat-option *ngFor="let notes of filteredVaccinationNotes | async" [value]="notes">
-            {{notes}}
-          </mat-option>
-        </mat-autocomplete>
-        <!-- </mat-form-field> -->
-      </div>
       <div>
-        <!-- <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback('medical')">Cancel</button> -->
-        <button type="button" class="btn btn-primary font-weight-bold confirmBtn btnWidth" (click)="saveClinicalNotes(clinicalNotesTypeSymptoms,clinicalNotesTypeObservations,clinicalNotesTypeDiagnosis,clinicalNotesNotes
+       
+          <div>
+            
+            <div class="fieldPadding photo-border">
+              <div class='file file--upload'>
+                <label for='vaccinationNotesAttach' (click)="vaccinationNotesAttach.click()">
+                  Upload File
+                </label>
+                <input #vaccinationNotesAttach type='file' (change)="filesSelected($event,'Vaccination Notes')"
+                  accept="image/*;capture=camera" />
+              </div>
+            </div>
+            <div class="img-section clearfix"
+              *ngIf="selectedFiles['Vaccination Notes'] && selectedFiles['Vaccination Notes'].files && selectedFiles['Vaccination Notes'].files.length > 0">
+              <ul class="galul">
+                <li *ngFor="let file of selectedFiles['Vaccination Notes'].files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img pointer-cursor">
+                      <img [src]="getImage(selectedFiles['Vaccination Notes'].base64[i], file)"
+                        *ngIf="selectedFiles['Vaccination Notes'].base64[i]" width="100px" height="100px">
+                      <a [href]="file.s3path" target="_blank">
+                        <img [src]="getImagefromUrl(file.s3path,file)"
+                          *ngIf="!selectedFiles['Vaccination Notes'].base64[i] && file.s3path" width="100px" height="100px">
+                      </a>
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImage(i, 'Vaccination Notes',file)">
+                      <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+       
+      </div> 
+    </div>
+   
+    <div class="form-group mgn-up-10"
+      *ngIf="suggestions && suggestions.vaccinationNotes && suggestions.vaccinationNotes.length > 0">
+      <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
+      <label>Vaccination Notes</label>
+      <mat-chip-list #chipVaccinationNotesList aria-label="VaccinationNotes selection" class="mat-wrap">
+        <mat-chip *ngFor="let notes of clinicalNotesVaccinationNotes" (removed)="removeVaccinationNotes(notes)">
+          {{notes}}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input class="form-control" placeholder="Enter vaccination notes instructions" #vaccinationNotesInput
+          [formControl]="vaccinationNotesCtrl" [matAutocomplete]="auto7" [matChipInputFor]="chipVaccinationNotesList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodesO" (matChipInputTokenEnd)="addVaccinationNotes($event)">
+      </mat-chip-list>
+      <mat-autocomplete #auto7="matAutocomplete" (optionSelected)="selectedVaccinationNotes($event)">
+        <mat-option *ngFor="let notes of filteredVaccinationNotes | async" [value]="notes">
+          {{notes}}
+        </mat-option>
+      </mat-autocomplete>
+      <!-- </mat-form-field> -->
+    </div>
+  </div>
+    <div>
+      <!-- <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback('medical')">Cancel</button> -->
+      <button type="button" class="btn btn-primary font-weight-bold confirmBtn btnWidth" (click)="saveClinicalNotes(clinicalNotesTypeSymptoms,clinicalNotesTypeObservations,clinicalNotesTypeDiagnosis,clinicalNotesNotes
           ,clinicalNotesAllergies,clinicalNotesComplaints,clinicalNotesVaccinationNotes)" [disabled]="sign">
-          <span *ngIf="!api_loading">{{btnName}}</span>
-          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
-          </app-common-innerloading-spinner>
-        </button>
-      </div>
+        <span *ngIf="!api_loading">{{btnName}}</span>
+        <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+        </app-common-innerloading-spinner>
+      </button>
     </div>
   </div>
 </div>
