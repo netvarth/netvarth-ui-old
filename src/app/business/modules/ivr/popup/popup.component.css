@@ -9,3 +9,20 @@
 .font-weight-600 {
   font-weight: 600 !important;
 }
+.modal_close {
+  width: 24px !important;
+  height: 30px!important;
+  color: #000!important;
+  background: none !important;
+  border: none !important;
+  margin: 15px;
+}
+
+.modal_close i:before {
+  font-family: custom-ynw!important;
+  content: "i";
+  font-size: 1rem!important;
+  width: 20px;
+  height: 20px;
+  font-weight: 600;
+}

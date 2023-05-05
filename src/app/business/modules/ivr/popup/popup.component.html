@@ -1,12 +1,15 @@
 <div class="text-center" *ngIf="data && data.type && data.type == 'users'">
   <div class="p-1 pt-0">
     <div>
+      <button mat-dialog-close class="pull-right modal_close" tabindex="-1"><i class="fa fa-window-close"
+        aria-hidden="true"></i></button>
       <div class="card">
         <div class="text-center">
           <button pButton pRipple type="button" class="p-button-warning btn-warning mr-2 font-weight-600"
             (click)="assignMyself()">Assign Myself
           </button>
-        </div><br>
+        </div>
+        <br>
         <p-table #callsTable [value]="users" dataKey="id"
           [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [rows]="10"
           responsiveLayout="scroll"

@@ -2370,7 +2370,7 @@
 
 @media only screen and (max-width: 575px) {
     .signupmainclass, .loginmainclass, .moreoptionsmainclass, .forgotpasswordmainclass, .commonpopupmainclass, .googlemainmappopup, .consumerpopupmainclass, .specialclass {
-        max-width: 92vw !important;
+        max-width: 100vw !important;
     }
 }
 
@@ -4583,4 +4583,7 @@
 .signupmainclass .mat-dialog-actions, .loginmainclass .mat-dialog-actions {
     border: none !important;
     box-shadow: none !important;
+}
+.commonpopupmainclass {
+    overflow: auto !important;
 }
