@@ -21,6 +21,13 @@
             </div>
             <div class="col-md-6 col-xs-12 col-sm-5 col-lg-3 no-padding small-device-style">
                 <div class="sms-notify">
+                    <label class="toggle-label">Whatsapp Notifications&nbsp;&nbsp;
+                        <span [ngClass] = "whatsappGlobalStatusStr === 'Off' ? 'bold' : 'greenc bold'"> {{whatsappGlobalStatusStr}}</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12 col-sm-5 col-lg-3 no-padding small-device-style">
+                <div class="sms-notify">
                     <label class="toggle-label">Send SMS&nbsp;&nbsp;
                         <span [ngClass] = "smsGlobalStatusStr === 'Off' ? 'bold' : 'greenc bold'"> {{smsGlobalStatusStr}}</span>
                     </label>
@@ -35,6 +42,7 @@
                     </li>
                 </ul>
             </div>
+           
             <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 no-padding">
                 <span class="act-btn mgn-rt-10" (click)="gotoProvider()">
                     {{provdr_domain_name | capitalizeFirst}}

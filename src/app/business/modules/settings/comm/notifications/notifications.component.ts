@@ -16,8 +16,10 @@ export class NotificationsComponent implements OnInit {
     virtualCallingMode_status: any;
     virtualCallingMode_statusstr: string;
     smsGlobalStatus;
+    whasappGlobalStatus;
     notificationStatus;
     smsGlobalStatusStr;
+    whatsappGlobalStatusStr;
     domain;
     smsCredits;
     genrl_notification_cap = '';
@@ -53,6 +55,7 @@ export class NotificationsComponent implements OnInit {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.getSMSglobalSettings();
+        this.getWhatsappglobalSettings();
         this.getSMSCredits();
         this.getDomainSubdomainSettings();
         this.genrl_notification_cap = Messages.GENRL_NOTIFICATION_MSG.replace('[provider]', this.provider_label);
@@ -98,6 +101,7 @@ export class NotificationsComponent implements OnInit {
             this.snackbarService.openSnackBar('Send notification  ' + status + ' successfully');
             this.commonDataStorage.setSettings('account', null);
             this.getSMSglobalSettings();
+
         }, (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.getSMSglobalSettings();
@@ -111,9 +115,31 @@ export class NotificationsComponent implements OnInit {
             this.snackbarService.openSnackBar('SMS settings ' + status + ' successfully');
             this.commonDataStorage.setSettings('account', null);
             this.getSMSglobalSettings();
+            this.getWhatsappglobalSettings();
         }, (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.getSMSglobalSettings();
+            this.getWhatsappglobalSettings();
+        });
+    }
+    handleGlobalWhatsappSettings(event) {
+        const value = (event.checked) ? true : false;
+        const status = (value) ? 'enabled' : 'disabled';
+        const state = (value) ? 'Enable' : 'Disable';
+        this.provider_services.setWhatsappglobalSettings(state).subscribe(data => {
+            this.snackbarService.openSnackBar('Whatsapp settings ' + status + ' successfully');
+            this.commonDataStorage.setSettings('account', null);
+            this.getWhatsappglobalSettings();
+        }, (error) => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.getWhatsappglobalSettings();
+        });
+    }
+    getWhatsappglobalSettings() {
+        this.provider_services.getAccountSettings().then(data => {
+            this.whasappGlobalStatus = data['enableWhatsApp'];
+            this.whatsappGlobalStatusStr = (this.whasappGlobalStatus) ? 'On' : 'Off';
+            this.notificationStatus = data['sendNotification'];
         });
     }
     getDomainSubdomainSettings() {

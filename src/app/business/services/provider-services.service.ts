@@ -2971,4 +2971,8 @@ export class ProviderServices {
     const url = 'provider/business/' + id;
     return this.servicemeta.httpGet(url, null);
   }
+  setWhatsappglobalSettings(state) {
+    const url = 'provider/account/settings/whatsapp/' + state;
+    return this.servicemeta.httpPut(url);
+  }
 }
