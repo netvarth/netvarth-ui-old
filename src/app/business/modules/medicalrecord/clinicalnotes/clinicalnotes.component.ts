@@ -1252,6 +1252,7 @@ if(vaccination.length>0){
     })
   }
   getImage(url, file) {
+  
     return this.fileService.getImage(url, file);
   }
   deleteTempImage(i, type, file) {
@@ -1285,6 +1286,7 @@ if(vaccination.length>0){
 
   }
   getImagefromUrl(url, file) {
+  
     if (file.fileType == 'pdf') {
       return './assets/images/pdf.png';
     } else if (file.fileType == 'application/vnd.ms-excel' || file.fileType == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {

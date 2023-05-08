@@ -107,6 +107,7 @@ export class FileService {
     }
   }
   getImage(url, fileObj) {
+  
     let file = fileObj;
     if (fileObj && fileObj['mimeType']) {
       file['type'] = fileObj['mimeType'];
