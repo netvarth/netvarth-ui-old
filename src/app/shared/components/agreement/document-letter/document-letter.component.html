@@ -1,964 +1,940 @@
 <div *ngIf="!signCompleted">
-    <div class="container" *ngIf="source && source=='provider'">
-        <div class="card d-flex justify-content-between">
-            <div class="pointer-cursor">
-                <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
-            </div>
-            <div class="text-right">
-                <button (click)="onPrint()" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;
-                    Print</button>
-            </div>
-        </div>
+  <div class="container" *ngIf="source && source=='provider'">
+    <div class="card d-flex justify-content-between">
+      <div class="pointer-cursor">
+        <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
+      </div>
+      <div class="text-right">
+        <button (click)="onPrint()" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;
+          Print</button>
+      </div>
     </div>
+  </div>
 
-    <div class="container">
-        <div id="printMe">
+  <div class="container">
+    <div id="printMe">
 
-            <div class="card spdc-letter p-0">
-                <div class="bg-red p-2 px-5 pt-4">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <img src="../../../../assets/images/cdl/logo.png" width="230" height="60"><br>
-                        </div>
-                        <div class="font-weight-bold text-right">
-                            <span class="text-small">Application Form For</span><br>
-                            <span class="text-large">CONSUMER DURABLE LOAN</span>
-                        </div>
-                    </div>
-                    <div class="bg-white text-center mt-2 p-2">
-                        <span class="font-small text-dark font-weight-bold">Manappuram Finance Ltd.
-                            CIN-165910KL1992PLC006623 IV/470A (old)
-                            W638A(New), Manappuram
-                            House, Valapad, Thrissur, Kerala - 680 567.<br>Ph: 0487-3050000/3050108. E-mail ID:
-                            www.manappuram.com</span>
-                    </div>
-                </div>
+      <div class="card spdc-letter p-0">
+        <div class="bg-red p-2 px-5 pt-4">
+          <div class="d-flex justify-content-between">
+            <div>
+              <img src="../../../../assets/images/cdl/logo.png" width="230" height="60"><br>
+            </div>
+            <div class="font-weight-bold text-right">
+              <span class="text-small">Application Form For</span><br>
+              <span class="text-large">CONSUMER DURABLE LOAN</span>
+            </div>
+          </div>
+          <div class="bg-white text-center mt-2 p-2">
+            <span class="font-small text-dark font-weight-bold">Manappuram Finance Ltd.
+              CIN-165910KL1992PLC006623 IV/470A (old)
+              W638A(New), Manappuram
+              House, Valapad, Thrissur, Kerala - 680 567.<br>Ph: 0487-3050000/3050108. E-mail ID:
+              www.manappuram.com</span>
+          </div>
+        </div>
 
-                <div class="clearfix"></div>
-                <div class="mt-3 p-2">
-                    <b>Applicant's : </b>
-                    <div class="d-flex">
-                        <div>
-                            <table style="width:100%" class="table-responsive mt-2">
-                                <tr>
-                                    <td class="px-2">
-                                        <span>LOAN APPLICATION ID : </span>
-                                        <span *ngIf="loanData && loanData.referenceNo"
-                                            class="font-weight-bold">{{loanData.referenceNo}}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-2">
-                                        <span>CKYCR NUMBER : </span>
-                                        <span *ngIf="loanData && loanData.referenceNo" class="font-weight-bold"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-2">
-                                        <span>MAFIL CUSTOMER ID : </span>
-                                        <span *ngIf="loanData && loanData.customer && loanData.customer.id"
-                                            class="font-weight-bold">{{loanData.customer.id}}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-2">
-                                        <span>ADDRESS DETAILS : </span>
-                                        <b>
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList[0].permanentAddress1">{{loanData.loanApplicationKycList[0].permanentAddress1}},</span>
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList[0].permanentAddress2">{{loanData.loanApplicationKycList[0].permanentAddress2}},</span>
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList[0].permanentCity">{{loanData.loanApplicationKycList[0].permanentCity}},</span>
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList[0].permanentState">{{loanData.loanApplicationKycList[0].permanentState}},</span>
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList[0].permanentPin">{{loanData.loanApplicationKycList[0].permanentPin}}</span>
-                                        </b>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-2">
-                                        <span>MOBILE NUMBER : </span>
-                                        <span *ngIf="loanData && loanData.customer && loanData.customer.phoneNo"
-                                            class="font-weight-bold">{{loanData.customer.phoneNo}}</span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div *ngIf="loanData && loanData.consumerPhoto && loanData.consumerPhoto.length>0">
-                            <!-- <span *ngIf="loanData && loanData.consumerPhoto && loanData.consumerPhoto.length>0"
+        <div class="clearfix"></div>
+        <div class="mt-3 p-2">
+          <b>Applicant's : </b>
+          <div class="d-flex">
+            <div>
+              <table style="width:100%" class="table-responsive mt-2">
+                <tr>
+                  <td class="px-2">
+                    <span>LOAN APPLICATION ID : </span>
+                    <span *ngIf="loanData && loanData.referenceNo"
+                      class="font-weight-bold">{{loanData.referenceNo}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-2">
+                    <span>CKYCR NUMBER : </span>
+                    <span *ngIf="loanData && loanData.referenceNo" class="font-weight-bold"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-2">
+                    <span>MAFIL CUSTOMER ID : </span>
+                    <span
+                      *ngIf="loanData && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerIntegrationId"
+                      class="font-weight-bold">{{loanData.loanApplicationKycList[0].customerIntegrationId}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-2">
+                    <span>ADDRESS DETAILS : </span>
+                    <b>
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList[0].permanentAddress1">{{loanData.loanApplicationKycList[0].permanentAddress1}},</span>
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList[0].permanentAddress2">{{loanData.loanApplicationKycList[0].permanentAddress2}},</span>
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList[0].permanentCity">{{loanData.loanApplicationKycList[0].permanentCity}},</span>
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList[0].permanentState">{{loanData.loanApplicationKycList[0].permanentState}},</span>
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList[0].permanentPin">{{loanData.loanApplicationKycList[0].permanentPin}}</span>
+                    </b>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-2">
+                    <span>MOBILE NUMBER : </span>
+                    <span *ngIf="loanData && loanData.customer && loanData.customer.phoneNo"
+                      class="font-weight-bold">{{loanData.customer.phoneNo}}</span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div *ngIf="loanData && loanData.consumerPhoto && loanData.consumerPhoto.length>0">
+              <!-- <span *ngIf="loanData && loanData.consumerPhoto && loanData.consumerPhoto.length>0"
                                 class="font-weight-bold">{{loanData.consumerPhoto[0].s3path}}</span> -->
-                            <a [href]="loanData.consumerPhoto[0].s3path" target="_blank" class="pointer-cursor">
-                                <img src="{{loanData.consumerPhoto[0].s3path}}" width="150" height="150">
-                            </a>
-                        </div>
-                    </div>
-                </div>
+              <a [href]="loanData.consumerPhoto[0].s3path" target="_blank" class="pointer-cursor">
+                <img src="{{loanData.consumerPhoto[0].s3path}}" width="150" height="150">
+              </a>
+            </div>
+          </div>
+        </div>
 
-                <div class="mt-3 p-2">
-                    <b>Co Applicant's : </b>
-                    <div class="d-flex">
-                        <div>
-                            <table style="width:100%" class="table-responsive mt-2">
-                                <tr>
-                                    <td class="px-2">
-                                        <span>LOAN APPLICATION ID : </span>
-                                        <span *ngIf="loanData && loanData.referenceNo"
-                                            class="font-weight-bold">{{loanData.referenceNo}}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-2">
-                                        <span>CKYCR NUMBER : </span>
-                                        <span *ngIf="loanData && loanData.referenceNo" class="font-weight-bold"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-2">
-                                        <span>MAFIL CUSTOMER ID : </span>
-                                        <span
-                                            *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerId"
-                                            class="font-weight-bold">{{loanData.loanApplicationKycList[1].customerId}}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-2">
-                                        <span>ADDRESS DETAILS : </span>
-                                        <b
-                                            *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
-                                            <span
-                                                *ngIf="loanData.loanApplicationKycList[1].permanentAddress1">{{loanData.loanApplicationKycList[1].permanentAddress1}},</span>
-                                            <span
-                                                *ngIf="loanData.loanApplicationKycList[1].permanentAddress2">{{loanData.loanApplicationKycList[1].permanentAddress2}},</span>
-                                            <span
-                                                *ngIf="loanData.loanApplicationKycList[1].permanentCity">{{loanData.loanApplicationKycList[1].permanentCity}},</span>
-                                            <span
-                                                *ngIf="loanData.loanApplicationKycList[1].permanentState">{{loanData.loanApplicationKycList[1].permanentState}},</span>
-                                            <span
-                                                *ngIf="loanData.loanApplicationKycList[1].permanentPin">{{loanData.loanApplicationKycList[1].permanentPin}}</span>
-                                        </b>
-                                        <b
-                                            *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
-                                            N/A
-                                        </b>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-2">
-                                        <span>MOBILE NUMBER : </span>
-                                        <span
-                                            *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerPhone"
-                                            class="font-weight-bold">{{loanData.loanApplicationKycList[1].customerPhone}}</span>
-                                        <span>
-                                            <b
-                                                *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
-                                                N/A
-                                            </b>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div
-                            *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerPhoto && loanData.loanApplicationKycList[1].customerPhoto.length > 0">
-                            <!-- <span *ngIf="loanData && loanData.consumerPhoto && loanData.consumerPhoto.length>0"
+        <div class="mt-3 p-2">
+          <b>Co Applicant's : </b>
+          <div class="d-flex">
+            <div>
+              <table style="width:100%" class="table-responsive mt-2">
+                <tr>
+                  <td class="px-2">
+                    <span>LOAN APPLICATION ID : </span>
+                    <span *ngIf="loanData && loanData.referenceNo"
+                      class="font-weight-bold">{{loanData.referenceNo}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-2">
+                    <span>CKYCR NUMBER : </span>
+                    <span *ngIf="loanData && loanData.referenceNo" class="font-weight-bold"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-2">
+                    <span>MAFIL CUSTOMER ID : </span>
+                    <span
+                      *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerIntegrationId"
+                      class="font-weight-bold">{{loanData.loanApplicationKycList[1].customerIntegrationId}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-2">
+                    <span>ADDRESS DETAILS : </span>
+                    <b *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+                      <span
+                        *ngIf="loanData.loanApplicationKycList[1].permanentAddress1">{{loanData.loanApplicationKycList[1].permanentAddress1}},</span>
+                      <span
+                        *ngIf="loanData.loanApplicationKycList[1].permanentAddress2">{{loanData.loanApplicationKycList[1].permanentAddress2}},</span>
+                      <span
+                        *ngIf="loanData.loanApplicationKycList[1].permanentCity">{{loanData.loanApplicationKycList[1].permanentCity}},</span>
+                      <span
+                        *ngIf="loanData.loanApplicationKycList[1].permanentState">{{loanData.loanApplicationKycList[1].permanentState}},</span>
+                      <span
+                        *ngIf="loanData.loanApplicationKycList[1].permanentPin">{{loanData.loanApplicationKycList[1].permanentPin}}</span>
+                    </b>
+                    <b *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                      N/A
+                    </b>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-2">
+                    <span>MOBILE NUMBER : </span>
+                    <span
+                      *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerPhone"
+                      class="font-weight-bold">{{loanData.loanApplicationKycList[1].customerPhone}}</span>
+                    <span>
+                      <b *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                        N/A
+                      </b>
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div
+              *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerPhoto && loanData.loanApplicationKycList[1].customerPhoto.length > 0">
+              <!-- <span *ngIf="loanData && loanData.consumerPhoto && loanData.consumerPhoto.length>0"
                                                     class="font-weight-bold">{{loanData.consumerPhoto[0].s3path}}</span> -->
-                            <a [href]="loanData.loanApplicationKycList[1].customerPhoto[0].s3path" target="_blank"
-                                class="pointer-cursor">
-                                <img src="{{loanData.loanApplicationKycList[1].customerPhoto[0].s3path}}" width="150"
-                                    height="150">
-                            </a>
-                        </div>
-                    </div>
+              <a [href]="loanData.loanApplicationKycList[1].customerPhoto[0].s3path" target="_blank"
+                class="pointer-cursor">
+                <img src="{{loanData.loanApplicationKycList[1].customerPhoto[0].s3path}}" width="150" height="150">
+              </a>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row p-4">
+          <div>
+            <div class="mt-3  overflow-y-scroll" style="width: 100%;">
+              <div class="d-flex justify-content-between">
+                <div>
+                  To,<br>
+                  The Manager<br>
+                  Manappuram Finance Limited<br>
+                  <span
+                    *ngIf="loanData && loanData.branch && loanData.branch.branchName ">{{loanData.branch.branchName}}</span><br>
                 </div>
-
-
-                <div class="row p-4">
-                    <div>
-                        <div class="mt-3  overflow-y-scroll" style="width: 100%;">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    To,<br>
-                                    The Manager<br>
-                                    Manappuram Finance Limited<br>
-                                    <span
-                                        *ngIf="loanData && loanData.branch && loanData.branch.branchName ">{{loanData.branch.branchName}}</span><br>
-                                </div>
-                            </div>
-                            <br>
-                            <div>
-                                <div>
-                                    <div *ngIf="loanData && loanData.referenceNo"><b>Sub :
-                                        </b>Request For Consumer Durables Loan</div>
-                                    <!-- <div><b>Loan Account No : </b>87654827895</div> -->
-                                </div>
-                                <div>
-                                    <div>
-                                        I request that a Loan/Credit facility of <span
-                                            *ngIf="loanData && loanData.sanctionedAmount" class="font-weight-bold">Rs
-                                            {{loanData.sanctionedAmount}}/-</span>
-                                        may
-                                        be granted to me. Necessary particulars for consideration of this
-                                        application submitting here.
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mt-3">
-                                <div class="d-flex">
-                                    <div>
-                                        <table style="width:100%" class="table-responsive mt-2">
-                                            <tr>
-                                                <td class="px-2"
-                                                    *ngIf="loanData && loanData.loanProducts;let last=last">
-                                                    <span>GOOD TO BE PURCHASED : </span>
-                                                    <span class="details-sub-title font-weight-bold"
-                                                        *ngFor="let item of loanData.loanProducts">{{item.productName}}<span
-                                                            *ngIf="!last">,</span>  
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="px-2">
-                                                    <span>GOODS VALUE / AMOUNT : </span>
-                                                    <span *ngIf="loanData && loanData.invoiceAmount"
-                                                        class="font-weight-bold">Rs {{loanData.invoiceAmount}}/-</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="px-2">
-                                                    <span>DOWN PAYMENT - AMOUNT : </span>
-                                                    <span *ngIf="loanData && loanData.downpaymentAmount"
-                                                        class="font-weight-bold">Rs
-                                                        {{loanData.downpaymentAmount}}/-</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="px-2">
-                                                    <span>LOAN AMOUNT : </span>
-                                                    <span *ngIf="loanData && loanData.requestedAmount"
-                                                        class="font-weight-bold">Rs
-                                                        {{loanData.requestedAmount}}/-</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="px-2">
-                                                    <span>TENURE - IN MONTHS : </span>
-                                                    <span *ngIf="loanData && loanData.noOfEmi"
-                                                        class="font-weight-bold">{{loanData.noOfEmi}} Months</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row col-md-12 no-padding mt-5">
-                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                    <div class="text-center">
-                                        <b>APPLICANT PROFILE</b>
-                                    </div><br>
-                                    <div>
-                                        <div class="mt-2">Customer Education :
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerEducationName"
-                                                class="font-weight-bold">{{loanData.loanApplicationKycList[0].customerEducationName}}</span>
-                                        </div>
-                                        <span class="mt-2">Customer Profession :
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerOccupation"
-                                                class="font-weight-bold">{{loanData.loanApplicationKycList[0].customerOccupation}}</span>
-                                        </span><br>
-                                        <span class="mt-2">Gross Monthly Income :
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].monthlyIncome"
-                                                class="font-weight-bold">{{loanData.loanApplicationKycList[0].monthlyIncome}}</span>
-                                        </span><br>
-                                        <span class="mt-2">Net Monthly Income :
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].monthlyIncome"
-                                                class="font-weight-bold">{{loanData.loanApplicationKycList[0].monthlyIncome}}</span>
-                                        </span><br>
-                                        <span class="mt-2">Avg. Monthly Expense :
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].monthlyIncome"
-                                                class="font-weight-bold"></span>
-                                        </span><br>
-                                        <span class="mt-2">Existing EMI Amount :
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].monthlyIncome"
-                                                class="font-weight-bold"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                    <div class="text-center">
-                                        <b>CO-APPLICANT PROFILE</b>
-                                    </div><br>
-                                    <div>
-                                        <div class="mt-2">Education :
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerEducationName"
-                                                class="font-weight-bold"></span>
-                                        </div>
-                                        <span class="mt-2">Profession :
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerOccupation"
-                                                class="font-weight-bold"></span>
-                                        </span><br>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="mt-3">
-                                <table style="width:100%" class="table-responsive mt-2">
-                                    <tr class="text-center">
-                                        <td>
-                                            <span>CREDIT INSURANCE NOMINEE NAME</span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].nomineeName"
-                                                class="font-weight-bold">{{loanData.loanApplicationKycList[0].nomineeName}}</span>
-                                        </td>
-                                        <td>
-                                            <span>NOMINEE DOB</span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].nomineeDob"
-                                                class="font-weight-bold">{{loanData.loanApplicationKycList[0].nomineeDob}}</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <td>
-                                            <span>NOMINEE RELATION WITH APPLICANT</span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].nomineeType"
-                                                class="font-weight-bold">{{loanData.loanApplicationKycList[0].nomineeType}}</span>
-                                        </td>
-                                        <td>
-                                            <span>NOMINEE AGE</span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].nomineeAge"
-                                                class="font-weight-bold">{{loanData.loanApplicationKycList[0].nomineeAge}}</span>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-
-                            <div class="text-center mt-4">
-                                <div class="text-small font-weight-bold">DOCUMENTS TO BE SUBMITTED</div>
-                            </div>
-
-
-
-                            <div class="mt-3">
-                                Aadhaar Card/Passport/Driving License/NREGA Job Card/Voter ID/Letter issued by NPR-Any
-                                one mandatory. PAN
-                                Card/Form-60-Any one mandatory, Last 6-month Bank statement, Photograph/Digital photo
-                                and any other document as may be
-                                required.
-                            </div><br>
-                            <div class="mt-3">
-                                <i>
-                                    I here give my consent to Manappuram Finance Limited (MAFIL) to obtain my Aadhaar
-                                    Number details and demographic
-                                    details. MAFIL has informed me that, the details collected will be used for opening
-                                    customer account and may use for
-                                    other loan products. Further the collected details will be shared with other
-                                    entities/agencies for credit, Burgo score,
-                                    legal and regulatory purposes on need basis. The collected data will be stored by
-                                    MAFIL and will not be shared further
-                                    with any other entity or agency.
-                                </i>
-                            </div>
-                            <div class="mt-4">
-                                <div class="text-right">
-                                    <div>
-                                        <div class="text-center"
-                                            *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url">
-                                            Customer Signed Digitally / OTP<br>
-                                        </div>
-                                        <div
-                                            *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url)">
-                                            <span class="font-weight-bold text-danger">Customer Not Yet Signed</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="text-center py-2 bg-yellow mt-4 font-weight-bold">
-                                CDL
-                            </div>
-
-                        </div>
-                    </div>
+              </div>
+              <br>
+              <div>
+                <div>
+                  <div *ngIf="loanData && loanData.referenceNo"><b>Sub :
+                    </b>Request For Consumer Durables Loan</div>
+                  <!-- <div><b>Loan Account No : </b>87654827895</div> -->
                 </div>
+                <div>
+                  <div>
+                    I request that a Loan/Credit facility of <span *ngIf="loanData && loanData.sanctionedAmount"
+                      class="font-weight-bold">Rs
+                      {{loanData.sanctionedAmount}}/-</span>
+                    may
+                    be granted to me. Necessary particulars for consideration of this
+                    application submitting here.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-3">
+                <div class="d-flex">
+                  <div>
+                    <table style="width:100%" class="table-responsive mt-2">
+                      <tr>
+                        <td class="px-2" *ngIf="loanData && loanData.loanProducts;let last=last">
+                          <span>GOOD TO BE PURCHASED : </span>
+                          <span class="details-sub-title font-weight-bold"
+                            *ngFor="let item of loanData.loanProducts">{{item.productName}}<span *ngIf="!last">,</span>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="px-2">
+                          <span>GOODS VALUE / AMOUNT : </span>
+                          <span *ngIf="loanData && loanData.invoiceAmount" class="font-weight-bold">Rs
+                            {{loanData.invoiceAmount}}/-</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="px-2">
+                          <span>DOWN PAYMENT - AMOUNT : </span>
+                          <span *ngIf="loanData && loanData.downpaymentAmount" class="font-weight-bold">Rs
+                            {{loanData.downpaymentAmount}}/-</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="px-2">
+                          <span>LOAN AMOUNT : </span>
+                          <span *ngIf="loanData && loanData.requestedAmount" class="font-weight-bold">Rs
+                            {{loanData.requestedAmount}}/-</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="px-2">
+                          <span>TENURE - IN MONTHS : </span>
+                          <span *ngIf="loanData && loanData.noOfEmi" class="font-weight-bold">{{loanData.noOfEmi}}
+                            Months</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row col-md-12 no-padding mt-5">
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                  <div class="text-center">
+                    <b>APPLICANT PROFILE</b>
+                  </div><br>
+                  <div>
+                    <div class="mt-2">Customer Education :
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerEducationName"
+                        class="font-weight-bold">{{loanData.loanApplicationKycList[0].customerEducationName}}</span>
+                    </div>
+                    <span class="mt-2">Customer Profession :
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerOccupation"
+                        class="font-weight-bold">{{loanData.loanApplicationKycList[0].customerOccupation}}</span>
+                    </span><br>
+                    <span class="mt-2">Gross Monthly Income :
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].monthlyIncome"
+                        class="font-weight-bold">{{loanData.loanApplicationKycList[0].monthlyIncome}}</span>
+                    </span><br>
+                    <span class="mt-2">Net Monthly Income :
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].monthlyIncome"
+                        class="font-weight-bold">{{loanData.loanApplicationKycList[0].monthlyIncome}}</span>
+                    </span><br>
+                    <span class="mt-2">Avg. Monthly Expense :
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].monthlyIncome"
+                        class="font-weight-bold"></span>
+                    </span><br>
+                    <span class="mt-2">Existing EMI Amount :
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].monthlyIncome"
+                        class="font-weight-bold"></span>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                  <div class="text-center">
+                    <b>CO-APPLICANT PROFILE</b>
+                  </div><br>
+                  <div>
+                    <div class="mt-2">Education :
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerEducationName"
+                        class="font-weight-bold"></span>
+                    </div>
+                    <span class="mt-2">Profession :
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerOccupation"
+                        class="font-weight-bold"></span>
+                    </span><br>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="mt-3">
+                <table style="width:100%" class="table-responsive mt-2">
+                  <tr class="text-center">
+                    <td>
+                      <span>CREDIT INSURANCE NOMINEE NAME</span>
+                    </td>
+                    <td>
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].nomineeName"
+                        class="font-weight-bold">{{loanData.loanApplicationKycList[0].nomineeName}}</span>
+                    </td>
+                    <td>
+                      <span>NOMINEE DOB</span>
+                    </td>
+                    <td>
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].nomineeDob"
+                        class="font-weight-bold">{{loanData.loanApplicationKycList[0].nomineeDob}}</span>
+                    </td>
+                  </tr>
+                  <tr class="text-center">
+                    <td>
+                      <span>NOMINEE RELATION WITH APPLICANT</span>
+                    </td>
+                    <td>
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].nomineeType"
+                        class="font-weight-bold">{{loanData.loanApplicationKycList[0].nomineeType}}</span>
+                    </td>
+                    <td>
+                      <span>NOMINEE AGE</span>
+                    </td>
+                    <td>
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].nomineeAge"
+                        class="font-weight-bold">{{loanData.loanApplicationKycList[0].nomineeAge}}</span>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <div class="text-center mt-4">
+                <div class="text-small font-weight-bold">DOCUMENTS TO BE SUBMITTED</div>
+              </div>
+
+
+
+              <div class="mt-3">
+                Aadhaar Card/Passport/Driving License/NREGA Job Card/Voter ID/Letter issued by NPR-Any
+                one mandatory. PAN
+                Card/Form-60-Any one mandatory, Last 6-month Bank statement, Photograph/Digital photo
+                and any other document as may be
+                required.
+              </div><br>
+              <div class="mt-3">
+                <i>
+                  I here give my consent to Manappuram Finance Limited (MAFIL) to obtain my Aadhaar
+                  Number details and demographic
+                  details. MAFIL has informed me that, the details collected will be used for opening
+                  customer account and may use for
+                  other loan products. Further the collected details will be shared with other
+                  entities/agencies for credit, Burgo score,
+                  legal and regulatory purposes on need basis. The collected data will be stored by
+                  MAFIL and will not be shared further
+                  with any other entity or agency.
+                </i>
+              </div>
+              <div class="mt-4">
+                <div class="text-right">
+                  <div>
+                    <div class="text-center"
+                      *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url">
+                      Customer Signed Digitally / OTP<br>
+                    </div>
+                    <div
+                      *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url)">
+                      <span class="font-weight-bold text-danger">Customer Not Yet Signed</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="text-center py-2 bg-yellow mt-4 font-weight-bold">
+                CDL
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="card p-5 dpn-letter">
+        <div class="text-center">
+          <h4 class="font-weight-bold"><u>DEMAND PROMISSORY NOTE</u></h4>
+        </div>
+        <div class="mt-5">
+          <div>
+            <div class="d-flex justify-content-end">
+              <div>
+                Place : Thrissur <br>
+                Date : {{currentDate | date:'yyyy-MM-dd'}}
+              </div>
+            </div>
+            <br>
+            <div *ngIf="loanData && loanData.sanctionedAmount">
+              Rs.<b>{{loanData.sanctionedAmount}}/-</b>
+            </div>
+            <div class="mt-4">
+              <div>
+                ON DEMAND, I / WE, (Name of Customer)
+                <b><span
+                    *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>
+                  &nbsp;<span
+                    *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span></b>
+                (Customer Address)
+                <b>
+                  <span
+                    *ngIf="loanData && loanData.loanApplicationKycList[0].permanentAddress1">{{loanData.loanApplicationKycList[0].permanentAddress1}},</span>
+                  <span
+                    *ngIf="loanData && loanData.loanApplicationKycList[0].permanentAddress2">{{loanData.loanApplicationKycList[0].permanentAddress2}},</span>
+                  <span
+                    *ngIf="loanData && loanData.loanApplicationKycList[0].permanentCity">{{loanData.loanApplicationKycList[0].permanentCity}},</span>
+                  <span
+                    *ngIf="loanData && loanData.loanApplicationKycList[0].permanentState">{{loanData.loanApplicationKycList[0].permanentState}},</span>
+                  <span
+                    *ngIf="loanData && loanData.loanApplicationKycList[0].permanentPin">{{loanData.loanApplicationKycList[0].permanentPin}}</span>
+                </b>
+                and (Name of Co-Applicant / Guarantor If applicable)
+                <b *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+                  <span *ngIf=" loanData && loanData.loanApplicationKycList[1] &&
+                                    loanData.loanApplicationKycList[1].customerFirstName">
+                    {{loanData.loanApplicationKycList[1].customerFirstName}}
+                  </span><span
+                    *ngIf="loanData && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerLastName">
+                    {{loanData.loanApplicationKycList[1].customerLastName}}
+                  </span>
+                </b>
+                <b *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                  N/A
+                </b>
+                (Co-Applicant / Guarantor Address)
+                <b *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+                  <span
+                    *ngIf="loanData.loanApplicationKycList[1].permanentAddress1">{{loanData.loanApplicationKycList[1].permanentAddress1}},</span>
+                  <span
+                    *ngIf="loanData.loanApplicationKycList[1].permanentAddress2">{{loanData.loanApplicationKycList[1].permanentAddress2}},</span>
+                  <span
+                    *ngIf="loanData.loanApplicationKycList[1].permanentCity">{{loanData.loanApplicationKycList[1].permanentCity}},</span>
+                  <span
+                    *ngIf="loanData.loanApplicationKycList[1].permanentState">{{loanData.loanApplicationKycList[1].permanentState}},</span>
+                  <span
+                    *ngIf="loanData.loanApplicationKycList[1].permanentPin">{{loanData.loanApplicationKycList[1].permanentPin}}</span>
+                </b>
+                <b *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                  N/A
+                </b>
+                jointly and severally promise to pay to MANAPPURAM FINANCE LIMITED (“Lender”) or order
+                the
+                sum of
+                <b><span *ngIf="loanData && loanData.sanctionedAmount">
+                    Rs {{loanData.sanctionedAmount}}/-
+                  </span></b> (Rupees only) for value
+                received, together with interest from the date hereof, at <b><span
+                    *ngIf="loanData && loanData.loanScheme && loanData.loanScheme.schemeRate">
+                    {{loanData.loanScheme.schemeRate }} %
+                  </span></b>per annum or such other rates which
+                MANAPPURAM
+                FINANCE LIMITED (“Lender”) may ﬁx from me to me,
+                compounding and payable with daily / monthly / quarterly rests, for value received.
+              </div>
             </div>
 
-            <br>
 
-            <div class="card p-5 dpn-letter">
-                <div class="text-center">
-                    <h4 class="font-weight-bold"><u>DEMAND PROMISSORY NOTE</u></h4>
-                </div>
-                <div class="mt-5">
-                    <div>
-                        <div class="d-flex justify-content-end">
-                            <div>
-                                Place : Thrissur <br>
-                                Date : {{currentDate | date:'yyyy-MM-dd'}}
-                            </div>
-                        </div>
-                        <br>
-                        <div *ngIf="loanData && loanData.sanctionedAmount">
-                            Rs.<b>{{loanData.sanctionedAmount}}/-</b>
-                        </div>
-                        <div class="mt-4">
-                            <div>
-                                ON DEMAND, I / WE, (Name of Customer)
-                                <b><span
-                                        *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>
-                                    &nbsp;<span
-                                        *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span></b>
-                                (Customer Address)
-                                <b>
-                                    <span
-                                        *ngIf="loanData && loanData.loanApplicationKycList[0].permanentAddress1">{{loanData.loanApplicationKycList[0].permanentAddress1}},</span>
-                                    <span
-                                        *ngIf="loanData && loanData.loanApplicationKycList[0].permanentAddress2">{{loanData.loanApplicationKycList[0].permanentAddress2}},</span>
-                                    <span
-                                        *ngIf="loanData && loanData.loanApplicationKycList[0].permanentCity">{{loanData.loanApplicationKycList[0].permanentCity}},</span>
-                                    <span
-                                        *ngIf="loanData && loanData.loanApplicationKycList[0].permanentState">{{loanData.loanApplicationKycList[0].permanentState}},</span>
-                                    <span
-                                        *ngIf="loanData && loanData.loanApplicationKycList[0].permanentPin">{{loanData.loanApplicationKycList[0].permanentPin}}</span>
-                                </b>
-                                and (Name of Co-Applicant / Guarantor If applicable)
-                                <b
-                                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
-                                    <span *ngIf=" loanData && loanData.loanApplicationKycList[1] &&
-                                    loanData.loanApplicationKycList[1].customerFirstName">
-                                        {{loanData.loanApplicationKycList[1].customerFirstName}}
-                                    </span><span
-                                        *ngIf="loanData && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerLastName">
-                                        {{loanData.loanApplicationKycList[1].customerLastName}}
-                                    </span>
-                                </b>
-                                <b
-                                    *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
-                                    N/A
-                                </b>
-                                (Co-Applicant / Guarantor Address)
-                                <b
-                                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
-                                    <span
-                                        *ngIf="loanData.loanApplicationKycList[1].permanentAddress1">{{loanData.loanApplicationKycList[1].permanentAddress1}},</span>
-                                    <span
-                                        *ngIf="loanData.loanApplicationKycList[1].permanentAddress2">{{loanData.loanApplicationKycList[1].permanentAddress2}},</span>
-                                    <span
-                                        *ngIf="loanData.loanApplicationKycList[1].permanentCity">{{loanData.loanApplicationKycList[1].permanentCity}},</span>
-                                    <span
-                                        *ngIf="loanData.loanApplicationKycList[1].permanentState">{{loanData.loanApplicationKycList[1].permanentState}},</span>
-                                    <span
-                                        *ngIf="loanData.loanApplicationKycList[1].permanentPin">{{loanData.loanApplicationKycList[1].permanentPin}}</span>
-                                </b>
-                                <b
-                                    *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
-                                    N/A
-                                </b>
-                                jointly and severally promise to pay to MANAPPURAM FINANCE LIMITED (“Lender”) or order
-                                the
-                                sum of
-                                <b><span *ngIf="loanData && loanData.sanctionedAmount">
-                                        Rs {{loanData.sanctionedAmount}}/-
-                                    </span></b> (Rupees only) for value
-                                received, together with interest from the date hereof, at <b><span
-                                        *ngIf="loanData && loanData.loanScheme && loanData.loanScheme.schemeRate">
-                                        {{loanData.loanScheme.schemeRate }} %
-                                    </span></b>per annum or such other rates which
-                                MANAPPURAM
-                                FINANCE LIMITED (“Lender”) may ﬁx from me to me,
-                                compounding and payable with daily / monthly / quarterly rests, for value received.
-                            </div>
-                        </div>
-
-
-                        <div class="mt-4">
-                            <div class="d-flex justify-content-end">
-                                <div class="mr-2 my-auto py-auto">
-                                    <div class="text-center">
-                                        <img *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url"
-                                            [src]="loanData.loanApplicationKycList[0].digitalSignature.url"
-                                            width="100px"><br>
-                                    </div>
-                                    <div
-                                        *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature&& loanData.loanApplicationKycList[0].digitalSignature.url)">
-                                        <span class="font-weight-bold text-danger">Not Yet Signed</span>
-                                    </div>
-                                    <span>Applicant Signature</span><br><br>
-                                    <div class="text-center font-weight-bold"
-                                        *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
-                                        <span>N/A</span>
-                                    </div>
-                                    <div class="font-weight-bold"
-                                        *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
-                                        N/A
-                                    </div>
-                                    <div class="font-weight-bold"
-                                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
-                                        <div class="text-center"
-                                            *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url">
-                                            <img [src]="loanData.loanApplicationKycList[1].digitalSignature.url"
-                                                width="100px"><br>
-                                        </div>
-                                        <div
-                                            *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url)">
-                                            <span class="font-weight-bold text-danger">Not Yet Signed</span>
-                                        </div>
-                                    </div>
-                                    <span>Co-Applicant / Guarantor Signature</span>
-                                </div>
-                                <div class="border-rectangle">
-                                    Revenue
-                                    Stamp of Re. 1/- to be aﬃxed.
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-                        <div class="mt-4">
-                            <div class="d-md-flex justify-content-between">
-                                <div class="mt-4">
-                                    <div class="text-center"
-                                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url">
-                                        <img [src]="loanData.loanApplicationKycList[0].digitalSignature.url"
-                                            width="100px"><br>
-                                    </div>
-                                    <div
-                                        *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature&& loanData.loanApplicationKycList[0].digitalSignature.url)">
-                                        <span class="font-weight-bold text-danger">Not Yet Signed</span>
-                                    </div>
-
-                                    <span>Applicant Signature</span><br>
-                                    <span class="mt-4">Applicant Name : <b><span
-                                                *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>
-                                            &nbsp;<span
-                                                *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span></b></span>
-                                </div>
-                                <div class="mt-4">
-                                    <div class="font-weight-bold"
-                                        *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
-                                        N/A
-                                    </div>
-                                    <div class="font-weight-bold"
-                                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
-                                        <div class="text-center"
-                                            *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url">
-                                            <img [src]="loanData.loanApplicationKycList[1].digitalSignature.url"
-                                                width="100px"><br>
-                                        </div>
-                                        <div
-                                            *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url)">
-                                            <span class="font-weight-bold text-danger">Not Yet Signed</span>
-                                        </div>
-                                    </div>
-                                    <span>Co-Applicant / Guarantor Signature</span><br>
-                                    <span class="mt-4">Co-Applicant / Guarantor Name : <b
-                                            *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
-                                            <span
-                                                *ngIf=" loanData && loanData.loanApplicationKycList[1] &&
-                                                                        loanData.loanApplicationKycList[1].customerFirstName">
-                                                {{loanData.loanApplicationKycList[1].customerFirstName}}
-                                            </span><span
-                                                *ngIf="loanData && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerLastName">
-                                                {{loanData.loanApplicationKycList[1].customerLastName}}
-                                            </span>
-                                        </b>
-                                        <b
-                                            *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
-                                            N/A
-                                        </b>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="mt-1 mb-4 text-center">
-                            <b>The Applicant / Co-Applicant Guarantor has / have to sign across the revenue stamp & DP
-                                note.</b>
-                        </div>
-
-
-                        <div class="text-center py-2 bg-yellow mt-4 font-weight-bold">
-                            CDL
-                        </div>
-
+            <div class="mt-4">
+              <div class="d-flex justify-content-end">
+                <div class="mr-2 my-auto py-auto">
+                  <div class="text-center">
+                    <img
+                      *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url"
+                      [src]="loanData.loanApplicationKycList[0].digitalSignature.url" width="100px"><br>
+                  </div>
+                  <div
+                    *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature&& loanData.loanApplicationKycList[0].digitalSignature.url)">
+                    <span class="font-weight-bold text-danger">Not Yet Signed</span>
+                  </div>
+                  <span>Applicant Signature</span><br><br>
+                  <div class="text-center font-weight-bold"
+                    *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                    <span>N/A</span>
+                  </div>
+                  <div class="font-weight-bold"
+                    *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                    N/A
+                  </div>
+                  <div class="font-weight-bold"
+                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+                    <div class="text-center"
+                      *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url">
+                      <img [src]="loanData.loanApplicationKycList[1].digitalSignature.url" width="100px"><br>
                     </div>
-                    <!-- <div class="btn btn-primary mt-3" (click)="goHome()">
+                    <div
+                      *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url)">
+                      <span class="font-weight-bold text-danger">Not Yet Signed</span>
+                    </div>
+                  </div>
+                  <span>Co-Applicant / Guarantor Signature</span>
+                </div>
+                <div class="border-rectangle">
+                  Revenue
+                  Stamp of Re. 1/- to be aﬃxed.
+                </div>
+              </div>
+            </div>
+
+
+
+
+            <div class="mt-4">
+              <div class="d-md-flex justify-content-between">
+                <div class="mt-4">
+                  <div class="text-center"
+                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url">
+                    <img [src]="loanData.loanApplicationKycList[0].digitalSignature.url" width="100px"><br>
+                  </div>
+                  <div
+                    *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature&& loanData.loanApplicationKycList[0].digitalSignature.url)">
+                    <span class="font-weight-bold text-danger">Not Yet Signed</span>
+                  </div>
+
+                  <span>Applicant Signature</span><br>
+                  <span class="mt-4">Applicant Name : <b><span
+                        *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>
+                      &nbsp;<span
+                        *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span></b></span>
+                </div>
+                <div class="mt-4">
+                  <div class="font-weight-bold"
+                    *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                    N/A
+                  </div>
+                  <div class="font-weight-bold"
+                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+                    <div class="text-center"
+                      *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url">
+                      <img [src]="loanData.loanApplicationKycList[1].digitalSignature.url" width="100px"><br>
+                    </div>
+                    <div
+                      *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url)">
+                      <span class="font-weight-bold text-danger">Not Yet Signed</span>
+                    </div>
+                  </div>
+                  <span>Co-Applicant / Guarantor Signature</span><br>
+                  <span class="mt-4">Co-Applicant / Guarantor Name : <b
+                      *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+                      <span
+                        *ngIf=" loanData && loanData.loanApplicationKycList[1] &&
+                                                                        loanData.loanApplicationKycList[1].customerFirstName">
+                        {{loanData.loanApplicationKycList[1].customerFirstName}}
+                      </span><span
+                        *ngIf="loanData && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerLastName">
+                        {{loanData.loanApplicationKycList[1].customerLastName}}
+                      </span>
+                    </b>
+                    <b *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                      N/A
+                    </b>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="mt-1 mb-4 text-center">
+              <b>The Applicant / Co-Applicant Guarantor has / have to sign across the revenue stamp & DP
+                note.</b>
+            </div>
+
+
+            <div class="text-center py-2 bg-yellow mt-4 font-weight-bold">
+              CDL
+            </div>
+
+          </div>
+          <!-- <div class="btn btn-primary mt-3" (click)="goHome()">
                         Go to Home
                     </div> -->
+        </div>
+      </div>
+
+
+      <div class="card p-5 mt-5 spdc-letter">
+        <div class="text-center">
+          <h4 class="font-weight-bold"><u>SECURITY POST DATED CHEQUE</u></h4>
+        </div>
+        <div class="row">
+          <div>
+            <div class="mt-3  overflow-y-scroll" style="width: 100%;">
+              <div class="d-flex justify-content-between">
+                <div>
+                  To,<br>
+                  The Manager<br>
+                  Manappuram Finance Limited<br>
+                  A O Valapad.<br>
                 </div>
-            </div>
-
-
-            <div class="card p-5 mt-5 spdc-letter">
-                <div class="text-center">
-                    <h4 class="font-weight-bold"><u>SECURITY POST DATED CHEQUE</u></h4>
+                <div>
+                  Date : {{currentDate | date:'yyyy-MM-dd'}}
                 </div>
-                <div class="row">
-                    <div>
-                        <div class="mt-3  overflow-y-scroll" style="width: 100%;">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    To,<br>
-                                    The Manager<br>
-                                    Manappuram Finance Limited<br>
-                                    A O Valapad.<br>
-                                </div>
-                                <div>
-                                    Date : {{currentDate | date:'yyyy-MM-dd'}}
-                                </div>
-                            </div>
-                            <br>
-                            <div>
-                                From
-                            </div>
-                            <div class="text-center">
-                                <div>
-                                    <div *ngIf="loanData && loanData.referenceNo"><b>Loan Application No :
-                                        </b>{{loanData.referenceNo}}</div>
-                                    <!-- <div><b>Loan Account No : </b>87654827895</div> -->
-                                </div>
-                            </div>
-                            <div class="mt-3">
-                                Dear Sir,
-                            </div>
+              </div>
+              <br>
+              <div>
+                From
+              </div>
+              <div class="text-center">
+                <div>
+                  <div *ngIf="loanData && loanData.referenceNo"><b>Loan Application No :
+                    </b>{{loanData.referenceNo}}</div>
+                  <!-- <div><b>Loan Account No : </b>87654827895</div> -->
+                </div>
+              </div>
+              <div class="mt-3">
+                Dear Sir,
+              </div>
 
-                            <div class="mt-2" *ngIf="loanData && loanData.sanctionedAmount">
-                                <b><u>Sub</u> : Cheques towards repayment of my Loan against CDL of Rs
-                                    {{loanData.sanctionedAmount}}/-</b>
-                            </div>
+              <div class="mt-2" *ngIf="loanData && loanData.sanctionedAmount">
+                <b><u>Sub</u> : Cheques towards repayment of my Loan against CDL of Rs
+                  {{loanData.sanctionedAmount}}/-</b>
+              </div>
 
-                            <div class="mt-3">
-                                Please ﬁnd enclosed crossed cheques /NACH drawn in favour of Manappuram Finance Limited
-                                bearing
-                                the
-                                following being
-                                submitted
-                                towards repayment of my captioned loan availed from your Company bearing the
-                                above-mentioned
-                                account number.
-                            </div>
-                            <div class="row col-md-12 no-padding mt-5">
-                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                    <div class="text-center">
-                                        <b>Applicant</b>
-                                    </div><br>
-                                    <div>
-                                        <div class="mt-2">1. Name of the Drawee Bank :
-                                            <span *ngIf="bankData && bankData.bankName"
-                                                class="font-weight-bold">{{bankData.bankName}}</span>
-                                        </div>
-                                        <span class="mt-2">2. Name of the Drawee Bank Branch :
-                                            <span *ngIf="bankData && bankData.bankBranchName"
-                                                class="font-weight-bold">{{bankData.bankBranchName}}</span>
-                                        </span><br>
-                                        <span class="mt-2">3. MICR Sort Code :
-                                            <span class="font-weight-bold">N/A</span>
-                                        </span><br>
-                                        <span class="mt-2">4. Account Number :
-                                            <span *ngIf="bankData && bankData.bankAccountNo"
-                                                class="font-weight-bold">{{bankData.bankAccountNo}}</span>
-                                        </span><br>
-                                        <span class="mt-2">5. IFSC Code :
-                                            <span *ngIf="bankData && bankData.bankIfsc"
-                                                class="font-weight-bold">{{bankData.bankIfsc}}</span>
-                                        </span><br>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                    <div class="text-center">
-                                        <b>Co-Applicant</b>
-                                    </div><br>
-                                    <div>
-                                        <span class="mt-2">1. Name of the Drawee Bank :
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankName"
-                                                class="font-weight-bold">{{loanData.loanApplicationKycList[1].bankName}}</span>
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]"
-                                                class="font-weight-bold">N/A</span>
-                                        </span><br>
-                                        <span class="mt-2">2. Name of the Drawee Bank Branch :
-                                            <span class="font-weight-bold">
-                                                <span
-                                                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankBranchName"
-                                                    class="font-weight-bold">{{loanData.loanApplicationKycList[1].bankBranchName}}</span>
-                                                <span
-                                                    *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]"
-                                                    class="font-weight-bold">N/A</span>
-                                            </span>
-                                        </span><br>
-                                        <span class="mt-2">3. MICR Sort Code :
-                                            <span class="font-weight-bold">N/A</span>
-                                        </span><br>
-                                        <span class="mt-2">4. Account Number :
-                                            <span class="font-weight-bold">
-                                                <span
-                                                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankAccountNo"
-                                                    class="font-weight-bold">{{loanData.loanApplicationKycList[1].bankAccountNo}}</span>
-                                                <span
-                                                    *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]"
-                                                    class="font-weight-bold">N/A</span>
-                                            </span>
-                                        </span><br>
-                                        <span class="mt-2">5. IFSC Code :
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankIfsc"
-                                                class="font-weight-bold">{{loanData.loanApplicationKycList[1].bankIfsc}}</span>
-                                            <span
-                                                *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]"
-                                                class="font-weight-bold">N/A</span>
-                                        </span><br>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="mt-3">
-                                <b>Applicant's : </b>
-                                <table style="width:100%" class="table-responsive mt-2">
-                                    <tr class="text-center">
-                                        <td>
-                                            <span>SI No</span>
-                                        </td>
-                                        <td>
-                                            <span>From</span>
-                                        </td>
-                                        <td>
-                                            <span>To</span>
-                                        </td>
-                                        <td>
-                                            <span>No Cheques</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <td>
-                                            <span>1</span>
-                                        </td>
-                                        <td>
-                                            <span></span>
-                                        </td>
-                                        <td>
-                                            <span></span>
-                                        </td>
-                                        <td>
-                                            <span>.....No's</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <td>
-                                            <span>2</span>
-                                        </td>
-                                        <td>
-                                            <span></span>
-                                        </td>
-                                        <td>
-                                            <span></span>
-                                        </td>
-                                        <td>
-                                            <span></span>
-                                        </td>
-                                    </tr>
+              <div class="mt-3">
+                Please ﬁnd enclosed crossed cheques /NACH drawn in favour of Manappuram Finance Limited
+                bearing
+                the
+                following being
+                submitted
+                towards repayment of my captioned loan availed from your Company bearing the
+                above-mentioned
+                account number.
+              </div>
+              <div class="row col-md-12 no-padding mt-5">
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                  <div class="text-center">
+                    <b>Applicant</b>
+                  </div><br>
+                  <div>
+                    <div class="mt-2">1. Name of the Drawee Bank :
+                      <span *ngIf="bankData && bankData.bankName" class="font-weight-bold">{{bankData.bankName}}</span>
+                    </div>
+                    <span class="mt-2">2. Name of the Drawee Bank Branch :
+                      <span *ngIf="bankData && bankData.bankBranchName"
+                        class="font-weight-bold">{{bankData.bankBranchName}}</span>
+                    </span><br>
+                    <span class="mt-2">3. MICR Sort Code :
+                      <span class="font-weight-bold">N/A</span>
+                    </span><br>
+                    <span class="mt-2">4. Account Number :
+                      <span *ngIf="bankData && bankData.bankAccountNo"
+                        class="font-weight-bold">{{bankData.bankAccountNo}}</span>
+                    </span><br>
+                    <span class="mt-2">5. IFSC Code :
+                      <span *ngIf="bankData && bankData.bankIfsc" class="font-weight-bold">{{bankData.bankIfsc}}</span>
+                    </span><br>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                  <div class="text-center">
+                    <b>Co-Applicant</b>
+                  </div><br>
+                  <div>
+                    <span class="mt-2">1. Name of the Drawee Bank :
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankName"
+                        class="font-weight-bold">{{loanData.loanApplicationKycList[1].bankName}}</span>
+                      <span *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]"
+                        class="font-weight-bold">N/A</span>
+                    </span><br>
+                    <span class="mt-2">2. Name of the Drawee Bank Branch :
+                      <span class="font-weight-bold">
+                        <span
+                          *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankBranchName"
+                          class="font-weight-bold">{{loanData.loanApplicationKycList[1].bankBranchName}}</span>
+                        <span *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]"
+                          class="font-weight-bold">N/A</span>
+                      </span>
+                    </span><br>
+                    <span class="mt-2">3. MICR Sort Code :
+                      <span class="font-weight-bold">N/A</span>
+                    </span><br>
+                    <span class="mt-2">4. Account Number :
+                      <span class="font-weight-bold">
+                        <span
+                          *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankAccountNo"
+                          class="font-weight-bold">{{loanData.loanApplicationKycList[1].bankAccountNo}}</span>
+                        <span *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]"
+                          class="font-weight-bold">N/A</span>
+                      </span>
+                    </span><br>
+                    <span class="mt-2">5. IFSC Code :
+                      <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankIfsc"
+                        class="font-weight-bold">{{loanData.loanApplicationKycList[1].bankIfsc}}</span>
+                      <span *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]"
+                        class="font-weight-bold">N/A</span>
+                    </span><br>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="mt-3">
+                <b>Applicant's : </b>
+                <table style="width:100%" class="table-responsive mt-2">
+                  <tr class="text-center">
+                    <td>
+                      <span>SI No</span>
+                    </td>
+                    <td>
+                      <span>From</span>
+                    </td>
+                    <td>
+                      <span>To</span>
+                    </td>
+                    <td>
+                      <span>No Cheques</span>
+                    </td>
+                  </tr>
+                  <tr class="text-center">
+                    <td>
+                      <span>1</span>
+                    </td>
+                    <td>
+                      <span></span>
+                    </td>
+                    <td>
+                      <span></span>
+                    </td>
+                    <td>
+                      <span>.....No's</span>
+                    </td>
+                  </tr>
+                  <tr class="text-center">
+                    <td>
+                      <span>2</span>
+                    </td>
+                    <td>
+                      <span></span>
+                    </td>
+                    <td>
+                      <span></span>
+                    </td>
+                    <td>
+                      <span></span>
+                    </td>
+                  </tr>
 
-                                    <tr class="text-center">
-                                        <td colspan="2">
-                                            <span>NACH - UMR Number</span>
-                                        </td>
-                                        <td>
-                                            <span></span>
-                                        </td>
-                                        <td>
-                                            <span></span>
-                                        </td>
-                                    </tr>
+                  <tr class="text-center">
+                    <td colspan="2">
+                      <span>NACH - UMR Number</span>
+                    </td>
+                    <td>
+                      <span></span>
+                    </td>
+                    <td>
+                      <span></span>
+                    </td>
+                  </tr>
 
-                                </table>
-                            </div>
+                </table>
+              </div>
 
-                            <div class="mt-3">
-                                <b>Co Applicant's : </b>
-                                <table style="width:100%" class="table-responsive mt-2">
-                                    <tr class="text-center">
-                                        <td>
-                                            <span>SI No</span>
-                                        </td>
-                                        <td>
-                                            <span>From</span>
-                                        </td>
-                                        <td>
-                                            <span>To</span>
-                                        </td>
-                                        <td>
-                                            <span>No Cheques</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <td>
-                                            <span>1</span>
-                                        </td>
-                                        <td>
-                                            <span></span>
-                                        </td>
-                                        <td>
-                                            <span></span>
-                                        </td>
-                                        <td>
-                                            <span>.....No's</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <td>
-                                            <span>2</span>
-                                        </td>
-                                        <td>
-                                            <span></span>
-                                        </td>
-                                        <td>
-                                            <span></span>
-                                        </td>
-                                        <td>
-                                            <span></span>
-                                        </td>
-                                    </tr>
+              <div class="mt-3">
+                <b>Co Applicant's : </b>
+                <table style="width:100%" class="table-responsive mt-2">
+                  <tr class="text-center">
+                    <td>
+                      <span>SI No</span>
+                    </td>
+                    <td>
+                      <span>From</span>
+                    </td>
+                    <td>
+                      <span>To</span>
+                    </td>
+                    <td>
+                      <span>No Cheques</span>
+                    </td>
+                  </tr>
+                  <tr class="text-center">
+                    <td>
+                      <span>1</span>
+                    </td>
+                    <td>
+                      <span></span>
+                    </td>
+                    <td>
+                      <span></span>
+                    </td>
+                    <td>
+                      <span>.....No's</span>
+                    </td>
+                  </tr>
+                  <tr class="text-center">
+                    <td>
+                      <span>2</span>
+                    </td>
+                    <td>
+                      <span></span>
+                    </td>
+                    <td>
+                      <span></span>
+                    </td>
+                    <td>
+                      <span></span>
+                    </td>
+                  </tr>
 
-                                    <tr class="text-center">
-                                        <td colspan="2">
-                                            <span>NACH - UMR Number</span>
-                                        </td>
-                                        <td>
-                                            <span></span>
-                                        </td>
-                                        <td>
-                                            <span></span>
-                                        </td>
-                                    </tr>
+                  <tr class="text-center">
+                    <td colspan="2">
+                      <span>NACH - UMR Number</span>
+                    </td>
+                    <td>
+                      <span></span>
+                    </td>
+                    <td>
+                      <span></span>
+                    </td>
+                  </tr>
 
-                                </table>
-                            </div>
+                </table>
+              </div>
 
-                            <div class="mt-4">
-                                I/We agree that the postdated cheques/NACH are given in satisfaction of the debt due and
-                                payable
-                                by me/us to
-                                the Company
-                                in terms of the captioned loan. I further undertake to replenish the requisite number of
-                                cheques/NACH on
-                                these
-                                cheques/NACH being exhausted, as demanded by the Company, from me to me.
-                            </div><br>
-                            <div class="mt-4">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <div class="text-center"
-                                            *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url">
-                                            <img [src]="loanData.loanApplicationKycList[0].digitalSignature.url"
-                                                width="100px"><br>
-                                        </div>
-                                        <div
-                                            *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url)">
-                                            <span class="font-weight-bold text-danger">Not Yet Signed</span>
-                                        </div>
-                                        <span>Signature</span><br>
-                                        <span class="mt-4">Name of Borrower : <b><span
-                                                    *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>
-                                                &nbsp;<span
-                                                    *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span></b></span>
-                                    </div>
-                                    <div>
-                                        <div class="font-weight-bold"
-                                            *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
-                                            N/A
-                                        </div>
-                                        <div class="font-weight-bold"
-                                            *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
-                                            <div class="text-center"
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url">
-                                                <img [src]="loanData.loanApplicationKycList[1].digitalSignature.url"
-                                                    width="100px"><br>
-                                            </div>
-                                            <div
-                                                *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url)">
-                                                <span class="font-weight-bold text-danger">Not Yet Signed</span>
-                                            </div>
-                                        </div>
-                                        <span>Signature</span><br>
-                                        <span class="mt-4">Co-Applicant / Guarantor : <b
-                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
-                                                <span
-                                                    *ngIf=" loanData && loanData.loanApplicationKycList[1] &&
+              <div class="mt-4">
+                I/We agree that the postdated cheques/NACH are given in satisfaction of the debt due and
+                payable
+                by me/us to
+                the Company
+                in terms of the captioned loan. I further undertake to replenish the requisite number of
+                cheques/NACH on
+                these
+                cheques/NACH being exhausted, as demanded by the Company, from me to me.
+              </div><br>
+              <div class="mt-4">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <div class="text-center"
+                      *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url">
+                      <img [src]="loanData.loanApplicationKycList[0].digitalSignature.url" width="100px"><br>
+                    </div>
+                    <div
+                      *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url)">
+                      <span class="font-weight-bold text-danger">Not Yet Signed</span>
+                    </div>
+                    <span>Signature</span><br>
+                    <span class="mt-4">Name of Borrower : <b><span
+                          *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>
+                        &nbsp;<span
+                          *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span></b></span>
+                  </div>
+                  <div>
+                    <div class="font-weight-bold"
+                      *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                      N/A
+                    </div>
+                    <div class="font-weight-bold"
+                      *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+                      <div class="text-center"
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url">
+                        <img [src]="loanData.loanApplicationKycList[1].digitalSignature.url" width="100px"><br>
+                      </div>
+                      <div
+                        *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url)">
+                        <span class="font-weight-bold text-danger">Not Yet Signed</span>
+                      </div>
+                    </div>
+                    <span>Signature</span><br>
+                    <span class="mt-4">Co-Applicant / Guarantor : <b
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+                        <span
+                          *ngIf=" loanData && loanData.loanApplicationKycList[1] &&
                                                                                                                 loanData.loanApplicationKycList[1].customerFirstName">
-                                                    {{loanData.loanApplicationKycList[1].customerFirstName}}
-                                                </span><span
-                                                    *ngIf="loanData && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerLastName">
-                                                    {{loanData.loanApplicationKycList[1].customerLastName}}
-                                                </span>
-                                            </b>
-                                            <b
-                                                *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
-                                                N/A
-                                            </b></span>
-                                    </div>
-                                </div>
-                            </div>
+                          {{loanData.loanApplicationKycList[1].customerFirstName}}
+                        </span><span
+                          *ngIf="loanData && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerLastName">
+                          {{loanData.loanApplicationKycList[1].customerLastName}}
+                        </span>
+                      </b>
+                      <b *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                        N/A
+                      </b></span>
+                  </div>
+                </div>
+              </div>
 
 
-                            <div class="text-center py-2 bg-yellow mt-4 font-weight-bold">
-                                CDL
-                            </div>
+              <div class="text-center py-2 bg-yellow mt-4 font-weight-bold">
+                CDL
+              </div>
 
-                        </div>
-                        <!-- <div class="btn btn-primary mt-3" (click)="goHome()">
+            </div>
+            <!-- <div class="btn btn-primary mt-3" (click)="goHome()">
                             Go to Home
                         </div> -->
-                    </div>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <div class="text-center mt-3"
-                        *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url) && source!='provider'">
-                        <button class="btn btn-primary" (click)="manualSignature()">Applicant Sign</button>
-                    </div>
-                    <div class="text-center mt-3 ml-2"
-                        *ngIf="(loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]) && !(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url) && source!='provider'">
-                        <button class="btn btn-primary" (click)="manualSignature('coapplicant')">Co-Applicant
-                            Sign</button>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+        <div class="d-flex justify-content-center">
+          <div class="text-center mt-3"
+            *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url) && source!='provider'">
+            <button class="btn btn-primary" (click)="manualSignature()">Applicant Sign</button>
+          </div>
+          <div class="text-center mt-3 ml-2"
+            *ngIf="(loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]) && !(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url) && source!='provider'">
+            <button class="btn btn-primary" (click)="manualSignature('coapplicant')">Co-Applicant
+              Sign</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
 
 <div class="policy card" *ngIf="signCompleted">
-    <div class="row">
-        <div class="text-center">
-            <div>
-                <img src="../../../../assets/images/cdl/thankyou.gif" class="img-fluid">
-            </div>
-            <!-- <div class="btn btn-primary mt-3" (click)="goHome()">
+  <div class="row">
+    <div class="text-center">
+      <div>
+        <img src="../../../../assets/images/cdl/thankyou.gif" class="img-fluid">
+      </div>
+      <!-- <div class="btn btn-primary mt-3" (click)="goHome()">
         Go to Home
       </div> -->
-        </div>
     </div>
+  </div>
 </div>

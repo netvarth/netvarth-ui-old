@@ -103,6 +103,12 @@
             <table class="table table-borderless">
               <tbody>
 
+                <tr style="width: 100%;" *ngIf="loanData && loanData.createdDate">
+                  <td style="width: 50%;" class="details-title">Created Date</td>
+                  <th style=" width: 50%;" class="details-sub-title">
+                    {{loanData.createdDate}}</th>
+                </tr>
+
                 <tr style="width: 100%;"
                   *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerIntegrationId">
                   <td style="width: 50%;" class="details-title">Customer Integration Id</td>
@@ -771,7 +777,13 @@
               <div class="details-title">Sanctioned Amount</div>
               <div class="details-sub-title">{{loanData.sanctionedAmount}}</div>
             </div>
-            <div class="col-md-4 no-padding-small mt-2">
+            <div class="col-md-4 no-padding-small mt-2"
+              *ngIf="loanData && loanData.loanScheme && loanData.loanScheme.schemeRate">
+              <div class="details-title">Rate of Interest</div>
+              <div class="details-sub-title">{{loanData.loanScheme.schemeRate}} %
+              </div>
+            </div>
+            <div class="col-md-6 no-padding-small mt-2">
               <div class="details-title"
                 *ngIf="loanData && loanData.partnerAcceptanceAttachments && loanData.partnerAcceptanceAttachments.length == 0">
                 <div class="bggrey my-2">
@@ -1034,7 +1046,7 @@
                 <div class="btn btn-primary mr-2" (click)="viewDigitalDocument()">View Agreement</div>
               </div>
               <!-- *ngIf="!digitalDocumenId || (digitalDocumenId && digitalDocumenId=='')" -->
-              <div class="mt-2">
+              <div class="mt-2" *ngIf="!digitalDocumenId || (digitalDocumenId && digitalDocumenId=='')">
                 <div class="btn btn-primary" (click)="sendDigitalAgreement()">Send Agreement</div>
               </div>
             </div>
@@ -1044,7 +1056,7 @@
                 <div class="btn btn-primary" (click)="viewInsuranceDocument()">View Insurance Agreement</div>
               </div>
               <!-- *ngIf="!digitalInsuranceId || (digitalInsuranceId && digitalInsuranceId=='')" -->
-              <div class="mt-2">
+              <div class="mt-2" *ngIf="!digitalInsuranceId || (digitalInsuranceId && digitalInsuranceId=='')">
                 <div class="btn btn-primary" (click)="sendInsuranceDocument()">Send Insurance Agreement</div>
               </div>
             </div>

@@ -707,6 +707,21 @@
         </tr>
 
         <tr class="text-left">
+          <td style="width:50%">
+            <div class="text-normal mx-1">
+              <b>Rate of Interest</b>
+            </div>
+          </td>
+          <td style="width:50%">
+            <div class="text-normal mx-1">
+              <span *ngIf="loanData && loanData.loanScheme && loanData.loanScheme.schemeRate">
+                {{loanData.loanScheme.schemeRate}} %
+              </span>
+            </div>
+          </td>
+        </tr>
+
+        <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
                     <b>Nominee Name</b>
