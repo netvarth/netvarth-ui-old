@@ -3023,6 +3023,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             resolve(false);
                         }
                     )
+                    _this.addWaitlistAdvancePayment();
                 }
             )
         })
