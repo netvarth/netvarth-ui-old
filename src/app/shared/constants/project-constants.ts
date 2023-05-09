@@ -63,7 +63,7 @@ export const projectConstantsLocal = {
   TIMEOUT_DELAY_LARGE6: 6000, // msec
   TIMEOUT_DELAY_LARGE10: 10000, // msec
   TIMEOUT_DELAY_600: 600,
-  TIMEOUT_MEETING:120000,
+  TIMEOUT_MEETING: 120000,
   TOOLBAR_CONFIG: [
     {
       name: 'document',
@@ -876,14 +876,14 @@ export const projectConstantsLocal = {
     { displayName: 'Phone-in', value: 'PHONE_IN_APPOINTMENT' },
 
   ],
-  RESPONSE_TYPE : [
+  RESPONSE_TYPE: [
     { displayName: 'INLINE ', value: 'INLINE' },
     { displayName: 'NOT_INLINE', value: 'NOT_INLINE' },
 
   ],
-  CDL_STATUS_LIST : [
-    { displayName: 'unconverged ', value: 'unconverged' },
-    { displayName: 'converged', value: 'converged' },
+  CDL_STATUS_LIST: [
+    { displayName: 'Unconverged ', value: 'Unconverged' },
+    { displayName: 'Converged', value: 'Converged' },
 
   ],
   APPOINTMENT_STATUS: [
