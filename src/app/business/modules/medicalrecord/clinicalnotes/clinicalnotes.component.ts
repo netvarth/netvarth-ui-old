@@ -578,7 +578,7 @@ selectedFiles = {
   handleClinicalNotes(data, type) {
   }
   saveClinicalNotes(symtopData, observationData, DiagnosisData, NotesData, AllergiesData, ComplaintsData, VaccinationData) {
-    if (symtopData || observationData || DiagnosisData || NotesData || AllergiesData || ComplaintsData || VaccinationData) {
+   
       this.api_loading = true;
      
     let symptoms=[];
@@ -752,12 +752,12 @@ if(vaccination.length>0){
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
       }
-    }
-    else {
-      const error = 'Please add Clinical Notes';
-      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      this.api_loading = false;
-    }
+    
+    // else {
+    //   const error = 'Please add Clinical Notes';
+    //   this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //   this.api_loading = false;
+    // }
 
   }
   UpdateClinicalNotesList(symtopData, observationData, DiagnosisData, NotesData, AllergiesData, ComplaintsData, VaccinationData) {
@@ -1132,6 +1132,7 @@ if(vaccination.length>0){
                 (dataS3Url) => {
                   console.log(dataS3Url);
                   _this.apiloading = false;
+                  this.sign = false;
                   console.log("Sending Attachment Success");
                 });
             }

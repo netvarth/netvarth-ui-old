@@ -523,11 +523,11 @@
         </div>
       </div>
       <div *ngFor="let item of clinicalNotes">
-        <div *ngIf="item && item.clinicalNotes"
+        <div *ngIf="item && item.type && (item.clinicalNotes || item.attachments.length>0)"
           [ngStyle]="{'background': getColor(item),'border-left':getBorderColor(item)}"
           class="shadow clinicalNotesList">
           <div class="notelabel" [ngStyle]="{'color':getColorType(item)}">
-            <div *ngIf="item && item.type && item.clinicalNotes">{{item.type}}</div>
+            <div *ngIf="item && item.type && (item.clinicalNotes || item.attachments.length>0)">{{item.type}}</div>
             <div class="noteDes" *ngIf="item && item.clinicalNotes">{{item.clinicalNotes}}</div>
           <br>
           
