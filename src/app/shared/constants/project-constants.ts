@@ -886,6 +886,7 @@ export const projectConstantsLocal = {
     { displayName: 'Converged', value: 'Converged' },
 
   ],
+  
   APPOINTMENT_STATUS: [
     // {displayName: 'Pre Payment Pending ', value: 'prepaymentPending'},
     { displayName: 'Confirmed', value: 'Confirmed' },
