@@ -785,61 +785,174 @@
                                                     <div class="payment-section-details mgn-lt-10"
                                                         *ngIf="selectedService && selectedService.isPrePayment">
                                                         <div>
-                                                            <div class="web">
-                                                                <div class="text-left"
-                                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                                    <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt"
-                                                                        class="ser_price no-mgn-bt bold mgn-rt-10">Service
-                                                                        Price <span *ngIf="paymentDetails && paymentDetails.fullPrepaymentService && selectedService.taxable">(Inclusive of taxes)</span>:
-                                                                        <span
-                                                                            class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
-                                                                            | currency:'&#8377;'}}</span></span>
-                                                                            <span *ngIf="paymentDetails.showPrice && serviceOptionApptt"
-                                                                            class="ser_price no-mgn-bt bold mgn-rt-10">Service
-                                                                            Price <span *ngIf="paymentDetails && paymentDetails.fullPrepaymentService && selectedService.taxable">(Inclusive of taxes)</span> :
-                                                                            <span
-                                                                                class="ser_price no-mgn-bt bold rupee-font">{{total_servicefee
-                                                                                | currency:'&#8377;'}}</span></span>
-                                                                    <span class="ser_price no-mgn-bt bold">Payment
-                                                                        required now :
-                                                                        <span
-                                                                            class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
-                                                                            ? payAmount :
-                                                                            paymentDetails.amountRequiredNow)|
-                                                                            currency:'&#8377;'}}</span></span> <br>
-                                                                            <!-- <span style="font-size: small;">Additional convenience charges may apply
-
-                                                                            </span> -->
+                                                            <div class="web" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                                <div class="text-left" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService">
+                                                                  <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt"
+                                                                    class="ser_price no-mgn-bt bold mgn-rt-10">Service Price : <span
+                                                                      class="ser_price no-mgn-bt bold rupee-font"
+                                                                      *ngIf="paymentDetails && selectedService.price">{{selectedService.price
+                                                                      | currency:'&#8377;'}}</span>
+                                                                  </span>
+                                                                  <span *ngIf="paymentDetails.showPrice && serviceOptionApptt"
+                                                                    class="ser_price no-mgn-bt bold mgn-rt-10">Service Price : <span
+                                                                      class="ser_price no-mgn-bt bold rupee-font" *ngIf="paymentDetails">{{total_servicefee
+                                                                      | currency:'&#8377;'}}</span>
+                                                                  </span>
+                                                                  <br>
+                                                                  <span class="ser_price no-mgn-bt bold">Payment required now :
+                                                                    <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
+                                                                      ? payAmount : paymentDetails.amountRequiredNow)|
+                                                                      currency:'&#8377;'}}</span></span> <br>
+                                                                  <!-- <span style="font-size: small;">Additional convenience charges may apply</span> -->
                                                                 </div>
-                                                                <p class="pay-cnfm">* Booking will be confirmed only after the payment</p>    
-                                                            </div>
-                                                            <div class="disply">
-                                                                <div class="text-left"
-                                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                                    <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt"
-                                                                        class="ser_price no-mgn-bt bold mgn-rt-10">Service
-                                                                        Price <span *ngIf="paymentDetails && paymentDetails.fullPrepaymentService && selectedService.taxable">(Inclusive of taxes)</span> :
-                                                                        <span
-                                                                            class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
-                                                                            | currency:'&#8377;'}}</span></span>
-                                                                            <span *ngIf="paymentDetails.showPrice && serviceOptionApptt"
-                                                                        class="ser_price no-mgn-bt bold mgn-rt-10">Service
-                                                                        Price <span *ngIf="paymentDetails && paymentDetails.fullPrepaymentService && selectedService.taxable">(Inclusive of taxes)</span> :
-                                                                        <span
-                                                                            class="ser_price no-mgn-bt bold rupee-font">{{total_servicefee
-                                                                            | currency:'&#8377;'}}</span></span><br>
-                                                                    <span class="ser_price no-mgn-bt bold">Payment
-                                                                        required now :
-                                                                        <span
-                                                                            class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
-                                                                            ? payAmount :
-                                                                            paymentDetails.amountRequiredNow)|
-                                                                            currency:'&#8377;'}}</span></span> <br>
-                                                                            <!-- <span style="font-size: small;">Additional convenience charges may apply
-
-                                                                            </span> -->
+                                              
+                                                                <div class="card col-md-12" *ngIf="paymentDetails && paymentDetails.fullPrepaymentService">
+                                                                  <div class="row col-md-12" *ngIf="paymentDetails.showPrice && !serviceOptionApptt">
+                                                                    <div class="col-md-12">
+                                                                      <div class="name col-md-4">Service Price</div>
+                                                                      <div class=" rupee-font col-md-2" *ngIf="paymentDetails && selectedService.price">
+                                                                        {{selectedService.price|currency:'&#8377; '}}
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                  <div class="row col-md-12" *ngIf="paymentDetails.showPrice && serviceOptionApptt">
+                                                                    <div class="col-md-12">
+                                                                      <div class="name col-md-4">Service Price</div>
+                                                                      <div class="rupee-font col-md-4">
+                                                                        {{total_servicefee|currency:'&#8377; '}}
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                  <div class="row col-md-12"
+                                                                    *ngIf="paymentDetails.showPrice && (paymentDetails.couponDiscount || paymentDetails.providerCouponDiscount || paymentDetails.jdnDiscount)">
+                                                                    <div class="col-md-12">
+                                                                      <div class="name col-md-4">Price After Discount</div>
+                                                                      <div class="price rupee-font col-md-4">
+                                                                        {{paymentDetails.amtAfterAppliedDisc|currency:'&#8377; '}}
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                              
+                                                                  <div class="row bill-breakup col-md-12"
+                                                                    *ngIf="paymentDetails.netTaxAmount && selectedService.taxable">
+                                                                    <div class="col-md-12">
+                                                                      <div class="name col-md-4">Taxes</div>
+                                                                      <div class="price rupee-font col-md-4">
+                                                                        {{paymentDetails.netTaxAmount|currency:'&#8377; '}}
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                  <div class="row col-md-12" *ngIf="paymentDetails.netTotal">
+                                                                    <div class="col-md-12">
+                                                                      <div class="name col-md-4">Amount to Pay</div>
+                                                                      <div class="price rupee-font col-md-4">
+                                                                        {{paymentDetails.netTotal|currency:'&#8377; '}}
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                  <div class="row col-md-12">
+                                                                    <div class="col-md-12">
+                                                                      <div class="name col-md-4">Payment required now</div>
+                                                                      <div class="price rupee-font col-md-4">
+                                                                        {{(checkJcash
+                                                                        ? payAmount : paymentDetails.amountRequiredNow)|
+                                                                        currency:'&#8377;'}}
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                  <!-- <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt"
+                                                                    class="ser_price no-mgn-bt bold mgn-rt-10">Service Price : <span class="ser_price no-mgn-bt bold rupee-font" *ngIf="paymentDetails && selectedService.price">{{selectedService.price
+                                                                      | currency:'&#8377;'}}</span> 
+                                                                   </span> -->
+                                                                  <!-- <span *ngIf="paymentDetails.showPrice && serviceOptionApptt"
+                                                                   class="ser_price no-mgn-bt bold mgn-rt-10">Service Price : <span class="ser_price no-mgn-bt bold rupee-font" *ngIf="paymentDetails">{{total_servicefee
+                                                                     | currency:'&#8377;'}}</span> 
+                                                                  </span>
+                                                                   <br>
+                                                                  <span *ngIf="paymentDetails.showPrice && (paymentDetails.couponDiscount || paymentDetails.providerCouponDiscount)"
+                                                                    class="ser_price no-mgn-bt bold mgn-rt-10">Price After Discount :
+                                                                    <span class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
+                                                                      | currency:'&#8377;'}}</span>
+                                                                   </span>
+                                                                   <br *ngIf="paymentDetails.showPrice && (paymentDetails.couponDiscount || paymentDetails.providerCouponDiscount)">
+                                                                   <span *ngIf="paymentDetails.netTaxAmount && selectedService.taxable"
+                                                                    class="ser_price no-mgn-bt bold">Taxes : <span class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTaxAmount
+                                                                      | currency:'&#8377;'}}</span></span>
+                                                                      <br *ngIf="paymentDetails.netTaxAmount && selectedService.taxable">
+                                                                      <span
+                                                                      class="ser_price no-mgn-bt bold">Amount to Pay : <span class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
+                                                                        | currency:'&#8377;'}}</span></span>
+                                                                        <br *ngIf="paymentDetails.amountRequiredNow">
+                                                                  <span class="ser_price no-mgn-bt bold">Payment required now :
+                                                                    <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
+                                                                      ? payAmount : paymentDetails.amountRequiredNow)|
+                                                                      currency:'&#8377;'}}</span></span> <br> -->
+                                                                  <!-- <span style="font-size: small;">Additional convenience charges may apply</span> -->
                                                                 </div>
-                                                                <p class="pay-cnfm">* Booking will be confirmed only after the payment</p> 
+                                              
+                                                                <div class="col-md-12">
+                                                                  <p class="pay-cnfm">* Booking will be confirmed only after the payment</p>
+                                                                </div>
+                                              
+                                              
+                                                              </div>
+                                                              <div class="disply"
+                                                              *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                              <div class="text-left" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService">
+                                                                <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt"
+                                                                  class="ser_price no-mgn-bt bold mgn-rt-10">Service Price : <span
+                                                                    class="ser_price no-mgn-bt bold rupee-font"
+                                                                    *ngIf="paymentDetails && selectedService.price">{{selectedService.price
+                                                                    | currency:'&#8377;'}}</span>
+                                                                </span>
+                                                                <span *ngIf="paymentDetails.showPrice && serviceOptionApptt"
+                                                                  class="ser_price no-mgn-bt bold mgn-rt-10">Service Price : <span
+                                                                    class="ser_price no-mgn-bt bold rupee-font" *ngIf="paymentDetails">{{total_servicefee
+                                                                    | currency:'&#8377;'}}</span>
+                                                                </span>
+                                                                <br>
+                                                                <span class="ser_price no-mgn-bt bold">Payment required now :
+                                                                  <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
+                                                                    ? payAmount : paymentDetails.amountRequiredNow)|
+                                                                    currency:'&#8377;'}}</span></span> <br>
+                                                                <!-- <span style="font-size: small;">Additional convenience charges may apply</span> -->
+                                                              </div>
+                                                              <div class="text-left" *ngIf="paymentDetails && paymentDetails.fullPrepaymentService">
+                                                                <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt"
+                                                                  class="ser_price no-mgn-bt mgn-rt-10">Service Price : <span class="ser_price no-mgn-bt rupee-font"
+                                                                    *ngIf="paymentDetails && selectedService.price">{{selectedService.price
+                                                                    | currency:'&#8377;'}}</span>
+                                                                </span>
+                                                                <span *ngIf="paymentDetails.showPrice && serviceOptionApptt"
+                                                                  class="ser_price no-mgn-bt mgn-rt-10">Service Price : <span class="ser_price no-mgn-bt rupee-font"
+                                                                    *ngIf="paymentDetails">{{total_servicefee
+                                                                    | currency:'&#8377;'}}</span>
+                                                                </span>
+                                                                <br>
+                                                                <span class="ser_price no-mgn-bt "
+                                                                  *ngIf="paymentDetails.showPrice && (paymentDetails.couponDiscount || paymentDetails.providerCouponDiscount || paymentDetails.jdnDiscount)">Price
+                                                                  After Discount :
+                                                                  <span class="ser_price no-mgn-bt rupee-font">{{paymentDetails.amtAfterAppliedDisc|
+                                                                    currency:'&#8377;'}}</span></span>
+                                                                <br
+                                                                  *ngIf="paymentDetails.showPrice && (paymentDetails.couponDiscount || paymentDetails.providerCouponDiscount || paymentDetails.jdnDiscount)">
+                                                                <span class="ser_price no-mgn-bt "
+                                                                  *ngIf="paymentDetails.netTaxAmount && selectedService.taxable">Taxes :
+                                                                  <span class="ser_price no-mgn-bt rupee-font">{{paymentDetails.netTaxAmount|
+                                                                    currency:'&#8377;'}}</span></span>
+                                                                <br *ngIf="paymentDetails.netTaxAmount && selectedService.taxable">
+                                                                <span class="ser_price no-mgn-bt " *ngIf="paymentDetails.netTotal">Amount to Pay :
+                                                                  <span class="ser_price no-mgn-bt rupee-font">{{paymentDetails.netTotal|
+                                                                    currency:'&#8377;'}}</span></span>
+                                                                <br *ngIf="paymentDetails.netTotal">
+                                                                <span class="ser_price no-mgn-bt ">Payment required now :
+                                                                  <span class="ser_price no-mgn-bt rupee-font">{{(checkJcash
+                                                                    ? payAmount : paymentDetails.amountRequiredNow)|
+                                                                    currency:'&#8377;'}}</span></span> <br>
+                                                                <!-- <span style="font-size: small;">Additional convenience charges may apply</span> -->
+                                                              </div>
+                                            
+                                                              <p class="pay-cnfm">* Booking will be confirmed only after the payment</p>
                                                             </div>
                                                             <!-- selected_payment_mode && isInternatonal === false && -->
                                                             <!-- <span style="font-size: small;" *ngIf="convenientFee > 0">
@@ -955,6 +1068,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                
+                                                
                                                 </div>
                                                 <div class="clearfix"></div>
                                                 <hr>
