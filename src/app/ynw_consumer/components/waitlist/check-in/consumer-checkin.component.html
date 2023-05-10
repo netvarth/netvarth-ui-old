@@ -742,7 +742,7 @@
                                                                 saved
                                                                 {{coupon.value.value | currency:'&#8377;'}}
                                                                 on
-                                                                {{coupon.key}}
+                                                                {{coupon.key}} , it will be reflected in bill
                                                             </small>
                                                             <small class="black"
                                                             *ngIf="coupon.value.value === '0.0'">
@@ -764,7 +764,7 @@
                                                             <small class="black rupee-font"
                                                                 *ngIf="coupon.value.value !== '0.0'">You saved
                                                                 {{coupon.value.value | currency:'&#8377;'}}
-                                                                on {{coupon.key}}
+                                                                on {{coupon.key}} , it will be reflected in bill
                                                             </small>
                                                             <small class="black"
                                                             *ngIf="coupon.value.value === '0.0'">
