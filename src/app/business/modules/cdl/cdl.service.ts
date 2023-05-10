@@ -669,6 +669,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  updateCustomerIntegrationId(loanId, kycId, data) {
+    const url = 'provider/loanapplication/' + loanId + '/kyc/' + kycId + '/updatecustomerintegrationid';
+    return this.servicemeta.httpPut(url, data);
+  }
+
   getInsuranceDocument(id) {
     const url = 'provider/loanapplication/digitalinsurance/download/' + id;
     return this.servicemeta.httpGet(url, null);

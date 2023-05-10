@@ -84,6 +84,29 @@
           </div>
         </div>
         <br>
+        <div
+          *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerIntegrationId"
+          class="font-medium">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+              Mafil Customer Id :&nbsp;
+              <span class="font-weight-bold"> {{loanData.loanApplicationKycList[0].customerIntegrationId}}</span>
+            </div>
+            <div>
+              <a class="btn btn-primary"
+                (click)="updateCustomerIntegrationId(loanData.loanApplicationKycList[0].customerIntegrationId)">
+                <span>Update</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && !loanData.loanApplicationKycList[0].customerIntegrationId">
+          <a class="btn btn-primary" (click)="updateCustomerIntegrationId()">
+            <span>Add Mafil Customer Id</span>
+          </a>
+        </div>
+        <br>
         <div class="text-left">
           <div class="d-flex justify-content-between">
             <div class="d-flex align-items-center">
@@ -468,7 +491,8 @@
     <div class="col-md-7 no-padding mt-2">
       <div class="card">
         <div class="font-weight-bold mt-4">Loan Details</div>
-        <section class="row col-md-12 no-padding" *ngIf="capabilities && capabilities.canViewKycReport">
+        <section class="row col-md-12 no-padding"
+          *ngIf="user && user.roles && user.roles[0] && user.roles[0].roleId && user.roles[0].roleId!=6 && user.roles[0].roleId!=7">
           <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 mt-2">
             <div class="card">
               <div class="d-flex">

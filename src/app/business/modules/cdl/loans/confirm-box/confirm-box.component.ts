@@ -37,6 +37,7 @@ export class ConfirmBoxComponent implements OnInit {
     }
   };
   cibilScore: any;
+  customerIntegrationId: any;
   totalPayment: any = 0;
   downPayment: any = 0;
   loanAmount: any = 0;
@@ -115,6 +116,12 @@ export class ConfirmBoxComponent implements OnInit {
       }, 3500);
     }
 
+    if (this.from && this.from == 'customerIntegrationId') {
+      if (this.data && this.data.customerIntegrationId) {
+        this.customerIntegrationId = this.data.customerIntegrationId;
+      }
+    }
+
     if (this.data && this.data.dealerId) {
       this.getDealer(this.data.dealerId);
     }
@@ -143,6 +150,13 @@ export class ConfirmBoxComponent implements OnInit {
       }
       this.dialogRef.close({ msg: "success" });
     })
+  }
+
+  saveCustomerIntegrationId() {
+    let data = {
+      "customerIntegrationId": this.customerIntegrationId
+    }
+    this.dialogRef.close(data);
   }
 
 

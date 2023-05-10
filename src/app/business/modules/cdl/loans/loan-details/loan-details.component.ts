@@ -72,7 +72,7 @@ export class LoanDetailsComponent implements OnInit {
     "bankStatements": { files: [], base64: [], caption: [] }
   }
   filesToUpload: any = [];
-
+  loanKycId: any;
   constructor(
     private snackbarService: SnackbarService,
     private router: Router,
@@ -85,6 +85,7 @@ export class LoanDetailsComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log("user", this.user)
     if (this.user) {
       this.capabilities = this.cdlservice.getCapabilitiesConfig(this.user);
     }
@@ -95,6 +96,7 @@ export class LoanDetailsComponent implements OnInit {
 
           this.cdlservice.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
+            this.loanKycId = this.loanData.loanApplicationKycList[0].id;
             if (this.loanId && this.loanData && this.loanData.isAccountAggregated) {
               this.getAccountAggregatorStatus(this.loanId, 0)
             }
@@ -408,6 +410,40 @@ export class LoanDetailsComponent implements OnInit {
         this.showEquifaxScore = true;
       }
     });
+  }
+
+  updateCustomerIntegrationId(id?) {
+    let data = {
+      type: "customerIntegrationId",
+      from: "customerIntegrationId"
+    }
+    if (id) {
+      data['customerIntegrationId'] = id;
+    }
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: data
+    });
+    dialogRef.afterClosed().subscribe(
+      (response: any) => {
+        if (response && response.customerIntegrationId) {
+          this.cdlservice.updateCustomerIntegrationId(this.loanId, this.loanKycId, response).subscribe((data: any) => {
+            if (data) {
+              this.ngOnInit();
+              this.snackbarService.openSnackBar("Customer Integration Id Updated Successfully");
+            }
+          },
+            (error) => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+            });
+
+        }
+      });
+
+
+
   }
 
 
