@@ -243,6 +243,11 @@ export class NewReportComponent implements OnInit {
   locationFilter: any = [];
   accountType;
   response_mode: any;
+  basedOnServiceDate = false;
+  hideDateRange = true;
+  serviceDate_ge: any;
+  serviceDate_le: any;
+  hide_timeperiod = true;
   constructor(
     private router: Router,
     private activated_route: ActivatedRoute,
@@ -431,7 +436,21 @@ export class NewReportComponent implements OnInit {
     if (Object.keys(res).length !== 0) {
       switch (this.report_type) {
         case 'payment': {
-          this.payment_paymentStatus = res.status || 0;
+          if(this.basedOnServiceDate){
+            this.payment_paymentStatus = res.status || 0;
+            this.payment_paymentMode = res.paymentMode || 0;
+            this.payment_paymentPurpose = res.paymentPurpose || 0;
+            this.payment_amount = res.amount;
+            this.payment_transactionType = res.transactionType || 0;
+            this.payment_donationName = res.donationName;
+            this.payment_donationEmail = res.donationEmail;
+            this.payment_donationPhone = res.donationPhone;
+            this.serviceDate_ge = res.serviceStartDate;
+            this.serviceDate_le = res.serviceEndDate;
+            break;
+          }
+          else{
+            this.payment_paymentStatus = res.status || 0;
           this.payment_paymentMode = res.paymentMode || 0;
           this.payment_paymentPurpose = res.paymentPurpose || 0;
           this.payment_amount = res.amount;
@@ -446,6 +465,7 @@ export class NewReportComponent implements OnInit {
             this.payment_endDate = res.endDate;
           }
           break;
+          }
         }
         case 'donation': {
           this.donation_amount = res.donationAmount;
@@ -1261,78 +1281,158 @@ export class NewReportComponent implements OnInit {
       }
       if (this.payment_timePeriod === 'DATE_RANGE' && (this.payment_startDate === undefined || this.payment_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
-      } else {
-        this.filterparams = {
-          'status': this.payment_paymentStatus,
-          'paymentMode': this.payment_paymentMode,
-          'paymentPurpose': this.payment_paymentPurpose,
-          'amount': this.payment_amount,
-          'transactionType': this.payment_transactionType,
-          'queue': this.payment_queue_id,
-          'service': this.payment_service_id,
-          'schedule': this.payment_schedule_id,
-          'providerOwnConsumerId': this.payment_customerId,
-          'donationEmail': this.payment_donationEmail,
-          'donationPhone': this.payment_donationPhone,
-        };
-        if (this.payment_userId) {
-          this.filterparams['provider']= this.payment_userId;
-        }
-        if (this.payment_paymentMode === 0) {
-          delete this.filterparams.paymentMode;
-        }
-        if (this.payment_paymentStatus === 0) {
-          delete this.filterparams.status;
-        }
-        if (this.payment_service_id === 0) {
-          delete this.filterparams.service;
-        }
-        if (this.payment_schedule_id === 0) {
-          delete this.filterparams.schedule;
-        }
-        if (this.payment_queue_id === 0) {
-          delete this.filterparams.queue;
-        }
-        if (this.payment_transactionType === 0) {
-          delete this.filterparams.transactionType;
-        }
-        if (this.payment_paymentPurpose === 0) {
-          delete this.filterparams.paymentPurpose;
-        }
-        if (this.payment_amount === undefined) {
-          delete this.filterparams.amount;
-        }
-        if (this.payment_donationEmail === '' || this.payment_donationEmail === undefined) {
-          delete this.filterparams.payment_donationEmail;
-        }
-        if (this.payment_donationPhone === '' || this.payment_donationPhone === undefined) {
-          delete this.filterparams.payment_donationPhone;
-        }
-        const filter = {};
-        for (const key in this.filterparams) {
-          if (this.filterparams.hasOwnProperty(key)) {
-            // assign property to new object with modified key
-            filter[key + '-eq'] = this.filterparams[key];
-          }
-        }
-        if (this.payment_timePeriod === 'DATE_RANGE') {
-          filter['paymentOn-ge'] = this.dateformat.transformTofilterDate(this.payment_startDate);
-          filter['paymentOn-le'] = this.dateformat.transformTofilterDate(this.payment_endDate);
-        }
-        if (this.pay_confirm_num) {
-          filter['transactionEncId-like'] = 'confirmationNo::' + this.pay_confirm_num;
-        }
-        if (this.payment_donationName !== '' || this.payment_donationName !== undefined) {
-          filter['donationName-like'] = this.payment_donationName;
-        }
-        const request_payload: any = {};
-        request_payload.reportType = this.report_type.toUpperCase();
-        request_payload.reportDateCategory = this.payment_timePeriod;
-        request_payload.filter = filter;
-        request_payload.responseType = 'INLINE';
-        this.passPayloadForReportGeneration(request_payload);
-        this.report_data_service.setReportCriteriaInput(request_payload);
+      } 
+      else if(this.basedOnServiceDate && (this.serviceDate_ge === undefined || this.serviceDate_le === undefined)){
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       }
+      else {
+        if(this.basedOnServiceDate){
+          this.filterparams = {
+            'status': this.payment_paymentStatus,
+            'paymentMode': this.payment_paymentMode,
+            'paymentPurpose': this.payment_paymentPurpose,
+            'amount': this.payment_amount,
+            'transactionType': this.payment_transactionType,
+            'queue': this.payment_queue_id,
+            'service': this.payment_service_id,
+            'schedule': this.payment_schedule_id,
+            'providerOwnConsumerId': this.payment_customerId,
+            'donationEmail': this.payment_donationEmail,
+            'donationPhone': this.payment_donationPhone,
+          };
+          if (this.payment_userId) {
+            this.filterparams['provider']= this.payment_userId;
+          }
+          if (this.payment_paymentMode === 0) {
+            delete this.filterparams.paymentMode;
+          }
+          if (this.payment_paymentStatus === 0) {
+            delete this.filterparams.status;
+          }
+          if (this.payment_service_id === 0) {
+            delete this.filterparams.service;
+          }
+          if (this.payment_schedule_id === 0) {
+            delete this.filterparams.schedule;
+          }
+          if (this.payment_queue_id === 0) {
+            delete this.filterparams.queue;
+          }
+          if (this.payment_transactionType === 0) {
+            delete this.filterparams.transactionType;
+          }
+          if (this.payment_paymentPurpose === 0) {
+            delete this.filterparams.paymentPurpose;
+          }
+          if (this.payment_amount === undefined) {
+            delete this.filterparams.amount;
+          }
+          if (this.payment_donationEmail === '' || this.payment_donationEmail === undefined) {
+            delete this.filterparams.payment_donationEmail;
+          }
+          if (this.payment_donationPhone === '' || this.payment_donationPhone === undefined) {
+            delete this.filterparams.payment_donationPhone;
+          }
+          const filter = {};
+          for (const key in this.filterparams) {
+            if (this.filterparams.hasOwnProperty(key)) {
+              // assign property to new object with modified key
+              filter[key + '-eq'] = this.filterparams[key];
+            }
+          }
+          if (this.basedOnServiceDate) {
+            filter['serviceDate-ge'] = this.dateformat.transformTofilterDate(this.serviceDate_ge);
+            filter['serviceDate-le'] = this.dateformat.transformTofilterDate(this.serviceDate_le);
+          }
+          if (this.pay_confirm_num) {
+            filter['transactionEncId-like'] = 'confirmationNo::' + this.pay_confirm_num;
+          }
+          if (this.payment_donationName !== '' || this.payment_donationName !== undefined) {
+            filter['donationName-like'] = this.payment_donationName;
+          }
+          const request_payload: any = {};
+          request_payload.reportType = this.report_type.toUpperCase();
+          request_payload.filter = filter;
+          request_payload.responseType = 'INLINE';
+          request_payload.basedOnServiceDate = this.basedOnServiceDate;
+          request_payload.reportDateCategory = 'DATE_RANGE';
+          this.passPayloadForReportGeneration(request_payload);
+          this.report_data_service.setReportCriteriaInput(request_payload);
+        }
+        else{
+          this.filterparams = {
+            'status': this.payment_paymentStatus,
+            'paymentMode': this.payment_paymentMode,
+            'paymentPurpose': this.payment_paymentPurpose,
+            'amount': this.payment_amount,
+            'transactionType': this.payment_transactionType,
+            'queue': this.payment_queue_id,
+            'service': this.payment_service_id,
+            'schedule': this.payment_schedule_id,
+            'providerOwnConsumerId': this.payment_customerId,
+            'donationEmail': this.payment_donationEmail,
+            'donationPhone': this.payment_donationPhone,
+          };
+          if (this.payment_userId) {
+            this.filterparams['provider']= this.payment_userId;
+          }
+          if (this.payment_paymentMode === 0) {
+            delete this.filterparams.paymentMode;
+          }
+          if (this.payment_paymentStatus === 0) {
+            delete this.filterparams.status;
+          }
+          if (this.payment_service_id === 0) {
+            delete this.filterparams.service;
+          }
+          if (this.payment_schedule_id === 0) {
+            delete this.filterparams.schedule;
+          }
+          if (this.payment_queue_id === 0) {
+            delete this.filterparams.queue;
+          }
+          if (this.payment_transactionType === 0) {
+            delete this.filterparams.transactionType;
+          }
+          if (this.payment_paymentPurpose === 0) {
+            delete this.filterparams.paymentPurpose;
+          }
+          if (this.payment_amount === undefined) {
+            delete this.filterparams.amount;
+          }
+          if (this.payment_donationEmail === '' || this.payment_donationEmail === undefined) {
+            delete this.filterparams.payment_donationEmail;
+          }
+          if (this.payment_donationPhone === '' || this.payment_donationPhone === undefined) {
+            delete this.filterparams.payment_donationPhone;
+          }
+          const filter = {};
+          for (const key in this.filterparams) {
+            if (this.filterparams.hasOwnProperty(key)) {
+              // assign property to new object with modified key
+              filter[key + '-eq'] = this.filterparams[key];
+            }
+          }
+          if (this.payment_timePeriod === 'DATE_RANGE') {
+            filter['paymentOn-ge'] = this.dateformat.transformTofilterDate(this.payment_startDate);
+            filter['paymentOn-le'] = this.dateformat.transformTofilterDate(this.payment_endDate);
+          }
+          if (this.pay_confirm_num) {
+            filter['transactionEncId-like'] = 'confirmationNo::' + this.pay_confirm_num;
+          }
+          if (this.payment_donationName !== '' || this.payment_donationName !== undefined) {
+            filter['donationName-like'] = this.payment_donationName;
+          }
+          const request_payload: any = {};
+          request_payload.reportType = this.report_type.toUpperCase();
+          request_payload.reportDateCategory = this.payment_timePeriod;
+          request_payload.filter = filter;
+          request_payload.responseType = 'INLINE';
+          this.passPayloadForReportGeneration(request_payload);
+          this.report_data_service.setReportCriteriaInput(request_payload);
+        }
+        }
+        
     } else if (reportType === 'appointment') {
       if (this.appointment_timePeriod === 'DATE_RANGE' && (this.appointment_startDate === undefined || this.appointment_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
@@ -3383,6 +3483,18 @@ export class NewReportComponent implements OnInit {
     let selectedValues = {};
     return new Promise((resolve) => {
       if (this.report_type === 'payment') {
+        if(this.basedOnServiceDate){
+          selectedValues = {
+            'status': this.payment_paymentStatus,
+            'paymentMode': this.payment_paymentMode,
+            'paymentPurpose': this.payment_paymentPurpose,
+            'amount': this.payment_amount,
+            'transactionType': this.payment_transactionType,
+            'serviceStartDate': this.serviceDate_ge,
+            'serviceEndDate': this.serviceDate_le,
+          };
+        }
+       else{
         selectedValues = {
           'status': this.payment_paymentStatus,
           'paymentMode': this.payment_paymentMode,
@@ -3391,8 +3503,9 @@ export class NewReportComponent implements OnInit {
           'transactionType': this.payment_transactionType,
           'dateRange': this.payment_timePeriod,
           'startDate': this.payment_startDate,
-          'endDate': this.payment_endDate
+          'endDate': this.payment_endDate,
         };
+       }
       }
       if (this.report_type === 'token') {
         selectedValues = {
@@ -3601,5 +3714,16 @@ export class NewReportComponent implements OnInit {
 
     }
 
+  }
+  serviceDate(event) {
+    if (event.checked) {
+      this.hideDateRange = false;
+      this.hide_timeperiod = false;
+      this.hide_dateRange = true;
+
+    } else {
+      this.hideDateRange = true;
+      this.hide_timeperiod = true;
+    }
   }
 }
