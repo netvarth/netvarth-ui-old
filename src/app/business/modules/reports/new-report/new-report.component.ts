@@ -101,6 +101,10 @@ export class NewReportComponent implements OnInit {
   HO_lead_timePeriod: string;
   HO_lead_StartDate;
   HO_lead_EndDate;
+  cdlPartnerStartDate: any;
+  cdlPartnerEndDate: any;
+  cdlUserStartDate: any;
+  cdlUserEndDate: any;
   appointment_service_id: number;
   appointment_service: string;
   appointment_users: string;
@@ -166,6 +170,8 @@ export class NewReportComponent implements OnInit {
   monthly_EndDate;
   user_timePeriod;
   cdlpayment_timePeriod;
+  cdlPartnerTimePeriod;
+  cdlUserTimePeriod;
   cdlpayment_partial_timePeriod;
   consolidate_StartDate;
   consolidate_EndDate;
@@ -342,7 +348,7 @@ export class NewReportComponent implements OnInit {
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
-    this.payment_timePeriod = this.loan_application_timePeriod = this.loan_partner_application_timePeriod = this.loan_user_application_timePeriod = this.customer_timePeriod = this.customer_wise_timePeriod = this.document_collected_timePeriod = this.customer_crif_status_timePeriod = this.crm_timePeriod = this.employee_Activity_timePeriod = this.daily_Activity_timePeriod = this.sanctioned_timePeriod = this.HO_lead_timePeriod = this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod = this.consolidated_timePeriod = this.tat_timePeriod = this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = this.cdlpayment_timePeriod = this.cdlpayment_partial_timePeriod = 'LAST_THIRTY_DAYS';
+    this.payment_timePeriod = this.loan_application_timePeriod = this.loan_partner_application_timePeriod = this.loan_user_application_timePeriod = this.customer_timePeriod = this.customer_wise_timePeriod = this.document_collected_timePeriod = this.customer_crif_status_timePeriod = this.crm_timePeriod = this.employee_Activity_timePeriod = this.daily_Activity_timePeriod = this.sanctioned_timePeriod = this.HO_lead_timePeriod = this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod = this.consolidated_timePeriod = this.tat_timePeriod = this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = this.cdlpayment_timePeriod = this.cdlpayment_partial_timePeriod = this.cdlPartnerTimePeriod = this.cdlUserTimePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
     this.payment_status = projectConstantsLocal.PAYMENT_STATUS;
@@ -361,7 +367,7 @@ export class NewReportComponent implements OnInit {
     this.payment_paymentMode = 0;
     this.customer_location = 0;
     this.appointment_mode = this.waitlist_mode = this.delivery_mode = 0;
-    this.appointment_status = this.waitlist_status = this.order_status = this.sta_s= 0;
+    this.appointment_status = this.waitlist_status = this.order_status = this.sta_s = 0;
     this.payment_customer = this.appointment_customer = this.waitlist_customer = this.donation_customer = 'Any';
     this.payment_transactionType = 0;
     this.waitlist_billpaymentstatus = this.appointment_billpaymentstatus = 0;
@@ -436,7 +442,7 @@ export class NewReportComponent implements OnInit {
     if (Object.keys(res).length !== 0) {
       switch (this.report_type) {
         case 'payment': {
-          if(this.basedOnServiceDate){
+          if (this.basedOnServiceDate) {
             this.payment_paymentStatus = res.status || 0;
             this.payment_paymentMode = res.paymentMode || 0;
             this.payment_paymentPurpose = res.paymentPurpose || 0;
@@ -449,22 +455,22 @@ export class NewReportComponent implements OnInit {
             this.serviceDate_le = res.serviceEndDate;
             break;
           }
-          else{
+          else {
             this.payment_paymentStatus = res.status || 0;
-          this.payment_paymentMode = res.paymentMode || 0;
-          this.payment_paymentPurpose = res.paymentPurpose || 0;
-          this.payment_amount = res.amount;
-          this.payment_transactionType = res.transactionType || 0;
-          this.payment_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          this.payment_donationName = res.donationName;
-          this.payment_donationEmail = res.donationEmail;
-          this.payment_donationPhone = res.donationPhone;
-          if (res.dateRange === 'DATE_RANGE') {
-            this.hide_dateRange = false;
-            this.payment_startDate = res.startDate;
-            this.payment_endDate = res.endDate;
-          }
-          break;
+            this.payment_paymentMode = res.paymentMode || 0;
+            this.payment_paymentPurpose = res.paymentPurpose || 0;
+            this.payment_amount = res.amount;
+            this.payment_transactionType = res.transactionType || 0;
+            this.payment_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+            this.payment_donationName = res.donationName;
+            this.payment_donationEmail = res.donationEmail;
+            this.payment_donationPhone = res.donationPhone;
+            if (res.dateRange === 'DATE_RANGE') {
+              this.hide_dateRange = false;
+              this.payment_startDate = res.startDate;
+              this.payment_endDate = res.endDate;
+            }
+            break;
           }
         }
         case 'donation': {
@@ -1281,12 +1287,12 @@ export class NewReportComponent implements OnInit {
       }
       if (this.payment_timePeriod === 'DATE_RANGE' && (this.payment_startDate === undefined || this.payment_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
-      } 
-      else if(this.basedOnServiceDate && (this.serviceDate_ge === undefined || this.serviceDate_le === undefined)){
+      }
+      else if (this.basedOnServiceDate && (this.serviceDate_ge === undefined || this.serviceDate_le === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       }
       else {
-        if(this.basedOnServiceDate){
+        if (this.basedOnServiceDate) {
           this.filterparams = {
             'status': this.payment_paymentStatus,
             'paymentMode': this.payment_paymentMode,
@@ -1301,7 +1307,7 @@ export class NewReportComponent implements OnInit {
             'donationPhone': this.payment_donationPhone,
           };
           if (this.payment_userId) {
-            this.filterparams['provider']= this.payment_userId;
+            this.filterparams['provider'] = this.payment_userId;
           }
           if (this.payment_paymentMode === 0) {
             delete this.filterparams.paymentMode;
@@ -1359,7 +1365,7 @@ export class NewReportComponent implements OnInit {
           this.passPayloadForReportGeneration(request_payload);
           this.report_data_service.setReportCriteriaInput(request_payload);
         }
-        else{
+        else {
           this.filterparams = {
             'status': this.payment_paymentStatus,
             'paymentMode': this.payment_paymentMode,
@@ -1374,7 +1380,7 @@ export class NewReportComponent implements OnInit {
             'donationPhone': this.payment_donationPhone,
           };
           if (this.payment_userId) {
-            this.filterparams['provider']= this.payment_userId;
+            this.filterparams['provider'] = this.payment_userId;
           }
           if (this.payment_paymentMode === 0) {
             delete this.filterparams.paymentMode;
@@ -1431,8 +1437,7 @@ export class NewReportComponent implements OnInit {
           this.passPayloadForReportGeneration(request_payload);
           this.report_data_service.setReportCriteriaInput(request_payload);
         }
-        }
-        
+      }
     } else if (reportType === 'appointment') {
       if (this.appointment_timePeriod === 'DATE_RANGE' && (this.appointment_startDate === undefined || this.appointment_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
@@ -1446,7 +1451,7 @@ export class NewReportComponent implements OnInit {
           'apptForId': this.appointment_customerId
         };
         if (this.appointment_userId) {
-          this.filterparams['provider']= this.appointment_userId;
+          this.filterparams['provider'] = this.appointment_userId;
         }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
@@ -3108,7 +3113,7 @@ export class NewReportComponent implements OnInit {
           'waitlistingForId': this.waitlist_customerId
         };
         if (this.token_userId) {
-          this.filterparams['provider']= this.token_userId;
+          this.filterparams['provider'] = this.token_userId;
         }
         if (!this.waitlist_customerId) {
           delete this.filterparams.waitlistingFor;
@@ -3265,24 +3270,23 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'LOAN_APPLICATION_STATUS') {
-      if (this.cdlpayment_timePeriod === 'DATE_RANGE' && (this.cdlpayment_startDate === undefined || this.cdlpayment_endDate  === undefined)) {
+      if (this.cdlpayment_timePeriod === 'DATE_RANGE' && (this.cdlpayment_startDate === undefined || this.cdlpayment_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
         this.filterparams = {
-         
           'status': this.sta_s
         };
         if (this.sta_s === 0) {
           delete this.filterparams.status;
         }
-        
-       
+
+
         if (this.sta_s === 'Any') {
           delete this.filterparams.status;
         }
-       
+
         const filter = {};
         for (const key in this.filterparams) {
           if (this.filterparams.hasOwnProperty(key)) {
@@ -3302,9 +3306,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'LOAN_APPLICATION_PARTIAL_STATUS') {
-      if (this.cdlpayment_partial_timePeriod === 'DATE_RANGE' && (this.cdlpayment_partial_startDate === undefined || this.cdlpayment_partial_endDate  === undefined)) {
+      if (this.cdlpayment_partial_timePeriod === 'DATE_RANGE' && (this.cdlpayment_partial_startDate === undefined || this.cdlpayment_partial_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
         const filter = {};
@@ -3320,7 +3324,62 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
+    else if (reportType === 'PARTNER_REPORT') {
+      if (this.cdlPartnerTimePeriod === 'DATE_RANGE' && (this.cdlPartnerStartDate === undefined || this.cdlPartnerEndDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'status': "approved",
+          "active": "true"
+        };
+
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.cdlPartnerTimePeriod === 'DATE_RANGE') {
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.cdlPartnerStartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.cdlPartnerEndDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = this.report_type;
+        request_payload.reportDateCategory = this.cdlPartnerTimePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    }
+    else if (reportType === 'USER_REPORT') {
+      if (this.cdlUserTimePeriod === 'DATE_RANGE' && (this.cdlUserStartDate === undefined || this.cdlUserEndDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'status': "available"
+        };
+
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.cdlUserTimePeriod === 'DATE_RANGE') {
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.cdlUserStartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.cdlUserEndDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = this.report_type;
+        request_payload.reportDateCategory = this.cdlUserTimePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    }
     else if (reportType === 'user') {
       console.log("Report Type :", reportType)
       if (this.user_timePeriod === 'DATE_RANGE' && (this.user_startDate === undefined || this.user_endDate === undefined)) {
@@ -3483,7 +3542,7 @@ export class NewReportComponent implements OnInit {
     let selectedValues = {};
     return new Promise((resolve) => {
       if (this.report_type === 'payment') {
-        if(this.basedOnServiceDate){
+        if (this.basedOnServiceDate) {
           selectedValues = {
             'status': this.payment_paymentStatus,
             'paymentMode': this.payment_paymentMode,
@@ -3494,18 +3553,18 @@ export class NewReportComponent implements OnInit {
             'serviceEndDate': this.serviceDate_le,
           };
         }
-       else{
-        selectedValues = {
-          'status': this.payment_paymentStatus,
-          'paymentMode': this.payment_paymentMode,
-          'paymentPurpose': this.payment_paymentPurpose,
-          'amount': this.payment_amount,
-          'transactionType': this.payment_transactionType,
-          'dateRange': this.payment_timePeriod,
-          'startDate': this.payment_startDate,
-          'endDate': this.payment_endDate,
-        };
-       }
+        else {
+          selectedValues = {
+            'status': this.payment_paymentStatus,
+            'paymentMode': this.payment_paymentMode,
+            'paymentPurpose': this.payment_paymentPurpose,
+            'amount': this.payment_amount,
+            'transactionType': this.payment_transactionType,
+            'dateRange': this.payment_timePeriod,
+            'startDate': this.payment_startDate,
+            'endDate': this.payment_endDate,
+          };
+        }
       }
       if (this.report_type === 'token') {
         selectedValues = {
@@ -3715,6 +3774,7 @@ export class NewReportComponent implements OnInit {
     }
 
   }
+
   serviceDate(event) {
     if (event.checked) {
       this.hideDateRange = false;
@@ -3726,4 +3786,5 @@ export class NewReportComponent implements OnInit {
       this.hide_timeperiod = true;
     }
   }
+
 }
