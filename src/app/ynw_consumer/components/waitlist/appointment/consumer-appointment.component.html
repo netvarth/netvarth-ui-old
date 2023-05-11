@@ -562,7 +562,7 @@
                     </div>
                     <div class="row col-md-12" *ngIf="paymentDetails.netTotal">
                       <div class="col-md-12">
-                        <div class="name col-md-4">Amount to Pay</div>
+                        <div class="name col-md-4">Net Total</div>
                         <div class="price rupee-font col-md-4">
                           {{paymentDetails.netTotal|currency:'&#8377; '}}
                         </div>
@@ -611,8 +611,18 @@
                   <div class="col-md-12">
                     <p class="pay-cnfm">* Booking will be confirmed only after the payment</p>
                   </div>
-
-
+                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable && (paymentDetails.couponDiscount || paymentDetails.providerCouponDiscount) ">
+                  
+                    <p class="pay-cnfm_cases">* Coupons and taxes will be applied only the final bill</p>
+                  </div>
+                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable">
+                  
+                    <p class="pay-cnfm_cases">* Taxes will be applied only the final bill</p>
+                  </div>
+                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && (paymentDetails.couponDiscount || paymentDetails.providerCouponDiscount)">
+                  
+                    <p class="pay-cnfm_cases">* Coupons will be applied only the final bill</p>
+                  </div>
                 </div>
 
                 <div class="disply"
@@ -660,7 +670,7 @@
                       <span class="ser_price no-mgn-bt rupee-font">{{paymentDetails.netTaxAmount|
                         currency:'&#8377;'}}</span></span>
                     <br *ngIf="paymentDetails.netTaxAmount && selectedService.taxable">
-                    <span class="ser_price no-mgn-bt " *ngIf="paymentDetails.netTotal">Amount to Pay :
+                    <span class="ser_price no-mgn-bt " *ngIf="paymentDetails.netTotal">Net Total :
                       <span class="ser_price no-mgn-bt rupee-font">{{paymentDetails.netTotal|
                         currency:'&#8377;'}}</span></span>
                     <br *ngIf="paymentDetails.netTotal">
@@ -670,8 +680,22 @@
                         currency:'&#8377;'}}</span></span> <br>
                     <!-- <span style="font-size: small;">Additional convenience charges may apply</span> -->
                   </div>
-
-                  <p class="pay-cnfm">* Booking will be confirmed only after the payment</p>
+                    <div class="col-md-12">
+                    <p class="pay-cnfm">* Booking will be confirmed only after the payment</p>
+                  </div>
+                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable && (paymentDetails.couponDiscount || paymentDetails.providerCouponDiscount) ">
+                  
+                    <p class="pay-cnfm_cases">* Coupons and taxes will be applied only the final bill</p>
+                  </div>
+                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable">
+                  
+                    <p class="pay-cnfm_cases">* Taxes will be applied only the final bill</p>
+                  </div>
+                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && (paymentDetails.couponDiscount || paymentDetails.providerCouponDiscount)">
+                  
+                    <p class="pay-cnfm_cases">* Coupons will be applied only the final bill</p>
+                  </div>
+                
                 </div>
                 <!-- <span style="font-size: small;" *ngIf="paymentMode && isInternational === false && convenientFee > 0">
  <span class="ser_price no-mgn-bt rupee-font">Convenient Fee: {{convenientFee | currency:'&#8377;'}}</span>
