@@ -34,6 +34,7 @@ export class DetailsCollectComponent implements OnInit {
   subCallQuestionAnswers: any;
   qnr: any;
   showEditQnr: any = false;
+  fileRecordingLink: any = "";
   constructor(
     private ActivatedRoute: ActivatedRoute,
     private ivrService: IvrService,
@@ -53,6 +54,9 @@ export class DetailsCollectComponent implements OnInit {
           this.callUid = params.id;
           this.ivrService.getAllIvrCallsByUid(params.id).subscribe((data) => {
             this.callData = data;
+            if (this.callData && this.callData.callStatus && this.callData.callStatus == 'voicemail') {
+              this.getVoiceMailRecording();
+            }
             if (this.callData && this.callData.questionnaires && this.callData.questionnaires[0] && this.callData.questionnaires[0].questionAnswers) {
               this.questionAnswers = this.callData.questionnaires[0].questionAnswers;
               this.qnr = this.callData.questionnaires[0];
@@ -309,7 +313,7 @@ export class DetailsCollectComponent implements OnInit {
     }
   }
 
-  validateSubCallQuestionnaire(id,src?) {
+  validateSubCallQuestionnaire(id, src?) {
     if (!this.subCallQuestionAnswers) {
       this.subCallQuestionAnswers = {
         answers: {
@@ -400,5 +404,15 @@ export class DetailsCollectComponent implements OnInit {
   formatDate(date) {
     let newDate = new Date(date);
     return moment(newDate).format('MMMM Do YYYY, h:mm:ss a');
+  }
+
+  getVoiceMailRecording() {
+    console.log("coming")
+    this.ivrService.getIvrRecoredFile(this.callData.recordingFileName).subscribe((data: any) => {
+      this.fileRecordingLink = data;
+      console.log("coming here", data)
+    }, (error) => {
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    });
   }
 }

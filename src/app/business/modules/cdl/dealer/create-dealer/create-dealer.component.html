@@ -210,14 +210,15 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Aadhar Number <span class="text-danger">*</span></div>
+                <div class="form-title">Aadhaar Number <span class="text-danger">*</span></div>
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
                   <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
-                    formControlName="aadhar" type="text" placeholder="Enter Aadhar Number" class="form-control"
-                    autocomplete="off" maxlength="12" [class.disabled]="aadharverification" />
-                  <a class="btn btn-verify" [class.btn-verified]="aadharverification"
+                    formControlName="aadhar" type="text" placeholder="Enter Aadhaar Number" class="form-control"
+                    autocomplete="off" maxlength="12" />
+                  <!-- [class.disabled]="aadharverification" -->
+                  <!-- <a class="btn btn-verify" [class.btn-verified]="aadharverification"
                     *ngIf="!aadharverification && !verifyingUID" (click)="idVerification('UID')"><span>Verify</span></a>
 
                   <a class="btn btn-verify" [class.btn-verified]="aadharverification" *ngIf="verifyingUID"
@@ -225,7 +226,7 @@
 
                   <a class="btn btn-verify" *ngIf="!verifyingUID && aadharverification"
                     [class.btn-verified]="aadharverification">
-                    <span *ngIf="aadharverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
+                    <span *ngIf="aadharverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a> -->
                 </div>
               </div>
             </div>
@@ -237,7 +238,8 @@
           <div class="bggrey my-2">
             <div>
               <div class="fieldPadding">
-                <div class='file file--upload' *ngIf="!aadharverification">
+                <div class='file file--upload'>
+                  <!-- *ngIf="!aadharverification" -->
                   <label (click)="aadharAttach.click()">
                     Upload File
                   </label>
@@ -259,7 +261,8 @@
                             *ngIf="!selectedFiles['aadhar'].base64[i] && file.s3path" width="100px" height="100px">
                         </a>
                       </div>
-                      <div class="gal_action" (click)="deleteTempImage(i, 'aadhar',file)" *ngIf="!aadharverification">
+                      <div class="gal_action" (click)="deleteTempImage(i, 'aadhar',file)">
+                        <!-- *ngIf="!aadharverification" -->
                         <i class=" fa fa-times-circle" aria-hidden="true"></i>
                       </div>
                     </div>

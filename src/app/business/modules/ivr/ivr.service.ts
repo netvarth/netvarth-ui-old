@@ -51,6 +51,11 @@ export class IvrService {
     return this.servicemeta.httpPost(url, data);
   }
 
+  getIvrRecoredFile(filename) {
+    const url = 'provider/ivr/file/' + filename;
+    return this.servicemeta.httpGet(url, null);
+  }
+
   getCustomers(filter) {
     const url = 'provider/customers';
     return this.servicemeta.httpGet(url, null, filter);
@@ -81,9 +86,8 @@ export class IvrService {
     return this.servicemeta.httpPost(url, null);
   }
 
-  getRecordingFile(filename)
-  {
-    const url = 'provider/ivr/file/'+filename;
+  getRecordingFile(filename) {
+    const url = 'provider/ivr/file/' + filename;
     return this.servicemeta.httpGet(url, null);
   }
 

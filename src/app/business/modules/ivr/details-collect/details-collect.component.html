@@ -66,7 +66,15 @@
           </mat-menu>
         </div>
       </div>
-
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-12 mt-2" *ngIf="callData && callData.callStatus == 'voicemail' && fileRecordingLink">
+      <span>
+        <audio controls>
+          <source [src]="fileRecordingLink" type="audio/ogg">
+          <source [src]="fileRecordingLink" type="audio/mpeg">
+        </audio>
+      </span>
     </div>
   </div>
 
@@ -239,7 +247,7 @@
               <div *ngIf="customerCallHistory && customerCallHistory.length>0">
                 <div class="my-1 p-1" *ngFor="let call of customerCallHistory">
                   <mat-expansion-panel>
-                    <mat-expansion-panel-header  [collapsedHeight]="'100px'">
+                    <mat-expansion-panel-header [collapsedHeight]="'100px'">
                       <mat-panel-title>
                         <div class="row my-2">
                           <div class="col-md-6 col-xs-6 mt-2">
