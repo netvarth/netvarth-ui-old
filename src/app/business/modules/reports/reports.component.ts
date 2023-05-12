@@ -64,6 +64,7 @@ export class ReportsComponent implements OnInit {
   loan_application_cdl_criteria: any[];
   cdlPartnerCriteria: any[];
   cdlUserCriteria: any[];
+  cdlLoanCriteria: any[];
   loan_application_partial_cdl_criteria: any[];
   loanPartnerWiseReports = [];
   customer_crif_Status_criteria: any;
@@ -149,6 +150,7 @@ export class ReportsComponent implements OnInit {
     this.loan_application_cdl_criteria = [];
     this.cdlPartnerCriteria = [];
     this.cdlUserCriteria = [];
+    this.cdlLoanCriteria = [];
     this.loan_application_partial_cdl_criteria = [];
     this.loan_user_criteria = [];
     this.customer_crif_Status_criteria = [];
@@ -276,6 +278,10 @@ export class ReportsComponent implements OnInit {
           }
           case 'USER_REPORT': {
             this.cdlUserCriteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'LOAN_REPORT': {
+            this.cdlLoanCriteria.push(this.criteria_list[i]);
             break;
           }
           case 'LOAN_APPLICATION_PARTIAL_STATUS': {

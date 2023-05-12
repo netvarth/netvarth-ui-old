@@ -82,6 +82,12 @@ export class NewReportComponent implements OnInit {
   appointment_mode_list: { displayName: string; value: string; }[];
   response_list: { displayName: string; value: string; }[];
   cdl_status_list: { displayName: string; value: string; }[];
+  partner_report_status_list: any;
+  loan_report_status_list: any;
+  partner_account_status_list: any;
+  user_report_status_list: any;
+
+  accountStatus: any;
   payment_purpose: { value: string; displayName: string; }[];
   donation_timePeriod: string;
   appointment_timePeriod: string;
@@ -103,6 +109,8 @@ export class NewReportComponent implements OnInit {
   HO_lead_EndDate;
   cdlPartnerStartDate: any;
   cdlPartnerEndDate: any;
+  cdlLoanStartDate: any;
+  cdlLoanEndDate: any;
   cdlUserStartDate: any;
   cdlUserEndDate: any;
   appointment_service_id: number;
@@ -171,6 +179,7 @@ export class NewReportComponent implements OnInit {
   user_timePeriod;
   cdlpayment_timePeriod;
   cdlPartnerTimePeriod;
+  cdlLoanTimePeriod;
   cdlUserTimePeriod;
   cdlpayment_partial_timePeriod;
   consolidate_StartDate;
@@ -178,6 +187,7 @@ export class NewReportComponent implements OnInit {
   tat_StartDate;
   tat_EndDate;
   user_users;
+  reportStatus;
   sanctioned_StartDate;
   sanctioned_EndDate;
   sanctioned_timePeriod: string;
@@ -348,7 +358,7 @@ export class NewReportComponent implements OnInit {
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
-    this.payment_timePeriod = this.loan_application_timePeriod = this.loan_partner_application_timePeriod = this.loan_user_application_timePeriod = this.customer_timePeriod = this.customer_wise_timePeriod = this.document_collected_timePeriod = this.customer_crif_status_timePeriod = this.crm_timePeriod = this.employee_Activity_timePeriod = this.daily_Activity_timePeriod = this.sanctioned_timePeriod = this.HO_lead_timePeriod = this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod = this.consolidated_timePeriod = this.tat_timePeriod = this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = this.cdlpayment_timePeriod = this.cdlpayment_partial_timePeriod = this.cdlPartnerTimePeriod = this.cdlUserTimePeriod = 'LAST_THIRTY_DAYS';
+    this.payment_timePeriod = this.loan_application_timePeriod = this.loan_partner_application_timePeriod = this.loan_user_application_timePeriod = this.customer_timePeriod = this.customer_wise_timePeriod = this.document_collected_timePeriod = this.customer_crif_status_timePeriod = this.crm_timePeriod = this.employee_Activity_timePeriod = this.daily_Activity_timePeriod = this.sanctioned_timePeriod = this.HO_lead_timePeriod = this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod = this.consolidated_timePeriod = this.tat_timePeriod = this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = this.cdlpayment_timePeriod = this.cdlpayment_partial_timePeriod = this.cdlPartnerTimePeriod = this.cdlLoanTimePeriod = this.cdlUserTimePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
     this.payment_status = projectConstantsLocal.PAYMENT_STATUS;
@@ -367,13 +377,18 @@ export class NewReportComponent implements OnInit {
     this.payment_paymentMode = 0;
     this.customer_location = 0;
     this.appointment_mode = this.waitlist_mode = this.delivery_mode = 0;
-    this.appointment_status = this.waitlist_status = this.order_status = this.sta_s = 0;
+    this.appointment_status = this.waitlist_status = this.order_status = this.sta_s = this.reportStatus = this.accountStatus = 0;
     this.payment_customer = this.appointment_customer = this.waitlist_customer = this.donation_customer = 'Any';
     this.payment_transactionType = 0;
     this.waitlist_billpaymentstatus = this.appointment_billpaymentstatus = 0;
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.response_list = projectConstantsLocal.RESPONSE_TYPE;
     this.cdl_status_list = projectConstantsLocal.CDL_STATUS_LIST;
+    this.partner_report_status_list = projectConstantsLocal.PARTNER_REPORT_STATUS_LIST;
+    this.loan_report_status_list = projectConstantsLocal.LOAN_REPORT_STATUS_LIST;
+    this.user_report_status_list = projectConstantsLocal.USER_REPORT_STATUS_LIST;
+    this.partner_account_status_list = projectConstantsLocal.PARTNER_ACCOUNT_STATUS_LIST;
+
     if (this.report_type === 'token' || this.report_type === 'appointment') {
       this.provider_services.getAllQuestionnaire().subscribe(
         (questionaires: any) => {
@@ -3329,10 +3344,15 @@ export class NewReportComponent implements OnInit {
       if (this.cdlPartnerTimePeriod === 'DATE_RANGE' && (this.cdlPartnerStartDate === undefined || this.cdlPartnerEndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
-        this.filterparams = {
-          'status': "approved",
-          "active": "true"
-        };
+        this.filterparams = {};
+
+        if (this.reportStatus) {
+          this.filterparams['status'] = this.reportStatus
+        }
+
+        if (this.accountStatus) {
+          this.filterparams['active'] = true;
+        }
 
         const filter = {};
         for (const key in this.filterparams) {
@@ -3353,13 +3373,48 @@ export class NewReportComponent implements OnInit {
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
     }
+    else if (reportType === 'LOAN_REPORT') {
+      if (this.cdlLoanTimePeriod === 'DATE_RANGE' && (this.cdlLoanStartDate === undefined || this.cdlLoanEndDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {};
+
+        if (this.reportStatus) {
+          this.filterparams['status'] = this.reportStatus
+        }
+
+        if (this.accountStatus) {
+          this.filterparams['active'] = true;
+        }
+
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.cdlLoanTimePeriod === 'DATE_RANGE') {
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.cdlLoanStartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.cdlLoanEndDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = this.report_type;
+        request_payload.reportDateCategory = this.cdlLoanTimePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    }
     else if (reportType === 'USER_REPORT') {
       if (this.cdlUserTimePeriod === 'DATE_RANGE' && (this.cdlUserStartDate === undefined || this.cdlUserEndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
-        this.filterparams = {
-          'status': "available"
-        };
+        this.filterparams = {};
+
+        if (this.reportStatus) {
+          this.filterparams['status'] = this.reportStatus
+        }
 
         const filter = {};
         for (const key in this.filterparams) {

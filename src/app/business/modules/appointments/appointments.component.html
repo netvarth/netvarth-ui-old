@@ -1280,7 +1280,7 @@
         </div>
       </div>
     </mat-tab>
-    <mat-tab label="Request ({{appointment_requests_count}})">
+    <mat-tab label="Request ({{appointment_requests_count}})" *ngIf="apptRequestStatus">
       <div class="col-md-12 col-xs-12 col-sm-12 no-padding adj-hgt table-responsive">
         <div>
           <table class="table tbl-qboard childDetails singleDash">

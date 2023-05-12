@@ -882,11 +882,32 @@ export const projectConstantsLocal = {
 
   ],
   CDL_STATUS_LIST: [
-    { displayName: 'Unconverged ', value: 'Unconverged' },
+    { displayName: 'Unconverged', value: 'Unconverged' },
     { displayName: 'Converged', value: 'Converged' },
 
   ],
-  
+  PARTNER_REPORT_STATUS_LIST: [
+    { displayName: 'Approved', value: 'approved' }
+  ],
+  LOAN_REPORT_STATUS_LIST: [
+    { displayName: 'Draft', value: 'Draft' },
+    { displayName: 'Loan Request', value: 'LoanRequest' },
+    { displayName: 'Approval Pending', value: 'ApprovalPending' },
+    { displayName: 'Approval Required', value: 'ApprovalRequired' },
+    { displayName: 'Credit Approved', value: 'CreditApproved' },
+    { displayName: 'Scheme Confirmed', value: 'SchemeConfirmed' },
+    { displayName: 'Branch Approved', value: 'BranchApproved' },
+    { displayName: 'Consumer Accepted', value: 'ConsumerAccepted' },
+    { displayName: 'Partner Accepted', value: 'PartnerAccepted' },
+    { displayName: 'Sanctioned', value: 'Sanctioned' },
+    { displayName: 'Operations Verified', value: 'OperationsVerified' }
+  ],
+  PARTNER_ACCOUNT_STATUS_LIST: [
+    { displayName: 'Active', value: 'active' }
+  ],
+  USER_REPORT_STATUS_LIST: [
+    { displayName: 'Available', value: 'available' }
+  ],
   APPOINTMENT_STATUS: [
     // {displayName: 'Pre Payment Pending ', value: 'prepaymentPending'},
     { displayName: 'Confirmed', value: 'Confirmed' },

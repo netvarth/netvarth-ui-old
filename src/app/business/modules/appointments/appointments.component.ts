@@ -96,6 +96,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   time_type = 1;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   newTimeDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+  apptRequestStatus: any;
   filter = {
     first_name: '',
     last_name: '',
@@ -538,7 +539,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       //this.refresh();
     });
-    this.bisinessProfile()
+    this.bisinessProfile();
+    this.getGlobalSettings();
   }
 
   showQuestionnaire(appt) {
@@ -2908,6 +2910,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.provider_services.getAccountSettings().then(
         (data: any) => {
           this.apptStatus = data.appointment;
+          this.apptRequestStatus = data.appointmentRequest
           resolve();
         });
     });
