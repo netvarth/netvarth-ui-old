@@ -893,15 +893,15 @@
                                                                 <div class="col-md-12">
                                                                     <p class="pay-cnfm">* Booking will be confirmed only after the payment</p>
                                                                   </div>
-                                                                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable && (paymentDetails.couponDiscount || paymentDetails.providerCouponDiscount) ">
+                                                                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable && paymentDetails.totalDiscount >0 ">
                                                                   
                                                                     <p class="pay-cnfm_cases">* Coupons and taxes will be applied only the final bill</p>
                                                                   </div>
-                                                                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable">
+                                                                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable && paymentDetails.totalDiscount === 0">
                                                                   
                                                                     <p class="pay-cnfm_cases">* Taxes will be applied only the final bill</p>
                                                                   </div>
-                                                                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && (paymentDetails.couponDiscount || paymentDetails.providerCouponDiscount)">
+                                                                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && paymentDetails.totalDiscount>0 && !selectedService.taxable">
                                                                   
                                                                     <p class="pay-cnfm_cases">* Coupons will be applied only the final bill</p>
                                                                   </div>
@@ -967,15 +967,15 @@
                                                               <div class="col-md-12">
                                                                 <p class="pay-cnfm">* Booking will be confirmed only after the payment</p>
                                                               </div>
-                                                              <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable && (paymentDetails.couponDiscount || paymentDetails.providerCouponDiscount) ">
+                                                              <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable && paymentDetails.totalDiscount >0 ">
                                                               
                                                                 <p class="pay-cnfm_cases">* Coupons and taxes will be applied only the final bill</p>
                                                               </div>
-                                                              <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable">
+                                                              <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable && paymentDetails.totalDiscount === 0">
                                                               
                                                                 <p class="pay-cnfm_cases">* Taxes will be applied only the final bill</p>
                                                               </div>
-                                                              <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && (paymentDetails.couponDiscount || paymentDetails.providerCouponDiscount)">
+                                                              <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && paymentDetails.totalDiscount>0 && !selectedService.taxable">
                                                               
                                                                 <p class="pay-cnfm_cases">* Coupons will be applied only the final bill</p>
                                                               </div>

@@ -46,7 +46,7 @@
                     Telegram
                 </mat-checkbox>
                 <mat-checkbox
-                [disabled]="selectedMessage.files.length !== 0 || (typeOfMsg === 'single' && (((!phone)|| phone === 'null' || phone === '' )))"
+                [disabled]="!whatsappStatusEnable || selectedMessage.files.length !== 0 || (typeOfMsg === 'single' && (((!phone)|| phone === 'null' || phone === '' )))"
                 class="mgright25 example-margin" [(ngModel)]="whatsApp" [ngModelOptions]="{standalone: true}">
                 Whatsapp
             </mat-checkbox>

@@ -32,6 +32,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   message = '';
   smsGlobalStatusEnable;
   notificationStatusEnable;
+  whatsappStatusEnable;
   source = null;
   message_label = null;
   api_loading = true;
@@ -177,6 +178,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       this.provider_services.getAccountSettings().then(data => {
         this.smsGlobalStatusEnable = data['enableSms'];
         this.notificationStatusEnable = data['sendNotification'];
+        this.whatsappStatusEnable = data['enableWhatsApp'];
         if (this.smsGlobalStatusEnable === true) {
           this.sms = true;
         }
@@ -188,6 +190,13 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         }
         else {
           this.pushnotify = false;
+        }
+       
+        if( this.whatsappStatusEnable === true){
+          this.whatsApp = true;
+        }
+        else{
+          this.whatsApp = false;
         }
         console.log("Sms and Notify status :", this.smsGlobalStatusEnable, this.notificationStatusEnable)
       });
@@ -563,7 +572,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
           }
         }
         else if (this.data.source === 'provider-waitlist' && this.type === 'appt') {
-          if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
+          if (!this.sms && !this.email && !this.pushnotify && !this.telegram && !this.whatsApp) {
             this.api_error = 'share message via options are not selected';
             this.disableButton = false;
             setTimeout(() => {
@@ -598,7 +607,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               );
           }
         } else if (this.data.source === 'provider-waitlist' && this.type === 'wl') {
-          if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
+          if (!this.sms && !this.email && !this.pushnotify && !this.telegram && !this.whatsApp) {
             this.api_error = 'share message via options are not selected';
             this.disableButton = false;
             setTimeout(() => {
