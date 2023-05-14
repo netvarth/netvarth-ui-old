@@ -466,6 +466,22 @@
   color: #D93025 !important;
 }
 
+.status-Approved {
+  background-color: #C8E6C9 !important;
+  color: #256029 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-Rejected {
+  background-color: #FFCDD2 !important;
+  color: #C63737 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
 /* .status-Draft {
   background-color: #fbbdc3 !important;
   color: rgb(186, 121, 0) !important;

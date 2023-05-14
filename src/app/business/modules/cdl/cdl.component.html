@@ -5,13 +5,13 @@
         <img width="45" height="45" src="./assets/images/cdl/profile.png">
       </div>
       <div class="d-flex align-items-center">
-       <div>
-        <span class="font-weight-bold welcome-text">Welcome,
-          <span *ngIf="user && user.firstName">{{user.firstName}}</span>
-        </span><br>
-        <span class="sub-title" *ngIf="user && user.roles && user.roles[0] && user.roles[0].roleName"><i
-            class="fa fa-stop-circle" aria-hidden="true"></i>&nbsp;{{user.roles[0].roleName}}</span>
-       </div>
+        <div>
+          <span class="font-weight-bold welcome-text">Welcome,
+            <span *ngIf="user && user.firstName">{{user.firstName}}</span>
+          </span><br>
+          <span class="sub-title" *ngIf="user && user.roles && user.roles[0] && user.roles[0].roleName"><i
+              class="fa fa-stop-circle" aria-hidden="true"></i>&nbsp;{{user.roles[0].roleName}}</span>
+        </div>
       </div>
     </div>
     <div>
@@ -381,75 +381,49 @@
           </div>
         </div>
 
-        <p-table [responsive]="true" responsiveLayout="scroll" #loansTable [value]="loans" dataKey="id"
-          [paginator]="true" [rows]="4" [showCurrentPageReport]="true"
+        <p-table #loansTable [value]="loans" responsiveLayout="scroll" [lazy]="true" (onLazyLoad)="loadLoans($event)"
+          dataKey="id" [showCurrentPageReport]="true" [rowsPerPageOptions]="[4,10,15]" [paginator]="true" [rows]="4"
+          [totalRecords]="totalLoansCount"
+          [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']"
           styleClass="p-datatable-customers p-datatable-gridlines"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-          [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']">
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
           <ng-template pTemplate="caption">
-            <div class="container-fluid no-padding-small">
-              <div class="row" *ngIf="capabilities && capabilities.canCreateBranch">
-                <div class="col-md-4 no-padding-small">
+            <div class="row" *ngIf="capabilities && capabilities.canCreateBranch">
+              <div class="col-md-4 no-padding-small">
 
-                </div>
-                <div class="col-md-4"></div>
-                <div class="col-md-4 text-right no-padding-small">
-                  <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="branches"
-                    (onChange)="branchChange($event)" [(ngModel)]="branchSelected" optionLabel="branchName">
-                  </p-dropdown>
-                </div>
               </div>
-              <div class="row mt-2">
-                <div class="col-md-4 no-padding-small">
-                  <span>
-                    <input pInputText type="text" [style]="{'width':'100%'}" class="search-field"
-                      (input)="loansTable.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword"
-                      style="width:100%" />
-                  </span>
-                </div>
-                <div class="col-md-4"></div>
-                <div class="col-md-4 text-right no-padding-small">
-                  <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="loanStatus"
-                    (onChange)="statusChange($event)" [(ngModel)]="statusDisplayName" optionLabel="displayName"
-                    dataKey="name">
-                  </p-dropdown>
-                </div>
+              <div class="col-md-4"></div>
+              <div class="col-md-4 text-right no-padding-small">
+                <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="branches"
+                  (onChange)="branchChange($event)" appendTo="body" [(ngModel)]="branchSelected"
+                  optionLabel="branchName">
+                </p-dropdown>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 no-padding-small">
+              </div>
+              <div class="col-md-4 no-padding-small">
+              </div>
+              <div class="col-md-4 no-padding-small text-right">
+                <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="loanStatus"
+                  (onChange)="statusChange($event)" appendTo="body" [(ngModel)]="statusDisplayName"
+                  optionLabel="displayName" dataKey="name">
+                </p-dropdown>
               </div>
             </div>
           </ng-template>
-          <ng-template pTemplate="header">
+          <ng-template pTemplate="header" let-columns>
             <tr>
-              <th>
-                <div class="p-d-flex p-jc-between p-ai-center">
-                  Loan Id
-                  <p-columnFilter type="text" field="referenceNo" display="menu"></p-columnFilter>
-                </div>
-              </th>
-              <th>
-                <div class="p-d-flex p-jc-between p-ai-center">
-                  Customer Name
-                  <p-columnFilter type="text" field="customer.firstName" display="menu"></p-columnFilter>
-                </div>
-              </th>
-              <th>
-                <div class="p-d-flex p-jc-between p-ai-center">
-                  Dealer
-                  <p-columnFilter type="text" field="partner.partnerName" display="menu"></p-columnFilter>
-                </div>
-              </th>
-              <th>
-                <div class="p-d-flex p-jc-between p-ai-center">
-                  Status
-                </div>
-              </th>
-              <th>
-                <div class="p-d-flex p-jc-between p-ai-center">
-                  More Actions
-                </div>
-              </th>
+              <th>Loan Id</th>
+              <th>Customer Name</th>
+              <th>Dealer</th>
+              <th>Status</th>
+              <th>More Actions</th>
             </tr>
+
           </ng-template>
-          <ng-template pTemplate="body" let-loan>
+          <ng-template pTemplate="body" let-loan let-columns="columns">
             <tr class="mobile-card">
               <td>
                 <span class="table-column-data">{{loan.referenceNo}}</span>
@@ -459,8 +433,9 @@
                   {{loan.customer.lastName}}</span>
               </td>
               <td>
-                <span *ngIf="loan && loan.partner && loan.partner.partnerName"
-                  class="table-column-data">{{loan.partner.partnerName}}</span>
+                <span class="table-column-data"
+                  *ngIf="loan && loan.partner && loan.partner.partnerName">{{loan.partner.partnerName}}</span>
+                <span class="table-column-data" *ngIf="loan && !loan.partner || !loan.partner.partnerName">-</span>
               </td>
               <td>
                 <span *ngIf="loan.applicationStatus !='Rejected'"
@@ -472,8 +447,13 @@
               </td>
               <td>
                 <div class="text-center">
-                  <button pButton pRipple type="button" class="p-button-primary  btn-primary"
-                    (click)="loanDetails(loan.uid,loan.spInternalStatus)">View</button>
+                  <div class="d-flex">
+                    <button *ngIf="loan.spInternalStatus=='Draft' || loan.isActionRequired" pButton pRipple
+                      type="button" class="p-button-primary mr-2 btn-primary"
+                      (click)="updateLoan(loan.uid, 'update', 'Draft')">Update</button>
+                    <button pButton pRipple type="button" class="p-button-primary btn-primary"
+                      (click)="loanDetails(loan.uid,loan.spInternalStatus)">View</button>
+                  </div>
                 </div>
               </td>
             </tr>
@@ -620,7 +600,7 @@
           </div>
         </div>
 
-        <p-table [responsive]="true" responsiveLayout="scroll" #dealerTable [value]="dealers" dataKey="id"
+        <!-- <p-table [responsive]="true" responsiveLayout="scroll" #dealerTable [value]="dealers" dataKey="id"
           [paginator]="true" [rows]="4" [showCurrentPageReport]="true"
           styleClass="p-datatable-customers p-datatable-gridlines"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -695,7 +675,110 @@
               <td colspan="7">No Dealers found.</td>
             </tr>
           </ng-template>
+        </p-table> -->
+
+
+        <p-table [responsive]="true" responsiveLayout="scroll" #dealerdata [value]="dealers" dataKey="id"
+          [totalRecords]="totalDealerCount" [rows]="4" [showCurrentPageReport]="true" [rowsPerPageOptions]="[4,10,15]"
+          [lazy]="true" (onLazyLoad)="loadDealers($event)" styleClass="p-datatable-customers p-datatable-gridlines"
+          [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']">
+          <ng-template pTemplate="caption">
+            <div class="row">
+              <div class="col-md-4">
+                <!-- <span>
+                      <input pInputText type="text" [style]="{'width':'100%'}" class="search-field"
+                        (input)="dealerdata.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword"
+                        style="width:100%" [(ngModel)]="statusDropdownClicked" />
+                    </span> -->
+              </div>
+              <div class="col-md-4"></div>
+              <div class="col-md-4 text-right">
+                <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="dealerStatus"
+                  (onChange)="dealerStatusChange($event)" appendTo="body" [(ngModel)]="dealerStatusDisplayName"
+                  optionLabel="displayName" dataKey="name">
+                </p-dropdown>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Dealer Id
+                  <!-- <p-columnFilter type="text" field="referenceNo" display="menu"></p-columnFilter> -->
+                </div>
+              </th>
+              <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Dealer Name
+                  <!-- <p-columnFilter type="text" field="partnerName" display="menu"></p-columnFilter> -->
+                </div>
+              </th>
+              <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Dealer Phone
+                  <!-- <p-columnFilter type="text" field="partnerMobile" display="menu"></p-columnFilter> -->
+                </div>
+              </th>
+              <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Status
+                </div>
+              </th>
+              <!-- <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Created On
+                </div>
+              </th> -->
+              <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  More Actions
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-dealer>
+            <tr class="mobile-card">
+              <td>
+                <span class="table-column-data">{{dealer.referenceNo}}</span>
+              </td>
+              <td>
+                <span class="table-column-data">{{dealer.partnerName}}</span>
+              </td>
+              <td>
+                <span class="table-column-data">{{dealer.partnerMobile}}</span>
+              </td>
+              <td>
+                <span [class]="'customer-badge status-' + dealer.spInternalStatus" class="table-column-data">
+                  {{dealer.spInternalStatus}}</span>
+              </td>
+              <!-- <td>
+                <span class="d-lg-none d-md-none">Created On : </span><span
+                  class="table-column-data">{{dealer.createdDate}}</span>
+              </td> -->
+              <td>
+                <!-- capabilities && capabilities.canUpdatePartner || -->
+                <div class="text-center">
+                  <button pButton pRipple type="button" class="p-button-primary btn-primary"
+                    *ngIf="dealer.spInternalStatus=='Draft'" (click)="updateDealer(dealer.uid,'update')"><i
+                      class="pi pi-upload text-white"></i>&nbsp;Update</button>
+                  <button pButton pRipple type="button" class="p-button-primary btn-primary"
+                    *ngIf=" dealer.spInternalStatus!='Draft'"
+                    (click)="updateDealer(dealer.uid,'view',dealer.spInternalStatus)">View</button>
+                </div>
+              </td>
+            </tr>
+            <br class="d-lg-none d-md-none">
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="7">No dealers found.</td>
+            </tr>
+          </ng-template>
         </p-table>
+
+
       </div>
     </div>
     <div class="mt-2 col-lg-4 col-md-12">
