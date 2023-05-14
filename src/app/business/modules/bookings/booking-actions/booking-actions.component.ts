@@ -4,9 +4,11 @@ import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/c
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
-import { NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { BookingDetailsSendComponent } from '../booking-details-send/booking-details-send.component';
+import { CommunicationService } from '../../../services/communication-service';
+import { GalleryImportComponent } from '../../../../shared/modules/gallery/import/gallery-import.component';
 
 @Component({
   selector: 'app-booking-actions',
@@ -33,20 +35,32 @@ export class BookingActionsComponent implements OnInit {
   canAssignMyself: any;
   canAssignProvider: any;
   providerLabel: any;
+  customerLabel: any;
   groups: any;
+  timeType: any;
   showSendDetails: any = false;
+  galleryDialog: any;
   constructor(
     private dialog: MatDialog,
     private groupService: GroupStorageService,
     private providerServices: ProviderServices,
     private snackbarService: SnackbarService,
     private router: Router,
-    private wordProcessor: WordProcessor
-  ) { }
+    private wordProcessor: WordProcessor,
+    private communicationService: CommunicationService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.activatedRoute.queryParams.subscribe((data) => {
+      if (data && data.timetype) {
+        this.timeType = data.timetype;
+      }
+    })
+  }
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage("ynw-user");
     this.providerLabel = this.wordProcessor.getTerminologyTerm("provider");
+    this.customerLabel = this.wordProcessor.getTerminologyTerm("customer");
     this.accountType = this.user.accountType;
     this.activeUser = this.user.userType;
     this.getUser(this.user.id);
@@ -281,6 +295,67 @@ export class BookingActionsComponent implements OnInit {
       }
     });
     smsdialogRef.afterClosed().subscribe(result => { });
+  }
+
+
+  printBooking() {
+    if (this.isAppointment) {
+      this.router.navigate(["provider", "appointments", this.bookingData.uid, "print"], { queryParams: { bookingType: "appt" } });
+    }
+    else if (this.isCheckin) {
+      this.router.navigate(['provider', 'check-ins', this.bookingData.ynwUuid, 'print'], { queryParams: { bookingType: 'checkin' } });
+    }
+  }
+
+  gotoCustomerDetails() {
+    let customerId = this.isAppointment ? this.bookingData.appmtFor[0].id : this.bookingData.waitlistingFor[0].id;
+    this.router.navigate(['/provider/customers/' + customerId]);
+  }
+
+  addConsumerInboxMessage() {
+    let checkin = [];
+    if (this.bookingData.multiSelection) {
+      checkin = this.bookingData;
+    } else {
+      checkin.push(this.bookingData);
+    }
+    let bookingType = this.isAppointment ? "appt" : "checkin";
+    this.communicationService.addConsumerInboxMessage(checkin, this, bookingType)
+      .then(
+        () => { },
+        () => { }
+      );
+  }
+
+
+  sendAttachments() {
+    this.galleryDialog = this.dialog.open(GalleryImportComponent, {
+      width: "50%",
+      panelClass: ["popup-class", "commonpopupmainclass"],
+      disableClose: true,
+      data: {
+        source_id: "attachment",
+        uid: this.bookingUid
+      }
+    });
+    this.galleryDialog.afterClosed().subscribe(result => {
+      this.refreshParent.emit();
+    });
+  }
+
+
+  viewBillPage() {
+    let bookingSource = this.isAppointment ? "appt" : "checkin";
+    this.providerServices.getWaitlistBill(this.bookingUid).subscribe(
+      (data: any) => {
+        this.router.navigate(["provider", "bill", this.bookingUid], {
+          queryParams: { source: bookingSource, timetype: this.timeType }
+        });
+      },
+      error => {
+        this.snackbarService.openSnackBar(error, { panelClass: "snackbarerror" });
+      }
+    );
   }
 
 }
