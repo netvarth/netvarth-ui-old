@@ -477,6 +477,28 @@ export class LoanDetailsComponent implements OnInit {
       });
   }
 
+  resendConsumerAgreement() {
+    this.cdlservice.resendConsumerAgreement(this.loanId).subscribe((data: any) => {
+      if (data) {
+        this.snackbarService.openSnackBar("Consumer Agreement Resent Successfully")
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
+
+  resendSPDC_DPN() {
+    this.cdlservice.resendSPDC_DPN_Document(this.loanId).subscribe((data: any) => {
+      if (data) {
+        this.snackbarService.openSnackBar("SPDC & DPN Documents Resent Successfully")
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
+
   sendInsuranceDocument() {
     this.cdlservice.sendInsuranceDocument(this.loanId).subscribe((data: any) => {
       if (data) {

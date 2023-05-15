@@ -3373,6 +3373,38 @@ export class NewReportComponent implements OnInit {
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
     }
+    else if (reportType === 'APRROVED_PARTNER_REPORT') {
+      if (this.cdlPartnerTimePeriod === 'DATE_RANGE' && (this.cdlPartnerStartDate === undefined || this.cdlPartnerEndDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          "status": "approved",
+          "type": "approved"
+        };
+
+        if (this.accountStatus) {
+          this.filterparams['active'] = true;
+        }
+
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.cdlPartnerTimePeriod === 'DATE_RANGE') {
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.cdlPartnerStartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.cdlPartnerEndDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = "PARTNER_REPORT";
+        request_payload.reportDateCategory = this.cdlPartnerTimePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    }
     else if (reportType === 'LOAN_REPORT') {
       if (this.cdlLoanTimePeriod === 'DATE_RANGE' && (this.cdlLoanStartDate === undefined || this.cdlLoanEndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });

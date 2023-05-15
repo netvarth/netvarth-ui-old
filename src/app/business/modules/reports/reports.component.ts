@@ -63,6 +63,7 @@ export class ReportsComponent implements OnInit {
   loan_partner_wise_criteria: any[];
   loan_application_cdl_criteria: any[];
   cdlPartnerCriteria: any[];
+  cdlApprovedPartnerCriteria: any[];
   cdlUserCriteria: any[];
   cdlLoanCriteria: any[];
   loan_application_partial_cdl_criteria: any[];
@@ -149,6 +150,7 @@ export class ReportsComponent implements OnInit {
     this.loan_partner_wise_criteria = [];
     this.loan_application_cdl_criteria = [];
     this.cdlPartnerCriteria = [];
+    this.cdlApprovedPartnerCriteria = [];
     this.cdlUserCriteria = [];
     this.cdlLoanCriteria = [];
     this.loan_application_partial_cdl_criteria = [];
@@ -274,6 +276,10 @@ export class ReportsComponent implements OnInit {
           }
           case 'PARTNER_REPORT': {
             this.cdlPartnerCriteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'APRROVED_PARTNER_REPORT': {
+            this.cdlApprovedPartnerCriteria.push(this.criteria_list[i]);
             break;
           }
           case 'USER_REPORT': {

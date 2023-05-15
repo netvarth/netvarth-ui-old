@@ -220,6 +220,11 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  pushDealerToLMS(id) {
+    const url = 'provider/partner/' + id + '/webhookpartnerrequestresent';
+    return this.servicemeta.httpPut(url, null);
+  }
+
   dealerApprovalRequest(id) {
     const url = 'provider/partner/' + id + '/approvalrequest';
     return this.servicemeta.httpPut(url, null);
@@ -436,6 +441,16 @@ export class CdlService {
   sendDigitalDocument(id) {
     const url = 'provider/loanapplication/digitaldocument/' + id;
     return this.servicemeta.httpPost(url, null);
+  }
+
+  resendConsumerAgreement(id) {
+    const url = 'provider/loanapplication/' + id + '/consumeracceptancerequestresent';
+    return this.servicemeta.httpPut(url, null);
+  }
+
+  resendSPDC_DPN_Document(id) {
+    const url = 'provider/loanapplication/' + id + '/consumerdocumentsignrequestresent';
+    return this.servicemeta.httpPut(url, null);
   }
 
 

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookingActionsComponent } from './booking-actions.component';
 import { BookingDetailsSendModule } from '../booking-details-send/booking-details-send.modules';
+import { BookingActionsPopupModule } from '../booking-actions-popup/booking-actions-popup.module';
 
 
 
@@ -11,7 +12,8 @@ import { BookingDetailsSendModule } from '../booking-details-send/booking-detail
   ],
   imports: [
     CommonModule,
-    BookingDetailsSendModule
+    BookingDetailsSendModule,
+    BookingActionsPopupModule
   ],
   exports: [
     BookingActionsComponent

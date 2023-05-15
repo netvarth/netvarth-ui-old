@@ -64,8 +64,8 @@
       src="../assets/images/bookings/user-details.png" alt="Customer Details" width="25px"> {{customerLabel}}
     Details</button>
 
-  <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/notes.png" alt="Private Notes"
-      width="25px"> Private Notes</button>
+  <button class="more-actions-btn mr-3 mt-2" (click)="addPrivateNotes()"><img src="../assets/images/bookings/notes.png"
+      alt="Private Notes" width="25px"> Private Notes</button>
 
   <button class="more-actions-btn mr-3 mt-2" (click)="addConsumerInboxMessage()"><img
       src="../assets/images/bookings/message.png" alt="Send Message" width="22px"> Send Message</button>
@@ -76,6 +76,7 @@
   <button class="more-actions-btn mr-3 mt-2" (click)="viewBillPage()"><img src="../assets/images/bookings/bill.png"
       alt="Generate Bill" width="25px"> Generate Bill</button>
 
-  <button class="more-actions-btn mr-3 mt-2"><img src="../assets/images/bookings/labels.png" alt="Labels" width="25px">
+  <button class="more-actions-btn mr-3 mt-2" *ngIf="bookingStatus!=='blocked'" (click)="showLabels()"><img
+      src="../assets/images/bookings/labels.png" alt="Labels" width="25px">
     Labels</button>
 </div>

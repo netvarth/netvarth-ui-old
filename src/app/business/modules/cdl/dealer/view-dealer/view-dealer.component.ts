@@ -593,4 +593,17 @@ export class ViewDealerComponent implements OnInit {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
     })
   }
+
+  pushtoLMS() {
+    this.cdlservice.pushDealerToLMS(this.dealerUid).subscribe((data) => {
+      if (data) {
+        this.snackbarService.openSnackBar("Pushed to LMS Successfully")
+      }
+    }, (error) => {
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    })
+  }
+
 }
+
+

@@ -9,6 +9,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { BookingDetailsSendComponent } from '../booking-details-send/booking-details-send.component';
 import { CommunicationService } from '../../../services/communication-service';
 import { GalleryImportComponent } from '../../../../shared/modules/gallery/import/gallery-import.component';
+import { BookingActionsPopupComponent } from '../booking-actions-popup/booking-actions-popup.component';
 
 @Component({
   selector: 'app-booking-actions',
@@ -356,6 +357,46 @@ export class BookingActionsComponent implements OnInit {
         this.snackbarService.openSnackBar(error, { panelClass: "snackbarerror" });
       }
     );
+  }
+
+
+  addPrivateNotes() {
+    let bookingSource = this.isAppointment ? "appt" : "checkin";
+    const addnotedialogRef = this.dialog.open(BookingActionsPopupComponent,
+      {
+        width: "50%",
+        panelClass: ["popup-class", "commonpopupmainclass"],
+        disableClose: true,
+        data: {
+          bookingUid: this.bookingUid,
+          source: bookingSource,
+          type: "privateNotes"
+        }
+      }
+    );
+    addnotedialogRef.afterClosed().subscribe(result => {
+      this.refreshParent.emit();
+    });
+  }
+
+
+  showLabels() {
+    let bookingSource = this.isAppointment ? "appt" : "checkin";
+    const addnotedialogRef = this.dialog.open(BookingActionsPopupComponent,
+      {
+        width: "50%",
+        panelClass: ["popup-class", "commonpopupmainclass"],
+        disableClose: true,
+        data: {
+          bookingUid: this.bookingUid,
+          source: bookingSource,
+          type: "Labels"
+        }
+      }
+    );
+    addnotedialogRef.afterClosed().subscribe(result => {
+      this.refreshParent.emit();
+    });
   }
 
 }

@@ -1,0 +1,116 @@
+<!-- <div>
+  <div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-lt-20 no-padding" *ngIf="!data.multiSelection">
+      <p
+        *ngIf="appt && appt.appmtFor && appt.appmtFor[0] && appt.appmtFor[0].firstName != '' ||appt && appt.appmtFor && appt.appmtFor[0] &&  appt.appmtFor[0].lastName != ''">
+        {{customer_label | capitalizeFirst}} Name : {{appt.appmtFor[0].firstName}} {{appt.appmtFor[0].lastName}}
+      </p>
+      <p
+        *ngIf="appt && appt.appmtFor && appt.appmtFor[0] && appt.appmtFor[0].firstName == '' && appt && appt.appmtFor && appt.appmtFor[0] &&  appt.appmtFor[0].lastName == ''">
+        {{customer_label | capitalizeFirst}} id : {{appt.providerConsumer.jaldeeId}} </p>
+      <p>Appointment Time : {{getSingleTime(appt.appmtTime)}}
+      </p>
+      <p *ngIf="action === 'status' &&statusList && statusList.length == 0">Current Status:
+        {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}</p>
+      <p *ngIf="action === 'status' &&statusList && statusList.length > 0">Current External Status:
+        {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}</p>
+      <p *ngIf="action === 'status'&&statusList && statusList.length > 0">Current Internal Status:
+        {{appt.internalStatus || 'Nil'}}</p>
+    </div>
+  </div>
+</div> -->
+
+
+
+<div *ngIf="type && type == 'privateNotes'">
+  <form [formGroup]="privateNotesForm" novalidate
+    (ngSubmit)="privateNotesForm.valid && onPrivateNotesSubmit(privateNotesForm.value)" (keyup)="resetApiErrors()"
+    class="ynw-common-form">
+    <h1 class="mat-dialog-title">
+      {{addProviderNotesCap}}
+      <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+      </button>
+    </h1>
+    <mat-dialog-content>
+      <div class="form-group">
+        <mat-form-field>
+          <textarea matInput class="form-control" id="message" placeholder="{{notesPlaceholder}} *"
+            formControlName="message" maxlength="360">
+              </textarea>
+        </mat-form-field>
+        <app-field-error-display [displayError]="formMessageDisplayService.isFieldValid(privateNotesForm,'message')"
+          errorMsg="Please enter a private note.">
+        </app-field-error-display>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <ng-container *ngIf="selectedMessage">
+        <div class="row col-md-12 no-padding-small" style="display: flex;"
+          *ngFor="let item of selectedMessage.files; let i = index">
+          <div class="col-md-7 no-padding-small">
+            <span class="ln-hgt-40">{{item.name}}</span>
+          </div>
+          <div class="col-md-5 no-padding-small">
+            <span class="mbt comm-menu-imgs">
+              <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
+                  <i class="icon-delete"></i>
+                  <span>delete</span>
+                </button>
+              </mat-menu>
+            </span>
+          </div>
+        </div>
+      </ng-container>
+      <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+        <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancelButton}}</button>
+        <button type="submit" mat-button [disabled]="!privateNotesForm.valid || disableButton"
+          class="cs-btn bt1">{{saveButton}}</button>
+        <button type="button" class="cs-btn btn-attach bt_attach" (click)="logofile.click()"
+          [matTooltip]="'Upload files'">
+          <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
+            (change)="filesSelected($event)">
+          <span><i class="material-icons">attach_file</i></span>
+        </button>
+      </div>
+    </mat-dialog-actions>
+    <app-field-error-display [displayError]="true" *ngIf="apiError" errorMsg="{{apiError}}"></app-field-error-display>
+    <app-form-success-display [displayMsg]="true" *ngIf="apiSuccess"
+      successMsg="{{apiSuccess}}"></app-form-success-display>
+  </form>
+</div>
+
+
+<div *ngIf="type && type == 'Labels'">
+  <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">
+    Labels
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+        aria-hidden="true"></i></button>
+  </h1>
+  <div class="action-label">
+    <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding queue-outer">
+      <app-common-innerloading-spinner></app-common-innerloading-spinner>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 scro"
+      *ngIf="providerLabels && providerLabels.length > 0">
+      <div class="mgn-bt-5" *ngFor="let label of providerLabels;let i = index">
+        <mat-checkbox [checked]="label.selected" (change)="addLabeltoAppt(label.label, $event)"
+          [disabled]="!label.isPermitted">
+          {{label.displayName | capitalizeFirst}}</mat-checkbox>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-30 scro" *ngIf="providerLabels.length === 0">
+      No labels created till now
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks">
+      <a class="mgn-rt-25" (click)="addLabelvalue('newlabel')" *ngIf="!showApply">Create new</a>
+      <a class="" (click)="gotoLabel()" *ngIf="!showApply">Manage labels</a>
+      <a class="" (click)="applyLabel()" *ngIf="showApply">Apply</a>
+    </div>
+  </div>
+</div>

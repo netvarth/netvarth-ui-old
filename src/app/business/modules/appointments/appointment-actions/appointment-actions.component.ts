@@ -320,14 +320,14 @@ export class AppointmentActionsComponent implements OnInit {
   }
   setData() {
     this.holdselectedTime = this.appt.appmtTime;
-   
+
     if (this.data.timetype === 4) {
-   
+
       this.pastDate = this.appt.appmtDate;
       this.sel_checkindate  = this.hold_sel_checkindate = moment(this.today, 'YYYY-MM-DD HH:mm').format();
-     
+
     } else {
-    
+
       this.sel_checkindate = this.hold_sel_checkindate = this.appt.appmtDate;
     }
     if (this.appt && this.appt.schedule && this.appt.schedule.id) {
@@ -1557,7 +1557,7 @@ export class AppointmentActionsComponent implements OnInit {
     if (this.appt && this.appt.schedule && this.appt.schedule.id && this.selectedDay) {
       this.getSlotsBySheduleandDate(this.appt.schedule.id, this.selectedDay);
     }    //this.getAppointmentSlots();
-    //this.getSlots(this.sel_schedule_id); 
+    //this.getSlots(this.sel_schedule_id);
   }
 
   getSlots(selectedScheduleId) {

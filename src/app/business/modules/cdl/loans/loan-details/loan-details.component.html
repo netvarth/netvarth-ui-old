@@ -1092,6 +1092,36 @@
             </div>
 
           </div>
+
+          <div *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus=='BranchApproved'">
+            <div class="d-lg-flex">
+              <div class="mt-2">
+                <div class="btn btn-primary mr-2" (click)="resendConsumerAgreement()">Resend Consumer Agreement</div>
+              </div>
+              <!-- *ngIf="!digitalDocumenId || (digitalDocumenId && digitalDocumenId=='')" -->
+              <div class="mt-2">
+                <div class="btn btn-primary" (click)="resendSPDC_DPN()">Resend SPDC & DPN Document</div>
+              </div>
+            </div>
+
+            <div class="d-lg-flex">
+              <div class="mt-2 mr-2">
+                <div class="btn btn-primary" (click)="viewInsuranceDocument()">View Insurance Agreement</div>
+              </div>
+              <!-- *ngIf="!digitalInsuranceId || (digitalInsuranceId && digitalInsuranceId=='')" -->
+              <div class="mt-2" *ngIf="!digitalInsuranceId || (digitalInsuranceId && digitalInsuranceId=='')">
+                <div class="btn btn-primary" (click)="sendInsuranceDocument()">Send Insurance Agreement</div>
+              </div>
+            </div>
+
+            <div class="d-lg-flex">
+              <div class="mt-2">
+                <div class="btn btn-primary" (click)="sendEnach()">Send Enach</div>
+              </div>
+            </div>
+
+          </div>
+
           <div class="d-lg-flex">
             <div class="mt-2">
               <a (click)="showLoanDetailsDoc()" target="_blank" class="btn btn-primary">

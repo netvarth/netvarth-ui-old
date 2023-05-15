@@ -336,6 +336,40 @@
             <mat-expansion-panel [expanded]="true">
               <mat-expansion-panel-header>
                 <mat-panel-title class="report_title">
+                  Approved Partners Report
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'APRROVED_PARTNER_REPORT'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="cdlReports.length===0">
+                <div *ngIf="cdlApprovedPartnerCriteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+
+                </div>
+                <table *ngIf="cdlApprovedPartnerCriteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let partner of cdlApprovedPartnerCriteria">
+                    <td>{{partner.reportName}}</td>
+                    <td><a (click)="recreateReport(partner)">Generate</a></td>
+                    <td><a (click)="viewCriteria(partner)">View</a></td>
+                    <td><a (click)="deletCriteria(partner)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+
+
+      <div class="row" *ngIf="cdlStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
                   SpInternal Status Wise Loan Report
                   <div class="width100pc">
                     <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"

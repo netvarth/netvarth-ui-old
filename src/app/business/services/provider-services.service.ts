@@ -1485,7 +1485,23 @@ export class ProviderServices {
     const url = 'provider/appointment/note/' + uuid;
     return this.servicemeta.httpPost(url, messgae);
   }
-  //
+
+  addProviderBookingNotes(uuid, message, source) {
+    let url = 'provider/waitlist/notes/' + uuid;
+    if (source && source == 'appt') {
+      url = 'provider/appointment/note/' + uuid;
+    }
+    return this.servicemeta.httpPost(url, message);
+  }
+
+  getProviderBookingNotes(uuid, source) {
+    let url = 'provider/waitlist/notes/' + uuid;
+    if (source && source == 'appt') {
+      url = 'provider/appointment/note/' + uuid;
+    }
+    return this.servicemeta.httpGet(url);
+  }
+
   setLivetrack(status) {
     const url = 'provider/account/settings/livetrack/' + status;
     return this.servicemeta.httpPut(url);
