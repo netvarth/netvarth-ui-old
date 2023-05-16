@@ -582,7 +582,7 @@ export class ViewDealerComponent implements OnInit {
     let data = {
       "validFrom": moment(this.fromDate + 1).format('YYYY-MM-DD'),
       "validTo": moment(this.toDate + 1).format('YYYY-MM-DD'),
-      "integrationId": this.integrationId
+      // "integrationId": this.integrationId
     };
 
     this.cdlservice.updateDealerValidDates(this.dealerUid, data).subscribe((data) => {

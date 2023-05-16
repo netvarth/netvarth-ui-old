@@ -76,7 +76,8 @@
               <div class="btn btn-primary">Edit</div>
             </div> -->
             <div (click)="pushtoLMS()" class="mr-2"
-              *ngIf="dealerData && dealerData.spInternalStatus && dealerData.spInternalStatus == 'Approved'">
+              *ngIf="dealerData && dealerData.spInternalStatus && dealerData.spInternalStatus == 'Approved' && capabilities &&
+            capabilities.canPushtoLms">
               <div class="btn btn-primary">Push to LMS</div>
             </div>
             <div (click)="suspendDealer()"
@@ -716,10 +717,29 @@
                       </a>
                     </div>
                   </div>
-                </div><br>
+                </div>
+                <br>
+                <div class="col-md-12 no-padding">
+                  <div class="bggrey my-2">
+                    <div>
+                      <div class="fieldPadding">
+                        <div>
+                          <label for="to" class="form-title">Integration Id</label>
+                          <div class="d-flex">
+                            <div>
+                              <input pInputText type="text" class="search-field" placeholder="Integration Id" style="width:100%"
+                                [(ngModel)]="integrationId" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br>
                 <span class="font-weight-bold">Agreement Valid Date</span><br>
                 <div class="row no-padding">
-                  <div class="col-md-4 col-xs-6">
+                  <div class="col-md-6 col-xs-6">
                     <div class="bggrey my-2">
                       <div>
                         <div class="fieldPadding">
@@ -733,7 +753,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-4 col-xs-6">
+                  <div class="col-md-6 col-xs-6">
                     <div class="bggrey my-2">
                       <div>
                         <div class="fieldPadding">
@@ -749,28 +769,9 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4 col-xs-12">
-                    <div class="bggrey my-2">
-                      <div>
-                        <div class="fieldPadding">
-                          <div>
-                            <label for="to" class="form-title">Integration Id</label>
-                            <div class="d-flex">
-                              <div>
-                                <input pInputText type="text" class="search-field" placeholder="Integration Id"
-                                  style="width:100%" [(ngModel)]="integrationId" />
-                              </div>
-                              <!-- <div>
-                                <button pButton type="button" class="btn-primary" (click)="updatePartnervalidDate()">Update</button>
-                              </div> -->
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="col-md-4 col-xs-6">
+
+                  <div class="col-md-12">
                     <div class="bggrey my-2">
                       <div>
                         <div class="fieldPadding">
@@ -788,7 +789,12 @@
                   </div>
 
 
+
+
                 </div>
+
+
+
               </div>
             </div>
           </div>

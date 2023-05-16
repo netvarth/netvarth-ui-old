@@ -61,7 +61,9 @@ export class DealerComponent implements OnInit {
       { field: 'referenceNo', title: 'Dealer Id', type: 'text', filterType: 'like' },
       { field: 'partnerName', title: 'Partner Name', type: 'text', filterType: 'like' },
       { field: 'partnerMobile', title: 'Partner Mobile', type: 'text', filterType: 'like' },
-      { field: 'createdDate', title: 'Created Date', type: 'date', filterType: 'eq' }
+      { field: 'createdDate', title: 'Created Date', type: 'date', filterType: 'eq' },
+      { field: 'createdDate', title: 'Date From', type: 'date', filterType: 'ge' },
+      { field: 'createdDate', title: 'Date To', type: 'date', filterType: 'le' }
     ]
   }
 

@@ -128,6 +128,8 @@ export class CdlComponent implements OnInit {
   users: any;
   branches: any;
   dealersRejected: any;
+  sanctionedLoansCount:any;
+  consumerAcceptedLoansCount:any;
   dealerDashboardStats: any;
   totalDealerCount: any;
   dealerStatusDropdownClicked: any;
@@ -187,8 +189,12 @@ export class CdlComponent implements OnInit {
         this.allLoansCount = count;
       });
 
-      this.getLoansCount({ 'spInternalStatus-eq': 'SchemeConfirmed' }).then((count) => {
-        this.approvedLoansCount = count;
+      this.getLoansCount({ 'spInternalStatus-eq': 'Sanctioned' }).then((count) => {
+        this.sanctionedLoansCount = count;
+      });
+
+      this.getLoansCount({ 'spInternalStatus-eq': 'ConsumerAccepted' }).then((count) => {
+        this.consumerAcceptedLoansCount = count;
       });
 
       this.getLoansCount({ 'spInternalStatus-eq': 'ApprovalRequired' }).then((count) => {
@@ -458,10 +464,10 @@ export class CdlComponent implements OnInit {
 
 
     this.pieChartData = {
-      labels: ['Leads', 'Scheme Confirmed', 'Approval Required', 'Rejected'],
+      labels: ['Leads', 'Approved', 'Approval Required', 'Rejected'],
       datasets: [
         {
-          data: [this.leadsCount, this.approvedLoansCount, this.pendingLoansCount, this.rejectedLoansCount],
+          data: [this.leadsCount, this.consumerAcceptedLoansCount, this.pendingLoansCount, this.rejectedLoansCount],
           backgroundColor: [
             "orange",
             "#3CB698",

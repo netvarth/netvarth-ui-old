@@ -85,6 +85,8 @@ export class LoansComponent implements OnInit {
       { field: 'customerMobile', title: 'Customer Phone', type: 'text', filterType: 'like' },
       { field: 'partnerName', title: 'Dealer Name', type: 'text', filterType: 'like' },
       { field: 'createdDate', title: 'Created Date', type: 'date', filterType: 'eq' },
+      { field: 'createdDate', title: 'Date From', type: 'date', filterType: 'ge' },
+      { field: 'createdDate', title: 'Date To', type: 'date', filterType: 'le' }
       // { field: 'branch', title: 'Branch', type: 'dropdown', filterType: 'eq', options: this.branches, value: 'id', label: 'branchName' }
     ]
 
