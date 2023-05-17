@@ -21,7 +21,7 @@
                         [(ngModel)]="filter[field.field + '-' + field.filterType]"
                         *ngIf="field && field.type=='text'" />
                     <div *ngIf="field && field.type=='date'">
-                        <p-calendar appendTo="body" [(ngModel)]="filter[field.field + '-' + field.filterType]"></p-calendar>
+                        <p-calendar appendTo="body" dateFormat="dd/mm/yy" [(ngModel)]="filter[field.field + '-' + field.filterType]"></p-calendar>
                     </div>
                     <div *ngIf="field && field.type=='dropdown'">
                         <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="field.options"
