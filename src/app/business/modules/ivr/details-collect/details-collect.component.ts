@@ -162,6 +162,18 @@ export class DetailsCollectComponent implements OnInit {
       });
   }
 
+  getCallByUid(uid) {
+    this.ivrService.getAllIvrCallsByUid(uid).subscribe((data: any) => {
+      if (data) {
+        console.log("this.callData", this.callData)
+        this.callData = data;
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
+
   unassignToCall(uid) {
     let data = {
       "uid": uid,
@@ -342,6 +354,7 @@ export class DetailsCollectComponent implements OnInit {
       this.snackbarService.openSnackBar("Details Saved Successfully");
       if (!src) {
         this.callDetails(this.callUid);
+
       }
       else if (src && src == 'details') {
         this.ngOnInit();
@@ -354,14 +367,14 @@ export class DetailsCollectComponent implements OnInit {
 
   submitQuestionnaire(data, src?) {
     this.ivrService.submitQuestionnaire(this.callUid, this.questionAnswers.answers).subscribe((data: any) => {
-      this.snackbarService.openSnackBar("Details Saved Successfully");
-      if (!src) {
-        this.callDetails(this.callUid);
-      }
-      else if (src && src == 'details') {
+      if (src && src == 'details') {
         this.ngOnInit();
         this.showEditQnr = !this.showEditQnr;
       }
+      this.snackbarService.openSnackBar("Details Saved Successfully");
+      this.router.navigate(['provider', 'ivr']).then(() => {
+        this.callDetails(this.callUid);
+      })
     }, (error) => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     });

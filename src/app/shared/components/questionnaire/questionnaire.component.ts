@@ -193,7 +193,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       } else if (!this.uuid) {
         this.questions = this.questionnaireList.labels;
         this.groupQuestionsBySection();
-      } else if (this.source === 'qnrView') {
+      } else if (this.source === 'qnrView' || this.source === 'ivr') {
         this.questions = this.questionnaireList.labels;
         this.groupQuestionsBySection();
 
@@ -224,6 +224,9 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       }
       if (this.questionAnswers.answers) {
         this.getAnswers(this.questionAnswers.answers.answerLine, 'init');
+      }
+      if (this.source == 'ivr') {
+        this.getAnswers(this.questionAnswers, 'get');
       }
     }
     if (this.donationDetails && this.donationDetails.questionnaire) {
@@ -294,7 +297,6 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     }
   }
   getAnswers(answerData, type?) {
-
     this.answers = new Object();
     this.dataGridColumns = {};
     if (type === 'get') {

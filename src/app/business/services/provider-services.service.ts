@@ -2175,7 +2175,7 @@ export class ProviderServices {
     const url = 'provider/waitlist/labelBatch';
     return this.servicemeta.httpPost(url, data);
   }
-  addLabeltoMultipleAppt(data) {
+ addLabeltoMultipleAppt (data) {
     const url = 'provider/appointment/labelBatch';
     return this.servicemeta.httpPost(url, data);
   }
