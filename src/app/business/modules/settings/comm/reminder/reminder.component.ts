@@ -59,7 +59,8 @@ export class ReminderComponent implements OnInit {
     time: "",
     sms: true,
     email: false,
-    phoneNumber: false
+    phoneNumber: false,
+    whatsapp:false
   };
   filter = {
     //projectConstantsLocal.PERPAGING_LIMIT
@@ -559,10 +560,10 @@ _filter(value: string): string[] {
       (this.reminder.email =
         this.reminderDetails.reminderSource.Email === "1" ? true : false),
       (this.reminder.phoneNumber =
-        this.reminderDetails.reminderSource.PushNotification === "1"
-          ? true
-          : false);
-
+        this.reminderDetails.reminderSource.PushNotification === "1" ? true: false), 
+      (this.reminder.whatsapp =
+        this.reminderDetails.reminderSource.Whatsapp === "1" ? true : false);
+      
        let sttime ;
        const hour = parseInt(
         moment(this.reminderDetails.schedule.timeSlots[0].sTime, [
@@ -583,8 +584,6 @@ _filter(value: string): string[] {
      };
      if(this.reminderDetails.schedule.timeSlots[0].sTime.includes('PM')){
       sttime['mode'] = "PM"
-    }
-    else{
       sttime['mode'] = "AM"
 
     }
@@ -835,7 +834,9 @@ _filter(value: string): string[] {
       (this.reminder.time = ""),
       (this.reminder.sms = true),
       (this.reminder.email = false),
-      (this.reminder.phoneNumber = false);
+      (this.reminder.phoneNumber = false),
+      (this.reminder.whatsapp = false);
+
     this.selectedTimes = [];
     this.reminderId = 0;
     this.selectedId = 0;
@@ -912,7 +913,8 @@ _filter(value: string): string[] {
       ],
       sms: [true],
       email: [false],
-      phoneNumber: [false]
+      phoneNumber: [false],
+      whatsapp:[false]
     });
     // this.loading = false;
     // }
@@ -979,7 +981,8 @@ _filter(value: string): string[] {
       toDate: this.reminderDetails.schedule.terminator.endDate,
       sms: this.reminderDetails.reminderSource.Sms,
       email: this.reminderDetails.reminderSource.Email,
-      phoneNumber: this.reminderDetails.reminderSource.PushNotification
+      phoneNumber: this.reminderDetails.reminderSource.PushNotification,
+      whatsapp: this.reminderDetails.reminderSource.Whatsapp
     });
     if (sttime || edtime) {
       this.selectedTimes.push(sttime);
@@ -1046,7 +1049,7 @@ _filter(value: string): string[] {
         this.snackbarService.openSnackBar("Please search consumer", {
           panelClass: "snackbarerror"
         });
-      } else if ((form_data.sms === false && form_data.email === false && form_data.phoneNumber === false)) {
+      } else if ((form_data.sms === false && form_data.email === false && form_data.phoneNumber === false &&form_data.whatsapp === false)) {
         this.snackbarService.openSnackBar("Select atleat one reminder source", {
           panelClass: "snackbarerror"
         });
@@ -1090,7 +1093,8 @@ _filter(value: string): string[] {
           reminderSource: {
             Sms: form_data.sms ? "1" : "0",
             Email: form_data.email ? "1" : "0",
-            PushNotification: form_data.phoneNumber ? "1" : "0"
+            PushNotification: form_data.phoneNumber ? "1" : "0",
+            Whatsapp: form_data.whatsapp ? "1" : "0"
           }
         };
         console.log("Posting Updated Data ;", postData);
@@ -1171,7 +1175,7 @@ _filter(value: string): string[] {
         this.snackbarService.openSnackBar("Please search consumer", {
           panelClass: "snackbarerror"
         });
-      } else if ((form_data.sms === false && form_data.email === false && form_data.phoneNumber === false)) {
+      } else if ((form_data.sms === false && form_data.email === false && form_data.phoneNumber === false && form_data.whatsapp === false)) {
         this.snackbarService.openSnackBar("Select atleat one reminder source", {
           panelClass: "snackbarerror"
         });
@@ -1230,7 +1234,9 @@ _filter(value: string): string[] {
           reminderSource: {
             Sms: form_data.sms ? "1" : "0",
             Email: form_data.email ? "1" : "0",
-            PushNotification: form_data.phoneNumber ? "1" : "0"
+            PushNotification: form_data.phoneNumber ? "1" : "0",
+            Whatsapp: form_data.whatsapp ? "1" : "0"
+            
           }
         };
         // this.amForm.reset();
