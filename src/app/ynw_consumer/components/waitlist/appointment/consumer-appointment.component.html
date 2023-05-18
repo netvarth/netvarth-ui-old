@@ -504,32 +504,14 @@
               <div class="payment-section-details mgn-lt-10"
                 *ngIf="appointmentType !== 'reschedule' && paymentLength>0 && paymentDetails && selectedService && selectedService.serviceBookingType !== 'request'">
                 <div class="web" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                  <div class="text-left" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService">
-                    <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt"
-                      class="ser_price no-mgn-bt bold mgn-rt-10">Service Price : <span
-                        class="ser_price no-mgn-bt bold rupee-font"
-                        *ngIf="paymentDetails && selectedService.price">{{selectedService.price
-                        | currency:'&#8377;'}}</span>
-                    </span>
-                    <span *ngIf="paymentDetails.showPrice && serviceOptionApptt"
-                      class="ser_price no-mgn-bt bold mgn-rt-10">Service Price : <span
-                        class="ser_price no-mgn-bt bold rupee-font" *ngIf="paymentDetails">{{total_servicefee
-                        | currency:'&#8377;'}}</span>
-                    </span>
-                    <br>
-                    <span class="ser_price no-mgn-bt bold">Payment required now :
-                      <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
-                        ? payAmount : paymentDetails.amountRequiredNow)|
-                        currency:'&#8377;'}}</span></span> <br>
-                    <!-- <span style="font-size: small;">Additional convenience charges may apply</span> -->
-                  </div>
+                 
 
-                  <div class="card col-md-12" *ngIf="paymentDetails && paymentDetails.fullPrepaymentService">
+                  <div class="card col-md-12" *ngIf="paymentDetails && paymentDetails.showPrice">
                     <div class="row col-md-12" *ngIf="paymentDetails.showPrice && !serviceOptionApptt">
                       <div class="col-md-12">
                         <div class="name col-md-4">Service Price</div>
-                        <div class=" rupee-font col-md-2" *ngIf="paymentDetails && selectedService.price">
-                          {{selectedService.price|currency:'&#8377; '}}
+                        <div class=" rupee-font col-md-2" *ngIf="paymentDetails && paymentDetails.servicePrice">
+                          {{paymentDetails.servicePrice|currency:'&#8377; '}}
                         </div>
                       </div>
                     </div>
@@ -578,48 +560,21 @@
                         </div>
                       </div>
                     </div>
-                    <!-- <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt"
-                      class="ser_price no-mgn-bt bold mgn-rt-10">Service Price : <span class="ser_price no-mgn-bt bold rupee-font" *ngIf="paymentDetails && selectedService.price">{{selectedService.price
-                        | currency:'&#8377;'}}</span> 
-                     </span> -->
-                    <!-- <span *ngIf="paymentDetails.showPrice && serviceOptionApptt"
-                     class="ser_price no-mgn-bt bold mgn-rt-10">Service Price : <span class="ser_price no-mgn-bt bold rupee-font" *ngIf="paymentDetails">{{total_servicefee
-                       | currency:'&#8377;'}}</span> 
-                    </span>
-                     <br>
-                    <span *ngIf="paymentDetails.showPrice && (paymentDetails.couponDiscount || paymentDetails.providerCouponDiscount)"
-                      class="ser_price no-mgn-bt bold mgn-rt-10">Price After Discount :
-                      <span class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
-                        | currency:'&#8377;'}}</span>
-                     </span>
-                     <br *ngIf="paymentDetails.showPrice && (paymentDetails.couponDiscount || paymentDetails.providerCouponDiscount)">
-                     <span *ngIf="paymentDetails.netTaxAmount && selectedService.taxable"
-                      class="ser_price no-mgn-bt bold">Taxes : <span class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTaxAmount
-                        | currency:'&#8377;'}}</span></span>
-                        <br *ngIf="paymentDetails.netTaxAmount && selectedService.taxable">
-                        <span
-                        class="ser_price no-mgn-bt bold">Amount to Pay : <span class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
-                          | currency:'&#8377;'}}</span></span>
-                          <br *ngIf="paymentDetails.amountRequiredNow">
-                    <span class="ser_price no-mgn-bt bold">Payment required now :
-                      <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
-                        ? payAmount : paymentDetails.amountRequiredNow)|
-                        currency:'&#8377;'}}</span></span> <br> -->
-                    <!-- <span style="font-size: small;">Additional convenience charges may apply</span> -->
+                  
                   </div>
 
                   <div class="col-md-12">
                     <p class="pay-cnfm">* Booking will be confirmed only after the payment</p>
                   </div>
-                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable && paymentDetails.totalDiscount >0 ">
+                  <div class="col-md-12" *ngIf="paymentDetails && selectedService.taxable && paymentDetails.totalDiscount >0 ">
                   
                     <p class="pay-cnfm_cases">* Any discounts and taxes will be applied only the final bill</p>
                   </div>
-                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable && paymentDetails.totalDiscount === 0">
+                  <div class="col-md-12" *ngIf="paymentDetails && selectedService.taxable && paymentDetails.totalDiscount === 0">
                   
                     <p class="pay-cnfm_cases">* Taxes will be applied only the final bill</p>
                   </div>
-                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && paymentDetails.totalDiscount>0 && !selectedService.taxable">
+                  <div class="col-md-12" *ngIf="paymentDetails && paymentDetails.totalDiscount>0 && !selectedService.taxable">
                   
                     <p class="pay-cnfm_cases">* Any discounts will be applied only the final bill</p>
                   </div>
@@ -627,29 +582,11 @@
 
                 <div class="disply"
                   *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                  <div class="text-left" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService">
-                    <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt"
-                      class="ser_price no-mgn-bt bold mgn-rt-10">Service Price : <span
-                        class="ser_price no-mgn-bt bold rupee-font"
-                        *ngIf="paymentDetails && selectedService.price">{{selectedService.price
-                        | currency:'&#8377;'}}</span>
-                    </span>
-                    <span *ngIf="paymentDetails.showPrice && serviceOptionApptt"
-                      class="ser_price no-mgn-bt bold mgn-rt-10">Service Price : <span
-                        class="ser_price no-mgn-bt bold rupee-font" *ngIf="paymentDetails">{{total_servicefee
-                        | currency:'&#8377;'}}</span>
-                    </span>
-                    <br>
-                    <span class="ser_price no-mgn-bt bold">Payment required now :
-                      <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
-                        ? payAmount : paymentDetails.amountRequiredNow)|
-                        currency:'&#8377;'}}</span></span> <br>
-                    <!-- <span style="font-size: small;">Additional convenience charges may apply</span> -->
-                  </div>
-                  <div class="text-left" *ngIf="paymentDetails && paymentDetails.fullPrepaymentService">
+                
+                  <div class="text-left" *ngIf="paymentDetails && paymentDetails.showPrice">
                     <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt"
                       class="ser_price no-mgn-bt mgn-rt-10">Service Price : <span class="ser_price no-mgn-bt rupee-font"
-                        *ngIf="paymentDetails && selectedService.price">{{selectedService.price
+                        *ngIf="paymentDetails && paymentDetails.servicePrice">{{paymentDetails.servicePrice
                         | currency:'&#8377;'}}</span>
                     </span>
                     <span *ngIf="paymentDetails.showPrice && serviceOptionApptt"
@@ -683,15 +620,15 @@
                     <div class="col-md-12">
                     <p class="pay-cnfm">* Booking will be confirmed only after the payment</p>
                   </div>
-                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable && paymentDetails.totalDiscount >0 ">
+                  <div class="col-md-12" *ngIf="paymentDetails  && selectedService.taxable && paymentDetails.totalDiscount >0 ">
                   
                     <p class="pay-cnfm_cases">* Any discounts and taxes will be applied only the final bill</p>
                   </div>
-                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && selectedService.taxable && paymentDetails.totalDiscount === 0">
+                  <div class="col-md-12" *ngIf="paymentDetails && selectedService.taxable && paymentDetails.totalDiscount === 0">
                   
                     <p class="pay-cnfm_cases">* Taxes will be applied only the final bill</p>
                   </div>
-                  <div class="col-md-12" *ngIf="paymentDetails && !paymentDetails.fullPrepaymentService && paymentDetails.totalDiscount>0 && !selectedService.taxable">
+                  <div class="col-md-12" *ngIf="paymentDetails && paymentDetails.totalDiscount>0 && !selectedService.taxable">
                   
                     <p class="pay-cnfm_cases">* Any discounts will be applied only the final bill</p>
                   </div>
