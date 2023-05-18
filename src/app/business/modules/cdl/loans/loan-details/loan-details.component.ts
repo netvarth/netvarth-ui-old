@@ -463,16 +463,16 @@ export class LoanDetailsComponent implements OnInit {
     console.log("coming here to here", loanData)
     this.cdlservice.uploadBankStatements(this.loanId, loanData).subscribe((s3urls: any) => {
       if (s3urls) {
-        if (s3urls.length > 0) {
-          this.uploadAudioVideo(s3urls).then(
-            (dataS3Url) => {
-              console.log(dataS3Url);
-              this.snackbarService.openSnackBar("Bank Statement Uploaded Successfully")
-              // this.router.navigate(['provider', 'cdl', 'loans']);
-              this.ngOnInit();
-            }).catch(() => {
-            });
-        }
+        // if (s3urls.length > 0) {
+        //   this.uploadAudioVideo(s3urls).then(
+        //     (dataS3Url) => {
+        //       console.log(dataS3Url);
+        this.snackbarService.openSnackBar("Bank Statement Uploaded Successfully")
+        // this.router.navigate(['provider', 'cdl', 'loans']);
+        this.ngOnInit();
+        //     }).catch(() => {
+        //     });
+        // }
 
       };
     },
