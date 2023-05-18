@@ -106,6 +106,25 @@
             <span>Add Mafil Customer Id</span>
           </a>
         </div>
+        <div *ngIf="loanData && loanData.integrationId">
+          <br>
+          <div>
+            Integration Id :&nbsp;
+            <span class="font-weight-bold"> {{loanData.integrationId}}</span>
+          </div>
+        </div>
+        <div *ngIf="loanData && loanData.webhookStatus">
+          <div>
+            Webhook Status :&nbsp;
+            <span class="font-weight-bold"> {{loanData.webhookStatus}}</span>
+          </div>
+        </div>
+        <div *ngIf="loanData && loanData.webhookDate">
+          <div>
+            Webhook Date :&nbsp;
+            <span class="font-weight-bold"> {{loanData.webhookDate | date:"mediumDate"}}</span>
+          </div>
+        </div>
         <br>
         <div class="text-left">
           <div class="d-flex justify-content-between">
@@ -807,6 +826,27 @@
               <div class="details-sub-title">{{loanData.loanScheme.schemeRate}} %
               </div>
             </div>
+            <div class="col-md-4 no-padding-small mt-2"
+              *ngIf="loanData && (loanData.noOfAdvanceEmi || (loanData.noOfAdvanceEmi == 0))">
+              <div class="details-title">No of Advance EMI</div>
+              <div class="details-sub-title">{{loanData.noOfAdvanceEmi}}
+              </div>
+            </div>
+            <div class="col-md-4 no-padding-small mt-2" *ngIf="loanData && loanData.noOfEmi">
+              <div class="details-title">Loan Tenure</div>
+              <div class="details-sub-title">{{loanData.noOfEmi}} Months
+              </div>
+            </div>
+            <div class="col-md-4 no-padding-small mt-2" *ngIf="loanData && loanData.emiDueDay">
+              <div class="details-title">EMI Due Day</div>
+              <div class="details-sub-title">{{ordinal_suffix_of(loanData.emiDueDay)}} of every month
+              </div>
+            </div>
+            <div class="col-md-4 no-padding-small mt-2" *ngIf="loanData && loanData.upfrontFeePaid">
+              <div class="details-title">Upfront Fee Paid</div>
+              <div class="details-sub-title"><i class="fa fa-inr"></i>&nbsp;{{loanData.upfrontFeePaid}}
+              </div>
+            </div>
             <div class="col-md-6 no-padding-small mt-2">
               <div class="details-title"
                 *ngIf="loanData && loanData.partnerAcceptanceAttachments && loanData.partnerAcceptanceAttachments.length == 0">
@@ -815,8 +855,9 @@
                     <div class="fieldPadding">
                       <div class="d-lg-flex d-md-flex">
                         <div class="file">
-                          <label (click)="invoiceAttach.click()">
-                            Upload Invoice
+                          <app-common-innerloading-spinner *ngIf="btnLoading"></app-common-innerloading-spinner>
+                          <label (click)="invoiceAttach.click()" *ngIf="!btnLoading">
+                            <span>Upload Invoice</span>
                           </label>
                           <input #invoiceAttach type='file' (change)="filesSelected($event, 'invoice')" />
                         </div>&nbsp;

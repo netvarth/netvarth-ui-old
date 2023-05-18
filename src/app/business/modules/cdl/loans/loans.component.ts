@@ -107,7 +107,7 @@ export class LoansComponent implements OnInit {
       { field: 'customerFirstName', title: 'Customer Name', value: '[customer.firstName,customer.lastName]', haveColumnFilter: true, type: 'text' },
       { field: 'partnerName', title: 'Dealer', value: '[partner.partnerName]', haveColumnFilter: true, type: 'text' },
       { field: 'createdDate', title: 'Created Date', value: '[createdDate]', haveColumnFilter: true, type: 'date' },
-      { field: 'spInternalStatus', title: 'Status', value: '[spInternalStatusDisplyName]', haveColumnFilter: false, type: 'text' }
+      // { field: 'spInternalStatus', title: 'Status', value: '[spInternalStatusDisplyName]', haveColumnFilter: false, type: 'text' }
     ];
 
     this._selectedColumns = this.cols;

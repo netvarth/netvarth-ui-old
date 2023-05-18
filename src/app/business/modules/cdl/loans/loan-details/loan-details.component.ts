@@ -10,6 +10,7 @@ import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { CdlService } from '../../cdl.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { FileService } from '../../../../../shared/services/file-service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 // import { ViewReportComponent } from './view-report/view-report.component';
 
 @Component({
@@ -67,10 +68,13 @@ export class LoanDetailsComponent implements OnInit {
   digitalDocumenId: any;
   digitalInsuranceId: any;
   mafilScorePercentange: any;
+  btnLoading: any = false;
   selectedFiles = {
     "invoice": { files: [], base64: [], caption: [] },
     "bankStatements": { files: [], base64: [], caption: [] }
   }
+  businessDetails: any;
+  businessId: any;
   filesToUpload: any = [];
   loanKycId: any;
   constructor(
@@ -82,6 +86,7 @@ export class LoanDetailsComponent implements OnInit {
     private dialog: MatDialog,
     private cdlservice: CdlService,
     private fileService: FileService,
+    private wordProcessor: WordProcessor
   ) { }
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -89,6 +94,14 @@ export class LoanDetailsComponent implements OnInit {
     if (this.user) {
       this.capabilities = this.cdlservice.getCapabilitiesConfig(this.user);
     }
+
+    this.cdlservice.getBusinessProfile().subscribe((data) => {
+      this.businessDetails = data;
+      if (this.businessDetails && this.businessDetails.id) {
+        this.businessId = this.businessDetails.id;
+      }
+    })
+
     this.activated_route.params.subscribe((params) => {
       if (params) {
         if (params && params.id) {
@@ -190,40 +203,143 @@ export class LoanDetailsComponent implements OnInit {
     return url;
   }
 
+  // filesSelected(event, type) {
+  //   console.log("Event ", event, type)
+  //   const input = event.target.files;
+  //   console.log("input ", input)
+  //   this.fileService.filesSelected(event, this.selectedFiles[type]).then(
+  //     () => {
+  //       for (const pic of input) {
+  //         const size = pic["size"] / 1024;
+  //         let fileObj = {
+  //           owner: this.user.id,
+  //           fileName: pic["name"],
+  //           fileSize: size / 1024,
+  //           caption: "",
+  //           fileType: pic["type"].split("/")[1],
+  //           action: 'add'
+  //         }
+  //         fileObj['file'] = pic;
+  //         fileObj['type'] = type;
+  //         this.filesToUpload.push(fileObj);
+  //       }
+  //       if (type == 'invoice') {
+  //         this.uploadInvoice()
+  //       }
+  //       if (type == 'bankStatements') {
+  //         this.uploadBankStatements()
+  //       }
+  //     }).catch((error) => {
+  //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //     })
+  // }
+
+
   filesSelected(event, type) {
+    this.btnLoading = true;
     console.log("Event ", event, type)
     const input = event.target.files;
     console.log("input ", input)
-    this.fileService.filesSelected(event, this.selectedFiles[type]).then(
+    let fileUploadtoS3 = [];
+    const _this = this;
+    this.fileService.filesSelected(event, _this.selectedFiles[type]).then(
       () => {
+        let index = _this.filesToUpload && _this.filesToUpload.length > 0 ? _this.filesToUpload.length : 0;
         for (const pic of input) {
           const size = pic["size"] / 1024;
           let fileObj = {
-            owner: this.user.id,
+            owner: _this.businessId,
+            ownerType: "Provider",
             fileName: pic["name"],
             fileSize: size / 1024,
             caption: "",
             fileType: pic["type"].split("/")[1],
             action: 'add'
           }
+          console.log("pic", pic)
           fileObj['file'] = pic;
           fileObj['type'] = type;
-          this.filesToUpload.push(fileObj);
+          fileObj['order'] = index;
+          _this.filesToUpload.push(fileObj);
+          fileUploadtoS3.push(fileObj);
+          index++;
         }
-        if (type == 'invoice') {
-          this.uploadInvoice()
-        }
-        if (type == 'bankStatements') {
-          this.uploadBankStatements()
-        }
+
+        _this.cdlservice.uploadFilesToS3(fileUploadtoS3).subscribe(
+          (s3Urls: any) => {
+            if (s3Urls && s3Urls.length > 0) {
+              _this.uploadAudioVideo(s3Urls).then(
+                (dataS3Url) => {
+                  console.log(dataS3Url);
+                  console.log("Sending Attachment Success");
+                  if (type == 'invoice') {
+                    this.uploadInvoice()
+                  }
+                  if (type == 'bankStatements') {
+                    this.uploadBankStatements()
+                  }
+                });
+            }
+          }, error => {
+            _this.snackbarService.openSnackBar(error,
+              { panelClass: "snackbarerror" }
+            );
+          }
+        );
       }).catch((error) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       })
 
 
-
-
   }
+
+
+  // uploadAudioVideo(data) {
+  //   const _this = this;
+  //   let count = 0;
+  //   console.log("DAta:", data);
+  //   return new Promise(async function (resolve, reject) {
+  //     for (const s3UrlObj of data) {
+  //       console.log("S3URLOBJ:", s3UrlObj);
+  //       console.log('_this.filesToUpload', _this.filesToUpload)
+  //       const file = _this.filesToUpload.filter((fileObj) => {
+  //         return ((fileObj.order === (s3UrlObj.orderId)) ? fileObj : '');
+  //       })[0];
+  //       console.log("File:", file);
+  //       if (file) {
+  //         await _this.uploadFiles(file['file'], s3UrlObj.url).then(
+  //           () => {
+  //             count++;
+  //             console.log("Count", count);
+  //             console.log("Count", data.length);
+  //             if (count === data.length) {
+  //               console.log("HERE");
+  //               resolve(true);
+  //             }
+  //           }
+  //         );
+  //       }
+  //       else {
+  //         resolve(true);
+  //       }
+  //     }
+  //   })
+  // }
+
+
+  // uploadFiles(file, url) {
+  //   const _this = this;
+  //   return new Promise(function (resolve, reject) {
+  //     _this.cdlservice.videoaudioS3Upload(file, url)
+  //       .subscribe(() => {
+  //         resolve(true);
+  //       }, (error) => {
+  //         console.log('error', error)
+  //         _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //         resolve(false);
+  //       });
+  //   })
+  // }
 
 
   uploadAudioVideo(data) {
@@ -232,21 +348,19 @@ export class LoanDetailsComponent implements OnInit {
     console.log("DAta:", data);
     return new Promise(async function (resolve, reject) {
       for (const s3UrlObj of data) {
-        console.log("S3URLOBJ:", s3UrlObj);
         console.log('_this.filesToUpload', _this.filesToUpload)
-        const file = _this.filesToUpload.filter((fileObj) => {
+        let file = _this.filesToUpload.filter((fileObj) => {
           return ((fileObj.order === (s3UrlObj.orderId)) ? fileObj : '');
         })[0];
         console.log("File:", file);
         if (file) {
-          await _this.uploadFiles(file['file'], s3UrlObj.url).then(
+          file['driveId'] = s3UrlObj.driveId;
+          await _this.uploadFiles(file['file'], s3UrlObj.url, s3UrlObj.driveId).then(
             () => {
               count++;
-              console.log("Count", count);
-              console.log("Count", data.length);
               if (count === data.length) {
-                console.log("HERE");
                 resolve(true);
+                console.log('_this.filesToUpload', _this.filesToUpload)
               }
             }
           );
@@ -257,17 +371,18 @@ export class LoanDetailsComponent implements OnInit {
       }
     })
   }
-
-
-  uploadFiles(file, url) {
+  uploadFiles(file, url, driveId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
       _this.cdlservice.videoaudioS3Upload(file, url)
         .subscribe(() => {
-          resolve(true);
-        }, (error) => {
+          console.log("Final Attchment Sending Attachment Success", file)
+          _this.cdlservice.videoaudioS3UploadStatusUpdate('COMPLETE', driveId).subscribe((data: any) => {
+            resolve(true);
+          })
+        }, error => {
           console.log('error', error)
-          _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           resolve(false);
         });
     })
@@ -315,16 +430,17 @@ export class LoanDetailsComponent implements OnInit {
 
     this.cdlservice.uploadInvoice(this.loanId, loanData).subscribe((s3urls: any) => {
       if (s3urls) {
-        if (s3urls.length > 0) {
-          this.uploadAudioVideo(s3urls).then(
-            (dataS3Url) => {
-              console.log(dataS3Url);
-              this.snackbarService.openSnackBar("Invoice Uploaded Successfully")
-              // this.router.navigate(['provider', 'cdl', 'loans']);
-              this.ngOnInit();
-            }).catch(() => {
-            });
-        }
+        // if (s3urls.length > 0) {
+        // this.uploadAudioVideo(s3urls).then(
+        //   (dataS3Url) => {
+        //     console.log(dataS3Url);
+        this.btnLoading = false;
+        this.snackbarService.openSnackBar("Invoice Uploaded Successfully")
+        // this.router.navigate(['provider', 'cdl', 'loans']);
+        this.ngOnInit();
+        // }).catch(() => {
+        // });
+        // }
 
       };
     },
@@ -899,6 +1015,21 @@ export class LoanDetailsComponent implements OnInit {
       }
     };
     this.router.navigate(['provider', 'cdl', 'loans', 'create'], navigationExtras);
+  }
+
+  ordinal_suffix_of(i) {
+    var j = i % 10,
+      k = i % 100;
+    if (j == 1 && k != 11) {
+      return i + "st";
+    }
+    if (j == 2 && k != 12) {
+      return i + "nd";
+    }
+    if (j == 3 && k != 13) {
+      return i + "rd";
+    }
+    return i + "th";
   }
 
 }

@@ -163,7 +163,9 @@
         <tr>
           <th pSortableColumn="referenceNo">Loan Id <p-sortIcon field="referenceNo"></p-sortIcon></th>
           <th *ngFor="let col of columns" pSortableColumn="{{col.field}}">{{col.title}} <p-sortIcon
-              field="{{col.field}}"></p-sortIcon></th>
+              field="{{col.field}}"></p-sortIcon>
+          </th>
+          <th>Status</th>
           <th>More Actions</th>
         </tr>
 
@@ -174,6 +176,7 @@
           <th *ngFor="let col of columns">
             <p-columnFilter type="{{col.type}}" field="{{col.field}}"></p-columnFilter>
           </th>
+          <th></th>
           <th></th>
         </tr>
       </ng-template>
@@ -198,7 +201,7 @@
               *ngIf="loan && loan.createdDate">{{loan.createdDate | date:'longDate'}}</span>
             <span class="table-column-data" *ngIf="loan && !loan.createdDate">-</span>
           </td>
-          <td *ngIf="showColumn('spInternalStatus') && selectedColumns">
+          <td>
             <span class="d-lg-none d-md-none">Status : </span>
             <span *ngIf="loan.applicationStatus !='Rejected'" [class]="'customer-badge status-' + loan.spInternalStatus"
               class="table-column-data">
