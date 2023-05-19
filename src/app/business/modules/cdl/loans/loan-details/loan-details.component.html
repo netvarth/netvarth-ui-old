@@ -897,6 +897,10 @@
                 </div>
               </div>
             </div>
+            <div class="col-md-4 no-padding-small mt-2"  *ngIf="loanData && loanData.partner && loanData.partner.id">
+              <div class="details-title">Dealer Id</div>
+              <div class="details-sub-title">{{loanData.partner.id}}</div>
+            </div>
           </div>
 
           <div class="row mt-3" *ngIf="loanData && loanData.productImages && loanData.productImages.length>0">
