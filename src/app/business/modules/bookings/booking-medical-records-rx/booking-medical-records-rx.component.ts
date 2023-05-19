@@ -47,7 +47,7 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
     }
     this.provider_services.GetMedicalRecordList(filter)
       .subscribe((data: any) => {
-        if(this.customerId || this.providerId){
+        if (this.customerId || this.providerId) {
           this.mrList = data;
           this.rxList = this.mrList.filter(mr => mr.prescriptionCreated);
           if (this.source === 'details') {
@@ -55,11 +55,11 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
             this.waitlistmr = this.mrList.filter(mr => mr.uuid === uuid);
           }
         }
-        else{
+        else {
           this.mrList = [];
           this.rxList = [];
         }
-       
+
         this.loading = false;
       });
   }
@@ -69,7 +69,7 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
     let bookingId;
     let bookingType;
     // const mrId = (mr.id) ? mr.id : (this.waitlistmr[0]) ? this.waitlistmr[0].id : 0;
-    const mrId=0;
+    const mrId = 0;
     console.log(mrId);
     const consumerId = (this.customerId) ? this.customerId : mr.providerConsumer.id;
     if (mr.bookingType) {
@@ -81,46 +81,67 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
     }
     if (this.type === 'rx') {
       // alert('prescription rx')
-    if(mr==='add'){
-      let routerId='prescription';
-      const qparams = { 'prescription': 'prescription' };
-      const navigationExtras: NavigationExtras = {
-        queryParams: qparams
-      };
-      this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId,routerId],navigationExtras);
-      // this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mr.id, 'prescription']);
-    }
-    // else{
-    //   // console.log(mr)
-    //   this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mr.id, 'prescription']);
-    // }
-      
+      if (mr === 'add') {
+        let routerId = 'prescription';
+        const qparams = { 'prescription': 'prescription' };
+        const navigationExtras: NavigationExtras = {
+          queryParams: qparams
+        };
+        this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId, routerId], navigationExtras);
+        // this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mr.id, 'prescription']);
+      }
+      // else{
+      //   // console.log(mr)
+      //   this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mr.id, 'prescription']);
+      // }
+
     } else {
       // alert('clinicalnotes mr')
       console.log(mr);
-      if(mr==='add'){
+      if (mr === 'add') {
         // console.log('consumerId',consumerId)
         // console.log('bookingType',bookingType)
         // console.log('bookingId',bookingId)
-        const routerId='clinicalnotes';
+        const routerId = 'clinicalnotes';
         const qparams = { 'clinicalnotes': 'clinicalnotes' };
-      const navigationExtras: NavigationExtras = {
-        queryParams: qparams
-      };
-        this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId,routerId],navigationExtras);
+        const navigationExtras: NavigationExtras = {
+          queryParams: qparams
+        };
+        this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId, routerId], navigationExtras);
         // this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mr.id, 'prescription']);
       }
-      else{
-        const routerId='clinicalnotes';
+      else {
+        const routerId = 'clinicalnotes';
         const qparams = { 'clinicalnotes': 'clinicalnotes' };
-      const navigationExtras: NavigationExtras = {
-        queryParams: qparams
-      };
-        this.router.navigate(['provider', 'customers', this.customerId, 'FOLLOWUP', 0, 'medicalrecord',mr.id, routerId],navigationExtras);
+        const navigationExtras: NavigationExtras = {
+          queryParams: qparams
+        };
+        this.router.navigate(['provider', 'customers', this.customerId, 'FOLLOWUP', 0, 'medicalrecord', mr.id, routerId], navigationExtras);
       }
-      
+
     }
   }
+
+  gotoPrescriptionDetails(prescription) {
+    console.log("prescription", prescription)
+    const consumerId = (this.customerId) ? this.customerId : prescription.providerConsumer.id;
+    let bookingId;
+    let bookingType;
+    if (prescription.bookingType) {
+      bookingType = prescription.bookingType;
+      bookingId = (prescription.uuid) ? prescription.uuid : 0;
+    } else {
+      bookingType = (this.source === 'customer-details') ? 'FOLLOWUP' : (this.waitlist_data.waitlistStatus) ? 'TOKEN' : 'APPT';
+      bookingId = (this.source === 'customer-details') ? 0 : (this.waitlist_data.ynwUuid) ? this.waitlist_data.ynwUuid : this.waitlist_data.uid;
+    }
+    const routerId = 'clinicalnotes';
+    const qparams = { 'clinicalnotes': 'clinicalnotes' };
+    const navigationExtras: NavigationExtras = {
+      queryParams: qparams
+    };
+    this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', prescription.id, routerId], navigationExtras);
+  }
+
   gotoMrList() {
     const qparams = { 'calledfrom': 'list' };
     if (this.providerId) {

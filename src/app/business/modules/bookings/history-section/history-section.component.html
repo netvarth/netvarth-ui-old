@@ -13,10 +13,10 @@
       <div class="card-header collapsed" *ngIf="widget"
         [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
         [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#history" aria-expanded="false">
-        <div class="text-capitalize">History</div>
+        <div class="text-capitalize text-dark">History</div>
         <div class="mgn-lt-auto">
-          <a class="btn btn-primary pointer-cursor" aria-hidden="true" [class.mgn-rt-20]="small_device_display"
-            (click)="openbookinghistory()">View</a>
+          <a class="view-btn pointer-cursor" aria-hidden="true" [class.mgn-rt-20]="small_device_display"
+            (click)="openbookinghistory()"><i class="fa fa-eye"></i>&nbsp;View</a>
           <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
         </div>
       </div>

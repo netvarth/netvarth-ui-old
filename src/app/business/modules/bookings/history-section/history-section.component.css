@@ -15,6 +15,7 @@
   justify-content: space-between !important;
   align-items: center !important;
   min-height: auto !important;
+  padding: 12px!important;
 }
 
 .card.data-card .card-header i {
@@ -30,9 +31,16 @@
 }
 
 .widgetStyle .data-card {
-  border: 1.75px solid #d0d0d0 !important;
-  border-radius: 10px !important;
-  border-top: 3px solid #1E4079 !important;
+  border: 0.75px solid #d0d0d0 !important;
+  border-radius: 5px !important;
+  /* border-top: 3px solid #1E4079 !important; */
+}
+
+.view-btn
+{
+  font-size: 12.5px!important;
+  color: #1E4079!important;
+  text-transform: capitalize!important;
 }
 
 .card-body>div>.row {
@@ -157,4 +165,9 @@
   .card-body {
     max-height: 200px !important;
   }
+}
+
+.content
+{
+  min-height: auto!important;
 }

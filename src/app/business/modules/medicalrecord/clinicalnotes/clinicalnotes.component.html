@@ -6,7 +6,7 @@
         <span class="table-heading"><b>Clinical Notes</b></span>
         <!-- <span *ngIf="tempClinicalNOtes"> <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/delete.png"  (click)="goback('medical')" /></span> -->
       </div><br>
-      <div class="section_border">  
+      <div class="section_border">
       <div class="form-group" *ngIf="!suggestions || !suggestions.symptoms || suggestions.symptoms.length == 0">
         <label>Symptoms</label>
         <div class="input-group">
@@ -16,8 +16,8 @@
             placeholder="Enter Symptoms instructions" maxlength="500"></textarea>
         </div>
       </div>
-     
-     
+
+
       <div class="form-group mgn-up-10" *ngIf="suggestions && suggestions.symptoms && suggestions.symptoms.length > 0">
         <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
         <label>Symptoms</label>
@@ -40,9 +40,9 @@
         <!-- </mat-form-field> -->
       </div>
       <div>
-        
+
         <div>
-          
+
           <div class="fieldPadding photo-border">
             <div class='file file--upload'>
               <label for='symptomsAttach' (click)="symptomsAttach.click()">
@@ -73,11 +73,11 @@
             </ul>
           </div>
         </div>
-      
+
     </div>
     </div>
     <br> <br>
-    <div  class="section_border">  
+    <div  class="section_border">
       <div class="form-group" *ngIf="!suggestions || !suggestions.observations || suggestions.observations.length == 0">
         <label>Observations</label>
         <div class="input-group">
@@ -87,8 +87,8 @@
             placeholder="Enter Observations instructions" maxlength="500"></textarea>
         </div>
       </div>
-     
-     
+
+
       <div class="form-group mgn-up-10"
         *ngIf="suggestions && suggestions.observations && suggestions.observations.length > 0">
         <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
@@ -113,9 +113,9 @@
         <!-- </mat-form-field> -->
       </div>
       <div>
-       
+
         <div>
-          
+
           <div class="fieldPadding photo-border">
             <div class='file file--upload'>
               <label for='observationsAttach' (click)="observationsAttach.click()">
@@ -158,8 +158,8 @@
             placeholder="Enter Diagnosis instructions" maxlength="500"></textarea>
         </div>
       </div>
-    
-     
+
+
       <div class="form-group mgn-up-10"
         *ngIf="suggestions && suggestions.diagnosis && suggestions.diagnosis.length > 0">
         <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
@@ -183,9 +183,9 @@
         <!-- </mat-form-field> -->
       </div>
       <div>
-        
+
         <div>
-          
+
           <div class="fieldPadding photo-border">
             <div class='file file--upload'>
               <label for='diagnosisAttach' (click)="diagnosisAttach.click()">
@@ -230,9 +230,9 @@
             type="text" class="form-control" placeholder="Enter Notes instructions" maxlength="500"></textarea>
         </div>
       </div>
-    
-     
-     
+
+
+
       <div class="form-group mgn-up-10" *ngIf="suggestions && suggestions.notes && suggestions.notes.length > 0">
         <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
         <label>Notes</label>
@@ -255,9 +255,9 @@
         <!-- </mat-form-field> -->
       </div>
       <div>
-        
+
         <div>
-          
+
           <div class="fieldPadding photo-border">
             <div class='file file--upload'>
               <label for='notesAttach' (click)="notesAttach.click()">
@@ -302,8 +302,8 @@
             placeholder="Enter Allergies instructions" maxlength="500"></textarea>
         </div>
       </div>
-     
-    
+
+
       <div class="form-group mgn-up-10"
         *ngIf="suggestions && suggestions.allergies && suggestions.allergies.length > 0">
         <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
@@ -327,9 +327,9 @@
         <!-- </mat-form-field> -->
       </div>
       <div>
-        
+
         <div>
-          
+
           <div class="fieldPadding photo-border">
             <div class='file file--upload'>
               <label for='allergiesAttach' (click)="allergiesAttach.click()">
@@ -360,7 +360,7 @@
             </ul>
           </div>
         </div>
-      
+
     </div>
     </div> <br>
     <div class="section_border">
@@ -373,8 +373,8 @@
             placeholder="Enter Complaints instructions" maxlength="500"></textarea>
         </div>
       </div>
-     
-     
+
+
       <div class="form-group mgn-up-10"
         *ngIf="suggestions && suggestions.complaints && suggestions.complaints.length > 0">
         <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
@@ -398,9 +398,9 @@
         <!-- </mat-form-field> -->
       </div>
       <div>
-       
+
         <div>
-          
+
           <div class="fieldPadding photo-border">
             <div class='file file--upload'>
               <label for='complaintsAttach' (click)="complaintsAttach.click()">
@@ -431,7 +431,7 @@
             </ul>
           </div>
         </div>
-      
+
     </div>
     </div> <br>
     <div class="section_border">
@@ -445,7 +445,7 @@
             placeholder="Enter Vaccination Notes instructions" maxlength="500"></textarea>
         </div>
       </div>
-     
+
     <div class="form-group mgn-up-10"
       *ngIf="suggestions && suggestions.vaccinationNotes && suggestions.vaccinationNotes.length > 0">
       <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
@@ -469,9 +469,9 @@
       <!-- </mat-form-field> -->
     </div>
     <div>
-       
+
       <div>
-        
+
         <div class="fieldPadding photo-border">
           <div class='file file--upload'>
             <label for='vaccinationNotesAttach' (click)="vaccinationNotesAttach.click()">
@@ -502,8 +502,8 @@
           </ul>
         </div>
       </div>
-   
-  </div> 
+
+  </div>
 </div>
 
   </div>
@@ -536,23 +536,23 @@
             <div *ngIf="item && item.type && (item.clinicalNotes || item.attachments.length>0)">{{item.type}}</div>
             <div class="noteDes" *ngIf="item && item.clinicalNotes">{{item.clinicalNotes}}</div>
           <br>
-          
+
             <div class="noteDes" *ngIf="item && item.attachments">
               <div *ngIf="item && item.attachments && item.attachments.length>0 "><b>Uploaded Files</b></div>
-            
+
             <div class="img-section clearfix"
          >
             <ul class="galul">
               <li *ngFor="let file of item.attachments;let i = index ">
                 <div class="galimg_outer">
                   <div class="gal_img pointer-cursor">
-                  
+
                     <a [href]="file.s3path" target="_blank">
                       <img [src]="getImagefromUrl(file.s3path,file)"
                        width="50px" height="50px">
                     </a>
                   </div>
-                 
+
                 </div>
               </li>
             </ul>

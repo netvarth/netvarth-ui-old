@@ -120,11 +120,12 @@ export class ShareRxComponent implements OnInit {
     caption: []
   };
   fileName: any;
-  src:any;
+  src: any;
   ScreenHeight: any;
-  innerWidth:any;
+  innerWidth: any;
   screenWidth: string;
-  digitalSignType:boolean=true;
+  digitalSignType: boolean = true;
+  signUploading: any = false;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -143,7 +144,7 @@ export class ShareRxComponent implements OnInit {
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_user_Id = this.medicalService.getDoctorId();
-    console.log('this.data',this.data)
+    console.log('this.data', this.data)
     this.mrId = this.data.mrId;
     this.type = this.data.type;
     this.patientId = this.data.patientId;
@@ -152,23 +153,23 @@ export class ShareRxComponent implements OnInit {
     }
     // console.log(this.data.docname);
     this.getPatientDetails(this.patientId);
-    this.ThemePalette='#06c706';
-    console.log('data:;',this.data)
-    if(this.data && this.data.file && this.data.file.url){
-      this.fileName=this.data.file.url;
+    this.ThemePalette = '#06c706';
+    console.log('data:;', this.data)
+    if (this.data && this.data.file && this.data.file.url) {
+      this.fileName = this.data.file.url;
     }
-    if(this.data && this.data.file && (this.data.file.type==='.pdf' || this.data.file.type==='.jpeg' || this.data.file.type==='.bmp' ||
-    this.data.file.type==='.png' || this.data.file.type==='.jpg')){
-      this.digitalSignType=false;
+    if (this.data && this.data.file && (this.data.file.type === '.pdf' || this.data.file.type === '.jpeg' || this.data.file.type === '.bmp' ||
+      this.data.file.type === '.png' || this.data.file.type === '.jpg')) {
+      this.digitalSignType = false;
     }
-    else{
-      this.digitalSignType=true;
+    else {
+      this.digitalSignType = true;
     }
     // if(this.data.file.url)
     this.onReSize()
 
   }
-  
+
   ngOnInit() {
     const cnow = new Date();
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
@@ -184,23 +185,23 @@ export class ShareRxComponent implements OnInit {
       this.getBusinessProfile();
     }
     this.getSMSCredits();
-    // window.oncontextmenu = function() {return false;} // for disable right click 
+    // window.oncontextmenu = function() {return false;} // for disable right click
   }
 
   @HostListener('window:resize', ['$event'])
   onReSize() {
-    if(window && window.innerWidth){
+    if (window && window.innerWidth) {
       this.innerWidth = window.innerWidth;
       if (this.innerWidth <= 768) {
-        this.ScreenHeight= '90%';
-        this.screenWidth='80%';
+        this.ScreenHeight = '90%';
+        this.screenWidth = '80%';
       }
       else {
         //  this.ScreenHeight='85%';
-         this.screenWidth='50%'
-      } 
+        this.screenWidth = '50%'
+      }
     }
-    
+
   }
   createForm() {
     this.sharewith = 0;
@@ -259,26 +260,26 @@ export class ShareRxComponent implements OnInit {
     this.sharebtnloading = true;
     this.resetApiErrors();
     let vwofrx;
-    if(document && document.getElementById('sharerxview')){
-       vwofrx = document.getElementById('sharerxview');
+    if (document && document.getElementById('sharerxview')) {
+      vwofrx = document.getElementById('sharerxview');
     }
     let sahrePdfVia;
-    if(document && document.getElementById('sharePdf')){
-       sahrePdfVia=document.getElementById('sharePdf');
+    if (document && document.getElementById('sharePdf')) {
+      sahrePdfVia = document.getElementById('sharePdf');
     }
     let thirdPartyHtml;
-    if(document.getElementById('thirdParty')){
-      thirdPartyHtml= document.getElementById('thirdParty')
+    if (document.getElementById('thirdParty')) {
+      thirdPartyHtml = document.getElementById('thirdParty')
     }
-    console.log('thirdPartyHtml',thirdPartyHtml)
+    console.log('thirdPartyHtml', thirdPartyHtml)
     // console.log('sahrePdfVia',sahrePdfVia.innerHTML)
-    console.log('vwofrx',vwofrx)
-    console.log('this.sharewith',this.sharewith)
+    console.log('vwofrx', vwofrx)
+    console.log('this.sharewith', this.sharewith)
     if (this.sharewith !== 0) {
       // if (this.thirdpartyphone === '' && this.thirdpartyemail === '') {
       if (this.thirdpartyemail === '') {
         this.api_error = 'Please enter  email';
-        this.snackbarService.openSnackBar(this.api_error,{ 'panelClass': 'snackbarerror' })
+        this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' })
         this.disable = false;
         this.sharebtnloading = false;
         return false;
@@ -328,15 +329,15 @@ export class ShareRxComponent implements OnInit {
         console.log(this.phon);
         console.log(this.email_id);
         console.log(this.IsTelegramDisable);
-        if(this.phon==='' && this.email_id==='' && this.IsTelegramDisable===true){
+        if (this.phon === '' && this.email_id === '' && this.IsTelegramDisable === true) {
           this.api_error = 'Update the patient details in the patient record to use share options.';
           this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' })
         }
-        else{
+        else {
           this.api_error = 'share via options are not selected';
-          this.snackbarService.openSnackBar(this.api_error,{ 'panelClass': 'snackbarerror' })
+          this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' })
         }
-        
+
         // setTimeout(() => {
         //   this.api_error = '';
         // }, 3000)
@@ -349,7 +350,7 @@ export class ShareRxComponent implements OnInit {
       if (this.sharewith !== 0) {
         const passData = {
           'message': this.amForm.controls.message.value,
-          'html':  vwofrx.innerHTML,
+          'html': vwofrx.innerHTML,
           'shareThirdParty': {
             'phone': this.thirdpartyphone,
             'email': this.thirdpartyemail
@@ -374,7 +375,7 @@ export class ShareRxComponent implements OnInit {
         // alert('1st')
         const passData = {
           'message': this.amForm.controls.message.value,
-          'html': vwofrx.innerHTML ,
+          'html': vwofrx.innerHTML,
           'medium': {
             'email': this.email,
             'sms': this.sms,
@@ -394,23 +395,23 @@ export class ShareRxComponent implements OnInit {
             this.sharebtnloading = false;
           });
       }
-    } 
+    }
     else {
       if (this.sharewith !== 0) {
         // alert(this.data.file.type);
         let passData;
         if (this.data && this.data.file && (this.data.file.type === '.jpeg' || this.data.file.type === '.bmp' ||
           this.data.file.type === '.png' || this.data.file.type === '.jpg')) {
-             passData = {
-              'message': this.amForm.controls.message.value,
-              // 'html': vwofrx.innerHTML,
-              'shareThirdParty': {
-                'phone': this.thirdpartyphone,
-                'email': this.thirdpartyemail
-              }
-            };
+          passData = {
+            'message': this.amForm.controls.message.value,
+            // 'html': vwofrx.innerHTML,
+            'shareThirdParty': {
+              'phone': this.thirdpartyphone,
+              'email': this.thirdpartyemail
+            }
+          };
         }
-        else{
+        else {
           passData = {
             'message': this.amForm.controls.message.value,
             'html': vwofrx.innerHTML,
@@ -438,12 +439,12 @@ export class ShareRxComponent implements OnInit {
 
       } else if (this.sharewith === 0) {
         // alert('2nd')
-        let passData:any;
-        if(this.data.file.type==='.pdf'){
+        let passData: any;
+        if (this.data.file.type === '.pdf') {
           // alert('.pdf')
           passData = {
             'message': this.amForm.controls.message.value,
-            'html': sahrePdfVia.innerHTML   , //vwofrx.innerHTML,
+            'html': sahrePdfVia.innerHTML, //vwofrx.innerHTML,
             'medium': {
               'email': this.email,
               'sms': this.sms,
@@ -453,7 +454,7 @@ export class ShareRxComponent implements OnInit {
             }
           };
         }
-        else{
+        else {
           // alert('notpdf')
           passData = {
             'message': this.amForm.controls.message.value,
@@ -551,9 +552,9 @@ export class ShareRxComponent implements OnInit {
           });
     }
   }
-  signurlFile(url){
+  signurlFile(url) {
     // console.log('url',url)
-    if(url){
+    if (url) {
       let logourl = '';
       if (url) {
         logourl = url
@@ -562,7 +563,7 @@ export class ShareRxComponent implements OnInit {
     }
   }
   uploadSign() {
-   const uploadsignRef = this.dialog.open(UploadDigitalSignatureComponent, {
+    const uploadsignRef = this.dialog.open(UploadDigitalSignatureComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
@@ -583,12 +584,15 @@ export class ShareRxComponent implements OnInit {
     );
   }
   filesSelected(event) {
+    this.signUploading = true;
     const input = event.target.files;
     if (input) {
       for (const file of input) {
         if (projectConstantsLocal.IMAGE_FORMATS.indexOf(file.type) === -1) {
+          this.signUploading = false;
           this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
         } else if (file.size > projectConstantsLocal.IMAGE_MAX_SIZE) {
+          this.signUploading = false;
           this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
         } else {
           this.selectedMessage.files.push(file);
@@ -600,9 +604,6 @@ export class ShareRxComponent implements OnInit {
           this.saveDigitalSignImages();
         }
       }
-      // console.log(' this.selectedMessage', this.selectedMessage);
-      // this.saveDigitalSignImages();
-      
     }
   }
   saveDigitalSignImages() {
@@ -628,14 +629,15 @@ export class ShareRxComponent implements OnInit {
   }
   uploadMrDigitalsign(id, submit_data) {
     this.provider_services.uploadMrDigitalsign(id, submit_data)
-      .subscribe((data:any) => {
-        console.log('data',data);
-        this.selectedMessage.files=[]
+      .subscribe((data: any) => {
+        console.log('data', data);
+        this.selectedMessage.files = []
         this.selectedMessage.files.push(data);
+        this.signUploading = false;
         // this.snackbarService.openSnackBar('Digital sign uploaded successfully');
-        const error:string='Digital sign uploaded successfully'
+        const error: string = 'Digital sign uploaded successfully'
         this.snackbarService.openSnackBar((error));
-        this.digitalSign=true;
+        this.digitalSign = true;
         // this.selectedMessage.files.push(data)
         // this.dialog.closeAll()
         // this.uploadsignatureRef.close()
@@ -646,7 +648,7 @@ export class ShareRxComponent implements OnInit {
         });
   }
   uploadSignature() {
-   const uploadsignatureRef = this.dialog.open(UploadSignatureComponent, {
+    const uploadsignatureRef = this.dialog.open(UploadSignatureComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
@@ -668,8 +670,8 @@ export class ShareRxComponent implements OnInit {
     );
   }
   manualSignature() {
-    const height:any=this.ScreenHeight;
-   const uploadmanualsignatureRef = this.dialog.open(ManualSignatureComponent, {
+    const height: any = this.ScreenHeight;
+    const uploadmanualsignatureRef = this.dialog.open(ManualSignatureComponent, {
       width: this.screenWidth,
       height: height,//this.ScreenHeight,
       panelClass: ['popup-class'],
@@ -679,7 +681,7 @@ export class ShareRxComponent implements OnInit {
         patientid: this.patientId,
         bookingid: this.bookingId,
         bookingtype: this.bookingType,
-        providerid:this.provider_user_Id
+        providerid: this.provider_user_Id
       }
     });
     uploadmanualsignatureRef.afterClosed().subscribe((res) => {
@@ -695,13 +697,13 @@ export class ShareRxComponent implements OnInit {
   }
   showimgPopup(file) {
     file.title = 'Your digital signature';
-   const signatureviewdialogRef = this.dialog.open(ImagesviewComponent, {
+    const signatureviewdialogRef = this.dialog.open(ImagesviewComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: file,
     });
-   signatureviewdialogRef.afterClosed().subscribe(result => {
+    signatureviewdialogRef.afterClosed().subscribe(result => {
       if (result) {
       }
     });
@@ -722,7 +724,7 @@ export class ShareRxComponent implements OnInit {
           .subscribe((data) => {
             this.selectedMessage.files.splice(index, 1);
             this.getDigitalSign();
-            const error='Digital signature removed successfully'
+            const error = 'Digital signature removed successfully'
             this.snackbarService.openSnackBar(error);
           },
             error => {
@@ -731,8 +733,8 @@ export class ShareRxComponent implements OnInit {
       }
     });
   }
-  showdigitalsign( signurl?) {
-    if(signurl){
+  showdigitalsign(signurl?) {
+    if (signurl) {
       let logourl = '';
       if (signurl) {
         logourl = (signurl) ? signurl : '';
@@ -823,41 +825,41 @@ export class ShareRxComponent implements OnInit {
     }
   }
   autoGrowTextZone(e) {
-    if(e){
+    if (e) {
       e.target.style.height = "0px";
       e.target.style.height = (e.target.scrollHeight + 15) + "px";
     }
-    
+
   }
-  closeDialog(){
+  closeDialog() {
     this.dialogRef.close()
   }
-  shareBtn(data){
-    let shareInfo={
-      'shareWith':this.sharewith,
-      'message':this.amForm.controls.message.value,
-      'thirdpartyemail':this.thirdpartyemail,
-      'sms':this.sms,
-      'email':this.email,
-      'telegram':this.telegram,
+  shareBtn(data) {
+    let shareInfo = {
+      'shareWith': this.sharewith,
+      'message': this.amForm.controls.message.value,
+      'thirdpartyemail': this.thirdpartyemail,
+      'sms': this.sms,
+      'email': this.email,
+      'telegram': this.telegram,
       'whatsApp': this.whatsApp,
-      'mrId':this.mrId
+      'mrId': this.mrId
     }
     this.onSubmit()
-    if(this.thirdpartyemail==='' || this.thirdpartyphone===''){
-      this.dialogRef.disableClose=false;
+    if (this.thirdpartyemail === '' || this.thirdpartyphone === '') {
+      this.dialogRef.disableClose = false;
     }
-    else{
+    else {
       this.dialogRef.close(shareInfo);
     }
   }
-  messageBoxhandle(data){
+  messageBoxhandle(data) {
     // console.log(data)
-    if(data){}
-    else{
-      const msg = this.fed_service.isFieldValid(this.amForm,'message');
+    if (data) { }
+    else {
+      const msg = this.fed_service.isFieldValid(this.amForm, 'message');
       console.log(msg);
-      const error='Please enter a message'
+      const error = 'Please enter a message'
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     }
   }

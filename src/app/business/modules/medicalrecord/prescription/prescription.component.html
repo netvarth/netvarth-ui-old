@@ -430,7 +430,7 @@
                           </div>
                           <div>Delete</div>
                         </button>
-                        <button mat-menu-item class="gap" (click)="printSecond(file)">
+                        <!-- <button mat-menu-item class="gap" (click)="printSecond(file)">
                           <div class="Share pointer-cursor" *ngIf="file ">
                             <img *ngIf="file.type !=='.pdf'" class="fileView"
                               src="./assets/images/medicalReportIcon/download.png" #tooltip="matTooltip"
@@ -441,6 +441,13 @@
                           </div>
                           <div *ngIf="file.type !=='.pdf'">{{printText}}</div>
                           <div *ngIf="file.type ==='.pdf'">View</div>
+                        </button> -->
+                        <button mat-menu-item class="gap" *ngIf="file">
+                            <div class="Share pointer-cursor" (click)="printSecond(file)">
+                              <img class="fileView" src="./assets/images/medicalReportIcon/download.png" #tooltip="matTooltip"
+                                matTooltip="{{printText}}" [matTooltipPosition]="'below'" />
+                            </div>
+                            <div><a *ngIf="file.url" [href]="file.url" class="text-dark" download>{{printText}}</a></div>
                         </button>
                         <button mat-menu-item (click)="shareManualRx('uploadrx',bookingType,bookingId,file)"
                           class="gap">

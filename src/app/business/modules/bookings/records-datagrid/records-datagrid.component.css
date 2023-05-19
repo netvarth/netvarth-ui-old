@@ -11,7 +11,7 @@
 }
 
 .operations-row .column .card {
-    border-radius: 10px !important;
+    border-radius: 5px !important;
     border: 1.75px solid #d0d0d0 !important;
     box-shadow: 0 0 10px 0 rgb(183 192 206 / 20%) !important;
     padding: 0px !important;
@@ -132,16 +132,19 @@ td {
 }
 
 .card-header {
-    border-radius: calc(0.5rem - 1px) calc(0.5rem - 1px) 0 0 !important;
-    border-bottom: 1.75px solid #d0d0d0 !important;
+    /* border-radius: calc(0.5rem - 1px) calc(0.5rem - 1px) 0 0 !important; */
+    border-radius: 5px!important;
+    /* border-bottom: 1.75px solid #d0d0d0 !important; */
+    border-bottom: 0.75px solid #d0d0d0 !important;
     font-size: 13px !important;
     text-transform: uppercase !important;
-    color: #395789 !important;
+    color: #000 !important;
     font-weight: 700 !important;
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
     width: 100% !important;
+    padding: 12px !important;
 }
 
 .card-header i {
@@ -172,7 +175,7 @@ td {
 
 .operations-row .table tr:hover {
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 25%);
-    border-radius: 10px;
+    border-radius: 5px;
     background: transparent !important;
 }
 
