@@ -1,3 +1,12 @@
+.text-primary {
+  color: #1e4079 !important;
+}
+
+.btn-primary {
+  background-color: #1e4079 !important;
+  border-radius: 10px !important;
+}
+
 .data-card {
   box-shadow: none !important;
   border-radius: 0 !important;
@@ -6,7 +15,7 @@
 
 .card.data-card .card-header {
   border-radius: 0 !important;
-  border-bottom: 1.75px solid #d0d0d0 !important;
+  border-bottom: 0.75px solid #d0d0d0 !important;
   font-size: 13px !important;
   text-transform: uppercase !important;
   color: #395789 !important;
@@ -15,7 +24,6 @@
   justify-content: space-between !important;
   align-items: center !important;
   min-height: auto !important;
-  padding: 12px!important;
 }
 
 .card.data-card .card-header i {
@@ -26,7 +34,7 @@
 }
 
 .widgetStyle .card-body {
-  height: 300px !important;
+  height: 317px !important;
   overflow: auto !important;
 }
 
@@ -34,13 +42,6 @@
   border: 0.75px solid #d0d0d0 !important;
   border-radius: 5px !important;
   /* border-top: 3px solid #1E4079 !important; */
-}
-
-.view-btn
-{
-  font-size: 12.5px!important;
-  color: #1E4079!important;
-  text-transform: capitalize!important;
 }
 
 .card-body>div>.row {
@@ -57,14 +58,6 @@
   min-width: auto !important;
   max-width: none !important;
   margin-bottom: 6px !important;
-}
-
-.btn-primary {
-  background-color: #1E4079 !important;
-  border: none !important;
-  color: #fff !important;
-  padding: 5px 8px !important;
-  border-radius: 3px !important;
 }
 
 .card-body .row-data .doc-name {
@@ -118,6 +111,12 @@
   font-weight: 700 !important;
 }
 
+.view-btn {
+  font-size: 12.5px !important;
+  color: #1E4079 !important;
+  text-transform: capitalize !important;
+}
+
 .document img {
   width: 100%;
   height: 100%;
@@ -167,17 +166,51 @@
 }
 
 .card-body {
-  max-height: 135px !important;
+  max-height: 100px !important;
 }
 
 
 @media (max-width: 750px) {
   .card-body {
-    max-height: 200px !important;
+    max-height: 150px !important;
   }
 }
 
-.content
+.addNoteButton {
+  width: 85px;
+  padding: 2px;
+  margin-right: 15px;
+  background-color: #1e4079 !important;
+  border-radius: 100%;
+  color: whitesmoke;
+  text-transform: capitalize;
+  font-size: small;
+  font-weight: normal;
+}
+
+/* .faCircle{
+    color: white;
+} */
+.fa-plus-circle:before {
+  color: white !important;
+  padding: 2px;
+}
+
+.consumerCard {
+  border: 1px solid #80808040 !important;
+  padding: 5px;
+  box-shadow: 0 0 10px rgb(0 0 0 / 5%);
+  border-radius: 0.25rem;
+  margin-bottom: 1px;
+}
+
+.card-text
 {
-  min-height: auto!important;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.heading
+{
+  font-size: 16px!important;
 }

@@ -54,6 +54,7 @@ export class DealerComponent implements OnInit {
       }
       if (qparams && qparams.spInternalStatus) {
         this.spInternalStatus = qparams.spInternalStatus;
+        this.statusDisplayName = { name: this.spInternalStatus };
       }
     });
 
@@ -139,7 +140,7 @@ export class DealerComponent implements OnInit {
   loadDealers(event) {
     // this.getTotalDealersCount()
     let api_filter = this.cdlservice.setFiltersFromPrimeTable(event);
-    if (this.statusDropdownClicked) {
+    if (this.statusDropdownClicked || this.spInternalStatus) {
       if (this.statusDisplayName && this.statusDisplayName.name) {
         if (this.statusDisplayName.name != 'All' && this.statusDisplayName.name != 'rejected') {
           if (this.statusDisplayName.name == 'Rejected') {

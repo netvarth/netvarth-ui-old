@@ -95,7 +95,7 @@
 
 .booking-details-body .available-records .value {
   font-size: 0.775rem !important;
-  color: #8e8e8e !important;    
+  color: #8e8e8e !important;
 }
 .padding-20px {
   padding: 10px 20px !important;
@@ -123,7 +123,7 @@
 .records-sec .column {
   width: 50% !important;
   float: left;
-  padding: 10px;
+  padding: 3px;
 }
 
 @media (max-width: 767px) {
@@ -145,8 +145,8 @@
     margin: 0 !important;
     float: right;
   }
-  
-  
+
+
 }
 
 .qnr-hgt {
@@ -219,7 +219,7 @@
 .card-header.collapsed i.fa.fa-angle-down {
   transition: 0.70s !important;
   transform: rotate(0deg) !important;
-} 
+}
 .collapse.in {
   display: block !important;
 }

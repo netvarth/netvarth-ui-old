@@ -230,6 +230,16 @@ th {
     transform: rotate(0deg) !important;
 }
 
+.card-header i.fa.fa-caret-down {
+  transition: 0.70s !important;
+  transform: rotate(180deg) !important;
+}
+
+.card-header.collapsed i.fa.fa-caret-down {
+  transition: 0.70s !important;
+  transform: rotate(0deg) !important;
+}
+
 .no-record div {
     width: 200px;
     margin: auto;

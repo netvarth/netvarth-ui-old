@@ -9,16 +9,36 @@
 <section [class.p-4]="!widget" *ngIf="source === 'customer'">
   <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 m-0 p-0"
     [class.widgetStyle]="widget">
-    <div class="card card-custom data-card">
+    <div class="card card-custom data-card" [class.mt-2]="small_device_display">
       <div class="card-header collapsed" *ngIf="widget"
-        [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+        [ngStyle]="{'padding': '12px'}"
         [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#notes" aria-expanded="false">
-        <div class="text-capitalize">My Notes</div>
-        <div class="mgn-lt-auto">
+        <div class="text-capitalize text-dark">My Notes</div>
+        <!-- <div class="mgn-lt-auto">
           <span class="addNoteButton pointer-cursor" (click)="addProviderNote()"><i class="fa fa-plus-circle"
               aria-hidden="true"></i></span>
           <i class="fa fa-external-link pointer-cursor" aria-hidden="true" [class.mgn-rt-20]="small_device_display"></i>
           <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
+        </div> -->
+        <div class="mgn-lt-auto">
+          <div class="d-flex">
+            <div  [class.mgn-rt-20]="small_device_display">
+              <span class="view-btn pointer-cursor" aria-hidden="true"
+                (click)="addProviderNote()">
+                <div class="d-flex">
+                  <div class="mr-1">
+                    <img src="./assets/images/dashboard/add-file.png" width="12">
+                  </div>
+                  <div class="d-flex align-content-center">
+                    Add Notes
+                  </div>
+                </div>
+              </span>
+            </div>
+            <div>
+              <i class="fa fa-caret-down" *ngIf="small_device_display"></i>
+            </div>
+          </div>
         </div>
       </div>
       <div class="card-body p-3" [class.cardheight]="!widget" id="notes"
@@ -59,14 +79,14 @@
   <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 m-0 p-0"
     [class.widgetStyle]="widget">
 
-    <div class="card card-custom data-card mgn-up-5">
+    <div class="card card-custom data-card" [class.mt-2]="small_device_display">
       <div class="card-header collapsed" *ngIf="widget"
-        [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+        [ngStyle]="{'padding': '12px'}"
         [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#consumerNotes" aria-expanded="false">
-        <div class="text-capitalize">Consumer Notes</div>
+        <div class="text-capitalize text-dark">Consumer Notes</div>
         <div class="mgn-lt-auto">
-          <i class="fa fa-external-link pointer-cursor" aria-hidden="true" [class.mgn-rt-20]="small_device_display"></i>
-          <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
+          <!-- <i class="fa fa-external-link pointer-cursor" aria-hidden="true" [class.mgn-rt-20]="small_device_display"></i> -->
+          <i class="fa fa-caret-down" *ngIf="small_device_display"></i>
         </div>
       </div>
 

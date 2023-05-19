@@ -415,6 +415,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
             this.communication_history.push(his);
           }
         }
+        console.log("communication_history", this.communication_history)
         this.sortMessages();
         this.shared_Functionsobj.sendMessage({
           ttype: "load_unread_count",

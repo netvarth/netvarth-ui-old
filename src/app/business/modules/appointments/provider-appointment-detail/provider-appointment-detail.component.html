@@ -227,21 +227,15 @@
     </div>
   </div>
 </div>
-<div class="clearfix"></div>
+
 <section class="prov-apptDetail" *ngIf="waitlist_data">
-  <div class="content comn-cls checkin-details no-padding" *ngIf="!small_device_display">
-    <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small mt-3">
-      <div class="card" *ngIf="api_loading">
-        <app-common-innerloading-spinner></app-common-innerloading-spinner>
-      </div>
-      <div class="card inboxList" *ngIf="!api_loading">
-        <label>Messages</label>
-        <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
-          (reloadApi)="getCommunicationHistory(waitlist_data.uid)">
-        </app-inbox-list>
+  <div class="content comn-cls checkin-details no-padding">
+    <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small" [class.px-1]="small_device_display">
+      <div *ngIf="communication_history && communication_history.length>0">
+        <app-messages-section [messages]="communication_history" [widget]="true"></app-messages-section>
       </div>
     </div>
-    <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small mt-3" *ngIf="!small_device_display">
+    <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small pl-0" *ngIf="!small_device_display">
       <div class="card-custom data-card p-0 m-0">
         <app-notes-section [source]="'customerNote'" [widget]="true" [waitlistdata]="waitlist_data"
           [waitlist_notes]="waitlist_notes">
@@ -250,7 +244,7 @@
     </div>
   </div>
 </section>
-
+<div class="clearfix"></div>
 <div>
   <div class="content checkin-details" *ngIf="waitlist_data">
     <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small px-1"
@@ -274,7 +268,7 @@
   </div>
 
   <div class="clearfix"></div>
-  <section class="prov-apptDetail" *ngIf="waitlist_data">
+  <!-- <section class="prov-apptDetail" *ngIf="waitlist_data">
     <div class="content comn-cls checkin-details no-padding" *ngIf="small_device_display">
       <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small mt-3">
         <div class="card" *ngIf="api_loading">
@@ -287,14 +281,8 @@
           </app-inbox-list>
         </div>
       </div>
-      <!-- <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small mt-3" *ngIf="!small_device_display">
-        <div class="card-custom data-card p-0 m-0">
-          <app-notes-section [source]="'customerNote'" [widget]="true" [waitlistdata]="waitlist_data" [waitlist_notes]="waitlist_notes">
-          </app-notes-section>
-        </div>
-      </div> -->
     </div>
-  </section>
+  </section> -->
 
   <div class="content comn-cls checkin-details" *ngIf="!api_loading && questionnaires.length > 0">
     <div class="card-header text-capitalize card pointer-cursor d-flex" data-toggle="collapse" data-target="#moreinfo">
@@ -344,3 +332,4 @@
     </div>
   </div>
 </div>
+<br>

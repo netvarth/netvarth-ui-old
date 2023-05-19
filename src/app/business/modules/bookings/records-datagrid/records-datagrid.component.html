@@ -354,13 +354,23 @@
             <!-- <i class="fa fa-external-link pointer-cursor" aria-hidden="true" [class.mgn-rt-20]="small_device_display"
               *ngIf="source != 'customers' || (source == 'customers' && admin)"></i>
             <i class="fa fa-angle-down" *ngIf="small_device_display"></i> -->
-            <div class="inner-card add-record rounded-sm pointer-cursor" (click)="gotoAdd()"
-              *ngIf="source == 'providers' || (source == 'customers' && admin)">
-              <a class="inner-card-heading">
-                Add {{(source == 'providers') ? provider_label : customer_label}}
-              </a>
-              <div class="inner-card-text">
-                Diagnosis, Alergies, Prescription, etc.
+
+            <div class="d-flex">
+              <div class="add-record rounded-sm pointer-cursor" [class.mr-4]="small_device_display" (click)="gotoAdd()"
+                *ngIf="source == 'providers' || (source == 'customers' && admin)">
+                <a class="inner-card-heading">
+                  <div class="d-flex">
+                    <div class="mr-1">
+                      <img src="./assets/images/dashboard/add-file.png" width="12">
+                    </div>
+                    <div class="d-flex align-content-center">
+                      Add {{(source == 'providers') ? provider_label : customer_label}}
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div>
+                <i class="fa fa-caret-down" *ngIf="small_device_display"></i>
               </div>
             </div>
           </div>
