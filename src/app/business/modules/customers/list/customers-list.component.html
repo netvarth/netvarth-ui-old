@@ -327,6 +327,35 @@
                       </div>
                     </div>
                   </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsevisit"
+                          aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-id-badge"></i>
+                            </div>
+                           Visits Greater than
+                          </div>
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapsevisit" class="collapse in" data-parent="#accordion1">
+                      <div class="card-body" style="padding: 0px !important;">
+                        <div class="filterTextinput filter-text-input">
+                          <li class="filterli filter-li">
+                            <input type="text" id="visitgt"
+                            (keyup)="keyPress()" class="filterTextbox visitgt" placeholder=">">
+                            <input type="text" id="visitcount" [(ngModel)]="filter.visitcount" #visitcount
+                              (keyup)="keyPress()" class="filterTextbox"
+                              placeholder="">
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </ul>
               </section>
               <div class="filter-footer" *ngIf="filterapplied">

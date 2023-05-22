@@ -47,7 +47,8 @@ export class CustomersListComponent implements OnInit {
     countrycode: '',
     email: '',
     page_count: projectConstants.PERPAGING_LIMIT,
-    page: 1
+    page: 1,
+    visitcount :'',
   }; // same in resetFilter Fn
   customer_label = '';
   customer_labels = '';
@@ -79,7 +80,8 @@ export class CustomersListComponent implements OnInit {
     'date': false,
     'mobile': false,
     'countrycode': false,
-    'email': false
+    'email': false,
+    'visitcount': false,
   };
   customerselection = 0;
   customerSelected: any = [];
@@ -343,7 +345,7 @@ export class CustomersListComponent implements OnInit {
   }
   keyPress() {
     this.labelSelection();
-    if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.countrycode || this.filter.email || this.labelFilterData !== '') {
+    if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.countrycode || this.filter.email ||  this.filter.visitcount || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -377,7 +379,9 @@ export class CustomersListComponent implements OnInit {
       'date': false,
       'mobile': false,
       'countrycode': false,
-      'email': false
+      'email': false,
+      'visitcount': false,
+      
     };
     this.filter = {
       jaldeeid: '',
@@ -387,6 +391,7 @@ export class CustomersListComponent implements OnInit {
       mobile: '',
       countrycode: '',
       email: '',
+      visitcount : '',
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 1
     };
@@ -415,6 +420,9 @@ export class CustomersListComponent implements OnInit {
     }
     if (this.filter.email !== '') {
       api_filter['email-eq'] = this.filter.email;
+    }
+    if (this.filter.visitcount !== '') {
+      api_filter['visitCount-gt'] = this.filter.visitcount;
     }
     if (this.filter.mobile !== '') {
       const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
