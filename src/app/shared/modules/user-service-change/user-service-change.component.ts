@@ -13,7 +13,7 @@ import { ConfirmBoxComponent } from '../../../business/shared/confirm-box/confir
 import { WordProcessor } from '../../services/word-processor.service';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../constants/project-constants';
-import { userContactInfoComponent } from '../../../business/modules/settings/general/users/user-contact-info/user-contact-info.component';
+// import { userContactInfoComponent } from '../../../business/modules/settings/general/users/user-contact-info/user-contact-info.component';
 import { ConfirmBoxLocationComponent } from './confirm-box-location/confirm-box-location.component';
 
 @Component({
@@ -566,16 +566,16 @@ export class UserServiceChnageComponent implements OnInit {
     }
     this.doSearch();
   }
-  viewContactDetails(user) {
-    this.contactDetailsdialogRef = this.dialog.open(userContactInfoComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        userData: user
-      }
-    });
-  }
+  // viewContactDetails(user) {
+  //   this.contactDetailsdialogRef = this.dialog.open(userContactInfoComponent, {
+  //     width: '50%',
+  //     panelClass: ['popup-class', 'commonpopupmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       userData: user
+  //     }
+  //   });
+  // }
   getApptDetails() {
     this.provider_services.getAppointmentById(this.uuid)
       .subscribe(

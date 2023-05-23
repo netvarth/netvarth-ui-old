@@ -34,7 +34,7 @@ const routes: Routes = [
   { path: 'paper/shoppingcart', loadChildren: () => import('./ynw_consumer/components/home/submit-paper/submit-paper.module').then(m => m.SubmitPaperModule) },
   { path: 'order/shoppingcart/checkout', loadChildren: () => import('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule) },
   { path: 'paper/shoppingcart/checkout', loadChildren: () => import('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule) },
-  { path: 'userchange', loadChildren: () => import('./shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
+  // { path: 'userchange', loadChildren: () => import('./shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
   { path: 'order/item-details', loadChildren: () => import('./shared/components/item-details/item-details.module').then(m => m.ItemDetailsModule) },
   { path: 'questionnaire/:uid/:id/:accountId', loadChildren: () => import('./shared/components/questionnaire-link/questionnaire-link.module').then(m => m.QuestionnaireLinkModule) },
   { path: ':id', loadChildren: () => import('./shared/components/business-page/business-page.module').then(m => m.BusinessPageModule) },
