@@ -362,7 +362,7 @@ export class DentalHomeComponent implements OnInit {
         mrid: this.mrid
       }
     };
-    this.router.navigate(['provider','dental','teeth',index,'view'],navigationExtras);
+    this.router.navigate(['provider','dental','teeth','id','view'],navigationExtras);
     // this.routingService.setFeatureRoute('dental/teeth/' + index)
     // this.routingService.handleRoute('/view', navigationExtras);
 

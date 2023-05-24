@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 const routes: Routes = [
   { path: '', component: DentalHomeComponent },
   { path: 'teeth/:id', loadChildren: () => import('./teeth-question/teeth-question.module').then(m => m.TeethQuestionModule) },
-  { path: 'teeth/:id/view', loadChildren: () => import('./teeth-view/teeth-view.module').then(m => m.TeethViewModule) },
+  { path: 'teeth/id/view', loadChildren: () => import('./teeth-view/teeth-view.module').then(m => m.TeethViewModule) },
 ]
 
 @NgModule({

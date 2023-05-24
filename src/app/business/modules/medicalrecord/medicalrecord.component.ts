@@ -1256,5 +1256,14 @@ export class MedicalrecordComponent implements OnInit {
 
 
   }
+  viewDentalChart(){
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        patientId: this.patientId,
+        mrid: this.mrId
+      }
+    };
+    this.router.navigate(['provider','dental','teeth','id','view'], navigationExtras)
+  }
 }
 
