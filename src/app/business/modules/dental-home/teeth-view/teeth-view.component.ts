@@ -47,6 +47,12 @@ export class TeethViewComponent {
   loading = true;
   customerDetails: any;
   firstName: any;
+  medicalInfo: any;
+  mrNumber: any;
+  mrCreatedDate;
+  doctorName;teethNumber: any;
+  patientId: any;
+;
   constructor(
     private location: Location,
     private fileService: FileService,
@@ -56,13 +62,20 @@ export class TeethViewComponent {
     private router: Router,
     private wordProcessor: WordProcessor,
     private route: ActivatedRoute,
-    private providerService: ProviderServices
+    private providerService: ProviderServices,
+    public provider_services: ProviderServices
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['mrid']) {
         this.mrid = params['mrid'];
         this.getTeethDetails()
+        this.getMedicalRecordUsingId(this.mrid);
       }
+      if (params['patientId']) {
+        this.patientId = params['patientId'];
+        this.getPatientDetails(this.patientId);
+      }
+    
     });
   }
   ngOnInit(): void {
@@ -93,6 +106,30 @@ export class TeethViewComponent {
         },
         error => {
           // alert('getPatientDetails')
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+  }
+  
+  getMedicalRecordUsingId(mrId) {
+    this.subscriptions.sink = this.provider_services.GetMedicalRecord(mrId)
+      .subscribe((data: any) => {
+        if (data) {
+          this.loading = false;
+          this.medicalInfo = data;
+          this.mrNumber = data.mrNumber;
+         
+          if (data.mrCreatedDate) {
+            this.mrCreatedDate = data.mrCreatedDate;
+          }
+          if (data.provider && data.provider.id) {
+            this.doctorName = data.provider.firstName + ' ' + data.provider.lastName;       
+          } 
+          if(data && data.dentalChart && data.dentalChart.teeth.length>0){
+            this.teethNumber = data.dentalChart.teeth.length;
+          }
+        }
+      },
+        error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }

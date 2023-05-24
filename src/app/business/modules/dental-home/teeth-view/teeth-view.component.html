@@ -12,9 +12,9 @@
       <div class="d-flex align-items-center">
         <div>
           <span class="font-weight-bold welcome-text">
-            <span>Athira K R</span>
+            <span *ngIf="firstName">{{firstName}}</span>
           </span><br>
-          <span class="sub-title"> &nbsp;+91 8943819702</span>
+          <span class="sub-title" *ngIf="customerDetails && customerDetails.countryCode"> &nbsp; {{customerDetails.countryCode ?customerDetails.countryCode : '+91'}}  </span><span class="sub-title" *ngIf="customerDetails && customerDetails.phoneNo"> {{customerDetails.phoneNo}}</span>
         </div>
       </div>
     </div>
@@ -33,24 +33,24 @@
       <div class="d-flex teeth-view">
         <div class="dateCreate">
           <div class="mrNumber1">Date</div>
-          <div class="dateClr"><i class="fas fa-calendar-day"></i>17/05/2023</div>
+          <div class="dateClr"><i class="fas fa-calendar-day"></i>{{mrCreatedDate}}</div>
         </div>
         <div class="dateCreate">
           <div class="mrNumber1">MR ID</div>
-          <div class="dateClr">MR -13</div>
+          <div class="dateClr">{{mrNumber}}</div>
         </div>
         <div class="dateCreate">
           <div class="mrNumber1">Doctor</div>
-          <div class="dateClr">null</div>
+          <div class="dateClr">{{doctorName}}</div>
         </div>
         <div class="dateCreate">
           <div class="mrNumber1">No of teeth</div>
-          <div class="dateClr">03</div>
+          <div class="dateClr">{{teethNumber}}</div>
         </div>
-        <div class="dateCreate">
+        <!-- <div class="dateCreate">
           <div class="mrNumber1">Status</div>
           <div class="dateClr">Completed</div>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -91,7 +91,7 @@
           <mat-chip-list *ngIf="selectedTeethDetails.surface" class="surface">
             <mat-chip class="pointer-cursor" *ngFor="let surfaceItem of selectedTeethDetails.surface | keyvalue"
             (click)="setSurface(surfaceItem.value,surfaceItem.key)" [ngClass]="{'selected':(surfaceItem.key === selectedSurface.key)}">
-              {{surfaceConstants[surfaceItem.key]}}
+              <span>  <img class="teeth" src="./assets/images/dental/Union.png" height="20px" width="20px"> &nbsp;&nbsp;</span>{{surfaceConstants[surfaceItem.key]}}
             </mat-chip>
           </mat-chip-list>
           <hr/>
@@ -134,7 +134,7 @@
                 <div class="galimg_outer">
                   <div class="gal_img pointer-cursor">
                     <a [href]="file.s3path" target="_blank">
-                      <img [src]="getImagefromUrl(file.s3path,file)" width="50px" height="50px">
+                      <img [src]="getImagefromUrl(file.s3path,file)" width="70px" height="70px">
                     </a>
                   </div>
                 </div>
