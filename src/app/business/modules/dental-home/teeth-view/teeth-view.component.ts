@@ -6,6 +6,8 @@ import { ActivatedRoute,NavigationExtras, Router} from '@angular/router';
 import { FileService } from '../../../../shared/services/file-service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { SubSink } from 'subsink';
+import { ProviderServices } from '../../../../../../src/app/business/services/provider-services.service';
 // import { RoutingService } from 'jaldee-framework/routing';
 @Component({
   selector: 'app-teeth-view',
@@ -41,6 +43,10 @@ export class TeethViewComponent {
   teeth_loading = true;
   selectedTeethDetails: any;
   selectedSurface;
+  private subscriptions = new SubSink();
+  loading = true;
+  customerDetails: any;
+  firstName: any;
   constructor(
     private location: Location,
     private fileService: FileService,
@@ -50,6 +56,7 @@ export class TeethViewComponent {
     private router: Router,
     private wordProcessor: WordProcessor,
     private route: ActivatedRoute,
+    private providerService: ProviderServices
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['mrid']) {
@@ -66,6 +73,28 @@ export class TeethViewComponent {
         this.businessId = this.businessDetails.id;
       }
     })
+
+  }
+  getPatientDetails(uid) {
+    const filter = { 'id-eq': uid };
+    this.subscriptions.sink = this.providerService.getCustomer(filter)
+      .subscribe(
+        (data: any) => {
+          const response = data;
+          this.loading = false;
+          console.log('responseToken', response);
+          if (response && response[0]) {
+            this.customerDetails = response[0];
+          }
+          if(this.customerDetails.firstName){
+            this.firstName = this.customerDetails.firstName;
+          }
+       
+        },
+        error => {
+          // alert('getPatientDetails')
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
   }
   goBack() {
     this.location.back();
