@@ -139,13 +139,13 @@
                   </div>
                 </div>
               </li>
-              <li *ngIf="teeth.attachments.length === 0">
-                <div class="galimg_outer">
+              
+                <div class="galimg_outer" *ngIf="teeth.attachments.length === 0">
                   <div class="gal_img pointer-cursor">
                     No Data Found
                   </div>
                 </div>
-              </li>
+              
             </ul>
           </div>
         </div>
