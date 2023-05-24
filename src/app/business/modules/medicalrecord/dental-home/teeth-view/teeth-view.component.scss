@@ -1,0 +1,194 @@
+.dateCreate {
+  justify-content: flex-start !important;
+  width: 100% !important;
+}
+.mrNumber1{
+  display: flex;
+    grid-gap: 5px;
+    gap: 5px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #8E9295;
+    
+}
+.mrNumber2{
+  display: flex;
+    gap: 5px;
+    color: #4B5057;
+    font-size: 12px;
+}
+.dateClr{
+  color: #4B5057;
+  font-size: 12px;
+}
+  .prescriptionNotes {
+    flex-wrap: wrap;
+  }
+
+  .spaanOr {
+    display: none;
+  }
+
+  .mobileDevice {
+    display: block;
+    width: 100%;
+    height: 13px;
+    border-bottom: 2px solid #E6E8EB;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    background: #F9F9F9 !important;
+  }
+
+  .flexClass1 {
+    flex-wrap: wrap;
+    gap: 10px;
+    /* flex-wrap: nowrap !important; */
+    align-items: flex-start !important;
+  }
+  .date{
+    display: block !important;
+    margin-left: 5rem;
+  }
+
+  .infoDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    grid-gap: 24px;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  .nameClr {
+    font-size: 13px;
+    font-weight: 500;
+    color: #8E9295;
+  }
+
+  .imageSize {
+    height: 30px;
+    width: 30px
+  }
+
+  .mobDevice {
+    display: block !important;
+  }
+
+  .webDevice {
+    display: none !important;
+  }
+
+  .elementTextClr {
+    color: #06152B;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .dateCreate {
+    justify-content: flex-start !important;
+    width: 100% !important;
+  }
+
+  .clinicalOuter1 {
+    height: 7rem !important;
+  }
+
+  .showHideClass{
+    display: block !important;
+    background: #EBEFF2 !important;
+    border-radius: 8.66431px;
+  }
+ 
+  .date{
+    margin-left: 5rem !important;
+  }
+
+
+.showHideClass{
+  display: none ;
+}
+.showHideClassDesktop{
+  display: flex ;
+  // background: #EBEFF2 !important;
+    border-radius: 8.66431px;
+}
+.flexClass1{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+// .mat-mdc-tab-body-content {
+//   height: 100%;
+//   overflow: hidden !important;
+// }
+.mat-tab-body-content 
+{ overflow: hidden!important}
+.notifilabel{
+  overflow: hidden !important 
+}
+.surface_select  {
+  background-color: #F8F9FB;
+  border-bottom: 2px solid #F8F9FB !important;
+}
+::ng-deep .mat-mdc-tab-body-content {
+  
+    width: 100%;
+    height: 100%;
+    overflow: hidden !important;
+  
+}
+.galul {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.galul li {
+  float: left !important;
+}
+.galimg_outer {
+  position: relative !important;
+  padding: 5px 10px 10px 5px !important;
+}
+.gal-input input {
+  width: 70px !important;
+  font-size: .7rem !important;
+}
+
+.gal_action {
+  position: absolute !important;
+  top: -5px !important;
+  right: -3px !important;
+  background: rgba(0, 0, 0, .5) !important;
+  width: 15px !important;
+  height: 15px !important;
+  text-align: center !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+}
+.bggrey
+{
+background-color: #f8f8f8!important;
+/* padding: 15px!important; */
+border-radius: 10px!important;
+}
+::ng-deep .bggrey .mat-mdc-standard-chip{
+  
+  background-color: #f8f8f8!important;
+}
+.noteDes{
+  color: #272525;
+    font-size: 13px;
+    font-weight: 500;
+}
+@media (min-width: 599px) {
+  .disply {
+    display: none !important;
+  }
+}
+@media (max-width: 600px) {
+  .web {
+    display: none !important;
+  }
+}

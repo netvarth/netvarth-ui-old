@@ -1,0 +1,118 @@
+.chart tr {
+  height: 50px;
+}
+
+.chart .img-cont td span {
+  border: 1px solid #ddd;
+  margin: 5px;
+  padding: 10px 5px 10px 5px;
+}
+
+.chart {
+  border: 1px;
+  text-align: center;
+  overflow: auto;
+  padding-top: 50px;
+}
+
+img.teeth {
+  width: 35px;
+  height: 35px;
+}
+
+.teeth_edit {
+  width: 25;
+  height: 25;
+  margin: 10px !important;
+}
+
+.mat-chip-list .mat-chip {
+  padding: 10px;
+}
+
+.progress_list {
+  border: 1px solid #739FF9;
+  border-radius: 8px !important;
+  padding: 10px;
+  width: 100%;
+  max-width: 75% !important;
+}
+
+.btn-draft {
+  background-color: #fff !important;
+  border-color: hsl(204, 86%, 53%) !important;
+  color: hsl(204, 86%, 53%) !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+  float: right;
+}
+
+.btn-primary {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+}
+
+.btnn-primary {
+  background-color: #b5b5c3 !important;
+  border-color: #b5b5c3 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  font-size: 16px !important;
+  padding: 10px 20px !important;
+}
+
+.btn-draftt {
+  background-color: hsl(204, 86%, 53%) !important;
+  border-color: hsl(204, 86%, 53%) !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+}
+.btn-drafts {
+  background-color: hsl(204, 86%, 53%) !important;
+  border-color: hsl(204, 86%, 53%) !important;
+  color: #fff !important;
+  font-weight: 70 !important;
+  border-radius: 5px !important;
+  padding: 8px 10px !important;
+}
+
+.btn-verify {
+  background-color: hsl(204, 86%, 96%) !important;
+  border-color: hsl(204, 86%, 53%) !important;
+  color: hsl(204, 86%, 53%) !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: auto 5px !important;
+}
+
+
+.btn-verified {
+  background-color: #d1f3d9 !important;
+  border-color: #20A044 !important;
+  color: #20A044 !important;
+  font-weight: bold !important;
+  border-radius: 5px !important;
+  padding: auto 5px !important;
+}
+
+.td_select {
+  // border: 2px solid #5598FD !important;
+  background-color: #5598FD !important;
+}
+@media (min-width: 599px) {
+  .disply {
+    display: none !important;
+  }
+}
+@media (max-width: 600px) {
+  .web {
+    display: none !important;
+  }
+}

@@ -1,0 +1,572 @@
+.fa-angle-left {
+    font-size: 20px !important;
+    font-weight: bold !important;
+  }
+  
+  
+  .form-title {
+    font-size: 12px !important;
+    color: #1E4079 !important;
+  }
+  
+  .btn-primary {
+    background-color: #1e4079 !important;
+    border-color: #1e4070 !important;
+    color: #fff !important;
+    font-weight: 100 !important;
+    border-radius: 5px !important;
+    padding: 10px 20px !important;
+  }
+ .btnn-primary {
+  background-color: #b5b5c3 !important;
+    border-color: #b5b5c3 !important;
+    color: #fff !important;
+    font-weight: 100 !important;
+    font-size: 16px !important;
+    border-radius: 5px !important;
+  }
+  .btn-draft {
+    background-color:hsl(204, 86%, 53%) !important;
+    border-color: hsl(204, 86%, 53%) !important;
+    color: #fff !important; 
+    font-weight: 100 !important;
+    border-radius: 5px !important;
+    padding: 10px 20px !important;
+  }
+  
+  .btn-verify {
+    background-color: hsl(204, 86%, 96%) !important;
+    border-color: hsl(204, 86%, 53%) !important;
+    color: hsl(204, 86%, 53%) !important;
+    font-weight: 100 !important;
+    border-radius: 5px !important;
+    padding: auto 5px !important;
+  }
+  
+  
+  .btn-verified {
+    background-color: #d1f3d9 !important;
+    border-color: #20A044 !important;
+    color: #20A044 !important;
+    font-weight: bold !important;
+    border-radius: 5px !important;
+    padding: auto 5px !important;
+  }
+  
+  
+  .disabled {
+    pointer-events: none !important;
+    /* cursor: not-allowed !important; */
+  }
+  
+  
+  
+  
+  /* File Input Styles  */
+  
+  .file {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .file>input[type='file'] {
+    display: none
+  }
+  
+  .file>label {
+    font-size: 14px !important;
+    font-weight: bold;
+    cursor: pointer;
+    outline: 0;
+    user-select: none;
+    border: 0.5px dashed hsl(204, 86%, 53%);
+    border-radius: 5px;
+    background-color: hsl(204, 86%, 96%);
+    color: hsl(0, 0%, 29%);
+    padding: 8px 20px !important;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .file>label:hover {
+    border-color: hsl(0, 0%, 21%);
+  }
+  
+  .file>label:active {
+    background-color: hsl(0, 0%, 96%);
+  }
+  
+  .file>label>i {
+    padding-right: 5px;
+  }
+  
+  .file--upload>label {
+    color: hsl(204, 86%, 53%);
+    border-color: hsl(204, 86%, 53%);
+  }
+  
+  .file--upload>label:hover {
+    border-color: hsl(204, 86%, 53%);
+    background-color: hsl(204, 86%, 96%);
+  }
+  
+  /* File input styles end  */
+  
+  .photo-border {
+    border: 1px solid #D2D6DE !important;
+    padding: 5px 5px 0px 5px !important;
+  }
+  
+  
+  
+  
+  .galul {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+  }
+  
+  .galul li {
+    float: left !important;
+  }
+  
+  .galimg_outer {
+    position: relative !important;
+    padding: 5px 10px 10px 5px !important;
+  }
+  
+  .gal-input input {
+    width: 70px !important;
+    font-size: .7rem !important;
+  }
+  
+  .gal_action {
+    position: absolute !important;
+    top: -5px !important;
+    right: -3px !important;
+    background: rgba(0, 0, 0, .5) !important;
+    width: 15px !important;
+    height: 15px !important;
+    text-align: center !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+  }
+  
+  .imageClass {
+    width: 4rem;
+    height: 4rem;
+    padding: 20px;
+    border-radius: 50%;
+    text-align: center;
+    background: #D9D8D8;
+  }
+  
+  
+  ::ng-deep .p-dropdown {
+    width: 100% !important;
+  }
+  
+  ::ng-deep .p-dropdown ul {
+    max-width: 300px !important;
+  }
+  
+  
+  ::ng-deep .bankList .mat-mdc-form-field .mat-mdc-form-field-wrapper .mat-mdc-form-field-flex .mat-mdc-form-field-infix .mat-mdc-input-element {
+    border: none !important;
+  }
+  
+  ::ng-deep .bankList .mat-mdc-form-field-infix {
+    /* border: 1px solid #D2D6DE !important; */
+    padding: 0 !important;
+    border-top: none !important;
+  }
+  
+  
+  ::ng-deep .bankList .mat-mdc-form-field-flex {
+    border: 1px solid #D2D6DE !important;
+    /* display: flex !important;
+    align-items: center !important; */
+  }
+  
+  ::ng-deep .bankList .mat-mdc-form-field-appearance-legacy .mat-mdc-form-field-infix {
+    padding-bottom: 0px !important;
+  }
+  .font-medium {
+    font-size: 12px !important;
+  }
+  .nav-pills .nav-link:not(.active) {
+    background-color: #fff !important;
+    color: black !important;
+  }
+  .nav-pills>li.active>a,
+.nav-pills>li>a,
+.nav-pills>li.active>a:hover,
+.nav-pills>li.active>a:focus {
+  border: none !important;
+}
+img.teeth {
+    width: 25px;
+    height:25px;
+}
+.fa-angle-left {
+    font-size: 18px !important;
+  }
+  
+  .dealer-tag {
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)), #F44336;
+    color: #FF4C51;
+    border-radius: 5px;
+    padding: 3px 6px;
+    font-size: 12px;
+  }
+  
+  .table>tbody>tr>td {
+    border: none !important;
+  }
+  
+  .table>tbody>tr>th {
+    border: none !important;
+  }
+  
+  .table {
+    margin: 0 !important;
+  }
+  
+  .dealer-name {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+  
+  .dealer-icon {
+    color: #0C315E;
+    background-color: rgba(12, 49, 94, 0.11);
+    font-size: 22px;
+    padding: 10px 13px;
+    border-radius: 10px;
+  }
+  
+  .dealer-icon-info {
+    color: rgba(58, 53, 65, 0.87);
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .dealer-icon-sub-info {
+    color: rgba(58, 53, 65, 0.68);
+    font-size: 14px;
+  }
+  
+  .dealer-info {
+    font-size: 14px !important;
+  }
+  
+  .font-medium {
+    font-size: 16px !important;
+  }
+  
+  .nav-pills {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    display: -webkit-box !important;
+    display: -moz-box !important;
+  }
+  
+  .nav-pills>li {
+    float: none !important;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 2px !important;
+  }
+  
+  .btn-primary {
+    background-color: #1e4079 !important;
+    border-color: #1e4070 !important;
+    color: #fff !important;
+    font-weight: 100 !important;
+    font-size: 16px !important;
+    border-radius: 5px !important;
+  }
+  
+  .btn-danger {
+    background-color: #fff !important;
+    border-color: #FF4C51 !important;
+    color: #FF4C51 !important;
+    font-weight: 100 !important;
+    font-size: 16px !important;
+    border-radius: 5px !important;
+  }
+  
+  .btn-danger:hover {
+    background-color: #FF4C51 !important;
+    border-color: #FF4C51 !important;
+    color: #fff !important;
+    font-weight: 100 !important;
+    font-size: 16px !important;
+    border-radius: 5px !important;
+    transition-duration: 2s;
+    transition-delay: 1s;
+  }
+  
+  th {
+    color: rgb(142, 142, 142) !important;
+    font-size: 13px !important;
+  }
+  
+  td {
+    color: #000 !important;
+    font-size: 12px !important;
+  }
+  
+  .view-dashboard-btn {
+    padding: 5px 15px !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+  }
+  
+  .inactivestatus {
+    color: rgb(244, 197, 109);
+  }
+  
+  .font-weight-light {
+    font-weight: 500 !important;
+    font-size: 16px !important;
+  }
+  
+  .btn-verify {
+    background-color: hsl(204, 86%, 96%) !important;
+    border-color: hsl(204, 86%, 53%) !important;
+    color: hsl(204, 86%, 53%) !important;
+    font-weight: 100 !important;
+    border-radius: 5px !important;
+    padding: auto 5px !important;
+  }
+  
+  .approved-loan-head-icon {
+    color: #427A0A !important;
+    background-color: #e8f3de !important;
+    padding: 10px !important;
+    border-radius: 10px !important;
+    font-size: 20px !important;
+  }
+  
+  
+  .approved-amount-head-icon {
+    color: #1CC5FA !important;
+    background-color: #ddf3fa !important;
+    padding: 10px !important;
+    border-radius: 10px !important;
+    font-size: 20px !important;
+  }
+  
+  .total-amount-head-icon {
+    color: #5843BE !important;
+    background-color: #e4e0f6 !important;
+    padding: 10px !important;
+    border-radius: 10px !important;
+    font-size: 20px !important;
+  }
+  
+  .rejected-loan-head-icon {
+    color: #E84D4D !important;
+    background-color: #fef0f0 !important;
+    padding: 10px !important;
+    border-radius: 10px !important;
+    font-size: 20px !important;
+  }
+  
+  .activestatus {
+    color: rgb(16, 179, 16);
+  }
+  
+  .w-90 {
+    width: 90% !important;
+  }
+  
+  .w-100 {
+    width: 100% !important;
+  }
+  
+  .alerts-icon {
+    color: #e11f1f !important;
+    background-color: #e8c6c1 !important;
+    padding: 10px !important;
+    font-size: 25px !important;
+  }
+  
+  .alerts-title {
+    font-size: 12px !important;
+  }
+  
+  /* not active */
+  .nav-pills .nav-link:not(.active) {
+    background-color: #fff !important;
+    color: black !important;
+  }
+  
+  /* active*/
+  .nav-pills .nav-link {
+    background: #FFFFFF;
+    box-shadow: 0px 1.34477px 5.90996px rgba(16, 24, 40, 0.15);
+    border-radius: 4px;
+  }
+  
+  .nav-pills>li.active>a,
+  .nav-pills>li>a,
+  .nav-pills>li.active>a:hover,
+  .nav-pills>li.active>a:focus {
+    border: none !important;
+  }
+  
+  .nav-pills>li.active>a,
+  .nav-pills>li.active>a:hover,
+  .nav-pills>li.active>a:focus {
+    border: 2px solid #e8c6c1 !important;
+    color: #b4afaf !important;
+    background: #FFFFFF;
+box-shadow: 0px 1.34477px 5.90996px rgba(16, 24, 40, 0.15);
+border-radius: 4px;
+  }
+  
+  
+  
+  
+  .font-small {
+    font-size: 12px !important;
+  }
+  
+  
+  .text-primary {
+    color: #1E4079 !important;
+  }
+  
+  .min-height {
+    min-height: 570px !important;
+  }
+  
+  .alerts-min-height {
+    min-height: 400px !important;
+  }
+  
+  .p-button-primary {
+    background-color: #1e4079 !important;
+    border-color: #1e4070 !important;
+    color: #fff !important;
+    font-weight: 100 !important;
+    border-radius: 3px !important;
+  }
+  
+  
+  /* .btn-primary {
+    background-color: #1e4079 !important;
+    border-color: #1e4070 !important;
+    color: #fff !important;
+    font-weight: 100 !important;
+    border-radius: 5px !important;
+    padding: 10px !important;
+  } */
+  
+  
+  .tabview-custom {
+    overflow-x: scroll !important;
+  }
+  
+  .officer-active {
+    font-size: 14px !important;
+    font-weight: bold !important;
+    color: rgb(1, 163, 1) !important;
+  }
+  
+  .officer-name {
+    font-size: 15px !important;
+  }
+  
+  .officer-phone {
+    font-size: 13px !important;
+  }
+  
+  .btn-primary {
+    font-size: 14px !important;
+  }
+  
+  .bg-grey {
+    background-color: #e9e9e9 !important;
+    cursor: pointer !important;
+  }
+  
+  .form-title {
+    font-size: 14px !important;
+    color: #1E4079 !important;
+    font-weight: normal !important;
+  }
+  
+  .width-70 {
+    width: 70% !important;
+  }
+  
+  
+  .small-text {
+    font-size: 16px !important;
+  }
+  
+  
+  @media screen and (max-width: 576px) and (min-width: 0px) {
+    ::ng-deep .validDateCalendar .p-inputtext {
+      width: 100px !important;
+    }
+  
+    .small-text {
+      font-size: 14px !important;
+    }
+  }
+  
+  
+  ::-webkit-scrollbar {
+    width: 10px !important;
+    height: 4px !important;
+  }
+  
+  .overflow-y-scroll {
+    max-height: 60vh !important;
+    overflow-y: scroll !important;
+  }
+  
+  @media(max-width: 600px) {
+    .overflow-y-scroll {
+      max-height: 500px !important;
+      overflow-y: scroll !important;
+    }
+  }
+  .denta{
+    display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 13.4477px 21.5163px;
+gap: 8.07px;
+
+position: absolute;
+width: 132.04px;
+height: 53.9px;
+left: 174px;
+top: 408px;
+
+background: #FFFFFF;
+box-shadow: 0px 1.34477px 5.90996px rgba(16, 24, 40, 0.15);
+border-radius: 4px;
+  }
+  .nav-pills>li.active>a,
+.nav-pills>li.active>a:hover,
+.nav-pills>li.active>a:focus {
+  border-bottom: 2px solid #5598FD !important;
+  color: #5598FD !important;
+}
+.surface_select  {
+  background-color: #5598FD;
+  box-shadow: 0px 1.34477px 5.90996px #5598FD;
+  border-bottom: 2px solid #5598FD !important;
+  color: #5598FD !important;
+}
