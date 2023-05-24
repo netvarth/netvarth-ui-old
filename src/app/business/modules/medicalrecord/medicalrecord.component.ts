@@ -143,6 +143,7 @@ export class MedicalrecordComponent implements OnInit {
   suggestions: any = [];
   small_device_display = false;
   mrecordId: any;
+  subdomain: any;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -176,8 +177,9 @@ export class MedicalrecordComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
+    this.subdomain = bdetails.bss;
     this.onResize();
-    // console.log('tempClinicalNOtes::',this.tempClinicalNOtes)
     const uniqueId = this.groupService.getitemFromGroupStorage('uniqueId');
     this.provider_services.getClinicalSuggestions(uniqueId).subscribe(
       (suggestions: any) => {
