@@ -1,7 +1,7 @@
 <section>
   <div class="card title-gb">
     <div class="mgn-up-10 medicalRecord">
-      <img style="cursor: pointer;" height="15px" width="15px" src="/assets/images/medicalReportIcon/goBack.png"
+      <img style="cursor: pointer;" height="15px" width="15px" src="./assets/images/medicalReportIcon/goBack.png"
         (click)="goback('medical')" #tooltip="matTooltip" matTooltip="Back" [matTooltipPosition]="'below'" />
       <span class="clrChnge">Medical Record</span>
     </div>
@@ -97,7 +97,7 @@
         <!---prescriptiojn start-->
         <div class="prescriptionOuter" (click)="prescriptionSelect(patientId)" *ngIf=" prescriptionOuter">
           <div>
-            <img class="imageSize" src="/assets/images/medicalReportIcon/CreatePrescription.png" />
+            <img class="imageSize" src="./assets/images/medicalReportIcon/CreatePrescription.png" />
           </div>
           <div class="nameClrOther">
             Create Prescription
@@ -108,13 +108,21 @@
         <div class="clinicalOuter" (click)="addPrescriptionAndClinical(patientId,'craeteClinicalnotes')"
           *ngIf=" clinicalOuter">
           <div>
-            <img class="imageSize" src="/assets/images/medicalReportIcon/AddClinicalNote.png" />
+            <img class="imageSize" src="./assets/images/medicalReportIcon/AddClinicalNote.png" />
           </div>
           <div class="nameClrOther">
             Add Clinical Notes
           </div>
         </div>
         <!---clinical noptes end-->
+        <div class="clinicalOuter2" (click)="openDentalChart()">
+          <div>
+            <img class="imageSize" src="./assets/images/medicalReportIcon/AddClinicalNote.png" />
+          </div>
+          <div class="nameClrOther">
+            Create Dental Record
+          </div>
+        </div>
       </div>
     </div>
     <app-common-innerloading-spinner *ngIf="loading_table"></app-common-innerloading-spinner>
@@ -274,7 +282,7 @@
         <!---prescriptiojn start-->
         <div class="prescriptionOuter" (click)="prescriptionSelect(patientId)">
           <div>
-            <img class="imageSize" src="/assets/images/medicalReportIcon/CreatePrescription.png" />
+            <img class="imageSize" src="./assets/images/medicalReportIcon/CreatePrescription.png" />
           </div>
           <div class="nameClrOther2nd">
             Create Prescription
@@ -284,7 +292,7 @@
         <!---clinical notes start-->
         <div class="clinicalOuter" (click)="addPrescriptionAndClinicalSecond(patientId,'craeteClinicalnotes')">
           <div>
-            <img class="imageSize" src="/assets/images/medicalReportIcon/AddClinicalNote.png" />
+            <img class="imageSize" src="./assets/images/medicalReportIcon/AddClinicalNote.png" />
           </div>
           <div class="nameClrOther2nd">
             Add Clinical Notes
@@ -476,7 +484,7 @@
               *ngIf="!tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
               <div class="clinical pointer-cursor" (click)="addClinical(patientId,'craeteClinicalnotes')">
                 <div>
-                  <img class="imageSize" src="/assets/images/medicalReportIcon/AddClinicalNote.png" />
+                  <img class="imageSize" src="./assets/images/medicalReportIcon/AddClinicalNote.png" />
                 </div>
                 <div class="nameClrOther2nd">
                   Add Clinical Notes
@@ -509,7 +517,7 @@
               *ngIf="!tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false">
               <div class="clinical  pointer-cursor" (click)="addPrescription(patientId,'createPrescription')">
                 <div>
-                  <img class="imageSize" src="/assets/images/medicalReportIcon/CreatePrescription.png" />
+                  <img class="imageSize" src="./assets/images/medicalReportIcon/CreatePrescription.png" />
                 </div>
                 <div class="nameClrOther2nd">
                   Add Prescription
@@ -529,5 +537,4 @@
       </div>
     </div>
   </div>
-
 </section>

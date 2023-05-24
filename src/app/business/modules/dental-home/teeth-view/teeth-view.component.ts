@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
-import { FileService } from 'jaldee-framework/file';
 import { DentalHomeService } from '../dental-home.service';
-import { SnackbarService } from 'jaldee-framework/snackbar';
-import { WordProcessor } from 'jaldee-framework/word-processor';
-import { ActivatedRoute,NavigationExtras} from '@angular/router';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { RoutingService } from 'jaldee-framework/routing';
+import { ActivatedRoute,NavigationExtras, Router} from '@angular/router';
+import { FileService } from '../../../../shared/services/file-service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+// import { RoutingService } from 'jaldee-framework/routing';
 @Component({
   selector: 'app-teeth-view',
   templateUrl: './teeth-view.component.html',
@@ -23,6 +22,14 @@ export class TeethViewComponent {
   selectedFiles = {
     "photo": { files: [], base64: [], caption: [] }
   }
+  surfaceConstants= {
+    'mesial': 'Mesial',
+    'distal': 'Distal',
+    'buccal': 'Buccal',
+    'lingual': 'Lingual',
+    'incisal': 'Incisal',
+    'occlusal': 'Occlusal'
+  }
   filesToUpload: any = [];
   businessDetails: any;
   businessId: any;
@@ -33,12 +40,14 @@ export class TeethViewComponent {
   custSelect = true;
   teeth_loading = true;
   selectedTeethDetails: any;
+  selectedSurface;
   constructor(
     private location: Location,
     private fileService: FileService,
     private dental_homeservice: DentalHomeService,
     private snackbarService: SnackbarService,
-    private routingService: RoutingService,
+    // private routingService: RoutingService,
+    private router: Router,
     private wordProcessor: WordProcessor,
     private route: ActivatedRoute,
   ) {
@@ -69,8 +78,18 @@ export class TeethViewComponent {
       this.teeth_loading = false;
 
       this.selectedTeethDetails = this.teethDetails.teeth[0];
+      
+      let keys = Object.keys(this.selectedTeethDetails.surface);
+      if (keys.length > 0) {
+        this.selectedSurface = this.selectedTeethDetails.surface[keys[0]];
+        this.selectedSurface['key'] = keys[0];
+      }
 console.log( this.selectedTeethDetails)
     })
+  }
+  setSurface(surface, key) {
+    this.selectedSurface = surface;
+    this.selectedSurface['key'] = key;
   }
   filesSelected(event, type) {
     this.apiloading = true;
@@ -200,7 +219,8 @@ console.log( this.selectedTeethDetails)
    
   //   event.chipInput!.clear();
   // }
-  onSelect(teeth){
+  onSelect(teeth, event){
+    console.log(event);
       this.selectedTeethDetails = teeth;
     }
     toothEdit(teeth) {
@@ -213,8 +233,9 @@ console.log( this.selectedTeethDetails)
           type: this.type,
         }
       };
-      this.routingService.setFeatureRoute('dental')
-      this.routingService.handleRoute('teeth/' + this.selectedTeethDetails.toothId, navigationExtras);
+      this.router.navigate(['provider','dental','teeth',this.selectedTeethDetails.toothId],navigationExtras);
+      // this.routingService.setFeatureRoute('dental')
+      // this.routingService.handleRoute('teeth/' + this.selectedTeethDetails.toothId, navigationExtras);
   
     }
 }

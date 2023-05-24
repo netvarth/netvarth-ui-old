@@ -77,6 +77,7 @@ const routes: Routes = [
       { path: 'ivr', loadChildren: () => import('./modules/ivr/ivr.module').then(m => m.IvrModule) },
       { path: 'dl', loadChildren: () => import('./modules/doctors/dl.module').then(m => m.DlModule) },
       { path: 'tl', loadChildren: () => import('./modules/teachers/tl.module').then(m => m.TlModule) },
+      { path: 'dental', loadChildren: () => import('./modules/dental-home/dental-home.module').then(m => m.DentalHomeModule) },
       { path: 'branches', loadChildren: () => import('./modules/branches/branches.module').then(m => m.BranchesModule) },
       { path: 'followupone', loadChildren: () => import('./modules/crm/followupone/followupone.module').then(m => m.FollowuponeModule) }
     ]

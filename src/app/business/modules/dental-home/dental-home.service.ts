@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { DateTimeProcessor } from 'jaldee-framework/calendar/date-time';
-import { projectConstantsLocal } from 'jaldee-framework/constants';
-import { ServiceMeta } from 'jaldee-framework/service-meta';
-import { GroupStorageService } from 'jaldee-framework/storage/group';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { ServiceMeta } from '../../../shared/services/service-meta';
+// import { DateTimeProcessor } from 'jaldee-framework/calendar/date-time';
+// import { projectConstantsLocal } from 'jaldee-framework/constants';
+// import { ServiceMeta } from 'jaldee-framework/service-meta';
+// import { GroupStorageService } from 'jaldee-framework/storage/group';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class DentalHomeService {
   capabilities: any;
   patientDetails: any;
   constructor(
-    private dateTimeProcessor: DateTimeProcessor,
+    // private dateTimeProcessor: DateTimeProcessor,
     private servicemeta: ServiceMeta,
     private groupService: GroupStorageService
   ) {

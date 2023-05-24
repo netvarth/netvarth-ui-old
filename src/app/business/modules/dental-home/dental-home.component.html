@@ -57,20 +57,20 @@
       </mat-chip-list>
     </div>
    
-    <div class="table-responsive" *ngIf="isAdult">
+    <div class="table table-responsive" *ngIf="isAdult">
       <table class="chart ">
         <tr>
           <td *ngFor="let teeth of adultTeethArrayUpper">{{teeth.index}}</td>
         </tr>
         <tr class="img-cont">
           <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of adultTeethArrayUpper"><span
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
   
         </tr>
         <tr class="img-cont">
           <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of adultTeethArrayLower"><span
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
         </tr>
         <tr>
@@ -84,20 +84,20 @@
       </table>
     </div>
   
-    <div class="table-responsive" *ngIf="isChild">
+    <div class="table table-responsive" *ngIf="isChild">
       <table class="chart ">
         <tr>
           <td *ngFor="let teeth of childTeethArrayUpper">{{teeth.index}}</td>
         </tr>
         <tr class="img-cont">
           <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of childTeethArrayUpper"><span
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
   
         </tr>
         <tr class="img-cont">
           <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of childTeethArrayLower"><span
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
         </tr>
         <tr>
@@ -105,14 +105,14 @@
         </tr>
       </table>
     </div>
-    <div class="table-responsive" *ngIf="isMixed">
+    <div class="table table-responsive" *ngIf="isMixed">
       <table class="chart ">
         <tr>
           <td *ngFor="let teeth of mixedTeethArrayUpper1">{{teeth.index}}</td>
         </tr>
         <tr class="img-cont">
           <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayUpper1"><span
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
   
         </tr>
@@ -121,13 +121,13 @@
         </tr>
         <tr class="img-cont">
           <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayUpper2"><span
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
   
         </tr>
         <tr class="img-cont">
           <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayLower1"><span
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
         </tr>
         <tr>
@@ -135,7 +135,7 @@
         </tr>
         <tr class="img-cont">
           <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayLower2"><span
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
         </tr>
         <tr>
@@ -151,12 +151,12 @@
   
   </div>
   <div class="progress_list" *ngIf="teethDetails">
-    <table class="table">
+    <table class="table table-responsive">
       <tr *ngFor="let teeth of teethDetails.teeth;let i=index;">
         <td>
           <div class="d-flex">
             <div class="mr-2  align-items-center">
-              <img class="teeth_edit" src="./assets/images/Union.png" height="25px" width="25px">
+              <img class="teeth_edit" src="./assets/images/dental/Union.png" height="25px" width="25px">
             </div>
             <div class="align-items-center">
               <span class="font-weight-bold welcome-text">
@@ -214,20 +214,20 @@
     </mat-chip-list>
   </div>
  
-  <div class="table-responsive" *ngIf="!teeth_loading && isAdult && teethDetails && teethDetails.dentalState && teethDetails.dentalState !== 'MIXED'">
+  <div class="table table-responsive" *ngIf="!teeth_loading && isAdult && teethDetails && teethDetails.dentalState && teethDetails.dentalState !== 'MIXED'">
     <table class="chart ">
       <tr>
         <td *ngFor="let teeth of adultTeethArrayUpper">{{teeth.index}}</td>
       </tr>
       <tr class="img-cont">
         <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of adultTeethArrayUpper"><span
-            [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+            [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
         </td>
 
       </tr>
       <tr class="img-cont">
         <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of adultTeethArrayLower"><span
-            [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+            [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
         </td>
       </tr>
       <tr>
@@ -241,20 +241,20 @@
     </table>
   </div>
 
-  <div class="table-responsive" *ngIf="!teeth_loading && isChild  && teethDetails && teethDetails.dentalState && teethDetails.dentalState !== 'MIXED'">
+  <div class="table table-responsive" *ngIf="!teeth_loading && isChild  && teethDetails && teethDetails.dentalState && teethDetails.dentalState !== 'MIXED'">
     <table class="chart ">
       <tr>
         <td *ngFor="let teeth of childTeethArrayUpper">{{teeth.index}}</td>
       </tr>
       <tr class="img-cont">
         <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of childTeethArrayUpper"><span
-            [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+            [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
         </td>
 
       </tr>
       <tr class="img-cont">
         <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of childTeethArrayLower"><span
-            [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+            [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
         </td>
       </tr>
       <tr>
@@ -263,14 +263,14 @@
     </table>
   </div>
   <div *ngIf="!teeth_loading">
-    <div class="table-responsive" *ngIf="isMixed && teethDetails && teethDetails.dentalState || teethDetails.dentalState === 'MIXED'">
+    <div class="table table-responsive" *ngIf="isMixed && teethDetails && teethDetails.dentalState || teethDetails.dentalState === 'MIXED'">
       <table class="chart ">
         <tr>
           <td *ngFor="let teeth of mixedTeethArrayUpper1">{{teeth.index}}</td>
         </tr>
         <tr class="img-cont">
           <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayUpper1"><span
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
   
         </tr>
@@ -279,13 +279,13 @@
         </tr>
         <tr class="img-cont">
           <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayUpper2"><span
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
   
         </tr>
         <tr class="img-cont">
           <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayLower1"><span
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
         </tr>
         <tr>
@@ -293,7 +293,7 @@
         </tr>
         <tr class="img-cont">
           <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayLower2"><span
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/teeth.svg"></span>
+              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
         </tr>
         <tr>
@@ -309,12 +309,12 @@
         (change)="toggleAllApptIntStatusSelection()">Select All (Mouth)</mat-checkbox>
     </div><br/> -->
   <div class="progress_list" *ngIf="teethDetails">
-    <table class="table">
+    <table class="table table-responsive">
       <tr *ngFor="let teeth of teethDetails.teeth;let i=index;">
         <td>
           <div class="d-flex">
             <div class="mr-2  align-items-center">
-              <img class="teeth_edit" src="./assets/images/Union.png" height="25px" width="25px">
+              <img class="teeth_edit" src="./assets/images/dental/Union.png" height="25px" width="25px">
             </div>
             <div class="align-items-center">
               <span class="font-weight-bold welcome-text">

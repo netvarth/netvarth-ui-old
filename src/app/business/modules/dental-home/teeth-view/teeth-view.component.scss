@@ -1,7 +1,3 @@
-.dateCreate {
-  justify-content: flex-start !important;
-  width: 100% !important;
-}
 .mrNumber1{
   display: flex;
     grid-gap: 5px;
@@ -18,12 +14,14 @@
     font-size: 12px;
 }
 .dateClr{
-  color: #4B5057;
+  color: #000;
   font-size: 12px;
+  font-weight: 600;
 }
   .prescriptionNotes {
     flex-wrap: wrap;
   }
+
 
   .spaanOr {
     display: none;
@@ -87,7 +85,8 @@
 
   .dateCreate {
     justify-content: flex-start !important;
-    width: 100% !important;
+    margin:10px;
+    min-width: 100px;
   }
 
   .clinicalOuter1 {
@@ -127,10 +126,7 @@
 .notifilabel{
   overflow: hidden !important 
 }
-.surface_select  {
-  background-color: #F8F9FB;
-  border-bottom: 2px solid #F8F9FB !important;
-}
+
 ::ng-deep .mat-mdc-tab-body-content {
   
     width: 100%;
@@ -191,4 +187,72 @@ border-radius: 10px!important;
   .web {
     display: none !important;
   }
+}
+.teeth-view {
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+ font-weight: 600;
+}
+.teeth-summary{
+  width: 100%;
+  justify-content: space-between;
+}
+.flex-one-item{
+  flex-direction: column;
+  padding: 10px;
+}
+.flex-two-head {
+  flex-direction: column;
+}
+.surface_select  {
+  background-color: #eee;
+  border-radius: 10px;
+  border-bottom: 2px solid #F8F9FB !important;
+}
+::ng-deep .surface .mat-chip.mat-standard-chip, ::ng-deep .surface .mat-chip.mat-standard-chip:hover {
+  background-color: #fff !important;
+  color: #000 !important;
+  border-radius: 5px !important;
+  border:1px solid #ddd;
+}
+::ng-deep .surface .mat-chip-list-wrapper {
+  margin-bottom: 0px !important;;
+}
+hr {
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+}
+::ng-deep .surface .mat-chip.mat-standard-chip.selected {
+  color: #0000ff !important;
+}
+.flex-one {
+  width: 20%;
+}
+.flex-two {
+  width: 60%;
+}
+.flex-three {
+  width: 20%;
+}
+@media (max-width:600px) {
+  .teeth-summary {
+    flex-direction: column;
+  }
+  .flex-one,.flex-two,.flex-three {
+    width: 100%;
+  }
+  .teeth-selection {
+    max-height: 120px;
+    overflow: auto;
+  }
+}
+.tab-pane {
+  padding:10px;
+  background-color: #f7f7f7;
+}
+@media screen and (max-width: 768px){
+h6 {
+    font-size: .9rem !important;
+}
 }

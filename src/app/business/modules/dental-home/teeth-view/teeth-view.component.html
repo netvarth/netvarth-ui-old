@@ -1,0 +1,155 @@
+<section>
+  <div class="card">
+    <span class="pointer-cursor" (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;Back</span>
+  </div>
+</section>
+<div class="card">
+  <div class="d-flex justify-content-between">
+    <div class="d-flex">
+      <div class="mr-2 d-flex align-items-center">
+        <img width="45" height="45" src="./assets/images/cdl/profile.png">
+      </div>
+      <div class="d-flex align-items-center">
+        <div>
+          <span class="font-weight-bold welcome-text">
+            <span>Athira K R</span>
+          </span><br>
+          <span class="sub-title"> &nbsp;+91 8943819702</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div>
+        <span class="company-logo">
+          <i class="fa fa-solid fa-comment-dots fa-lg" style="color: #3670e2;"></i></span>
+        <!-- <span class="wtsapaud-icon"></span> -->
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-xs-12 col-sm-12 mgn-up-10 card">
+  <div class="col-xs-12 col-sm-12 mgn-up-10 card newCard">
+    <div class="showHideClassDesktop">
+      <div class="d-flex teeth-view">
+        <div class="dateCreate">
+          <div class="mrNumber1">Date</div>
+          <div class="dateClr"><i class="fas fa-calendar-day"></i>17/05/2023</div>
+        </div>
+        <div class="dateCreate">
+          <div class="mrNumber1">MR ID</div>
+          <div class="dateClr">MR -13</div>
+        </div>
+        <div class="dateCreate">
+          <div class="mrNumber1">Doctor</div>
+          <div class="dateClr">Athira K R</div>
+        </div>
+        <div class="dateCreate">
+          <div class="mrNumber1">No of teeth</div>
+          <div class="dateClr">03</div>
+        </div>
+        <div class="dateCreate">
+          <div class="mrNumber1">Status</div>
+          <div class="dateClr">Completed</div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="col-xs-12 col-sm-12 mgn-up-10 no-padding-small" *ngIf="!teeth_loading">
+
+    <div class="d-flex teeth-summary ">
+      <div class="flex-one flex-item card">
+        <div class="flex-one-head flex-one-item">
+          <h5 class="font-weight-bold">Teeths</h5>
+        </div>
+        <div class="teeth-selection">
+        <div class="flex-one-item" *ngFor="let teeth of teethDetails.teeth" (click)="onSelect(teeth,$event)"
+          [ngClass]="{'surface_select':teeth === selectedTeethDetails}">
+          <div>
+            <img class="teeth" src="./assets/images/dental/Union.png" height="20px" width="20px"> &nbsp;&nbsp; Teeth
+            {{teeth?.toothId}}
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="flex-two flex-item card">
+        <div class="flex-two-head">
+          <div>
+            <h6 class="font-weight-bold">Teeth {{selectedTeethDetails.toothId}}</h6>
+            <i class="fa fa-edit pull-right" style="color: #3670e2;"
+              (click)="toothEdit(selectedTeethDetails.toothId)"></i>
+          </div>
+          <div class="font-medium">
+            <span>Premolar , Adult Teeth</span>
+          </div>
+        </div>
+        <div class="flex-two-item mgn-up-50">
+          <div>
+            <h6 class="font-weight-bold">Details</h6>
+          </div>
+          <mat-chip-list *ngIf="selectedTeethDetails.surface" class="surface">
+            <mat-chip class="pointer-cursor" *ngFor="let surfaceItem of selectedTeethDetails.surface | keyvalue"
+            (click)="setSurface(surfaceItem.value,surfaceItem.key)" [ngClass]="{'selected':(surfaceItem.key === selectedSurface.key)}">
+              {{surfaceConstants[surfaceItem.key]}}
+            </mat-chip>
+          </mat-chip-list>
+          <hr/>
+          <ng-container *ngIf="selectedSurface">
+            <div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="tab1">              
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.chiefIssue">
+                <div class="mrNumber1">Chief Complaint</div>
+                <div class="dateClr">{{selectedTeethDetails.chiefIssue}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedSurface.symptoms">
+                <div class="mrNumber1">Symptoms</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedSurface.symptoms}}</div>
+              </div>              
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedSurface.observations">
+                <div class="mrNumber1">Observations</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedSurface.observations}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedSurface.diagnosis">
+                <div class="mrNumber1">Diagnosis</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedSurface.diagnosis}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedSurface.description">
+                <div class="mrNumber1">Notes</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedSurface.description}}</div>
+              </div>  
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedSurface.procedure">
+                <div class="mrNumber1">Procedure</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedSurface.procedure}}</div>
+              </div>             
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="flex-three flex-item card">
+        <div class="noteDes">
+          <div><b>Uploaded Files</b></div>
+          <div class="img-section clearfix d-flex" *ngIf="!teeth_loading">
+            <ul class="galul" *ngFor="let teeth of this.teethDetails.teeth ;let i = index ">
+              <li *ngFor="let file of teeth.attachments ;let i = index ">
+                <div class="galimg_outer">
+                  <div class="gal_img pointer-cursor">
+                    <a [href]="file.s3path" target="_blank">
+                      <img [src]="getImagefromUrl(file.s3path,file)" width="50px" height="50px">
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li *ngIf="teeth.attachments.length === 0">
+                <div class="galimg_outer">
+                  <div class="gal_img pointer-cursor">
+                    No Data Found
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

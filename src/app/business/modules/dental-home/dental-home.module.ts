@@ -15,7 +15,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    DentalHomeComponent
+    DentalHomeComponent 
   ],
   imports: [
     CommonModule,

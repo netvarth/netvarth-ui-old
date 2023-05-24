@@ -1,4 +1,4 @@
-import { Component,HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
@@ -142,6 +142,7 @@ export class MedicalrecordComponent implements OnInit {
   tempPhoneNumber: any;
   suggestions: any = [];
   small_device_display = false;
+  mrecordId: any;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -235,7 +236,7 @@ export class MedicalrecordComponent implements OnInit {
       // console.log('res',res);
       this.creteTypeMr = res;
     })
-   
+
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -699,9 +700,9 @@ export class MedicalrecordComponent implements OnInit {
     }
   }
   uploadFileforMr() {
-  
-    if( this.small_device_display){
-     
+
+    if (this.small_device_display) {
+
       this.uploadfiledialogRef = this.dialog.open(UploadPrescriptionComponent, {
         width: '100%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -720,27 +721,27 @@ export class MedicalrecordComponent implements OnInit {
         }
       });
     }
-   else{
-   
-    this.uploadfiledialogRef = this.dialog.open(UploadPrescriptionComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        mrid: this.mrId,
-        patientid: this.patientId,
-        bookingid: this.bookingId,
-        bookingtype: this.bookingType
-      }
-    });
-    this.uploadfiledialogRef.afterClosed().subscribe(result => {
-      // console.log(result)
-      if (result) {
-        this.getMedicalRecordUsingId(result);
-      }
-    });
-   }
-    
+    else {
+
+      this.uploadfiledialogRef = this.dialog.open(UploadPrescriptionComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          mrid: this.mrId,
+          patientid: this.patientId,
+          bookingid: this.bookingId,
+          bookingtype: this.bookingType
+        }
+      });
+      this.uploadfiledialogRef.afterClosed().subscribe(result => {
+        // console.log(result)
+        if (result) {
+          this.getMedicalRecordUsingId(result);
+        }
+      });
+    }
+
   }
 
 
@@ -1226,6 +1227,34 @@ export class MedicalrecordComponent implements OnInit {
   }
   addPrescription(data, text) {
     this.tempPrescription = true;
+  }
+  openDentalChart() {
+    if (this.mrecordId) {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          patientId: this.patientId,
+          mrid: this.mrecordId
+        }
+      };
+      this.router.navigate(['provider', 'dental'], navigationExtras);
+      // this.routingService.setFeatureRoute('dental');
+      // console.log('navigationExtras;', navigationExtras)
+      // this.routingService.handleRoute('', navigationExtras);
+    }
+    else {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          patientId: this.patientId,
+          mrid: this.mrId
+        }
+      };
+      this.router.navigate(['provider', 'dental'], navigationExtras);
+      // this.routingService.setFeatureRoute('dental');
+      // console.log('navigationExtras;', navigationExtras)
+      // this.routingService.handleRoute('', navigationExtras);
+    }
+
+
   }
 }
 

@@ -9,8 +9,8 @@ import { TabViewModule } from 'primeng/tabview';
 import { InputTextModule } from 'primeng/inputtext';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
-import { CapitalizeFirstPipeModule } from 'jaldee-framework/pipes/capitalize';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 
 const routes: Routes = [
     { path: '', component: TeethQuestionComponent }

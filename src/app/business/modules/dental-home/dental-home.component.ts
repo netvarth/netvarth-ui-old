@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { RoutingService } from 'jaldee-framework/routing';
+// import { RoutingService } from 'jaldee-framework/routing';
 import { Location } from '@angular/common';
-import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { DentalHomeService } from './dental-home.service';
-import { CustomersService } from 'projects/provider/src/app/customers/customers.service';
+// import { CustomersService } from 'projects/provider/src/app/customers/customers.service';
 import { SubSink } from 'subsink';
-import { SnackbarService } from 'jaldee-framework/snackbar';
-import { WordProcessor } from 'jaldee-framework/word-processor';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { ProviderServices } from '../../services/provider-services.service';
+// import { SnackbarService } from 'jaldee-framework/snackbar';
+// import { WordProcessor } from 'jaldee-framework/word-processor';
 @Component({
   selector: 'app-dental-home',
   templateUrl: './dental-home.component.html',
@@ -151,15 +154,16 @@ export class DentalHomeComponent implements OnInit {
   customerDetails: any;
   firstName: any;
   constructor(
-
-    private routingService: RoutingService,
+    private router: Router,
+    // private routingService: RoutingService,
     private location: Location,
-    private activatedRoute: ActivatedRoute,
+    // private activatedRoute: ActivatedRoute,
     private route: ActivatedRoute,
     private dental_homeservice: DentalHomeService,
-    private customersService: CustomersService,
+    // private customersService: CustomersService,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
+    private providerService: ProviderServices
   ) {
     this.route.queryParams.subscribe(params => {
       this.customerId = params['patientId'];
@@ -177,7 +181,7 @@ export class DentalHomeComponent implements OnInit {
   }
   getPatientDetails(uid) {
     const filter = { 'id-eq': uid };
-    this.subscriptions.sink = this.customersService.getCustomer(filter)
+    this.subscriptions.sink = this.providerService.getCustomer(filter)
       .subscribe(
         (data: any) => {
           const response = data;
@@ -309,8 +313,9 @@ export class DentalHomeComponent implements OnInit {
         type: this.type,
       }
     };
-    this.routingService.setFeatureRoute('dental')
-    this.routingService.handleRoute('teeth/' + teeth.toothId, navigationExtras);
+    this.router.navigate(['provider','dental','teeth',teeth.toothId],navigationExtras);
+    // this.routingService.setFeatureRoute('dental')
+    // this.routingService.handleRoute('teeth/' + teeth.toothId, navigationExtras);
 
   }
   toothClicked(index) {
@@ -324,8 +329,9 @@ export class DentalHomeComponent implements OnInit {
           action: 'edit'
         }
       };
-      this.routingService.setFeatureRoute('dental')
-      this.routingService.handleRoute('teeth/' + index, navigationExtras);
+      this.router.navigate(['provider','dental','teeth',index],navigationExtras);
+      // this.routingService.setFeatureRoute('dental')
+      // this.routingService.handleRoute('teeth/' + index, navigationExtras);
       console.log(index);
     } else {
       const navigationExtras: NavigationExtras = {
@@ -334,8 +340,9 @@ export class DentalHomeComponent implements OnInit {
           type: this.type
         }
       };
-      this.routingService.setFeatureRoute('dental')
-      this.routingService.handleRoute('teeth/' + index, navigationExtras);
+      this.router.navigate(['provider','dental','teeth',index],navigationExtras);
+      // this.routingService.setFeatureRoute('dental')
+      // this.routingService.handleRoute('teeth/' + index, navigationExtras);
       console.log(index);
     }
 
@@ -355,8 +362,9 @@ export class DentalHomeComponent implements OnInit {
         mrid: this.mrid
       }
     };
-    this.routingService.setFeatureRoute('dental/teeth/' + index)
-    this.routingService.handleRoute('/view', navigationExtras);
+    this.router.navigate(['provider','dental','teeth',index,'view'],navigationExtras);
+    // this.routingService.setFeatureRoute('dental/teeth/' + index)
+    // this.routingService.handleRoute('/view', navigationExtras);
 
   }
   toothDelete(toothId){
