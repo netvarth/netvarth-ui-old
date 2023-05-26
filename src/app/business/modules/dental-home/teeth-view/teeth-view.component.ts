@@ -310,7 +310,7 @@ console.log( this.selectedTeethDetails)
           mrid: this.mrid,
           action: 'edit',
           teethId : this.selectedTeethDetails.toothId,
-          type: this.type,
+          type: this.state,
         }
       };
       this.router.navigate(['provider','dental','teeth',this.selectedTeethDetails.toothId],navigationExtras);
