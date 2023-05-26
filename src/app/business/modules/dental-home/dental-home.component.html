@@ -8,14 +8,25 @@
   <div class="d-flex justify-content-between">
     <div class="d-flex">
       <div class="mr-2 d-flex align-items-center">
-        <img width="45" height="45" src="./assets/images/cdl/profile.png">
+        <div *ngIf="customerDetails && customerDetails.gender === 'male'">
+          <img width="45" height="45" class="imGBorderRadius" src="assets/images/mr_male.svg" />
+        </div>
+        <div *ngIf="customerDetails && customerDetails.gender === 'female'">
+          <img width="45" height="45" class="imGBorderRadius" src="assets/images/mr_female.svg" />
+        </div>
+        <div *ngIf="customerDetails.gender != 'male' && customerDetails.gender != 'female'">
+          <img width="45" height="45" class="imGBorderRadius" src="assets/images/undefinedUser.png" />
+        </div>
+        <!-- <img width="45" height="45" src="./assets/images/cdl/profile.png"> -->
       </div>
       <div class="d-flex align-items-center">
         <div>
-          <span class="font-weight-bold welcome-text">
-            <span>{{firstName}}</span>
-          </span><br>
-          <span class="sub-title" *ngIf="customerDetails && customerDetails.countryCode"> &nbsp; {{customerDetails.countryCode ?customerDetails.countryCode : '+91'}}  </span><span class="sub-title" *ngIf="customerDetails && customerDetails.phoneNo"> {{customerDetails.phoneNo}}</span>
+          <!-- <span class="font-weight-bold welcome-text">
+            
+          </span><br> -->
+          <div class="nameClrFirstlast">{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}
+          </div>
+          <span class="nameClrFirstlast" *ngIf="customerDetails && customerDetails.countryCode"> {{customerDetails.countryCode ?customerDetails.countryCode : '+91'}}  </span><span class="sub-title" *ngIf="customerDetails && customerDetails.phoneNo"> {{customerDetails.phoneNo}}</span>
         </div>
       </div>
     </div>
@@ -45,13 +56,13 @@
     </div><br>
     <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-10" >
       <mat-chip-list>
-        <mat-chip class="pointer-cursor" (click)="handleTeethSelectionType('adult')" [selected]="type === 'adult'">
+        <mat-chip class="pointer-cursor" (click)="handleTeethSelectionType('adult')" [ngClass]="{'td_select': isAdult === true}" [selected]="type === 'adult'">
           Adult Teeth
         </mat-chip> &nbsp;
-        <mat-chip class="pointer-cursor" (click)="handleTeethSelectionType('child')">
+        <mat-chip class="pointer-cursor" (click)="handleTeethSelectionType('child')" [ngClass]="{'td_select': isChild === true}">
           Child Teeth
         </mat-chip>&nbsp;
-        <mat-chip class="pointer-cursor" (click)="handleTeethSelectionType('mixed')">
+        <mat-chip class="pointer-cursor" (click)="handleTeethSelectionType('mixed')" [ngClass]="{'td_select': isMixed === true}">
           Mixed Teeth
         </mat-chip>
       </mat-chip-list>
@@ -315,14 +326,18 @@
           <div class="d-flex">
             <div class="mr-2  align-items-center">
               <img class="teeth_edit" src="./assets/images/dental/Union.png" height="25px" width="25px">
+              <span class="font-weight-bold welcome-text">
+                <span>Tooth {{teeth.toothId}}</span>
+              </span>
+            </div>
+            <!-- <div class="mr-2  align-items-center">
+            
             </div>
             <div class="align-items-center">
               <span class="font-weight-bold welcome-text">
-                <span>Teeth {{teeth.toothId}}</span>
+                <span>Tooth {{teeth.toothId}}</span>
               </span>
-              <br>
-              <span class="sub-title">Edit the questinaire</span>
-            </div>
+            </div> -->
           </div>
         </td>
         <td class="text-right web ">

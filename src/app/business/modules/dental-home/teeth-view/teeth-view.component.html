@@ -59,13 +59,13 @@
     <div class="d-flex teeth-summary ">
       <div class="flex-one flex-item card">
         <div class="flex-one-head flex-one-item">
-          <h5 class="font-weight-bold">Teeths</h5>
+          <h5 class="font-weight-bold">Teeth</h5>
         </div>
         <div class="teeth-selection">
         <div class="flex-one-item" *ngFor="let teeth of teethDetails.teeth" (click)="onSelect(teeth,$event)"
           [ngClass]="{'surface_select':teeth === selectedTeethDetails}">
           <div>
-            <img class="teeth" src="./assets/images/dental/Union.png" height="20px" width="20px"> &nbsp;&nbsp; Teeth
+            <img class="teeth" src="./assets/images/dental/Union.png" height="20px" width="20px"> &nbsp;&nbsp; Tooth
             {{teeth?.toothId}}
           </div>
         </div>
@@ -74,12 +74,12 @@
       <div class="flex-two flex-item card">
         <div class="flex-two-head">
           <div>
-            <h6 class="font-weight-bold">Teeth {{selectedTeethDetails.toothId}}</h6>
+            <h6 class="font-weight-bold">Tooth {{selectedTeethDetails.toothId}}</h6>
             <i class="fa fa-edit pull-right" style="color: #3670e2;"
               (click)="toothEdit(selectedTeethDetails.toothId)"></i>
           </div>
-          <div class="font-medium">
-            <span>Premolar , Adult Teeth</span>
+          <div class="font-medium" *ngIf="state">
+            <span>{{state}} Tooth</span>
           </div>
         </div>
         <div class="flex-two-item mgn-up-50">
@@ -137,13 +137,11 @@
                   </div>
                 </div>
               </li>
-              
                 <div class="galimg_outer" *ngIf="teeth.attachments.length === 0">
                   <div class="gal_img pointer-cursor">
                     No Data Found
                   </div>
                 </div>
-              
             </ul>
           </div>
         </div>

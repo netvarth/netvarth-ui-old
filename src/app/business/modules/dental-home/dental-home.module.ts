@@ -6,6 +6,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 
 const routes: Routes = [
   { path: '', component: DentalHomeComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
     MatChipsModule,
     MatCheckboxModule,
     FormsModule,
+    CapitalizeFirstPipeModule,
     ReactiveFormsModule,
     [RouterModule.forChild(routes)]
   ],

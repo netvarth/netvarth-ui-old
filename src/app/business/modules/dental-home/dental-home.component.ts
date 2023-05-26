@@ -326,7 +326,8 @@ export class DentalHomeComponent implements OnInit {
           patientId: this.customerId,
           mrid: this.mrid,
           type: this.type,
-          action: 'edit'
+          action: 'edit',
+          teethIndex : index
         }
       };
       this.router.navigate(['provider','dental','teeth',index],navigationExtras);
@@ -337,7 +338,8 @@ export class DentalHomeComponent implements OnInit {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           patientId: this.customerId,
-          type: this.type
+          type: this.type,
+          teethIndex : index
         }
       };
       this.router.navigate(['provider','dental','teeth',index],navigationExtras);

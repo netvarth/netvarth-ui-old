@@ -115,8 +115,7 @@
           </div>
         </div>
         <!---clinical noptes end-->
-        <div class="clinicalOuter" (click)="openDentalChart()"
-          *ngIf="(subdomain === 'Dentist / Dental Clinic'||subdomain === 'Dental Hospital')">
+        <div class="clinicalOuter2" (click)="openDentalChart()" *ngIf="(subdomain === 'Dentist / Dental Clinic'||subdomain === 'Dental Hospital')">
           <div>
             <img class="imageSize" src="./assets/images/medicalReportIcon/AddClinicalNote.png" />
           </div>
@@ -300,7 +299,7 @@
             Add Clinical Notes
           </div>
         </div>
-        <div class="clinicalOuter" (click)="openDentalChart()" *ngIf="(subdomain === 'Dentist / Dental Clinic'||subdomain === 'Dental Hospital')">
+        <div class="clinicalOuter2" (click)="openDentalChart()" *ngIf="(subdomain === 'Dentist / Dental Clinic'||subdomain === 'Dental Hospital')">
           <div>
             <img class="imageSize" src="./assets/images/medicalReportIcon/AddClinicalNote.png" />
           </div>
@@ -546,7 +545,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 no-padding"  *ngIf="(subdomain === 'Dentist / Dental Clinic' || subdomain === 'Dental Hospital')">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 no-padding" *ngIf="(subdomain === 'Dentist / Dental Clinic'||subdomain === 'Dental Hospital')">
       <div *ngIf="medicalInfo.dentalChart">
         <div>
          

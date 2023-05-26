@@ -718,4 +718,12 @@ border: 1.32184px solid #E6E8EB;
     /* justify-content: space-between; */
     align-items: center;
 }
+.clinicalOuter2{
+  padding: 5px;
+  background: #dff1ce;
+border-radius: 7.35323px;
+cursor: pointer;
+display: flex;
+  align-items: baseline;
+}
 

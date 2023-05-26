@@ -567,6 +567,30 @@ border-radius: 4px;
 .surface_select  {
   background-color: #5598FD;
   box-shadow: 0px 1.34477px 5.90996px #5598FD;
-  border-bottom: 2px solid #5598FD !important;
+  border: 2px solid #5598FD !important;
   color: #5598FD !important;
+}
+.btn-draftt {
+  background-color: hsl(204, 86%, 53%) !important;
+  border-color: hsl(204, 86%, 53%) !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+}
+.btn-cancel {
+  background-color: #b5b5c3 !important;
+  border-color:  #b5b5c3 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+}
+.surface_select_byone{
+    box-shadow: 0px 1.34477px 5.90996px #b5b5c3;
+    // border: 2px solid #b5b5c3 !important;
+  
+}
+.surface_select_one{
+padding: 15px !important;
 }

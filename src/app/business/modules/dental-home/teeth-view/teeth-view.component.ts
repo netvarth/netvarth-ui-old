@@ -52,7 +52,9 @@ export class TeethViewComponent {
   mrCreatedDate;
   doctorName;teethNumber: any;
   patientId: any;
-;
+  dentalState: any;
+  state: string;
+;z
   constructor(
     private location: Location,
     private fileService: FileService,
@@ -126,6 +128,18 @@ export class TeethViewComponent {
           } 
           if(data && data.dentalChart && data.dentalChart.teeth.length>0){
             this.teethNumber = data.dentalChart.teeth.length;
+          }
+          if(data && data.dentalChart && data.dentalChart.dentalState){
+            this.dentalState = data.dentalChart.dentalState;
+            if(this.dentalState === 'PERMANENT'){
+              this.state = 'Adult';
+            }
+            else if(this.dentalState === 'TEMPORARY'){
+              this.state = 'Child';
+            }
+            else if(this.dentalState === 'MIXED'){
+              this.state = 'Mixed';
+            }
           }
         }
       },

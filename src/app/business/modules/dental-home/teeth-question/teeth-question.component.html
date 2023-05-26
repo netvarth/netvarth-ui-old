@@ -1,624 +1,435 @@
 <div class="card pointer-cursor">
-    <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
+  <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
 </div>
-
 <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
-
-<div class="card m-2" >
-    <div>
-        <div >
-          <div class="d-lg-flex justify-content-between">
-            <div class="d-flex">
-              
-              <div class="ml-4">
-                <div>
-                
-                  <span class="dealer-name mt-4"
-                    >Teeth {{teethId}}</span>
-                </div>
-                <div class="font-medium">
-                  <span>{{dentalType | capitalizeFirst}} Teeth</span>
-                </div>
-              </div>
-            </div>
-           
-          </div>
-          <br/>
-         
-          <div>
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Surface</div>
-            </div>
-              <div class="scroller ">
-                <ul class="nav nav-pills">
-                  <li class="nav-item active"  [ngClass]="{'surface_select':isMesialData===true}">
-                      <a class="nav-link" (click)="mesialClick()"><span><img class="teeth" src="./assets/images/dental/teeth.svg"></span>&nbsp;<span style="color: #5F6D7E;">Mesial</span></a>
-                   
-                  </li>&nbsp;
-                  <li class="nav-item active" [ngClass]="{'surface_select':isDistalData===true}"> 
-                   <a class="nav-link"  (click)="distalClick()"><span><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
-                        &nbsp;<span style="color: #5F6D7E;">Distal</span></a> 
-                  </li>&nbsp;
-                  <li class="nav-item active" [ngClass]="{'surface_select':isBuccalData===true}" >
-                   <a class="nav-link" (click)="buccalClick()"><span><img class="teeth" src="./assets/images/dental/teeth.svg"></span>&nbsp;<span style="color: #5F6D7E;">Buccal</span></a> 
-                  </li>&nbsp;
-                  <li class="nav-item active" [ngClass]="{'surface_select':isLingualData===true}">
-                     <a class="nav-link" (click)="lingualClick()"><span><img class="teeth" src="./assets/images/dental/teeth.svg"></span>&nbsp;<span style="color: #5F6D7E;">Lingual</span></a> 
-                  </li>&nbsp;
-                  <li class="nav-item active" [ngClass]="{'surface_select':isIncisalData===true}">
-                    <a class="nav-link" (click)="incisalClick()"><span><img class="teeth" src="./assets/images/dental/teeth.svg"></span>&nbsp;<span style="color: #5F6D7E;">Incisal</span></a> 
-                  </li>&nbsp;
-                  <li class="nav-item active" [ngClass]="{'surface_select':isMissingData===true}"> 
-                    <a class="nav-link" (click)="misingClick()"><span><img class="teeth" src="./assets/images/dental/teeth.svg"></span>&nbsp;<span style="color: #5F6D7E;">Occlusal</span></a> 
-                  </li>&nbsp;
-                </ul>
-              </div>
-            </div>
-          </div>
-
-
+<div class="card m-2">
+  <div class="d-lg-flex justify-content-between">
+    <div class="d-flex">
+      <div class="ml-4">
+        <div>
+          <span class="dealer-name mt-4">Tooth {{teethIndex}}</span>
+        </div>
+        <div class="font-medium">
+          <span>{{dentalType | capitalizeFirst}} Tooth</span>
         </div>
       </div>
-   <br/>
-    <form [formGroup]="createTeeth" enctype="multipart/form-data">
-     
-
-            
-           
-           
-           
-       
-        <div class="row" *ngIf="isMesial">
-            <div class="col-md-7">
-            
-                <div>
-                  <div class="bggrey my-2">
-                      <div>
-                          <div class="d-flex">
-                              <div class="form-title">Symptoms</div>
-                          </div>
-                          <div class="fieldPadding">
-                              <input (keyup)="resetErrors()"
-                                  type="text" formControlName="symptoms_mesial" placeholder=""
-                                  class="form-control" autocomplete="off" />
-                          </div>
-                      </div>
-                  </div>
-              </div>
-                <div>
-                    <div class="bggrey my-2">
-                        <div>
-                            <div class="d-flex">
-                                <div class="form-title">Observations</div>
-                            </div>
-                            <div class="fieldPadding">
-                                <input (keyup)="resetErrors()"
-                                    type="text" formControlName="observations_mesial" placeholder=""
-                                    class="form-control" autocomplete="off" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="bggrey my-2">
-                        <div>
-                            <div class="d-flex">
-                                <div class="form-title">Diagnosis</div>
-                            </div>
-                            <div class="fieldPadding">
-                                <input (keyup)="resetErrors()" 
-                                    type="text" formControlName="diagnosis_mesial" placeholder=""
-                                    class="form-control" autocomplete="off" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="bggrey my-2">
-                        <div>
-                            <div class="d-flex">
-                                <div class="form-title">Notes</div>
-                            </div>
-                            <div class="fieldPadding">
-                                <input (keyup)="resetErrors()"
-                                    type="text" formControlName="notes_mesial" placeholder=""
-                                    class="form-control" autocomplete="off" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-               
-              
-            </div>
-        </div>
-       <div class="row tab-content mt-3 tab-pane active" *ngIf="isDistal">
-        <div class="col-md-7">
-           
-            <div>
-              <div class="bggrey my-2">
-                  <div>
-                      <div class="d-flex">
-                          <div class="form-title">Symptoms</div>
-                      </div>
-                      <div class="fieldPadding">
-                          <input (keyup)="resetErrors()"
-                              type="text" formControlName="symptoms_distal" placeholder=""
-                              class="form-control" autocomplete="off" />
-                      </div>
-                  </div>
-              </div>
-          </div>
-            <div>
-                <div class="bggrey my-2">
-                    <div>
-                        <div class="d-flex">
-                            <div class="form-title">Observations</div>
-                        </div>
-                        <div class="fieldPadding">
-                            <input (keyup)="resetErrors()"
-                                type="text" formControlName="observations_distal" placeholder=""
-                                class="form-control" autocomplete="off" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="bggrey my-2">
-                    <div>
-                        <div class="d-flex">
-                            <div class="form-title">Diagnosis</div>
-                        </div>
-                        <div class="fieldPadding">
-                            <input (keyup)="resetErrors()"
-                                type="text" formControlName="diagnosis_distal" placeholder=""
-                                class="form-control" autocomplete="off" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="bggrey my-2">
-                    <div>
-                        <div class="d-flex">
-                            <div class="form-title">Notes</div>
-                        </div>
-                        <div class="fieldPadding">
-                            <input (keyup)="resetErrors()"
-                                type="text" formControlName="notes_distal" placeholder=""
-                                class="form-control" autocomplete="off" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="bggrey my-2">
-                  <div>
-                    
-                    <!-- <div class="img-section clearfix"
-                      *ngIf="selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0">
-                      <ul class="galul">
-                        <li *ngFor="let file of selectedFiles['photo'].files;let i = index ">
-                          <div class="galimg_outer">
-                            <div class="gal_img pointer-cursor">
-                              <img [src]="getImage(selectedFiles['photo'].base64[i], file)"
-                                *ngIf="selectedFiles['photo'].base64[i]" width="100px" height="100px">
-                              <a [href]="file.s3path" target="_blank">
-                                <img [src]="file.s3path" *ngIf="!selectedFiles['photo'].base64[i] && file.s3path"
-                                  width="100px" height="100px">
-                              </a>
-                            </div>
-                            <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)">
-                              <i class=" fa fa-times-circle" aria-hidden="true"></i>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div> -->
-                  </div>
-                </div>
-              </div>
-        </div>
     </div>
- 
-   <div class="row tab-content mt-3 tab-pane active" *ngIf="isBuccal">
-    <div class="col-md-7">
-       
-        <div>
-          <div class="bggrey my-2">
-              <div>
-                  <div class="d-flex">
-                      <div class="form-title">Symptoms</div>
-                  </div>
-                  <div class="fieldPadding">
-                      <input (keyup)="resetErrors()"
-                          type="text" formControlName="symptoms_buccal" placeholder=""
-                          class="form-control" autocomplete="off" />
-                  </div>
-              </div>
-          </div>
-      </div>
-        <div>
-            <div class="bggrey my-2">
-                <div>
-                    <div class="d-flex">
-                        <div class="form-title">Observations</div>
-                    </div>
-                    <div class="fieldPadding">
-                        <input (keyup)="resetErrors()"
-                            type="text" formControlName="observations_buccal" placeholder=""
-                            class="form-control" autocomplete="off" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="bggrey my-2">
-                <div>
-                    <div class="d-flex">
-                        <div class="form-title">Diagnosis</div>
-                    </div>
-                    <div class="fieldPadding">
-                        <input (keyup)="resetErrors()"
-                            type="text" formControlName="diagnosis_buccal" placeholder=""
-                            class="form-control" autocomplete="off" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="bggrey my-2">
-                <div>
-                    <div class="d-flex">
-                        <div class="form-title">Notes</div>
-                    </div>
-                    <div class="fieldPadding">
-                        <input (keyup)="resetErrors()"
-                            type="text" formControlName="notes_buccal" placeholder=""
-                            class="form-control" autocomplete="off" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="bggrey my-2">
-              <div>
-                
-                <!-- <div class="img-section clearfix"
-                  *ngIf="selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0">
-                  <ul class="galul">
-                    <li *ngFor="let file of selectedFiles['photo'].files;let i = index ">
-                      <div class="galimg_outer">
-                        <div class="gal_img pointer-cursor">
-                          <img [src]="getImage(selectedFiles['photo'].base64[i], file)"
-                            *ngIf="selectedFiles['photo'].base64[i]" width="100px" height="100px">
-                          <a [href]="file.s3path" target="_blank">
-                            <img [src]="file.s3path" *ngIf="!selectedFiles['photo'].base64[i] && file.s3path"
-                              width="100px" height="100px">
-                          </a>
-                        </div>
-                        <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)">
-                          <i class=" fa fa-times-circle" aria-hidden="true"></i>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div> -->
-              </div>
-            </div>
-          </div>
-    </div>
-</div>
-
-<div class="row tab-content mt-3 tab-pane active" *ngIf="isLingual">
-  <div class="col-md-7">
-     
-      <div>
+  </div>
+  <br />
+  <div class="d-flex">
+    <div class="form-title">Surface</div>
+  </div>
+  <div class="scroller ">
+    <ul class="nav nav-pills">
+      <li class="nav-item active" [ngClass]="{'surface_select':isMesialData===true}">
+        <a class="nav-link" (click)="mesialClick()"><span><img class="teeth"
+              src="./assets/images/dental/teeth.svg"></span>&nbsp;<span style="color: #5F6D7E;">Mesial</span></a>
+      </li>&nbsp;
+      <li class="nav-item active" [ngClass]="{'surface_select':isDistalData===true}">
+        <a class="nav-link" (click)="distalClick()"><span><img class="teeth"
+              src="./assets/images/dental/teeth.svg"></span>
+          &nbsp;<span style="color: #5F6D7E;">Distal</span></a>
+      </li>&nbsp;
+      <li class="nav-item active" [ngClass]="{'surface_select':isBuccalData===true}">
+        <a class="nav-link" (click)="buccalClick()"><span><img class="teeth"
+              src="./assets/images/dental/teeth.svg"></span>&nbsp;<span style="color: #5F6D7E;">Buccal</span></a>
+      </li>&nbsp;
+      <li class="nav-item active" [ngClass]="{'surface_select':isLingualData===true}">
+        <a class="nav-link" (click)="lingualClick()"><span><img class="teeth"
+              src="./assets/images/dental/teeth.svg"></span>&nbsp;<span style="color: #5F6D7E;">Lingual</span></a>
+      </li>&nbsp;
+      <li class="nav-item active" [ngClass]="{'surface_select':isIncisalData===true}">
+        <a class="nav-link" (click)="incisalClick()"><span><img class="teeth"
+              src="./assets/images/dental/teeth.svg"></span>&nbsp;<span style="color: #5F6D7E;">Incisal</span></a>
+      </li>&nbsp;
+      <li class="nav-item active" [ngClass]="{'surface_select':isMissingData===true}">
+        <a class="nav-link" (click)="misingClick()"><span><img class="teeth"
+              src="./assets/images/dental/teeth.svg"></span>&nbsp;<span style="color: #5F6D7E;">Occlusal</span></a>
+      </li>&nbsp;
+    </ul>
+  </div>
+  <form [formGroup]="createTeeth" enctype="multipart/form-data" [ngClass]="{'surface_select_one':surfaceClicked===true}" >
+    <div class="row tab-content mt-3 tab-pane active" *ngIf="isMesial">
+      <div class="col-md-7" [ngClass]="{'surface_select_byone':isMesialData===true}">
+        <br>
+        <div class="form-title">Questionnaire about Mesial</div>
+        <br>
         <div class="bggrey my-2">
-            <div>
-                <div class="d-flex">
-                    <div class="form-title">Symptoms</div>
-                </div>
-                <div class="fieldPadding">
-                    <input (keyup)="resetErrors()"
-                        type="text" formControlName="symptoms_lingual" placeholder=""
-                        class="form-control" autocomplete="off" />
-                </div>
-            </div>
+          <div class="d-flex">
+            <div class="form-title">Symptoms</div>
+          </div>
+          <div class="fieldPadding">
+          
+              <textarea type="text" class="form-control" autocomplete="off"
+              formControlName="symptoms_mesial" (keyup)="resetErrors()"></textarea>
+          </div>
         </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Observations</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="observations_mesial" (keyup)="resetErrors()"></textarea>
+           
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Diagnosis</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="diagnosis_mesial" (keyup)="resetErrors()"></textarea>
+         
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Notes</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="notes_mesial" (keyup)="resetErrors()"></textarea>
+            
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Procedure</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="procedure_mesial" (keyup)="resetErrors()"></textarea>
+           
+          </div>
+        </div>
+      </div>
     </div>
-      <div>
-          <div class="bggrey my-2">
-              <div>
-                  <div class="d-flex">
-                      <div class="form-title">Observations</div>
-                  </div>
-                  <div class="fieldPadding">
-                      <input (keyup)="resetErrors()"
-                          type="text" formControlName="observations_lingual" placeholder=""
-                          class="form-control" autocomplete="off" />
-                  </div>
-              </div>
+    <div class="row tab-content mt-3 tab-pane active" *ngIf="isDistal">
+      <div class="col-md-7" [ngClass]="{'surface_select_byone':isDistalData===true}">
+        <br>
+        <div class="form-title">Questionnaire about Distal</div>
+        <br>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Symptoms</div>
           </div>
-      </div>
-      <div>
-          <div class="bggrey my-2">
-              <div>
-                  <div class="d-flex">
-                      <div class="form-title">Diagnosis</div>
-                  </div>
-                  <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" 
-                          type="text" formControlName="diagnosis_lingual" placeholder=""
-                          class="form-control" autocomplete="off" />
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="bggrey my-2">
-              <div>
-                  <div class="d-flex">
-                      <div class="form-title">Notes</div>
-                  </div>
-                  <div class="fieldPadding">
-                      <input (keyup)="resetErrors()"
-                          type="text" formControlName="notes_lingual" placeholder=""
-                          class="form-control" autocomplete="off" />
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="bggrey my-2">
-            <div>
-              
-              <!-- <div class="img-section clearfix"
-                *ngIf="selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0">
-                <ul class="galul">
-                  <li *ngFor="let file of selectedFiles['photo'].files;let i = index ">
-                    <div class="galimg_outer">
-                      <div class="gal_img pointer-cursor">
-                        <img [src]="getImage(selectedFiles['photo'].base64[i], file)"
-                          *ngIf="selectedFiles['photo'].base64[i]" width="100px" height="100px">
-                        <a [href]="file.s3path" target="_blank">
-                          <img [src]="file.s3path" *ngIf="!selectedFiles['photo'].base64[i] && file.s3path"
-                            width="100px" height="100px">
-                        </a>
-                      </div>
-                      <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)">
-                        <i class=" fa fa-times-circle" aria-hidden="true"></i>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div> -->
-            </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="symptoms_distal" (keyup)="resetErrors()"></textarea>
+           
           </div>
         </div>
-  </div>
-</div>
-
-<div class="row tab-content mt-3 tab-pane active" *ngIf="isIncisal">
-  <div class="col-md-7">
-    <div>
-      <div class="bggrey my-2">
-          <div>
-              <div class="d-flex">
-                  <div class="form-title">Symptoms</div>
-              </div>
-              <div class="fieldPadding">
-                  <input (keyup)="resetErrors()"
-                      type="text" formControlName="symptoms_incisal" placeholder=""
-                      class="form-control" autocomplete="off" />
-              </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Observations</div>
           </div>
-      </div>
-  </div>
-      <div>
-          <div class="bggrey my-2">
-              <div>
-                  <div class="d-flex">
-                      <div class="form-title">Observations</div>
-                  </div>
-                  <div class="fieldPadding">
-                      <input (keyup)="resetErrors()"
-                          type="text" formControlName="observations_incisal" placeholder=""
-                          class="form-control" autocomplete="off" />
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="bggrey my-2">
-              <div>
-                  <div class="d-flex">
-                      <div class="form-title">Diagnosis</div>
-                  </div>
-                  <div class="fieldPadding">
-                      <input (keyup)="resetErrors()"
-                          type="text" formControlName="diagnosis_incisal" placeholder=""
-                          class="form-control" autocomplete="off" />
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="bggrey my-2">
-              <div>
-                  <div class="d-flex">
-                      <div class="form-title">Notes</div>
-                  </div>
-                  <div class="fieldPadding">
-                      <input (keyup)="resetErrors()"
-                          type="text" formControlName="notes_incisal" placeholder=""
-                          class="form-control" autocomplete="off" />
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="bggrey my-2">
-            <div>
-             
-              <!-- <div class="img-section clearfix"
-                *ngIf="selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0">
-                <ul class="galul">
-                  <li *ngFor="let file of selectedFiles['photo'].files;let i = index ">
-                    <div class="galimg_outer">
-                      <div class="gal_img pointer-cursor">
-                        <img [src]="getImage(selectedFiles['photo'].base64[i], file)"
-                          *ngIf="selectedFiles['photo'].base64[i]" width="100px" height="100px">
-                        <a [href]="file.s3path" target="_blank">
-                          <img [src]="file.s3path" *ngIf="!selectedFiles['photo'].base64[i] && file.s3path"
-                            width="100px" height="100px">
-                        </a>
-                      </div>
-                      <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)">
-                        <i class=" fa fa-times-circle" aria-hidden="true"></i>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div> -->
-            </div>
-          </div>
-        </div>
-  </div>
-</div>
-
-<div class="row tab-content mt-3 tab-pane active" *ngIf="isMissing">
-  <div class="col-md-7">
-    <div>
-      <div class="bggrey my-2">
-          <div>
-              <div class="d-flex">
-                  <div class="form-title">Symptoms</div>
-              </div>
-              <div class="fieldPadding">
-                  <input (keyup)="resetErrors()"
-                      type="text" formControlName="symptoms_missing" placeholder=""
-                      class="form-control" autocomplete="off" />
-              </div>
-          </div>
-      </div>
-  </div>
-      <div>
-          <div class="bggrey my-2">
-              <div>
-                  <div class="d-flex">
-                      <div class="form-title">Observations</div>
-                  </div>
-                  <div class="fieldPadding">
-                      <input (keyup)="resetErrors()"
-                          type="text" formControlName="observations_missing" placeholder=""
-                          class="form-control" autocomplete="off" />
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="bggrey my-2">
-              <div>
-                  <div class="d-flex">
-                      <div class="form-title">Diagnosis</div>
-                  </div>
-                  <div class="fieldPadding">
-                      <input (keyup)="resetErrors()"
-                          type="text" formControlName="diagnosis_missing" placeholder=""
-                          class="form-control" autocomplete="off" />
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="bggrey my-2">
-              <div>
-                  <div class="d-flex">
-                      <div class="form-title">Notes</div>
-                  </div>
-                  <div class="fieldPadding">
-                      <input (keyup)="resetErrors()"
-                          type="text" formControlName="notes_missing" placeholder=""
-                          class="form-control" autocomplete="off" />
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="bggrey my-2">
-            <div>
-              
-              <!-- <div class="img-section clearfix"
-                *ngIf="selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0">
-                <ul class="galul">
-                  <li *ngFor="let file of selectedFiles['photo'].files;let i = index ">
-                    <div class="galimg_outer">
-                      <div class="gal_img pointer-cursor">
-                        <img [src]="getImage(selectedFiles['photo'].base64[i], file)"
-                          *ngIf="selectedFiles['photo'].base64[i]" width="100px" height="100px">
-                        <a [href]="file.s3path" target="_blank">
-                          <img [src]="file.s3path" *ngIf="!selectedFiles['photo'].base64[i] && file.s3path"
-                            width="100px" height="100px">
-                        </a>
-                      </div>
-                      <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)">
-                        <i class=" fa fa-times-circle" aria-hidden="true"></i>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div> -->
-            </div>
-          </div>
-        </div>
-  </div>
-</div>
-
-<div class="row tab-content mt-3 tab-pane active">
-  <div class="col-md-7">
-    <div>
-      <div class="bggrey my-2">
-          <div>
-              <!-- <div class="d-flex">
-                  <div class="form-title">Chief Issues</div>
-              </div> -->
-              <mat-checkbox class="mgright25 example-margin d-flex" formControlName="chiefComplaint"  (change)="changeChiefComplaint($event)"
-              >  <div class="form-title" >Chief Compalint</div></mat-checkbox>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="observations_distal" (keyup)="resetErrors()"></textarea>
           
           </div>
-      </div>
-  </div>
-    <div *ngIf="showChiefIssue">
-      <div class="bggrey my-2">
-          <div>
-              <div class="d-flex">
-                  <div class="form-title">Chief Issues</div>
-              </div>
-              <div class="fieldPadding">
-                  <input (keyup)="resetErrors()"
-                      type="text" formControlName="chiefIssue" placeholder=""
-                      class="form-control" autocomplete="off" />
-              </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Diagnosis</div>
           </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="diagnosis_distal" (keyup)="resetErrors()"></textarea>
+          
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Notes</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="notes_distal" (keyup)="resetErrors()"></textarea>
+          
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Procedure</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="procedure_distal" (keyup)="resetErrors()"></textarea>
+           
+          </div>
+        </div>
       </div>
-  </div>
-      
-     
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-7">
-    <div>
-      <div class="bggrey my-2">
+    </div>
+    <div class="row tab-content mt-3 tab-pane active" *ngIf="isBuccal">
+      <div class="col-md-7" [ngClass]="{'surface_select_byone':isBuccalData===true}">
+        <br>
+        <div class="form-title">Questionnaire about Buccal</div>
+        <br>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Symptoms</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="symptoms_buccal" (keyup)="resetErrors()"></textarea>
+          
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Observations</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="observations_buccal" (keyup)="resetErrors()"></textarea>
+          
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Diagnosis</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="diagnosis_buccal" (keyup)="resetErrors()"></textarea>
+       
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Notes</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="notes_buccal" (keyup)="resetErrors()"></textarea>
+          
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Procedure</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="procedure_buccal" (keyup)="resetErrors()"></textarea>
+         
+          </div>
+        </div>
         <div>
+        </div>
+      </div>
+    </div>
+    <div class="row tab-content mt-3 tab-pane active" *ngIf="isLingual">
+      <div class="col-md-7" [ngClass]="{'surface_select_byone':isLingualData===true}">
+        <br>
+        <div class="form-title">Questionnaire about Lingual</div>
+        <br>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Symptoms</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="symptoms_lingual" (keyup)="resetErrors()"></textarea>
+           
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Observations</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="observations_lingual" (keyup)="resetErrors()"></textarea>
+           
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Diagnosis</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="diagnosis_lingual" (keyup)="resetErrors()"></textarea>
+           
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Notes</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="notes_lingual" (keyup)="resetErrors()"></textarea>
+           
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Procedure</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="procedure_lingual" (keyup)="resetErrors()"></textarea>
+          
+          </div>
+        </div>
+        <div>
+        </div>
+      </div>
+    </div>
+    <div class="row tab-content mt-3 tab-pane active" *ngIf="isIncisal">
+      <div class="col-md-7" [ngClass]="{'surface_select_byone':isIncisalData===true}">
+        <br>
+        <div class="form-title">Questionnaire about Incisal</div>
+        <br>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Symptoms</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="symptoms_incisal" (keyup)="resetErrors()"></textarea>
+         
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Observations</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="observations_incisal" (keyup)="resetErrors()"></textarea>
+         
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Diagnosis</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="diagnosis_incisal" (keyup)="resetErrors()"></textarea>
+         
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Notes</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="notes_incisal" (keyup)="resetErrors()"></textarea>
+         
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Procedure</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="procedure_incisal" (keyup)="resetErrors()"></textarea>
+           
+          </div>
+        </div>
+        <div>
+        </div>
+      </div>
+    </div>
+    <div class="row tab-content mt-3 tab-pane active" *ngIf="isMissing">
+      <div class="col-md-7" [ngClass]="{'surface_select_byone':isMissingData===true}">
+        <br>
+        <div class="form-title">Questionnaire about Occlusal</div>
+        <br>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Symptoms</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="symptoms_missing" (keyup)="resetErrors()"></textarea>
+          
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Observations</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="observations_missing" (keyup)="resetErrors()"></textarea>
+          
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Diagnosis</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="diagnosis_missing" (keyup)="resetErrors()"></textarea>
+          
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Notes</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="notes_missing" (keyup)="resetErrors()"></textarea>
+        
+          </div>
+        </div>
+        <div class="bggrey my-2">
+          <div class="d-flex">
+            <div class="form-title">Procedure</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" class="form-control" autocomplete="off"
+            formControlName="procedure_missing" (keyup)="resetErrors()"></textarea>
+           
+          </div>
+        </div>
+        <div>
+        </div>
+      </div>
+    </div>
+    <div class="row tab-content mt-3 tab-pane active">
+      <div class="col-md-7">
+        <div class="bggrey my-2">
+          <mat-checkbox class="mgright25 example-margin d-flex" formControlName="chiefComplaint"
+            (change)="changeChiefComplaint($event)">
+            <div class="form-title">Chief Compalint</div>
+          </mat-checkbox>
+        </div>
+        <div *ngIf="showChiefIssue">
+          <div class="bggrey my-2">
+            <div class="d-flex">
+              <div class="form-title">Chief Issues</div>
+            </div>
+            <div class="fieldPadding">
+              <input (keyup)="resetErrors()" type="text" formControlName="chiefIssue" placeholder=""
+                class="form-control" autocomplete="off" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-7">
+        <div class="bggrey my-2">
           <div class="d-flex">
             <div class="form-title">Upload Files</div>
           </div>
           <div class="fieldPadding photo-border">
             <div class='file file--upload'>
               <label for='photoAttach' (click)="photoAttach.click()">
-               Add image
+                Add image
               </label>
               <input #photoAttach type='file' (change)="filesSelected($event,'photo')"
                 accept="image/*;capture=camera" />
@@ -633,8 +444,8 @@
                     <img [src]="getImage(selectedFiles['photo'].base64[i], file)"
                       *ngIf="selectedFiles['photo'].base64[i]" width="100px" height="100px">
                     <a [href]="file.s3path" target="_blank">
-                      <img [src]="file.s3path" *ngIf="!selectedFiles['photo'].base64[i] && file.s3path"
-                        width="100px" height="100px">
+                      <img [src]="getImagefromUrl(file.s3path,file)"
+                        *ngIf="!selectedFiles['photo'].base64[i] && file.s3path" width="100px" height="100px">
                     </a>
                   </div>
                   <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)">
@@ -647,22 +458,14 @@
         </div>
       </div>
     </div>
+    <br />
+  </form>
+  <div class="mt-2">
+    <button class="btn btn-cancel mr-2 " (click)="goBack()">
+      Cancel
+    </button>
+    <button class="btn btn-draftt mr-2" (click)="saveTeeth()">
+      Save
+    </button>
   </div>
-</div>
-
-<br/>
-    </form>
-    <div class="mt-2">
-        <div>
-          <button class="btn btn-draft mr-2"  (click)="saveTeeth()">
-            Save
-          </button>
-          <button class="btn btnn-primary " (click)="goBack()">
-              Cancel
-              </button>
-        </div>
-        <div class="mt-2">
-          
-        </div>
-      </div>
 </div>

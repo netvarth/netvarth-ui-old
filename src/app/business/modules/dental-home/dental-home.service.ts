@@ -78,4 +78,8 @@ export class DentalHomeService {
     const url = 'provider/mr/dentalchart/' + mrid;
     return this.servicemeta.httpDelete(url,data);
   }
+  GetMedicalRecord(mrId) {
+    const url = 'provider/mr/' + mrId;
+    return this.servicemeta.httpGet(url);
+  }
 }
