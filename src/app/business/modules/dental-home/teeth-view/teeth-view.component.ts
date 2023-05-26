@@ -318,5 +318,14 @@ console.log( this.selectedTeethDetails)
       // this.routingService.handleRoute('teeth/' + this.selectedTeethDetails.toothId, navigationExtras);
   
     }
+    backtoHome(){
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          mrid: this.mrid,
+          custId: this.patientId
+        }
+      };
+      this.router.navigate(['provider', 'dental'], navigationExtras);
+    }
 }
 

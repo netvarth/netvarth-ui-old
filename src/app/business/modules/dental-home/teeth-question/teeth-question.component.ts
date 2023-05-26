@@ -150,21 +150,27 @@ export class TeethQuestionComponent implements OnInit {
     if (this.teethDetailsById && this.teethDetailsById.surface) {
       if (this.teethDetailsById.surface.hasOwnProperty('mesial')) {
         this.isMesialData = true;
+        this.isMesial = true;
       }
       if (this.teethDetailsById.surface.hasOwnProperty('distal')) {
         this.isDistalData = true;
+        this.isDistal = true;
       }
       if (this.teethDetailsById.surface.hasOwnProperty('buccal')) {
         this.isBuccalData = true;
+        this.isBuccal = true;
       }
       if (this.teethDetailsById.surface.hasOwnProperty('lingual')) {
         this.isLingualData = true;
+        this.isLingual = true;
       }
       if (this.teethDetailsById.surface.hasOwnProperty('incisal')) {
         this.isIncisalData = true;
+        this.isIncisal = true;
       }
       if (this.teethDetailsById.surface.hasOwnProperty('occlusal')) {
         this.isMissingData = true;
+        this.isMissing = true;
       }
     }
     // this.createTeeth.controls['chiefComplaint'].setValue(this.teethDetailsById.chiefComplaint);

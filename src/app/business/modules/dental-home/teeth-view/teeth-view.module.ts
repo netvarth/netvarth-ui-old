@@ -7,6 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeethViewComponent } from './teeth-view.component';
 import { TabViewModule } from 'primeng/tabview';
 import { MatTabsModule } from '@angular/material/tabs';
+import { CapitalizeFirstPipeModule } from '../../../../../../src/app/shared/pipes/capitalize.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const routes: Routes = [
     { path: '', component: TeethViewComponent }
@@ -23,7 +25,9 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     TabViewModule,
+    CapitalizeFirstPipeModule,
     MatTabsModule,
+    MatTooltipModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [
