@@ -142,6 +142,7 @@
 
 .galul li {
   float: left !important;
+ 
 }
 .galimg_outer {
   position: relative !important;
@@ -234,6 +235,7 @@ hr {
 }
 .flex-three {
   width: 20%;
+  justify-content: flex-start;
 }
 @media (max-width:600px) {
   .teeth-summary {
