@@ -6,7 +6,10 @@
   <div class="d-lg-flex justify-content-between">
     <div class="d-flex">
       <div class="ml-4">
-        <div>
+        <div *ngIf="teethId">
+          <span class="dealer-name mt-4">Tooth {{teethId}}</span>
+        </div>
+        <div *ngIf="teethIndex && teethId">
           <span class="dealer-name mt-4">Tooth {{teethIndex}}</span>
         </div>
         <div class="font-medium">

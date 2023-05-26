@@ -25,13 +25,13 @@ export class TeethQuestionComponent implements OnInit {
   filesToUpload: any = [];
   businessDetails: any;
   businessId: any;
-  isMesial = false;
+  isMesial = true;
   isDistal = false;
   isBuccal = false;
   isLingual = false;
   isIncisal = false;
   isMissing = false;
-  isMesialData = false;
+  isMesialData = true;
   isDistalData = false;
   isBuccalData = false;
   isLingualData = false;
