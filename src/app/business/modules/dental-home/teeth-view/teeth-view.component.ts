@@ -319,3 +319,4 @@ console.log( this.selectedTeethDetails)
   
     }
 }
+

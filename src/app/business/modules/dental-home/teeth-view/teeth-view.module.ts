@@ -34,3 +34,4 @@ const routes: Routes = [
   ],
 })
 export class TeethViewModule { }
+

@@ -13,7 +13,6 @@ const routes: Routes = [
   { path: 'teeth/:id', loadChildren: () => import('./teeth-question/teeth-question.module').then(m => m.TeethQuestionModule) },
   { path: 'teeth/id/view', loadChildren: () => import('./teeth-view/teeth-view.module').then(m => m.TeethViewModule) },
 ]
-
 @NgModule({
   declarations: [
     DentalHomeComponent 

@@ -353,7 +353,6 @@ export class DentalHomeComponent implements OnInit {
   toggleAllApptIntStatusSelection() {
 
   }
-  
   goBack() {
     this.location.back();
   }

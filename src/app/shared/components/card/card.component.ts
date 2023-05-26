@@ -207,6 +207,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         event.stopPropagation();
     }
     cardActionPerformed(type, action, service, location, userId, event, item?) {
+     
         event.stopPropagation();
         const actionObj = {};
         if (item) {

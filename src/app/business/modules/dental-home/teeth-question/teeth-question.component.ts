@@ -698,6 +698,5 @@ export class TeethQuestionComponent implements OnInit {
     this.selectedFiles[type].files.splice(i, 1);
     this.selectedFiles[type].base64.splice(i, 1);
     this.selectedFiles[type].caption.splice(i, 1);
-
   }
 }
