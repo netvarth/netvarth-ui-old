@@ -32,6 +32,7 @@ import { FullViewCalendarModule } from '../dashboard/full-view-calendar/full-vie
 import { TabViewModule } from 'primeng/tabview';
 import { DropdownModule } from 'primeng/dropdown';
 import { SidebarModule } from 'primeng/sidebar';
+import { BookingsModule } from '../bookings/bookings.module';
 
 const routes: Routes = [
   { path: '', component: AppointmentsComponent },
@@ -83,6 +84,7 @@ const routes: Routes = [
     TabViewModule,
     DropdownModule,
     SidebarModule,
+    BookingsModule,
     [RouterModule.forChild(routes)]
   ],
   declarations: [

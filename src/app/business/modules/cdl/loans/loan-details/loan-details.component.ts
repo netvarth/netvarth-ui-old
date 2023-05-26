@@ -445,6 +445,7 @@ export class LoanDetailsComponent implements OnInit {
       };
     },
       (error) => {
+        this.btnLoading = false;
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
       })
   }
@@ -467,6 +468,7 @@ export class LoanDetailsComponent implements OnInit {
         //   this.uploadAudioVideo(s3urls).then(
         //     (dataS3Url) => {
         //       console.log(dataS3Url);
+        this.btnLoading = false;
         this.snackbarService.openSnackBar("Bank Statement Uploaded Successfully")
         // this.router.navigate(['provider', 'cdl', 'loans']);
         this.ngOnInit();
@@ -477,6 +479,16 @@ export class LoanDetailsComponent implements OnInit {
       };
     },
       (error) => {
+        this.selectedFiles['bankStatements'] = {
+          files: [], base64: [], caption: []
+        };
+        for (let i = 0; i < this.filesToUpload.length; i++) {
+          this.filesToUpload[i]['order'] = i;
+          if (this.filesToUpload[i]["type"] == 'bankStatements') {
+            this.filesToUpload[i] = []
+          }
+        }
+        this.btnLoading = false;
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
       })
   }

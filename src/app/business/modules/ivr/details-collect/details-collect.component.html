@@ -58,9 +58,9 @@
               *ngIf="callData && callData.userId && (callData.callStatus && callData.callStatus!='callCompleted')"><img
                 width="15" src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Unassign
             </button>
-
+            <!-- callData.questionnaires && callData.questionnaires[0] && callData.questionnaires[0].questionAnswers && -->
             <button type="button" mat-menu-item class="font-weight-600" (click)="markAsComplete(callData.uid)"
-              *ngIf="callData.questionnaires && callData.questionnaires[0] && callData.questionnaires[0].questionAnswers && (callData.callStatus && callData.callStatus!='callCompleted')"><i
+              *ngIf="callData.callStatus && callData.callStatus!='callCompleted'"><i
                 class="fa fa-check"></i>Complete
             </button>
           </mat-menu>

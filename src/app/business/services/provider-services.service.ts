@@ -6,6 +6,7 @@ import { projectConstantsLocal } from '../../../../src/app/shared/constants/proj
 // Import RxJs required methods
 import { ServiceMeta } from '../../shared/services/service-meta';
 import { GroupStorageService } from '../../shared/services/group-storage.service';
+import * as moment from 'moment';
 
 @Injectable()
 export class ProviderServices {
@@ -2175,7 +2176,7 @@ export class ProviderServices {
     const url = 'provider/waitlist/labelBatch';
     return this.servicemeta.httpPost(url, data);
   }
- addLabeltoMultipleAppt (data) {
+  addLabeltoMultipleAppt(data) {
     const url = 'provider/appointment/labelBatch';
     return this.servicemeta.httpPost(url, data);
   }
@@ -2949,7 +2950,7 @@ export class ProviderServices {
   getBranchesByFilter(filter) {
     const url = 'provider/branchmaster';
     return this.servicemeta.httpGet(url, null, filter);
-  }
+  } 
 
   saveBranch(data) {
     const url = 'provider/branchmaster';
@@ -2991,4 +2992,78 @@ export class ProviderServices {
     const url = 'provider/account/settings/whatsapp/' + state;
     return this.servicemeta.httpPut(url);
   }
+
+  getBookings(source, timeStamp, filter = {}) {
+    const url = 'provider/' + source + '/' + timeStamp;
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
+  getBookingsCount(source, timeStamp) {
+    const url = 'provider/' + source + '/' + timeStamp + '/count';
+    return this.servicemeta.httpGet(url, null);
+  }
+
+  setFiltersFromPrimeTable(event) {
+    let api_filter = {}
+    if ((event && event.first) || (event && event.first == 0)) {
+      api_filter['from'] = event.first;
+    }
+
+    if (event && event.rows) {
+      api_filter['count'] = event.rows;
+    }
+
+    if (event && event.filters) {
+      let filters = event.filters;
+      Object.entries(filters).forEach(([key, value]) => {
+        if (filters[key]['value'] != null) {
+          let filterSuffix = ''
+          if (filters[key]['matchMode'] == 'startsWith') {
+            filterSuffix = 'startWith';
+          }
+          else if (filters[key]['matchMode'] == 'contains') {
+            filterSuffix = 'like';
+          }
+          else if (filters[key]['matchMode'] == 'endsWith') {
+            filterSuffix = 'endWith';
+          }
+          else if (filters[key]['matchMode'] == 'equals') {
+            filterSuffix = 'eq';
+          }
+          else if (filters[key]['matchMode'] == 'notEquals') {
+            filterSuffix = 'neq';
+          }
+          else if (filters[key]['matchMode'] == "dateIs") {
+            filterSuffix = 'eq';
+            let dateValue = new Date(filters[key]['value']);
+            filters[key]['value'] = moment(dateValue).format('YYYY-MM-DD');
+          }
+          else if (filters[key]['matchMode'] == "dateIsNot") {
+            filterSuffix = 'neq';
+            let dateValue = new Date(filters[key]['value']);
+            filters[key]['value'] = moment(dateValue).format('YYYY-MM-DD');
+          }
+          if (filterSuffix != '') {
+            api_filter[key + '-' + filterSuffix] = filters[key]['value'];
+          }
+        }
+      });
+    }
+
+    if (event && event.sortField) {
+      let filterValue;
+      if (event.sortOrder && event.sortOrder == 1) {
+        filterValue = 'asc';
+      }
+      else if (event.sortOrder && event.sortOrder == -1) {
+        filterValue = 'dsc';
+      }
+      if (filterValue) {
+        api_filter['sort_' + event.sortField] = filterValue;
+      }
+    }
+    return api_filter;
+  }
+
+
 }

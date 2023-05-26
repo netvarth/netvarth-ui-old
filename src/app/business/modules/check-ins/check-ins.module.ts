@@ -34,6 +34,7 @@ import { TeleBookingService } from '../../../shared/services/tele-bookings-servi
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FullViewCalendarModule } from '../dashboard/full-view-calendar/full-view-calendar.module';
 import { DropdownModule } from 'primeng/dropdown';
+import { BookingsModule } from '../bookings/bookings.module';
 
 
 const routes: Routes = [
@@ -86,6 +87,7 @@ const routes: Routes = [
     MatAutocompleteModule,
     FullViewCalendarModule,
     DropdownModule,
+    BookingsModule,
     ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     [RouterModule.forChild(routes)]
   ],

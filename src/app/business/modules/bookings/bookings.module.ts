@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-//import { BookingsRoutingModule } from './bookings.routing.module';
-// import { BookingDetailModule } from './booking-detail/booking-detail.module';
 import { BookingsComponent } from './bookings.component';
-// import { BookingDashboardAdminModule } from './booking-dashboard-admin/booking-dashboard-admin.module';
-// import { BookingDashboardModule } from './booking-dashboard/booking-dashboard.module';
-
-
+import { CardModule } from 'primeng/card';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TooltipModule } from 'primeng/tooltip';
+import { TableModule } from 'primeng/table';
+import { AccordionModule } from 'primeng/accordion';
+import { SkeletonLoadingModule } from '../../../shared/modules/skeleton-loading/skeleton-loading.module';
 
 @NgModule({
   declarations: [
@@ -14,10 +15,14 @@ import { BookingsComponent } from './bookings.component';
   ],
   imports: [
     CommonModule,
-    //BookingsRoutingModule,
-    // BookingDetailModule,
-    // BookingDashboardAdminModule,
-    // BookingDashboardModule
+    CardModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DropdownModule,
+    TooltipModule,
+    TableModule,
+    AccordionModule,
+    SkeletonLoadingModule
   ],
   exports: [BookingsComponent]
 })

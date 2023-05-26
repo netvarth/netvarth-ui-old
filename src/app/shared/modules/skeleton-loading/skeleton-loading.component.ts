@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-skeleton-loading',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./skeleton-loading.component.css']
 })
 export class SkeletonLoadingComponent implements OnInit {
-
+  @Input() type;
   constructor() { }
 
   ngOnInit(): void {

@@ -1,0 +1,76 @@
+::ng-deep .bookins-heading-card .p-card
+{
+  font-size: 18px!important;
+  font-weight: bold!important;
+  color: #000!important;
+}
+
+::ng-deep .widget-actions-card .p-card{
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #000 !important;
+}
+
+
+::ng-deep .bookins-heading-card .p-card-content,
+::ng-deep .widget-actions-card .p-card-content,
+::ng-deep .bookings-list-card .p-card-content {
+  padding: 0 !important;
+}
+
+
+::ng-deep .bookingsTable .p-accordion .p-accordion-header .p-accordion-header-link
+{
+  background: #fff!important;
+}
+
+::ng-deep .bookingsTable .p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon {
+  margin-top: -8px!important;
+  position: absolute!important;
+  right: 0.5em!important;
+  top: 50%!important;
+}
+
+
+.widget-actions-image
+{
+  width: 40px;
+  height: 40px;
+}
+
+
+.user-selection-btn {
+  border: 1px solid #000000cc;
+  border-radius: 3px;
+  padding: 5px 10px;
+  color: #262626cc;
+  background-color: #fff;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.user-selection-btn:hover {
+  background-color: #F0F0F0 !important;
+  transition: 0.3s;
+}
+
+.text-primary
+{
+  color: #1E4079!important;
+}
+
+@media (max-width: 567px) {
+  .widget-actions-image {
+    width: 25px;
+    height: 25px;
+  }
+  .px-xs-1
+  {
+    padding: 5px!important;
+  }
+    ::ng-deep .widget-actions-card .p-card {
+      font-size: 10px !important;
+    }
+}
+
+

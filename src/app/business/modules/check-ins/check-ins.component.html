@@ -48,12 +48,6 @@
 </section>
 
 
-<!-- <div class="clearfix"></div>
-<div class="pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
-  <p-dropdown [dropdownIcon]="'fa fa-caret-down '" [options]="viewOptions" [(ngModel)]="SelectedView"
-    optionLabel="displayName"></p-dropdown>
-</div> -->
-
 <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
 <section *ngIf="!showDashbard && !apiloading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12" id="bcrumbHeader">
@@ -251,9 +245,7 @@
                     <div class="card-body">
                       <div class="filterTextinput filter-text-input">
                         <li class="filterli filter-li">
-                          <!-- <input type="text" #Ffname (keyup)="keyPressed()" class="filterTextbox filter-textbox"
-                            [(ngModel)]="filter.first_name" [ngModelOptions]="{standalone: true}"
-                            placeholder="Enter First Name"> -->
+
                           <input autocomplete="off" type="text" #Ffname (keyup)="keyPressed()"
                             class="form-control1 form-control1-solid form-control1-lg" [(ngModel)]="filter.first_name"
                             placeholder="Enter First Name" [matAutocomplete]="autoprov"
@@ -356,14 +348,7 @@
                   <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
                     <div class="card-body">
                       <div class="filterTextinput filter-text-input">
-                        <!-- <li class="filterli filter-li">
-                          <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode
-                            (keyup)="keyPressed()" class="filterTextbox change countryCodewidth" placeholder="+91">
-                          <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
-                            [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
-                            (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
-                            placeholder="9955668855">
-                        </li> -->
+
                         <li class="filterli filter-li flexClass">
                           <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode
                             (keyup)="keyPressed()" class="form-control1 form-control1-solid form-control1-lg"
@@ -410,7 +395,6 @@
                   <div id="collapseServices1" class="collapse in" data-parent="#accordion1">
                     <div class="card-body">
                       <div class="filter-checkbox-input" *ngIf="services.length > 1">
-                        <!-- <label class="filterHeaders">Services</label> -->
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -458,7 +442,7 @@
                   <div id="collapsePayStatus1" class="collapse in" data-parent="#accordion1">
                     <div class="card-body">
                       <div class="filter-checkbox-input">
-                        <!-- <label class="filterHeaders">Payment Status</label> -->
+
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -496,8 +480,7 @@
                   <div id="collapseAMode1" class="collapse in" data-parent="#accordion1">
                     <div class="card-body">
                       <div class="filter-checkbox-input">
-                        <!-- <label *ngIf="!showToken" class="filterHeaders">Check-in Mode</label>
-                              <label *ngIf="showToken" class="filterHeaders">Token booking mode</label> -->
+
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -533,7 +516,6 @@
                   <div id="collapseLabels1" class="collapse in" data-parent="#accordion1">
                     <div class="card-body">
                       <div class="filter-checkbox-input" *ngIf="providerLabels.length > 0">
-                        <!-- <label class="filterHeaders">Labels</label> -->
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                           <mat-checkbox class="filter-checkbox" [checked]="allLabelSelected"
                             (change)="setLabelFilter('all', $event)">
@@ -568,15 +550,10 @@
                   <div id="collapseStatus1" class="collapse in" data-parent="#accordion1">
                     <div class="card-body">
                       <div class="filter-checkbox-input">
-                        <!-- <label *ngIf="!showToken" class="filterHeaders">Check-in Mode</label>
-                              <label *ngIf="showToken" class="filterHeaders">Token booking mode</label> -->
+
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li>
-                        <!-- <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                          <mat-checkbox class="filter-checkbox" [checked]="allStatusSelected"
-                            (change)="setFilterDataCheckbox('internalStatus', 'all', $event)">
-                            All</mat-checkbox>
-                        </li> -->
+
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                           *ngFor="let stat of internalStats">
                           <mat-checkbox class="filter-checkbox" [checked]="intStat.indexOf(stat.statusId) !== -1"
@@ -587,7 +564,7 @@
                     </div>
                   </div>
                 </div>
-                <!----for multi user filter start today tab-->
+
                 <div class="card" *ngIf="users.length >0">
                   <div class="card-header">
                     <h2 class="mb-0">
@@ -606,9 +583,7 @@
                   <div id="collapseServicesMultiUser" class="collapse in" data-parent="#accordion3">
                     <div class="card-body">
                       <div class="filter-checkbox-input">
-                        <!-- <label class="filterHeaders">Services</label> -->
-                        <!-- <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                        </li> -->
+
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                           <mat-checkbox class="filter-checkbox" [checked]="allServiceSelectedMultiUser"
                             (change)="setFilterDataCheckbox('multiUser', 'all', $event)">
@@ -624,21 +599,12 @@
                               {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
                           </span>
                         </li>
-                        <!-- <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                          *ngFor="let multiUser of users">
-                          <span *ngIf="multiUser.admin === true">
-                          <mat-checkbox class="filter-checkbox"
-                            [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
-                            (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
-                            {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
-                          </span>
-                        </li> -->
+
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <!----for multi user filter end today tab -->
 
               </ul>
             </section>
@@ -773,7 +739,7 @@
                   <span style="color:green" *ngIf="checkin.internalStatus"> {{
                     checkin.internalStatus }}</span>
                   <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
-                    <!-- Team Name -->
+
                     {{getUsersList(checkin.teamId)}}
                   </div>
                   <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
@@ -845,8 +811,7 @@
                     </span>
                     <span
                       *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                      <!-- {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
-                      checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }} -->
+
                       <span *ngIf="checkin.whatsApp_PhNumber">
                         {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                         checkin.whatsApp_PhNumber}}
@@ -907,9 +872,7 @@
               <i class="fa fa-refresh" (click)="refresh()"></i>
             </a>
             <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
-              <!-- <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="filtericonTooltip">
-                    </i> -->
+
               <img src="../../../assets/images/provider-filter-icon.png" (click)="showFilterSidebar()"
                 [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
                 style="width: 22px !important; margin-top: -6px !important;">
@@ -1026,7 +989,6 @@
                   <span style="color:green" *ngIf="checkin.internalStatus">{{
                     checkin.internalStatus }}</span>
                   <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
-                    <!-- Team Name -->
                     {{getUsersList(checkin.teamId)}}
                   </div>
                   <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
@@ -1115,8 +1077,7 @@
                     </span>
                     <span
                       *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                      <!-- {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
-                      checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }} -->
+
                       <span *ngIf="checkin.whatsApp_PhNumber">
                         {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                         checkin.whatsApp_PhNumber}}
@@ -1212,9 +1173,7 @@
                       <div class="card-body">
                         <div class="filterTextinput filter-text-input">
                           <li class="filterli filter-li">
-                            <!-- <input type="text" #Ffname (keyup)="keyPressed()" class="filterTextbox filter-textbox"
-                              [(ngModel)]="filter.first_name" [ngModelOptions]="{standalone: true}"
-                              placeholder="Enter First Name"> -->
+
                             <input autocomplete="off" type="text" #Ffname (keyup)="keyPressed()"
                               class="form-control1 form-control1-solid form-control1-lg" [(ngModel)]="filter.first_name"
                               placeholder="Enter First Name" [matAutocomplete]="autoprov"
@@ -1317,14 +1276,7 @@
                     <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
                       <div class="card-body">
                         <div class="filterTextinput filter-text-input">
-                          <!-- <li class="filterli filter-li">
-                            <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode
-                              (keyup)="keyPressed()" class="filterTextbox change countryCodewidth" placeholder="+91">
-                            <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
-                              [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
-                              (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
-                              placeholder="9955668855">
-                          </li> -->
+
                           <li class="filterli filter-li flexClass">
                             <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode
                               (keyup)="keyPressed()" class="form-control1 form-control1-solid form-control1-lg"
@@ -1371,7 +1323,7 @@
                     <div id="collapseServices2" class="collapse in" data-parent="#accordion2">
                       <div class="card-body">
                         <div class="filter-checkbox-input" *ngIf="services.length > 1">
-                          <!-- <label class="filterHeaders">Services</label> -->
+
                           <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                           </li>
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -1421,7 +1373,7 @@
                     <div id="collapsePayStatus2" class="collapse in" data-parent="#accordion2">
                       <div class="card-body">
                         <div class="filter-checkbox-input">
-                          <!-- <label class="filterHeaders">Payment Status</label> -->
+
                           <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                           </li>
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -1494,7 +1446,7 @@
                     <div id="collapseLabels2" class="collapse in" data-parent="#accordion2">
                       <div class="card-body">
                         <div class="filter-checkbox-input" *ngIf="providerLabels.length > 0">
-                          <!-- <label class="filterHeaders">Labels</label> -->
+
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                             <mat-checkbox class="filter-checkbox" [checked]="allLabelSelected"
                               (change)="setLabelFilter('all', $event)">
@@ -1529,15 +1481,10 @@
                     <div id="collapseStatus2" class="collapse in" data-parent="#accordion1">
                       <div class="card-body">
                         <div class="filter-checkbox-input">
-                          <!-- <label *ngIf="!showToken" class="filterHeaders">Check-in Mode</label>
-                                <label *ngIf="showToken" class="filterHeaders">Token booking mode</label> -->
+
                           <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                           </li>
-                          <!-- <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                            <mat-checkbox class="filter-checkbox" [checked]="allStatusSelected"
-                              (change)="setFilterDataCheckbox('internalStatus', 'all', $event)">
-                              All</mat-checkbox>
-                          </li> -->
+
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                             *ngFor="let stat of internalStats">
                             <mat-checkbox class="filter-checkbox" [checked]="intStat.indexOf(stat.statusId) !== -1"
@@ -1578,7 +1525,7 @@
                       </div>
                     </div>
                   </div>
-                  <!----for multi user filter start future tab-->
+
                   <div class="card" *ngIf="users.length >0">
                     <div class="card-header">
                       <h2 class="mb-0">
@@ -1597,9 +1544,7 @@
                     <div id="collapseServicesMultiUser" class="collapse in" data-parent="#accordion3">
                       <div class="card-body">
                         <div class="filter-checkbox-input">
-                          <!-- <label class="filterHeaders">Services</label> -->
-                          <!-- <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                        </li> -->
+
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                             <mat-checkbox class="filter-checkbox" [checked]="allServiceSelectedMultiUser"
                               (change)="setFilterDataCheckbox('multiUser', 'all', $event)">
@@ -1615,21 +1560,12 @@
                                 {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
                             </span>
                           </li>
-                          <!-- <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                            *ngFor="let multiUser of users">
-                            <span *ngIf="multiUser.admin === true">
-                            <mat-checkbox class="filter-checkbox"
-                              [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
-                              (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
-                              {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
-                            </span>
-                          </li> -->
+
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <!----for multi user filter end future tab -->
                 </ul>
               </section>
               <div class="filter-footer" *ngIf="filterapplied === true">
@@ -1708,9 +1644,7 @@
                     <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                     <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                       capitalizeFirst}}</span>
-                    <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.browser && showMore">
-                        {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
-                        {{getbrowser(checkin.requestInfo.browser) | capitalizeFirst}}</span> -->
+
 
                     <span
                       *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
@@ -1756,7 +1690,7 @@
                 <span style="color:green" *ngIf="checkin.internalStatus"> {{
                   checkin.internalStatus }}</span>
                 <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
-                  <!-- Team Name -->
+
                   {{getUsersList(checkin.teamId)}}
                 </div>
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
@@ -1828,8 +1762,7 @@
                   </span>
                   <span
                     *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                    <!-- {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
-                    checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }} -->
+
                     <span *ngIf="checkin.whatsApp_PhNumber">
                       {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                       checkin.whatsApp_PhNumber}}
@@ -1926,9 +1859,6 @@
                       <div class="card-body">
                         <div class="filterTextinput filter-text-input">
                           <li class="filterli filter-li">
-                            <!-- <input type="text" #Ffname (keyup)="keyPressed()" class="filterTextbox filter-textbox"
-                              [(ngModel)]="filter.first_name" [ngModelOptions]="{standalone: true}"
-                              placeholder="Enter First Name"> -->
                             <input autocomplete="off" type="text" #Ffname (keyup)="keyPressed()"
                               class="form-control1 form-control1-solid form-control1-lg" [(ngModel)]="filter.first_name"
                               placeholder="Enter First Name" [matAutocomplete]="autoprov"
@@ -2032,14 +1962,7 @@
                     <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
                       <div class="card-body">
                         <div class="filterTextinput filter-text-input" *ngIf="time_type == 3">
-                          <!-- <li class="filterli filter-li">
-                            <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode
-                              (keyup)="keyPressed()" class="filterTextbox change countryCodewidth" placeholder="+91">
-                            <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
-                              [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
-                              (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
-                              placeholder="9955668855">
-                          </li> -->
+
                           <li class="filterli filter-li flexClass">
                             <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode
                               (keyup)="keyPressed()" class="form-control1 form-control1-solid form-control1-lg"
@@ -2068,43 +1991,7 @@
                       </div>
                     </div>
                   </div>
-                  <!-- <div class="card" *ngIf="locations.length > 0 && time_type === 3">
-                    <div class="card-header">
-                      <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse"
-                          data-target="#collapseLocations3" aria-expanded="false">
-                          <div>
-                            <div style="display: inline-block !important;">
-                              <i class="fa fa-map-marker"></i>
-                            </div>
-                            <span>&nbsp;Locations</span>
-                          </div>
-                          <i class="fa fa-angle-down"></i>
-                        </button>
-                      </h2>
-                    </div>
-                    <div id="collapseLocations3" class="collapse in" data-parent="#accordion3">
-                      <div class="card-body">
-                        <div class="filter-checkbox-input" *ngIf="locations.length > 0 && time_type === 3">
 
-                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                          </li>
-                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                            <mat-checkbox class="filter-checkbox" [checked]="allLocationSelected"
-                              (change)="setFilterDataCheckbox('location', 'all', $event)">
-                              All</mat-checkbox>
-                          </li>
-                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                            <mat-checkbox class="filter-checkbox" *ngFor="let loc of locations"
-                              [checked]="filterLocation.indexOf(loc.id) !== -1"
-                              (change)="setFilterDataCheckbox('location', loc.id, $event)">
-                              {{loc.place}}
-                            </mat-checkbox>
-                          </li>
-                        </div>
-                      </div>
-                    </div>
-                  </div> -->
                   <div class="card" *ngIf="queues.length > 0 && time_type === 3">
                     <div class="card-header">
                       <h2 class="mb-0">
@@ -2123,7 +2010,6 @@
                     <div id="collapseQueues3" class="collapse in" data-parent="#accordion3">
                       <div class="card-body">
                         <div class="filter-checkbox-input" *ngIf="queues.length > 0 && time_type === 3">
-                          <!-- <label class="filterHeaders">Queues</label> -->
                           <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                           </li>
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -2164,7 +2050,6 @@
                     <div id="collapseServices3" class="collapse in" data-parent="#accordion3">
                       <div class="card-body">
                         <div class="filter-checkbox-input" *ngIf="services.length > 1">
-                          <!-- <label class="filterHeaders">Services</label> -->
                           <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                           </li>
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -2251,7 +2136,6 @@
                     <div id="collapsePayStatus3" class="collapse in" data-parent="#accordion3">
                       <div class="card-body">
                         <div class="filter-checkbox-input">
-                          <!-- <label class="filterHeaders">Payment Status</label> -->
                           <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                           </li>
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -2324,7 +2208,6 @@
                     <div id="collapseLabels3" class="collapse in" data-parent="#accordion3">
                       <div class="card-body">
                         <div class="filter-checkbox-input" *ngIf="providerLabels.length > 0">
-                          <!-- <label class="filterHeaders">Labels</label> -->
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                             <mat-checkbox class="filter-checkbox" [checked]="allLabelSelected"
                               (change)="setLabelFilter('all', $event)">
@@ -2359,15 +2242,10 @@
                     <div id="collapseStatus3" class="collapse in" data-parent="#accordion1">
                       <div class="card-body">
                         <div class="filter-checkbox-input">
-                          <!-- <label *ngIf="!showToken" class="filterHeaders">Check-in Mode</label>
-                                <label *ngIf="showToken" class="filterHeaders">Token booking mode</label> -->
+                         +
                           <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                           </li>
-                          <!-- <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                            <mat-checkbox class="filter-checkbox" [checked]="allStatusSelected"
-                              (change)="setFilterDataCheckbox('internalStatus', 'all', $event)">
-                              All</mat-checkbox>
-                          </li> -->
+
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                             *ngFor="let stat of internalStats">
                             <mat-checkbox class="filter-checkbox" [checked]="intStat.indexOf(stat.statusId) !== -1"
@@ -2420,7 +2298,7 @@
                       </div>
                     </div>
                   </div>
-                  <!----for multi user filter start history tab-->
+
                   <div class="card" *ngIf="users.length >0">
                     <div class="card-header">
                       <h2 class="mb-0">
@@ -2439,9 +2317,8 @@
                     <div id="collapseServicesMultiUser" class="collapse in" data-parent="#accordion3">
                       <div class="card-body">
                         <div class="filter-checkbox-input">
-                          <!-- <label class="filterHeaders">Services</label> -->
-                          <!-- <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                        </li> -->
+
+
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                             <mat-checkbox class="filter-checkbox" [checked]="allServiceSelectedMultiUser"
                               (change)="setFilterDataCheckbox('multiUser', 'all', $event)">
@@ -2457,21 +2334,12 @@
                                 {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
                             </span>
                           </li>
-                          <!-- <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                            *ngFor="let multiUser of users">
-                            <span *ngIf="multiUser.admin === true">
-                            <mat-checkbox class="filter-checkbox"
-                              [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
-                              (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
-                              {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
-                            </span>
-                          </li> -->
+
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <!----for multi user filter end history tab -->
                 </ul>
               </section>
               <div class="filter-footer" *ngIf="filterapplied === true">
@@ -2546,9 +2414,7 @@
                     <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                     <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                       capitalizeFirst}}</span>
-                    <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.browser && showMore">
-                        {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
-                        {{getbrowser(checkin.requestInfo.browser) | capitalizeFirst}}</span> -->
+
                     <span
                       *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
                     <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">&nbsp;</span>
@@ -2592,7 +2458,6 @@
                 <span style="color:green" *ngIf="checkin.internalStatus"> {{
                   checkin.internalStatus }}</span>
                 <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
-                  <!-- {{}} Team Name -->
                   {{getUsersList(checkin.teamId)}}
                 </div>
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
@@ -2670,8 +2535,6 @@
                   <span
                     *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
 
-                    <!-- {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
-                    checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }} -->
                     <span *ngIf="checkin.whatsApp_PhNumber">
                       {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                       checkin.whatsApp_PhNumber}}
@@ -2702,7 +2565,6 @@
               </td>
             </tr>
           </tbody>
-          <!-- *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user && this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && small_device_display" -->
           <tbody *ngIf="check_in_filtered_list.length > 0 && small_device_display">
             <div [class.user-tr-backclr]="checkin.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
               *ngFor="let checkin of check_in_filtered_list, let i=index">
@@ -2754,3 +2616,8 @@
     <app-full-view-calendar [type]="'tokens'"></app-full-view-calendar>
   </div>
 </section>
+
+<!-- 
+<div>
+  <app-bookings [type]="'checkins'"></app-bookings>
+</div> -->

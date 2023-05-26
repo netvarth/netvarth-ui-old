@@ -275,7 +275,7 @@ export class IvrComponent implements OnInit {
   }
 
   loadCallBackCalls(event) {
-    this.getIvrCallBacks();
+    // this.getIvrCallBacks();
     let api_filter = this.ivrService.setFiltersFromPrimeTable(event);
     // api_filter['tokenRaised-eq'] = true;
     api_filter['userId-eq'] = null;

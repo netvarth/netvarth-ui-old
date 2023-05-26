@@ -704,7 +704,8 @@
                   <div class="fieldPadding">
                     <div class="d-lg-flex d-md-flex">
                       <div class="file">
-                        <label (click)="bankStatements.click()">
+                        <app-common-innerloading-spinner *ngIf="btnLoading"></app-common-innerloading-spinner>
+                        <label (click)="bankStatements.click()" *ngIf="!btnLoading">
                           Upload Bank Statements
                         </label>
                         <input #bankStatements type='file' (change)="filesSelected($event, 'bankStatements')" />

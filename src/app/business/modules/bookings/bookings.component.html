@@ -1,0 +1,245 @@
+<div class="bookins-heading-card">
+  <div>
+    <p-card>
+      <div class="d-flex">
+        <div class="mr-2">
+          <img src="../../../../assets/images/dashboard/welcome.png" width="40" height="40">
+        </div>
+        <div class="d-flex align-items-center">
+          <span>Welcome to your {{bookingType}}s Dashboard</span>
+        </div>
+      </div>
+    </p-card>
+  </div>
+</div>
+
+<div class="mt-2">
+  <div class="container-fluid no-padding">
+    <div class="widget-actions-card">
+      <p-card>
+        <div class="row">
+          <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 pointer-cursor text-center px-xs-1"
+            (click)="createAppointment()">
+            <p-card>
+              <div>
+                <div>
+                  <img src="../../../../assets/images/dashboard/create-booking.png" class="widget-actions-image">
+                </div>
+              </div>
+              <div class="my-1">
+                <span *ngIf="bookingType">{{bookingType}}</span>
+              </div>
+            </p-card>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 pointer-cursor text-center px-xs-1">
+            <p-card>
+              <div>
+                <div>
+                  <img src="../../../../assets/images/dashboard/phone-in.png" class="widget-actions-image">
+                </div>
+              </div>
+              <div class="my-1">
+                <span>Phone in</span>
+              </div>
+            </p-card>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 pointer-cursor text-center px-xs-1">
+            <p-card>
+              <div>
+                <div>
+                  <img src="../../../../assets/images/dashboard/create-user.png" class="widget-actions-image">
+                </div>
+              </div>
+              <div class="my-1">
+                <span>Patient</span>
+              </div>
+            </p-card>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 pointer-cursor text-center px-xs-1"
+            *ngIf="type && type == 'checkins'">
+            <p-card>
+              <div>
+                <div>
+                  <img src="../../../../assets/images/dashboard/delay.png" class="widget-actions-image">
+                </div>
+              </div>
+              <div class="my-1">
+                <span>Delay</span>
+              </div>
+            </p-card>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 pointer-cursor px-xs-1"></div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 pointer-cursor px-xs-1"></div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 pointer-cursor px-xs-1">
+            <div class="d-flex justify-content-md-end">
+              <div class="mr-1">
+                <p-dropdown appendTo="body" [dropdownIcon]="'fa fa-caret-down'" [style]="{'width':'100%'}"
+                  [options]="locations" [(ngModel)]="selectedLocation" optionLabel="place"></p-dropdown>
+              </div>
+              <div class="d-flex align-items-center" (click)="manageLocations()">
+                <img src="../../../../assets/images/dashboard/manage-location.png" width="35"
+                  pTooltip="Manage Locations" tooltipPosition="top">
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 pointer-cursor px-xs-1">
+            <button class="user-selection-btn" (click)="selectUser()">
+              <span style="margin-right: 10px !important;">
+                <i class="fa fa-users"></i>
+                <span *ngIf="!smallDeviceDisplay && selectedUser.name && !unAssignView">
+                  {{selectedUser.name}}</span>
+                <span *ngIf="!smallDeviceDisplay && !selectedUser.name && !unAssignView">
+                  <ng-container *ngIf="selectedUser.businessName">
+                    {{selectedUser.businessName}}</ng-container>
+                  <ng-container *ngIf="!selectedUser.businessName">
+                    {{selectedUser.firstName}}</ng-container>
+                </span>
+                <span *ngIf="!smallDeviceDisplay && unAssignView">
+                  Unassigned Requests</span>
+              </span>
+              <span class="caret"></span>
+            </button>
+          </div> -->
+        </div>
+      </p-card>
+    </div>
+
+    <div class="card mt-2">
+      <div class="bookings-list-card">
+        <div class="d-flex justify-content-between">
+          <div>
+            <p-dropdown appendTo="body" [dropdownIcon]="'fa fa-caret-down'" [style]="{'width':'100%'}"
+              [options]="timeStamps" (onChange)="timeStampChange($event)" [(ngModel)]="selectedTimeStamp"
+              optionLabel="displayName"></p-dropdown>
+          </div>
+          <div>
+            <div>
+              <p-dropdown appendTo="body" [dropdownIcon]="'fa fa-caret-down'" [style]="{'width':'100%'}"
+                [options]="locations" [(ngModel)]="selectedLocation" optionLabel="place"></p-dropdown>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div *ngIf="apiLoading">
+        <div>
+          <app-skeleton-loading [type]="'list'"></app-skeleton-loading>
+        </div>
+      </div> -->
+      <div class="bookingsTable mt-2">
+        <p-table #bookingsTable [value]="bookings" [lazy]="true" (onLazyLoad)="loadBookings($event)" dataKey="id"
+          [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,15,25]" [paginator]="true" [rows]="10"
+          [totalRecords]="totalBookingsCount" responsiveLayout="stack" styleClass="p-datatable-bookings"
+          currentPageReportTemplate="{first} to {last} of {totalRecords} bookings">
+          <ng-template pTemplate="body" let-booking>
+            <div class="card my-1 p-0">
+              <p-accordion styleClass="bookingAccordion">
+                <p-accordionTab>
+                  <ng-template pTemplate="header">
+                    <!-- <div class="flex align-items-center"> -->
+                    <!-- <div class="d-flex justify-content-between">
+                        <div>
+                          <i class="pi pi-calendar mr-2"></i>
+                          <span class="vertical-align-middle text-capitalize">
+                            <span
+                              *ngIf="booking.providerConsumer && booking.providerConsumer.firstName">{{booking.providerConsumer.firstName}}</span>&nbsp;
+                            <span
+                              *ngIf="booking.providerConsumer && booking.providerConsumer.lastName">{{booking.providerConsumer.lastName}}</span>
+                          </span>
+                        </div>
+                      </div> -->
+                    <div class="d-flex justify-content-between">
+                      <div class="text-capitalize mr-5 font-weight-bold">
+                        <span
+                          *ngIf="booking.providerConsumer && booking.providerConsumer.firstName">{{booking.providerConsumer.firstName}}</span>&nbsp;
+                        <span
+                          *ngIf="booking.providerConsumer && booking.providerConsumer.lastName">{{booking.providerConsumer.lastName}}</span>
+                      </div>
+                      <div class="text-capitalize mr-5 font-weight-bold text-success" *ngIf="!smallDeviceDisplay">
+                        <span *ngIf="booking.appmtTime">{{booking.appmtTime}}</span>
+                      </div>
+                      <div class="text-capitalize mr-5 text-primary" *ngIf="!smallDeviceDisplay">
+                        <span *ngIf="booking.service && booking.service.name">{{booking.service.name}}</span>
+                      </div>
+                      <div class="text-capitalize font-weight-bold text-info">
+                        <span>{{getBookingStatus(booking)}}</span>
+                      </div>
+                    </div>
+
+                    <!-- </div> -->
+                  </ng-template>
+                  <ng-template pTemplate="content">
+                    <div>
+                      <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="booking.callingStatus"
+                        *ngIf="boardCount > 0 && !booking.virtualService && (booking.apptStatus === 'Confirmed' || booking.apptStatus === 'Arrived')"
+                        (click)="stopprop($event);callingAppt(booking)"
+                        pTooltip="Alert" tooltipPosition="top">
+                        <i class="dashboardcallstop-icon" *ngIf="booking.callingStatus"></i> <span
+                          *ngIf="booking.callingStatus">&nbsp; Stop</span>
+                        <i class="dashboardcall-icon" *ngIf="!booking.callingStatus"></i>
+                        <span *ngIf="!booking.callingStatus">
+                          &nbsp;Alert</span>
+                      </a>
+                      <a class="statusText btn-play pointer-cursor start-btn"
+                        (click)="changeWaitlistStatus('STARTED', booking)"
+                        *ngIf="(booking.apptStatus == 'Arrived' || booking.apptStatus == 'Confirmed') && (!booking.virtualService)"
+                        pTooltip="Start" tooltipPosition="top">
+                        <i class="dashboardstart-icon"></i> <span *ngIf="!smallDeviceDisplay"> Start</span>
+                      </a>
+                      <a class="statusText btn-play pointer-cursor start-btn"
+                        [ngClass]="{'vid-ic-pd': (booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || booking.service.virtualCallingModes[0].callingMode === 'Zoom')?true:false}"
+                        *ngIf="booking.virtualService && (booking.apptStatus == 'Arrived' || booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Started')"
+                        pTooltip="TeleService" tooltipPosition="top" (click)="showCallingModes(booking)">
+                        <i class="fa meet-icon" [ngClass]="{'tool-pading': !smallDeviceDisplay?true:false}"
+                          *ngIf="booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                        <i class="fa zoom-icon" style="width: 15px; " [ngClass]="{'tool-pading': !smallDeviceDisplay?true:false}"
+                          *ngIf="booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                        <i *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                          class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                          [ngClass]="{'tool-pading': (!smallDeviceDisplay?true:false)}" aria-hidden="true"></i>
+                        <i class="fa phon-icon" style="width: 15px;" [ngClass]="{'tool-pading': !smallDeviceDisplay?true:false}"
+                          *ngIf="booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                        <i class="fa wtsapaud-icon" style="width: 15px;" [ngClass]="{'tool-pading': !smallDeviceDisplay?true:false}"
+                          *ngIf="booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType === 'audioService'"></i>
+                        <i class="fa wtsapvid-icon" style="width: 15px; " [ngClass]="{'tool-pading': !smallDeviceDisplay?true:false}"
+                          *ngIf="booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType === 'videoService'"></i>
+                        <span
+                          *ngIf="booking.service.serviceType === 'virtualService' && (booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| booking.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                        <span
+                          *ngIf="!smallDeviceDisplay && booking.service.virtualCallingModes[0].callingMode !== 'Phone' && booking.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
+                          {{booking.apptStatus === 'Started'? 'Resume':'Start'}}
+                        </span>
+                        <span *ngIf="booking.whatsApp_PhNumber">
+                          {{booking.apptStatus === 'Started'? 'Resume': 'Call '+
+                          booking.whatsApp_PhNumber}}
+                        </span>
+                      </a>
+
+                      <a class="statusText btn-play pointer-cursor done-btn"
+                        (click)="changeWaitlistStatus('DONE', booking)"
+                        pTooltip="Complete" tooltipPosition="top" *ngIf="booking.apptStatus == 'Started'">
+                        <i class="dashboardcomplete-icon" style="color: green; "></i> <span *ngIf="!smallDeviceDisplay">
+                          {{doneCap}}</span>
+                      </a>
+
+                      <a class="statusText btn-play pointer-cursor act-btn single-action" *ngIf="!smallDeviceDisplay"
+                        (click)="showCheckinActions('started', booking)" pTooltip="Actions" tooltipPosition="top">
+                        Actions <i class="fa fa-caret-down"></i>
+                      </a>
+                    </div>
+                  </ng-template>
+                </p-accordionTab>
+              </p-accordion>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <div class="text-center font-weigh-bold">
+              No {{bookingType}}s Found
+            </div>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>
