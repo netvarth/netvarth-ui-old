@@ -181,6 +181,12 @@
                 <span class="font-weight-bold"> {{dealerData.webhookDate | date:"mediumDate"}}</span>
               </div>
             </div>
+            <div *ngIf="dealerData && dealerData.webhookStatusNote">
+              <div>
+                Webhook Status Note :&nbsp;
+                <span class="font-weight-bold"> {{dealerData.webhookStatusNote}}</span>
+              </div>
+            </div>
             <br>
             <div class="text-left">
               <h6 class="font-weight-bold">Details</h6>
