@@ -160,7 +160,28 @@
                   </div>
                 </div>
               </div>
-            </div><br>
+            </div>
+            <br>
+            <div *ngIf="dealerData && dealerData.integrationId">
+              <br>
+              <div>
+                Integration Id :&nbsp;
+                <span class="font-weight-bold"> {{dealerData.integrationId}}</span>
+              </div>
+            </div>
+            <div *ngIf="dealerData && dealerData.webhookStatus">
+              <div>
+                Webhook Status :&nbsp;
+                <span class="font-weight-bold"> {{dealerData.webhookStatus}}</span>
+              </div>
+            </div>
+            <div *ngIf="dealerData && dealerData.webhookDate">
+              <div>
+                Webhook Date :&nbsp;
+                <span class="font-weight-bold"> {{dealerData.webhookDate | date:"mediumDate"}}</span>
+              </div>
+            </div>
+            <br>
             <div class="text-left">
               <h6 class="font-weight-bold">Details</h6>
               <hr>
