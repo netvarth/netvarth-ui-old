@@ -284,6 +284,10 @@
                               width="15" src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Unassign
                           </button>
 
+                          <button type="button" mat-menu-item class="font-weight-600" (click)="openUsersPopup(call.uid)"
+                            *ngIf="call && call.userId"><img width="15" src="./assets/images/ivr/change-user.png">&nbsp;&nbsp;Change Assignee
+                          </button>
+
                           <button type="button" mat-menu-item class="font-weight-600" (click)="markAsComplete(call.uid)"
                             *ngIf="call.questionnaires && call.questionnaires[0]
                             && call.questionnaires[0].questionAnswers  && (call.callStatus && call.callStatus!='callCompleted')"><i

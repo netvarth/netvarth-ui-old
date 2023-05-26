@@ -58,6 +58,11 @@
               *ngIf="callData && callData.userId && (callData.callStatus && callData.callStatus!='callCompleted')"><img
                 width="15" src="./assets/images/ivr/unassign.png">&nbsp;&nbsp;Unassign
             </button>
+
+            <button type="button" mat-menu-item class="font-weight-600" (click)="openUsersPopup(callData.uid)"
+              *ngIf="callData && callData.userId"><img width="15" src="./assets/images/ivr/change-user.png">&nbsp;&nbsp;Change Assignee
+            </button>
+
             <!-- callData.questionnaires && callData.questionnaires[0] && callData.questionnaires[0].questionAnswers && -->
             <button type="button" mat-menu-item class="font-weight-600" (click)="markAsComplete(callData.uid)"
               *ngIf="callData.callStatus && callData.callStatus!='callCompleted'"><i
