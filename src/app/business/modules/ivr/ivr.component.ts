@@ -51,6 +51,7 @@ export class IvrComponent implements OnInit {
     "connectedCalls": 0,
     "allCalls": 0
   };
+  historyCallsCount: any;
   constructor(
     private groupService: GroupStorageService,
     private ivrService: IvrService,
@@ -237,7 +238,7 @@ export class IvrComponent implements OnInit {
     api_filter['callStatus-eq'] = "callCompleted";
     if (api_filter) {
       this.getIvrCallsCount(api_filter).then((count) => {
-        this.totalCallsCount = count;
+        this.historyCallsCount = count;
       });
       this.ivrService.getAllIvrCallsbyFilter(api_filter).subscribe((data: any) => {
         this.calls = data;
@@ -302,7 +303,7 @@ export class IvrComponent implements OnInit {
 
   getRecordingFile(filename) {
     this.ivrService.getRecordingFile(filename).subscribe((data: any) => {
-      console.log("Recording Data",data)
+      console.log("Recording Data", data)
     },
       (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })

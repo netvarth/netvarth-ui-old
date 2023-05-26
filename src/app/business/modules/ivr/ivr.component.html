@@ -328,7 +328,7 @@
             <ng-template pTemplate="header">
               <span class="tabview-text">
                 <i class="fa fa-phone"></i>&nbsp;
-                <span>Call History<span>({{totalCallsCount}})</span></span>
+                <span>Call History<span>({{historyCallsCount}})</span></span>
               </span>
             </ng-template>
             <!-- <div class="card mt-2" *ngIf="onGoingCall && onGoingCall.length>0">
@@ -397,7 +397,7 @@
               </div> -->
             <p-table #callsTable [value]="calls" [lazy]="true" (onLazyLoad)="loadCalls($event)" dataKey="id"
               [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,15,25]" [paginator]="true" [rows]="5"
-              [totalRecords]="totalCallsCount" responsiveLayout="stack" styleClass="p-datatable-customers"
+              [totalRecords]="historyCallsCount" responsiveLayout="stack" styleClass="p-datatable-customers"
               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
               <ng-template pTemplate="body" let-call>
                 <div class="card my-1 p-1 py-2">
