@@ -41,12 +41,12 @@
                 <!-- <mat-checkbox *ngIf="notificationStatusEnable" [disabled]="true"> SMS</mat-checkbox> -->
                 <!-- "((source === 'customer-list' || source === 'donation-list' || source === 'provider-waitlist') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (((!phone)|| phone === 'null' || phone === '' )))" -->
                 <mat-checkbox
-                    [disabled]="selectedMessage.files.length !== 0 || (typeOfMsg === 'single' && (((!phone)|| phone === 'null' || phone === '' )))"
+                    [disabled]="(typeOfMsg === 'single' && (((!phone)|| phone === 'null' || phone === '' )))"
                     class="mgright25 example-margin" [(ngModel)]="telegram" [ngModelOptions]="{standalone: true}">
                     Telegram
                 </mat-checkbox>
                 <mat-checkbox
-                [disabled]="!whatsappStatusEnable || selectedMessage.files.length !== 0 || (typeOfMsg === 'single' && (((!phone)|| phone === 'null' || phone === '' )))"
+                [disabled]="!whatsappStatusEnable ||(typeOfMsg === 'single' && (((!phone)|| phone === 'null' || phone === '' )))"
                 class="mgright25 example-margin" [(ngModel)]="whatsApp" [ngModelOptions]="{standalone: true}">
                 Whatsapp
             </mat-checkbox>
@@ -62,7 +62,7 @@
             *ngIf="typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && ((!phone && !phone_history ) || phone === 'null')">
             {{SEND_MESSAGE}}</div>
         <div *ngIf="!api_loading &&  (source === 'customer-list' || source === 'donation-list' || source ==='provider-waitlist') && selectedMessage.files.length !== 0"
-            class="hint"><i class="fa fa-bell-o"></i>&nbsp;Message with uploaded files will be sent to email and jaldee
+            class="hint"><i class="fa fa-bell-o"></i>&nbsp;Message with uploaded files will be sent to email, Whatsapp, Telegram and jaldee
             inbox.</div>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     </mat-dialog-content>
