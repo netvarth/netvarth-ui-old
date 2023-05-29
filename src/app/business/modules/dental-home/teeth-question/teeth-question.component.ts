@@ -612,7 +612,7 @@ export class TeethQuestionComponent implements OnInit {
     // })
   }
   surfaceClick(surfaceCheck) {
-    this.surfaceSelected = surfaceCheck
+    this.surfaceSelected = surfaceCheck;
     if(this.surfaceSelected === 'mesial'){
       this.isMesial = true;
       this.isDistal = false;

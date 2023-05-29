@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { DentalHomeService } from '../dental-home.service';
-import { ActivatedRoute,NavigationExtras, Router} from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { FileService } from '../../../../shared/services/file-service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
@@ -24,7 +24,7 @@ export class TeethViewComponent {
   selectedFiles = {
     "photo": { files: [], base64: [], caption: [] }
   }
-  surfaceConstants= {
+  surfaceConstants = {
     'mesial': 'Mesial',
     'distal': 'Distal',
     'buccal': 'Buccal',
@@ -50,11 +50,11 @@ export class TeethViewComponent {
   medicalInfo: any;
   mrNumber: any;
   mrCreatedDate;
-  doctorName;teethNumber: any;
+  doctorName; teethNumber: any;
   patientId: any;
   dentalState: any;
   state: string;
-;z
+  ; z
   constructor(
     private location: Location,
     private fileService: FileService,
@@ -77,7 +77,7 @@ export class TeethViewComponent {
         this.patientId = params['patientId'];
         this.getPatientDetails(this.patientId);
       }
-    
+
     });
   }
   ngOnInit(): void {
@@ -97,21 +97,20 @@ export class TeethViewComponent {
         (data: any) => {
           const response = data;
           this.loading = false;
-          console.log('responseToken', response);
           if (response && response[0]) {
             this.customerDetails = response[0];
           }
-          if(this.customerDetails.firstName){
+          if (this.customerDetails.firstName) {
             this.firstName = this.customerDetails.firstName;
           }
-       
+
         },
         error => {
           // alert('getPatientDetails')
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-  
+
   getMedicalRecordUsingId(mrId) {
     this.subscriptions.sink = this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
@@ -119,25 +118,25 @@ export class TeethViewComponent {
           this.loading = false;
           this.medicalInfo = data;
           this.mrNumber = data.mrNumber;
-         
+
           if (data.mrCreatedDate) {
             this.mrCreatedDate = data.mrCreatedDate;
           }
           if (data.provider && data.provider.id) {
-            this.doctorName = data.provider.firstName + ' ' + data.provider.lastName;       
-          } 
-          if(data && data.dentalChart && data.dentalChart.teeth.length>0){
+            this.doctorName = data.provider.firstName + ' ' + data.provider.lastName;
+          }
+          if (data && data.dentalChart && data.dentalChart.teeth.length > 0) {
             this.teethNumber = data.dentalChart.teeth.length;
           }
-          if(data && data.dentalChart && data.dentalChart.dentalState){
+          if (data && data.dentalChart && data.dentalChart.dentalState) {
             this.dentalState = data.dentalChart.dentalState;
-            if(this.dentalState === 'PERMANENT'){
+            if (this.dentalState === 'PERMANENT') {
               this.state = 'Adult';
             }
-            else if(this.dentalState === 'TEMPORARY'){
+            else if (this.dentalState === 'TEMPORARY') {
               this.state = 'Child';
             }
-            else if(this.dentalState === 'MIXED'){
+            else if (this.dentalState === 'MIXED') {
               this.state = 'Mixed';
             }
           }
@@ -158,13 +157,13 @@ export class TeethViewComponent {
       this.teeth_loading = false;
 
       this.selectedTeethDetails = this.teethDetails.teeth[0];
-      
+
       let keys = Object.keys(this.selectedTeethDetails.surface);
-      if (keys.length > 0) {
-        this.selectedSurface = this.selectedTeethDetails.surface[keys[0]];
-        this.selectedSurface['key'] = keys[0];
-      }
-console.log( this.selectedTeethDetails)
+
+      this.selectedSurface = this.selectedTeethDetails.surface[keys[0]];
+      this.selectedSurface['key'] = keys[0];
+
+      console.log(this.selectedTeethDetails)
     })
   }
   setSurface(surface, key) {
@@ -173,9 +172,9 @@ console.log( this.selectedTeethDetails)
   }
   filesSelected(event, type) {
     this.apiloading = true;
-    console.log("Event ", event, type)
+
     const input = event.target.files;
-    console.log("input ", input)
+
     let fileUploadtoS3 = [];
     const _this = this;
     this.fileService.filesSelected(event, _this.selectedFiles[type]).then(
@@ -206,7 +205,7 @@ console.log( this.selectedTeethDetails)
             if (s3Urls && s3Urls.length > 0) {
               _this.uploadAudioVideo(s3Urls).then(
                 (dataS3Url) => {
-                  console.log(dataS3Url);
+
                   _this.apiloading = false;
                   console.log("Sending Attachment Success");
                 });
@@ -227,14 +226,14 @@ console.log( this.selectedTeethDetails)
   uploadAudioVideo(data) {
     const _this = this;
     let count = 0;
-    console.log("DAta:", data);
+
     return new Promise(async function (resolve, reject) {
       for (const s3UrlObj of data) {
-        console.log('_this.filesToUpload', _this.filesToUpload)
+
         let file = _this.filesToUpload.filter((fileObj) => {
           return ((fileObj.order === (s3UrlObj.orderId)) ? fileObj : '');
         })[0];
-        console.log("File:", file);
+
         if (file) {
           file['driveId'] = s3UrlObj.driveId;
           await _this.uploadFiles(file['file'], s3UrlObj.url, s3UrlObj.driveId).then(
@@ -292,41 +291,39 @@ console.log( this.selectedTeethDetails)
   }
   // onSelect(teeth, event: MatChipInputEvent): void {
   //   const value = (event.value || '').trim();
-   
+
   //   if (value) {
   //     this.selectedTeethDetails = teeth;
   //   }
-   
+
   //   event.chipInput!.clear();
   // }
-  onSelect(teeth, event){
-    console.log(event);
-      this.selectedTeethDetails = teeth;
-      console.log(this.selectedTeethDetails);
-    }
-    toothEdit(teeth) {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          // patientId: this.customerId,
-          mrid: this.mrid,
-          action: 'edit',
-          teethId : this.selectedTeethDetails.toothId,
-          type: this.state,
-        }
-      };
-      this.router.navigate(['provider','dental','teeth',this.selectedTeethDetails.toothId],navigationExtras);
-      // this.routingService.setFeatureRoute('dental')
-      // this.routingService.handleRoute('teeth/' + this.selectedTeethDetails.toothId, navigationExtras);
-  
-    }
-    backtoHome(){
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          mrid: this.mrid,
-          custId: this.patientId
-        }
-      };
-      this.router.navigate(['provider', 'dental'], navigationExtras);
-    }
+  onSelect(teeth) {
+    this.selectedTeethDetails = teeth;
+  }
+  toothEdit(teeth) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        // patientId: this.customerId,
+        mrid: this.mrid,
+        action: 'edit',
+        teethId: this.selectedTeethDetails.toothId,
+        type: this.state,
+      }
+    };
+    this.router.navigate(['provider', 'dental', 'teeth', this.selectedTeethDetails.toothId], navigationExtras);
+    // this.routingService.setFeatureRoute('dental')
+    // this.routingService.handleRoute('teeth/' + this.selectedTeethDetails.toothId, navigationExtras);
+
+  }
+  backtoHome() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        mrid: this.mrid,
+        custId: this.patientId
+      }
+    };
+    this.router.navigate(['provider', 'dental'], navigationExtras);
+  }
 }
 

@@ -108,7 +108,7 @@
           <h5 class="font-weight-bold">Teeth</h5>
         </div>
         <div class="teeth-selection">
-        <div class="flex-one-item" *ngFor="let teeth of teethDetails.teeth" (click)="onSelect(teeth,$event)"
+        <div class="flex-one-item" *ngFor="let teeth of teethDetails.teeth" (click)="onSelect(teeth)"
           [ngClass]="{'surface_select':teeth === selectedTeethDetails}">
           <div>
             <img class="teeth" src="./assets/images/dental/Union.png" height="20px" width="20px"> &nbsp;&nbsp; Tooth
@@ -133,37 +133,176 @@
             <h6 class="font-weight-bold">Details</h6>
           </div>
           <mat-chip-list *ngIf="selectedTeethDetails.surface" class="surface">
-            <mat-chip class="pointer-cursor" *ngFor="let surfaceItem of selectedTeethDetails.surface | keyvalue"
-            (click)="setSurface(surfaceItem.value,surfaceItem.key)" [ngClass]="{'selected':(surfaceItem.key === selectedSurface.key)}">
+            <mat-chip class="pointer-cursor" *ngFor="let surfaceItem of selectedTeethDetails.surface | keyvalue" [ngClass]="{'selected':(surfaceItem.key === selectedSurface.key)}">
               <span>  <img class="teeth" src="./assets/images/dental/Union.png" height="20px" width="20px"> &nbsp;&nbsp;</span>{{surfaceConstants[surfaceItem.key]}}
             </mat-chip>
           </mat-chip-list>
           <hr/>
-          <ng-container *ngIf="selectedSurface">
+          <ng-container *ngIf="selectedTeethDetails.surface.mesial">
             <div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="tab1">              
               <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.chiefIssue">
                 <div class="mrNumber1">Chief Complaint</div>
                 <div class="dateClr">{{selectedTeethDetails.chiefIssue}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedSurface.symptoms">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.mesial.symptoms">
                 <div class="mrNumber1">Symptoms</div>
-                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedSurface.symptoms}}</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.mesial.symptoms}}</div>
               </div>              
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedSurface.observations">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.mesial.observations">
                 <div class="mrNumber1">Observations</div>
-                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedSurface.observations}}</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.mesial.observations}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedSurface.diagnosis">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.mesial.diagnosis">
                 <div class="mrNumber1">Diagnosis</div>
-                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedSurface.diagnosis}}</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.mesial.diagnosis}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedSurface.description">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.mesial.description">
                 <div class="mrNumber1">Notes</div>
-                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedSurface.description}}</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.mesial.description}}</div>
               </div>  
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedSurface.procedure">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.mesial.procedure">
                 <div class="mrNumber1">Procedure</div>
-                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedSurface.procedure}}</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.mesial.procedure}}</div>
+              </div>             
+            </div>
+          </ng-container>
+          <ng-container *ngIf="selectedTeethDetails.surface.distal">
+            <div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="tab1">              
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.chiefIssue">
+                <div class="mrNumber1">Chief Complaint</div>
+                <div class="dateClr">{{selectedTeethDetails.chiefIssue}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.distal.symptoms">
+                <div class="mrNumber1">Symptoms</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.distal.symptoms}}</div>
+              </div>              
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.distal.observations">
+                <div class="mrNumber1">Observations</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.distal.observations}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.distal.diagnosis">
+                <div class="mrNumber1">Diagnosis</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.distal.diagnosis}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.distal.description">
+                <div class="mrNumber1">Notes</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.distal.description}}</div>
+              </div>  
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.distal.procedure">
+                <div class="mrNumber1">Procedure</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.distal.procedure}}</div>
+              </div>             
+            </div>
+          </ng-container>
+          <ng-container *ngIf="selectedTeethDetails.surface.buccal">
+            <div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="tab1">              
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.chiefIssue">
+                <div class="mrNumber1">Chief Complaint</div>
+                <div class="dateClr">{{selectedTeethDetails.chiefIssue}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.buccal.symptoms">
+                <div class="mrNumber1">Symptoms</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.buccal.symptoms}}</div>
+              </div>              
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.buccal.observations">
+                <div class="mrNumber1">Observations</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.buccal.observations}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.buccal.diagnosis">
+                <div class="mrNumber1">Diagnosis</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.buccal.diagnosis}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.buccal.description">
+                <div class="mrNumber1">Notes</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.buccal.description}}</div>
+              </div>  
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.buccal.procedure">
+                <div class="mrNumber1">Procedure</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.buccal.procedure}}</div>
+              </div>             
+            </div>
+          </ng-container>
+          <ng-container *ngIf="selectedTeethDetails.surface.lingual">
+            <div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="tab1">              
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.chiefIssue">
+                <div class="mrNumber1">Chief Complaint</div>
+                <div class="dateClr">{{selectedTeethDetails.chiefIssue}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.lingual.symptoms">
+                <div class="mrNumber1">Symptoms</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.lingual.symptoms}}</div>
+              </div>              
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.lingual.observations">
+                <div class="mrNumber1">Observations</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.lingual.observations}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.lingual.diagnosis">
+                <div class="mrNumber1">Diagnosis</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.lingual.diagnosis}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.lingual.description">
+                <div class="mrNumber1">Notes</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.lingual.description}}</div>
+              </div>  
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.lingual.procedure">
+                <div class="mrNumber1">Procedure</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.lingual.procedure}}</div>
+              </div>             
+            </div>
+          </ng-container>
+          <ng-container *ngIf="selectedTeethDetails.surface.incisal">
+            <div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="tab1">              
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.chiefIssue">
+                <div class="mrNumber1">Chief Complaint</div>
+                <div class="dateClr">{{selectedTeethDetails.chiefIssue}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.incisal.symptoms">
+                <div class="mrNumber1">Symptoms</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.incisal.symptoms}}</div>
+              </div>              
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.incisal.observations">
+                <div class="mrNumber1">Observations</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.incisal.observations}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.incisal.diagnosis">
+                <div class="mrNumber1">Diagnosis</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.incisal.diagnosis}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.incisal.description">
+                <div class="mrNumber1">Notes</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.incisal.description}}</div>
+              </div>  
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.incisal.procedure">
+                <div class="mrNumber1">Procedure</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.incisal.procedure}}</div>
+              </div>             
+            </div>
+          </ng-container>
+          <ng-container *ngIf="selectedTeethDetails.surface.occlusal">
+            <div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="tab1">              
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.chiefIssue">
+                <div class="mrNumber1">Chief Complaint</div>
+                <div class="dateClr">{{selectedTeethDetails.chiefIssue}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.occlusal.symptoms">
+                <div class="mrNumber1">Symptoms</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.occlusal.symptoms}}</div>
+              </div>              
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.occlusal.observations">
+                <div class="mrNumber1">Observations</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.occlusal.observations}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.occlusal.diagnosis">
+                <div class="mrNumber1">Diagnosis</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.occlusal.diagnosis}}</div>
+              </div>
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.occlusal.description">
+                <div class="mrNumber1">Notes</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.occlusal.description}}</div>
+              </div>  
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.occlusal.procedure">
+                <div class="mrNumber1">Procedure</div>
+                <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.occlusal.procedure}}</div>
               </div>             
             </div>
           </ng-container>
