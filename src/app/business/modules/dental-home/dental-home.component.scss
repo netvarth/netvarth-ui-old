@@ -75,14 +75,15 @@ img.teeth {
   padding: 10px 20px !important;
 }
 .btn-drafts {
-  background-color: hsl(204, 86%, 53%) !important;
-  border-color: hsl(204, 86%, 53%) !important;
+  background-color: hsl(204deg, 86%, 53%) !important;
+  border-color: hsl(204deg, 86%, 53%) !important;
   color: #fff !important;
-  font-weight: 70 !important;
+  /* font-weight: 10 !important; */
   border-radius: 5px !important;
-  padding: 8px 10px !important;
+  /* padding: 8px 10px !important; */
+  height: 26px;
+  font-size: 12px;
 }
-
 .btn-verify {
   background-color: hsl(204, 86%, 96%) !important;
   border-color: hsl(204, 86%, 53%) !important;
@@ -118,4 +119,7 @@ img.teeth {
   .web {
     display: none !important;
   }
+}
+.disabled {
+  cursor: not-allowed;
 }

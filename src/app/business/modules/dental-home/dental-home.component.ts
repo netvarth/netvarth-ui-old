@@ -8,8 +8,6 @@ import { SubSink } from 'subsink';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { ProviderServices } from '../../services/provider-services.service';
-// import { SnackbarService } from 'jaldee-framework/snackbar';
-// import { WordProcessor } from 'jaldee-framework/word-processor';
 @Component({
   selector: 'app-dental-home',
   templateUrl: './dental-home.component.html',
@@ -53,7 +51,7 @@ export class DentalHomeComponent implements OnInit {
   { index: 42, isSelected: false },
   { index: 41, isSelected: false },
   { index: 31, isSelected: false },
-  { index: 33, isSelected: false },
+  { index: 32, isSelected: false },
   { index: 33, isSelected: false },
   { index: 34, isSelected: false },
   { index: 35, isSelected: false },
@@ -142,7 +140,7 @@ export class DentalHomeComponent implements OnInit {
   { index: 42, isSelected: false },
   { index: 41, isSelected: false },
   { index: 31, isSelected: false },
-  { index: 33, isSelected: false },
+  { index: 32, isSelected: false },
   { index: 33, isSelected: false },
   { index: 34, isSelected: false },
   { index: 35, isSelected: false },
@@ -153,6 +151,7 @@ export class DentalHomeComponent implements OnInit {
   loading = true;
   customerDetails: any;
   firstName: any;
+  indexSelection: any;
   constructor(
     private router: Router,
     // private routingService: RoutingService,
@@ -318,36 +317,40 @@ export class DentalHomeComponent implements OnInit {
     // this.routingService.handleRoute('teeth/' + teeth.toothId, navigationExtras);
 
   }
-  toothClicked(index) {
+  toothClicked(index,indexSelection) {
     this.teethIndex = index;
-    if (this.teethDetails && this.teethDetails.teeth) {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          patientId: this.customerId,
-          mrid: this.mrid,
-          type: this.type,
-          action: 'edit',
-          teethIndex : index
-        }
-      };
-      this.router.navigate(['provider','dental','teeth',index],navigationExtras);
-      // this.routingService.setFeatureRoute('dental')
-      // this.routingService.handleRoute('teeth/' + index, navigationExtras);
-      console.log(index);
-    } else {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          patientId: this.customerId,
-          type: this.type,
-          teethIndex : index
-        }
-      };
-      this.router.navigate(['provider','dental','teeth',index],navigationExtras);
-      // this.routingService.setFeatureRoute('dental')
-      // this.routingService.handleRoute('teeth/' + index, navigationExtras);
-      console.log(index);
+    this.indexSelection = indexSelection;
+    if(!this.indexSelection){
+      if (this.teethDetails && this.teethDetails.teeth) {
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            patientId: this.customerId,
+            mrid: this.mrid,
+            type: this.type,
+            action: 'edit',
+            teethIndex : index
+          }
+        };
+        this.router.navigate(['provider','dental','teeth',index],navigationExtras);
+        // this.routingService.setFeatureRoute('dental')
+        // this.routingService.handleRoute('teeth/' + index, navigationExtras);
+        console.log(index);
+      } else {
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            patientId: this.customerId,
+            type: this.type,
+            teethIndex : index
+          }
+        };
+        this.router.navigate(['provider','dental','teeth',index],navigationExtras);
+        // this.routingService.setFeatureRoute('dental')
+        // this.routingService.handleRoute('teeth/' + index, navigationExtras);
+        console.log(index);
+      }
+  
     }
-
+    
 
   }
   toggleAllApptIntStatusSelection() {

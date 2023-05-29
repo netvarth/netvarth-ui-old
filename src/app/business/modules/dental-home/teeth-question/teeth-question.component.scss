@@ -593,3 +593,13 @@ border-radius: 4px;
 .surface_select_one{
 padding: 15px !important;
 }
+.td_select {
+  // border: 2px solid #5598FD !important;
+  background-color: #5598FD !important;
+}
+::ng-deep .surfaces .mat-chip.mat-standard-chip {
+  
+ height: 40px !important;
+  border-radius: 5px !important;
+ 
+}

@@ -12,6 +12,9 @@
         <div *ngIf="teethIndex && teethId">
           <span class="dealer-name mt-4">Tooth {{teethIndex}}</span>
         </div>
+        <div *ngIf="teethIndex">
+          <span class="dealer-name mt-4">Tooth {{teethIndex}}</span>
+        </div>
         <div class="font-medium">
           <span>{{dentalType | capitalizeFirst}} Tooth</span>
         </div>
@@ -23,37 +26,34 @@
     <div class="form-title">Surface</div>
   </div><br>
   <div class="scroller ">
-    <ul class="nav nav-pills">
-      <li class="nav-item active" [ngClass]="{'surface_select':isMesialData===true}">
-        <a class="nav-link" (click)="mesialClick()"><span><img class="teeth"
-              src="./assets/images/dental/teeth.svg"></span>&nbsp;<span style="color: #5F6D7E;">Mesial</span></a>
-      </li>&nbsp;
-      <li class="nav-item active" [ngClass]="{'surface_select':isDistalData===true}">
-        <a class="nav-link" (click)="distalClick()"><span><img class="teeth"
-              src="./assets/images/dental/teeth.svg"></span>
-          &nbsp;<span style="color: #5F6D7E;">Distal</span></a>
-      </li>&nbsp;
-      <li class="nav-item active" [ngClass]="{'surface_select':isBuccalData===true}">
-        <a class="nav-link" (click)="buccalClick()"><span><img class="teeth"
-              src="./assets/images/dental/teeth.svg"></span>&nbsp;<span style="color: #5F6D7E;">Buccal</span></a>
-      </li>&nbsp;
-      <li class="nav-item active" [ngClass]="{'surface_select':isLingualData===true}">
-        <a class="nav-link" (click)="lingualClick()"><span><img class="teeth"
-              src="./assets/images/dental/teeth.svg"></span>&nbsp;<span style="color: #5F6D7E;">Lingual</span></a>
-      </li>&nbsp;
-      <li class="nav-item active" [ngClass]="{'surface_select':isIncisalData===true}">
-        <a class="nav-link" (click)="incisalClick()"><span><img class="teeth"
-              src="./assets/images/dental/teeth.svg"></span>&nbsp;<span style="color: #5F6D7E;">Incisal</span></a>
-      </li>&nbsp;
-      <li class="nav-item active" [ngClass]="{'surface_select':isMissingData===true}">
-        <a class="nav-link" (click)="misingClick()"><span><img class="teeth"
-              src="./assets/images/dental/teeth.svg"></span>&nbsp;<span style="color: #5F6D7E;">Occlusal</span></a>
-      </li>&nbsp;
-    </ul>
+
+   
+    <mat-chip-list class="surfaces">
+      <mat-chip class="pointer-cursor" (click)="surfaceClick('mesial')" [ngClass]="{'td_select': isMesial===true}">
+        <span>  <img class="teeth" src="./assets/images/dental/teeth.svg" height="20px" width="20px"> &nbsp;&nbsp;</span>Mesial
+      </mat-chip> &nbsp;
+      <mat-chip class="pointer-cursor" (click)="surfaceClick('distal')" [ngClass]="{'td_select': isDistal===true}">
+        <span>  <img class="teeth" src="./assets/images/dental/teeth.svg" height="20px" width="20px"> &nbsp;&nbsp;</span>Distal
+      </mat-chip> &nbsp;
+      <mat-chip class="pointer-cursor" (click)="surfaceClick('buccal')" [ngClass]="{'td_select': isBuccal===true}">
+        <span>  <img class="teeth" src="./assets/images/dental/teeth.svg" height="20px" width="20px"> &nbsp;&nbsp;</span>Buccal
+      </mat-chip> &nbsp;
+      <mat-chip class="pointer-cursor" (click)="surfaceClick('lingual')" [ngClass]="{'td_select': isLingual===true}">
+        <span>  <img class="teeth" src="./assets/images/dental/teeth.svg" height="20px" width="20px"> &nbsp;&nbsp;</span>Lingual
+      </mat-chip> &nbsp;
+      <mat-chip class="pointer-cursor" (click)="surfaceClick('incisal')" [ngClass]="{'td_select': isIncisal===true}">
+        <span>  <img class="teeth" src="./assets/images/dental/teeth.svg" height="20px" width="20px"> &nbsp;&nbsp;</span>Incisal
+      </mat-chip> &nbsp;
+      <mat-chip class="pointer-cursor" (click)="surfaceClick('occlusal')" [ngClass]="{'td_select': isMissing===true}">
+        <span>  <img class="teeth" src="./assets/images/dental/teeth.svg" height="20px" width="20px"> &nbsp;&nbsp;</span>Occlusal
+      </mat-chip> &nbsp;
+     
+    </mat-chip-list>
+   
   </div>
   <form [formGroup]="createTeeth" enctype="multipart/form-data" [ngClass]="{'surface_select_one':surfaceClicked===true}" >
     <div class="row tab-content mt-3 tab-pane active" *ngIf="isMesial">
-      <div class="col-md-7" [ngClass]="{'surface_select_byone':isMesialData===true}">
+      <div class="col-md-7">
         <br>
         <div class="form-title">Questionnaire about Mesial</div>
         <br>
@@ -110,7 +110,7 @@
       </div>
     </div>
     <div class="row tab-content mt-3 tab-pane active" *ngIf="isDistal">
-      <div class="col-md-7" [ngClass]="{'surface_select_byone':isDistalData===true}">
+      <div class="col-md-7">
         <br>
         <div class="form-title">Questionnaire about Distal</div>
         <br>
@@ -167,7 +167,7 @@
       </div>
     </div>
     <div class="row tab-content mt-3 tab-pane active" *ngIf="isBuccal">
-      <div class="col-md-7" [ngClass]="{'surface_select_byone':isBuccalData===true}">
+      <div class="col-md-7">
         <br>
         <div class="form-title">Questionnaire about Buccal</div>
         <br>
@@ -226,7 +226,7 @@
       </div>
     </div>
     <div class="row tab-content mt-3 tab-pane active" *ngIf="isLingual">
-      <div class="col-md-7" [ngClass]="{'surface_select_byone':isLingualData===true}">
+      <div class="col-md-7">
         <br>
         <div class="form-title">Questionnaire about Lingual</div>
         <br>
@@ -285,7 +285,7 @@
       </div>
     </div>
     <div class="row tab-content mt-3 tab-pane active" *ngIf="isIncisal">
-      <div class="col-md-7" [ngClass]="{'surface_select_byone':isIncisalData===true}">
+      <div class="col-md-7">
         <br>
         <div class="form-title">Questionnaire about Incisal</div>
         <br>
@@ -344,7 +344,7 @@
       </div>
     </div>
     <div class="row tab-content mt-3 tab-pane active" *ngIf="isMissing">
-      <div class="col-md-7" [ngClass]="{'surface_select_byone':isMissingData===true}">
+      <div class="col-md-7">
         <br>
         <div class="form-title">Questionnaire about Occlusal</div>
         <br>
@@ -407,7 +407,7 @@
         <div class="bggrey my-2">
           <mat-checkbox class="mgright25 example-margin d-flex" formControlName="chiefComplaint"
             (change)="changeChiefComplaint($event)">
-            <div class="form-title">Chief Complaints</div>
+            <div class="form-title">Chief Complaint</div>
           </mat-checkbox>
         </div>
         <div *ngIf="showChiefIssue">
