@@ -64,14 +64,15 @@
           <td *ngFor="let teeth of adultTeethArrayUpper">{{teeth.index}}</td>
         </tr>
         <tr class="img-cont">
-          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of adultTeethArrayUpper"><span class="td_notSelect"
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of adultTeethArrayUpper"><span 
+            [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
   
         </tr>
+        <tr></tr>
         <tr class="img-cont">
-          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of adultTeethArrayLower"><span class="td_notSelect"
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of adultTeethArrayLower"><span
+            [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
         </tr>
         <tr>
@@ -91,14 +92,15 @@
           <td *ngFor="let teeth of childTeethArrayUpper">{{teeth.index}}</td>
         </tr>
         <tr class="img-cont">
-          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of childTeethArrayUpper"><span class="td_notSelect"
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of childTeethArrayUpper"><span 
+            [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
   
         </tr>
+        <tr></tr>
         <tr class="img-cont">
-          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of childTeethArrayLower"><span class="td_notSelect"
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of childTeethArrayLower"><span
+            [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
         </tr>
         <tr>
@@ -112,31 +114,34 @@
           <td *ngFor="let teeth of mixedTeethArrayUpper1">{{teeth.index}}</td>
         </tr>
         <tr class="img-cont">
-          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayUpper1"><span  class="td_notSelect"
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayUpper1"><span  
+            [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
   
         </tr>
+        <tr></tr>
         <tr>
           <td *ngFor="let teeth of mixedTeethArrayUpper2">{{teeth.index}}</td>
         </tr>
         <tr class="img-cont">
-          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayUpper2"><span class="td_notSelect"
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayUpper2"><span 
+            [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
   
         </tr>
+        <tr></tr>
         <tr class="img-cont">
-          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayLower1"><span class="td_notSelect"
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayLower1"><span 
+            [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
         </tr>
         <tr>
           <td *ngFor="let teeth of mixedTeethArrayLower1">{{teeth.index}}</td>
         </tr>
+        <tr></tr>
         <tr class="img-cont">
-          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayLower2"><span class="td_notSelect"
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayLower2"><span 
+            [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
         </tr>
         <tr>
@@ -221,14 +226,15 @@
         <td *ngFor="let teeth of adultTeethArrayUpper">{{teeth.index}}</td>
       </tr>
       <tr class="img-cont">
-        <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of adultTeethArrayUpper"><span class="td_notSelect"
-            [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+        <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of adultTeethArrayUpper"><span 
+          [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
         </td>
 
       </tr>
+      <tr></tr>
       <tr class="img-cont">
-        <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of adultTeethArrayLower"><span class="td_notSelect"
-            [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+        <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of adultTeethArrayLower"><span 
+          [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
         </td>
       </tr>
       <tr>
@@ -248,14 +254,14 @@
         <td *ngFor="let teeth of childTeethArrayUpper">{{teeth.index}}</td>
       </tr>
       <tr class="img-cont">
-        <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of childTeethArrayUpper"><span class="td_notSelect"
-            [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+        <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of childTeethArrayUpper"><span 
+          [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
         </td>
 
       </tr>
       <tr class="img-cont">
-        <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of childTeethArrayLower"><span class="td_notSelect"
-            [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+        <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of childTeethArrayLower"><span 
+          [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
         </td>
       </tr>
       <tr>
@@ -270,8 +276,8 @@
           <td *ngFor="let teeth of mixedTeethArrayUpper1">{{teeth.index}}</td>
         </tr>
         <tr class="img-cont">
-          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayUpper1"><span class="td_notSelect"
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayUpper1"><span
+            [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
   
         </tr>
@@ -279,22 +285,22 @@
           <td *ngFor="let teeth of mixedTeethArrayUpper2">{{teeth.index}}</td>
         </tr>
         <tr class="img-cont">
-          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayUpper2"><span class="td_notSelect"
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayUpper2"><span
+            [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
   
         </tr>
         <tr class="img-cont">
-          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayLower1"><span class="td_notSelect"
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayLower1"><span 
+            [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
         </tr>
         <tr>
           <td *ngFor="let teeth of mixedTeethArrayLower1">{{teeth.index}}</td>
         </tr>
         <tr class="img-cont">
-          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayLower2"><span class="td_notSelect"
-              [ngClass]="{'td_select':teeth.isSelected===true}"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
+          <td (click)="toothClicked(teeth.index)" *ngFor="let teeth of mixedTeethArrayLower2"><span 
+            [ngClass]="teeth.isSelected? 'td_select' : 'td_notSelect'"><img class="teeth" src="./assets/images/dental/teeth.svg"></span>
           </td>
         </tr>
         <tr>

@@ -546,7 +546,7 @@
       </div>
     </div>
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 no-padding" *ngIf="(subdomain === 'Dentist / Dental Clinic'||subdomain === 'Dental Hospital')">
-      <div *ngIf="medicalInfo.dentalChart">
+      <div *ngIf="medicalInfo.dentalChart && medicalInfo.dentalChart.teeth &&  medicalInfo.dentalChart.teeth.length>0 ">
         <div>
          
           <ng-container >

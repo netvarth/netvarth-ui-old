@@ -148,29 +148,29 @@ export class TeethQuestionComponent implements OnInit {
     // alert('1')
     console.log(this.teethDetailsById)
     if (this.teethDetailsById && this.teethDetailsById.surface) {
-      if (this.teethDetailsById.surface.hasOwnProperty('mesial')) {
+      if (this.teethDetailsById.surface['mesial']) {
         this.isMesialData = true;
         this.isMesial = true;
       }
-      if (this.teethDetailsById.surface.hasOwnProperty('distal')) {
+      if (this.teethDetailsById.surface['distal']) {
         this.isDistalData = true;
-        this.isDistal = true;
+       
       }
-      if (this.teethDetailsById.surface.hasOwnProperty('buccal')) {
+      if (this.teethDetailsById.surface['buccal']) {
         this.isBuccalData = true;
-        this.isBuccal = true;
+     
       }
-      if (this.teethDetailsById.surface.hasOwnProperty('lingual')) {
+      if (this.teethDetailsById.surface['lingual']) {
         this.isLingualData = true;
-        this.isLingual = true;
+       
       }
-      if (this.teethDetailsById.surface.hasOwnProperty('incisal')) {
+      if (this.teethDetailsById.surface['incisal']) {
         this.isIncisalData = true;
-        this.isIncisal = true;
+       
       }
-      if (this.teethDetailsById.surface.hasOwnProperty('occlusal')) {
+      if (this.teethDetailsById.surface['occlusal']) {
         this.isMissingData = true;
-        this.isMissing = true;
+       
       }
     }
     // this.createTeeth.controls['chiefComplaint'].setValue(this.teethDetailsById.chiefComplaint);

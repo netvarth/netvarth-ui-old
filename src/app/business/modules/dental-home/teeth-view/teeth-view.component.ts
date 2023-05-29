@@ -302,6 +302,7 @@ console.log( this.selectedTeethDetails)
   onSelect(teeth, event){
     console.log(event);
       this.selectedTeethDetails = teeth;
+      console.log(this.selectedTeethDetails);
     }
     toothEdit(teeth) {
       const navigationExtras: NavigationExtras = {
