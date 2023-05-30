@@ -198,7 +198,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.setAcceptOnlineCheckin(is_check);
     }
     getGlobalSettingsStatus() {
-        this.provider_services.getAccountSettings().then(
+        this.provider_services.getAccountSetting().subscribe(
             (data: any) => {
                 this.waitlist_status = data['waitlist'];
                 this.waitlist_statusstr = this.waitlist_status ? 'On' : 'Off';
@@ -211,6 +211,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             .subscribe(
                 () => {
                     this.commonDataStorage.setSettings('waitlist',null);
+                    this.commonDataStorage.setSettings('account', null);
                     this.getWaitlistMgr();
                 },
                 error => {

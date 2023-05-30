@@ -8,6 +8,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { CommonDataStorageService } from '../../../../../shared/services/common-datastorage.service';
 
 @Component({
     'selector': 'app-custid',
@@ -35,28 +36,30 @@ export class CustomerIdSettingsComponent implements OnInit {
         private groupService: GroupStorageService,
         private wordProcessor: WordProcessor,
         private routerobj: Router,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private commonDataStorage: CommonDataStorageService
     ) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.customer_label_upper = this.wordProcessor.firstToUpper(this. customer_label);
     }
-    ngOnInit() {
+    ngOnInit() {        
         this.getGlobalSettings();
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     }
     getGlobalSettings() {
-        this.provider_services.getAccountSettings().then(
+        const _this=this;
+        this.provider_services.getAccountSetting().subscribe(
             (data: any) => {
-                this.custIdFormat = data.jaldeeIdFormat.customerSeriesEnum;
-                this.tempCustIdFormat = data.jaldeeIdFormat;
+                _this.custIdFormat = data.jaldeeIdFormat.customerSeriesEnum;
+                _this.tempCustIdFormat = data.jaldeeIdFormat;
                 if (data.jaldeeIdFormat.patternSettings) {
-                    this.prefixName = data.jaldeeIdFormat.patternSettings.prefix;
-                    this.suffixName = data.jaldeeIdFormat.patternSettings.suffix;
+                    _this.prefixName = data.jaldeeIdFormat.patternSettings.prefix;
+                    _this.suffixName = data.jaldeeIdFormat.patternSettings.suffix;
                 } else {
-                    this.prefixName = '';
-                    this.suffixName = '';
+                    _this.prefixName = '';
+                    _this.suffixName = '';
                 }
             });
     }
@@ -91,9 +94,12 @@ export class CustomerIdSettingsComponent implements OnInit {
             dialogrefd.afterClosed().subscribe(result => {
                 if (result) {
                     this.provider_services.updateCustIdFormat(this.custIdFormat, post_data).subscribe(
-                        (data: any) => {
+                        (data: any) => {                            
+                            this.commonDataStorage.set('account', null);
+                            this.getGlobalSettings();
                             this.snackbarService.openSnackBar(this.customer_label_upper +  ' Id Configured Successfully');
                             this.inputChanged = false;
+                            
                         },
                         (error) => {
                             this.snackbarService.openSnackBar(error, { 'panelclass': 'snackbarerror' });
@@ -105,8 +111,10 @@ export class CustomerIdSettingsComponent implements OnInit {
         } else {
             this.provider_services.updateCustIdFormat(this.custIdFormat, post_data).subscribe(
                 (data: any) => {
+                    this.commonDataStorage.set('account', null);
                     this.snackbarService.openSnackBar(this.customer_label  +  'Id Configured Successfully');
                     this.inputChanged = false;
+                    this.getGlobalSettings();
                 },
                 (error) => {
                     this.snackbarService.openSnackBar(error, { 'panelclass': 'snackbarerror' });
