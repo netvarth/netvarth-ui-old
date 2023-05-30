@@ -62,7 +62,9 @@
     height:34px !important;
     /* background-color: #f6f6f6 !important; */
 }
-#email_id,#mobile_number,#last_name,#first_name,#countryCode,#dob,#address{
+#email_id,#mobile_number,#last_name,#first_name,#countryCode,#dob,#address,#countryCode_whatsapp,#whatsappumber,
+#telegramnumber,#countryCode_telegram,#customer_id{
+    
     background-color: #f6f6f6 !important;
     border-radius: 4px;
     border: 1px solid #f6f6f6 !important;

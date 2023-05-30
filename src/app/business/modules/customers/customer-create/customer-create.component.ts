@@ -61,6 +61,10 @@ export class CustomerCreateComponent implements OnInit {
   email: any;
   firstName: any;
   lastName: any;
+  whatsAppNum:any
+  telegramNum:any
+  countryCodewhatsapp:any
+  countryCodetelegram:any
   dob: any;
   ageType = "year";
   //year: any;
@@ -544,6 +548,30 @@ export class CustomerCreateComponent implements OnInit {
             Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)
           ])
         ],
+        countryCode_whatsapp: [
+          "+91",
+          Validators.compose([
+            Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)
+          ])
+        ],
+        whatsappumber: [
+          "",
+          Validators.compose([
+            Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)
+          ])
+        ],
+        countryCode_telegram: [
+          "+91",
+          Validators.compose([
+            Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)
+          ])
+        ],
+        telegramnumber: [
+          "",
+          Validators.compose([
+            Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)
+          ])
+        ],
         dob: [""],
         age: [""],
         ageType: ["year"],
@@ -572,6 +600,13 @@ export class CustomerCreateComponent implements OnInit {
     if (this.email) {
       this.amForm.get("email_id").setValue(this.email);
     }
+    if (this.whatsAppNum) {
+      this.amForm.get("whatsappumber").setValue(this.whatsAppNum);
+    }
+    if (this.telegramNum) {
+      this.amForm.get("telegramnumber").setValue(this.telegramNum);
+    }
+  
   }
 
   updateForm() {
@@ -586,7 +621,12 @@ export class CustomerCreateComponent implements OnInit {
       mobile_number: this.customer[0].phoneNo.trim() || "",
       countryCode: this.customer[0].countryCode.trim() || "",
       customer_id: this.customer[0].jaldeeId || "",
-      address: this.customer[0].address || ""
+      address: this.customer[0].address || "",
+      countryCode_telegram: this.customer[0].telegramNum.countryCode || "",
+      telegramnumber: this.customer[0].telegramNum.number || "",
+      whatsappumber: this.customer[0].whatsAppNum.number || "",
+      countryCode_whatsapp: this.customer[0].whatsAppNum.countryCode || "",
+
     });
     console.log("Update Form :", this.amForm);
     if (this.customer[0].age) {
@@ -647,6 +687,14 @@ export class CustomerCreateComponent implements OnInit {
           age: {
             year: null,
             month: form_data.age
+          },
+          whatsAppNum: {
+            countryCode: form_data.countryCode_whatsapp,
+            number: form_data.whatsappumber
+          },
+          telegramNum: {
+            countryCode: form_data.countryCode_telegram,
+            number: form_data.telegramnumber
           },
           gender: form_data.gender,
           phoneNo: form_data.mobile_number,
@@ -712,6 +760,14 @@ export class CustomerCreateComponent implements OnInit {
           age: {
             year: form_data.age,
             month: null
+          },
+          whatsAppNum: {
+            countryCode: form_data.countryCode_whatsapp,
+            number: form_data.whatsappumber
+          },
+          telegramNum: {
+            countryCode: form_data.countryCode_telegram,
+            number: form_data.telegramnumber
           },
           gender: form_data.gender,
           phoneNo: form_data.mobile_number,
@@ -779,7 +835,15 @@ export class CustomerCreateComponent implements OnInit {
         gender: form_data.gender,
         phoneNo: form_data.mobile_number,
         email: form_data.email_id,
-        address: form_data.address
+        address: form_data.address,
+        whatsAppNum: {
+          countryCode: form_data.countryCode_whatsapp,
+          number: form_data.whatsappumber
+        },
+        telegramNum: {
+          countryCode: form_data.countryCode_telegram,
+          number: form_data.telegramnumber
+        }
         //   }
       };
       if (form_data.age) {
