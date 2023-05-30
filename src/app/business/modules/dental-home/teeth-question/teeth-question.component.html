@@ -2,7 +2,7 @@
   <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
 </div>
 <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
-<div class="card m-2" >
+<div class="card m-2" *ngIf="!apiloading">
   <div class="d-lg-flex justify-content-between">
     <div class="d-flex">
       <div class="ml-4">
@@ -470,6 +470,6 @@
     <button class="btn btn-draftt mr-2" (click)="saveTeeth()" [disabled]="apiloading">
       Save
     </button>
-    <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
+    
   </div>
 </div>

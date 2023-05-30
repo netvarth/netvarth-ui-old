@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
+import { LoadingSpinnerModule } from '../../../../../../src/app/shared/modules/loading-spinner/loading-spinner.module';
 
 const routes: Routes = [
     { path: '', component: TeethQuestionComponent }
@@ -33,6 +34,7 @@ const routes: Routes = [
     MatRadioModule,
     MatCheckboxModule,
     CapitalizeFirstPipeModule,
+    LoadingSpinnerModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [
