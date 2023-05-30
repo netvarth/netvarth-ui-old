@@ -23,6 +23,32 @@
   </div>
 </div>
 
+<div class="p-3"  *ngIf="from && from == 'statusLog'">
+  <div class="d-flex justify-content-between">
+    <div class="d-flex align-items-center">
+      <span class="font-weight-bold">
+        <h4>Status Log</h4>
+      </span>
+    </div>
+    <div class="mr-3">
+      <div class="btn btn-primary" (click)="close()">Close</div>
+    </div>
+  </div>
+  <div *ngIf="internalStatusLogData && internalStatusLogData.length>0">
+    <div class="card mt-2" *ngFor="let log of internalStatusLogData">
+      <div *ngIf="log.spInternalStatus">
+        <span class="font-weight-bold">Status : </span><span>{{log.spInternalStatus}}</span>
+      </div>
+      <div *ngIf="log.updatedUserName">
+        <span class="font-weight-bold">Updated By : </span><span>{{log.updatedUserName}}</span>
+      </div>
+      <div *ngIf="log.statusUpdatedDateTime">
+        <span class="font-weight-bold">Updated On : </span><span>{{log.statusUpdatedDateTime | date : 'medium'}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <div class="text-center" *ngIf="from && from == 'equifax'">
   <div class="p-5 pt-0">

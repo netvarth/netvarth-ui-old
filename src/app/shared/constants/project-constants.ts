@@ -1252,15 +1252,15 @@ export const projectConstantsLocal = {
   ],
   TIMELINE_STATUS: [
     { index: 1, name: 'Draft', displayName: 'Draft' },
-    { index: 2, name: 'LoanRequest', displayName: 'Loan Request' },
-    { index: 3, name: 'ApprovalRequired', displayName: 'Approval Required' },
-    { index: 4, name: 'CreditApproved', displayName: 'Credit Verified' },
-    { index: 5, name: 'SchemeConfirmed', displayName: 'Scheme Confirmed' },
-    { index: 6, name: 'BranchApproved', displayName: 'BM Approved' },
+    // { index: 2, name: 'LoanRequest', displayName: 'Loan Request' },
+    { index: 2, name: 'ApprovalRequired', displayName: 'Approval Required' },
+    { index: 3, name: 'CreditApproved', displayName: 'Credit Verified' },
+    { index: 4, name: 'SchemeConfirmed', displayName: 'Scheme Confirmed' },
+    { index: 5, name: 'BranchApproved', displayName: 'BM Approved' },
     // { index: 3, name: 'ApprovalPending', displayName: 'Approval Pending' },
-    { index: 7, name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
-    { index: 8, name: 'Sanctioned', displayName: 'Sanctioned' },
-    { index: 9, name: 'OperationsVerified', displayName: 'Operations Verify' }
+    { index: 6, name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
+    { index: 7, name: 'Sanctioned', displayName: 'Sanctioned' },
+    { index: 8, name: 'OperationsVerified', displayName: 'Operations Verify' }
     // { index: 7, name: 'Rejected', displayName: 'Rejected' }
   ],
   DEALER_STATUS: [
@@ -1326,5 +1326,6 @@ export const projectConstantsLocal = {
   // PATH:'https://scale.jaldee.com/',
   // PATH:'https://www.jaldee.com/',,
   // PATH:'https://test.jaldee.com/jaldee/',
+  // SAPATH: "https://sa.jaldee.com/superadmin/rest/mgmt/"
   SAPATH: "https://sascale.jaldee.com/superadmin/rest/mgmt/"
 };

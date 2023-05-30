@@ -77,6 +77,7 @@ export class LoanDetailsComponent implements OnInit {
   businessId: any;
   filesToUpload: any = [];
   loanKycId: any;
+  internalStatusLogData: any;
   constructor(
     private snackbarService: SnackbarService,
     private router: Router,
@@ -109,6 +110,7 @@ export class LoanDetailsComponent implements OnInit {
 
           this.cdlservice.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
+            this.getLoanInternalStatusLog();
             this.loanKycId = this.loanData.loanApplicationKycList[0].id;
             if (this.loanId && this.loanData && this.loanData.isAccountAggregated) {
               this.getAccountAggregatorStatus(this.loanId, 0)
@@ -143,6 +145,49 @@ export class LoanDetailsComponent implements OnInit {
         }
       }
     })
+  }
+
+  getNameFromLogStatus(name) {
+    let userName = "";
+    if (this.internalStatusLogData && this.internalStatusLogData.length > 0) {
+      for (let i = 0; i < this.internalStatusLogData.length; i++) {
+        if (this.internalStatusLogData[i].spInternalStatus == name) {
+          userName = this.internalStatusLogData[i].updatedUserName
+        }
+      }
+    }
+    return userName;
+  }
+
+  viewLog() {
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        logData: this.internalStatusLogData,
+        type: "statusLog",
+        from: "statusLog"
+      }
+    });
+    dialogRef.afterClosed().subscribe(
+      (response: any) => {
+        if (response.msg == "success") {
+          this.ngOnInit();
+        }
+      });
+  }
+
+  getDateFromLogStatus(name) {
+    let updatedDateTime = "";
+    if (this.internalStatusLogData && this.internalStatusLogData.length > 0) {
+      for (let i = 0; i < this.internalStatusLogData.length; i++) {
+        if (this.internalStatusLogData[i].spInternalStatus == name) {
+          updatedDateTime = this.internalStatusLogData[i].statusUpdatedDateTime;
+        }
+      }
+    }
+    return updatedDateTime;
   }
 
   checkMafilScore() {
@@ -491,6 +536,15 @@ export class LoanDetailsComponent implements OnInit {
         this.btnLoading = false;
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
       })
+  }
+
+
+  getLoanInternalStatusLog() {
+    this.cdlservice.getLoanInternalStatusLog(this.loanId).subscribe((data) => {
+      this.internalStatusLogData = data;
+    }, (error: any) => {
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    })
   }
 
 

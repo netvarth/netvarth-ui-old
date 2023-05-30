@@ -112,6 +112,11 @@ export class CdlService {
     return this.servicemeta.httpPost(url, null);
   }
 
+  getLoanInternalStatusLog(id) {
+    const url = 'provider/loanapplication/' + id + '/internalstatuslog';
+    return this.servicemeta.httpGet(url, null);
+  }
+
 
   getLoans() {
     const url = 'provider/loanapplication';

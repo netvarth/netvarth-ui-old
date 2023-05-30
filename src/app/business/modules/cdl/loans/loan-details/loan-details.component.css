@@ -517,3 +517,8 @@ th {
 .astericColor {
   color: #f24949 !important;
 }
+
+.log-text
+{
+  font-size: 12px!important;
+}

@@ -51,6 +51,7 @@ export class ConfirmBoxComponent implements OnInit {
   }
   user: any;
   kycId: any;
+  internalStatusLogData: any;
   constructor(
     public dialogRef: MatDialogRef<ConfirmBoxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -102,6 +103,9 @@ export class ConfirmBoxComponent implements OnInit {
 
     if (this.data && this.data.kycId) {
       this.kycId = this.data.kycId;
+    }
+    if (this.data && this.data.logData) {
+      this.internalStatusLogData = this.data.logData;
     }
 
     if (this.from && this.from == 'loancreate') {
