@@ -176,7 +176,7 @@ export class BranchUserDetailComponent implements OnInit {
     this.userTypesFormfill = [
       { value: "ASSISTANT", name: "Assistant" },
       { value: "PROVIDER", name: this.provider_label.charAt(0).toUpperCase() + this.provider_label.slice(1).toLowerCase()},
-      
+
       { value: "ADMIN", name: "Admin" }
     ];
     if (bConfig && bConfig.bdata) {
@@ -298,7 +298,7 @@ export class BranchUserDetailComponent implements OnInit {
 
 
   getProviderLocations() {
- 
+
     this.api_loading = true;
     this.provider_services.getProviderLocations().subscribe(data => {
       console.log("loc_listdata" + JSON.stringify(data));
@@ -609,6 +609,9 @@ export class BranchUserDetailComponent implements OnInit {
       post_data1["admin"] = input.privileges;
       console.log(input.privileges);
     }
+    if (input.selectedUserType === "ASSISTANT") {
+      post_data1["showCsmrDataBase"] = input.showCsmrDataBase;
+    }
     if (this.settings && this.settings.enableCdl) {
       post_data1["userRoles"] = this.userRolesSelected;
     }
@@ -629,7 +632,7 @@ export class BranchUserDetailComponent implements OnInit {
         }
       );
     } else {
-    
+
       console.log(post_data1);
       this.provider_services.createUser(post_data1).subscribe(
         Id => {
@@ -745,10 +748,10 @@ export class BranchUserDetailComponent implements OnInit {
                       .setValue(this.departments[0].departmentId);
                   }
                   this.deptLength = this.departments.length;
-                  this.api_loading = false; 
+                  this.api_loading = false;
               },
               error => {
-                  
+
               }
           );
   }
