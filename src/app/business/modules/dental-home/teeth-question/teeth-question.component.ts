@@ -48,6 +48,7 @@ export class TeethQuestionComponent implements OnInit {
   teethIndex: any;
   surfaceClicked= false;
   surfaceSelected: any;
+  isFileUploading = false;
   constructor(
     private createTeethFormBuilder: UntypedFormBuilder,
     private location: Location,
@@ -369,7 +370,7 @@ export class TeethQuestionComponent implements OnInit {
   uploadAudioVideo(data) {
     const _this = this;
     let count = 0;
-
+    this.isFileUploading = true;
     return new Promise(async function (resolve, reject) {
       for (const s3UrlObj of data) {
         console.log('_this.filesToUpload', _this.filesToUpload)
@@ -386,6 +387,7 @@ export class TeethQuestionComponent implements OnInit {
                 resolve(true);
                 console.log('_this.filesToUpload', _this.filesToUpload)
               }
+              this.isFileUploading = false;
             }
           );
         }
@@ -394,6 +396,7 @@ export class TeethQuestionComponent implements OnInit {
         }
       }
     })
+   
   }
   uploadFiles(file, url, driveId) {
     const _this = this;
