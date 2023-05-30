@@ -9,6 +9,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CapitalizeFirstPipeModule } from '../../../../../../src/app/shared/pipes/capitalize.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
 
 const routes: Routes = [
     { path: '', component: TeethViewComponent }
@@ -28,6 +29,7 @@ const routes: Routes = [
     CapitalizeFirstPipeModule,
     MatTabsModule,
     MatTooltipModule,
+    MatSelectModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [
