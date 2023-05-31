@@ -152,6 +152,8 @@ export class DentalHomeComponent implements OnInit {
   customerDetails: any;
   firstName: any;
   indexSelection: any;
+  bookingType: any;
+  bookingId: any;
   constructor(
     private router: Router,
     // private routingService: RoutingService,
@@ -172,6 +174,12 @@ export class DentalHomeComponent implements OnInit {
       }
       if (params['custId']) {
         this.customerId = params['custId'];
+      }
+      if (params['bookingType']) {
+        this.bookingType = params['bookingType'];
+      }
+      if (params['bookingId']) {
+        this.bookingId = params['bookingId'];
       }
     });
   }
@@ -356,8 +364,14 @@ export class DentalHomeComponent implements OnInit {
   toggleAllApptIntStatusSelection() {
 
   }
-  goBack() {
-    this.location.back();
+  goBack(backFrom) {
+    if(backFrom === 'medical'){
+      this.router.navigate(['provider', 'customers', this.customerId , this.bookingType, this.bookingId, 'medicalrecord',this.mrid,'clinicalnotes']);
+    } else{
+      this.location.back();
+    }
+   
+    
   }
   gotoView(index) {
     const navigationExtras: NavigationExtras = {

@@ -54,6 +54,8 @@ export class TeethViewComponent {
   patientId: any;
   dentalState: any;
   state: string;
+  bookingType: any;
+  bookingId: any;
   ; z
   constructor(
     private location: Location,
@@ -77,7 +79,12 @@ export class TeethViewComponent {
         this.patientId = params['patientId'];
         this.getPatientDetails(this.patientId);
       }
-
+      if (params['bookingType']) {
+        this.bookingType = params['bookingType'];
+      }
+      if (params['bookingId']) {
+        this.bookingId = params['bookingId'];
+      }
     });
   }
   ngOnInit(): void {
@@ -320,7 +327,9 @@ export class TeethViewComponent {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         mrid: this.mrid,
-        custId: this.patientId
+        custId: this.patientId,
+        bookingType : this.bookingType,
+          bookingId : this.bookingId
       }
     };
     this.router.navigate(['provider', 'dental'], navigationExtras);

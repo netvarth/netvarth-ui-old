@@ -1235,7 +1235,9 @@ export class MedicalrecordComponent implements OnInit {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           patientId: this.patientId,
-          mrid: this.mrecordId
+          mrid: this.mrecordId,
+          bookingType : this.bookingType,
+          bookingId : this.bookingId
         }
       };
       this.router.navigate(['provider', 'dental'], navigationExtras);
@@ -1247,7 +1249,9 @@ export class MedicalrecordComponent implements OnInit {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           patientId: this.patientId,
-          mrid: this.mrId
+          mrid: this.mrId,
+          bookingType : this.bookingType,
+          bookingId : this.bookingId
         }
       };
       this.router.navigate(['provider', 'dental'], navigationExtras);
@@ -1262,7 +1266,9 @@ export class MedicalrecordComponent implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         patientId: this.patientId,
-        mrid: this.mrId
+        mrid: this.mrId,
+        bookingType : this.bookingType,
+          bookingId : this.bookingId
       }
     };
     this.router.navigate(['provider','dental','teeth','id','view'], navigationExtras)
