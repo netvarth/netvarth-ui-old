@@ -211,9 +211,9 @@
               </div>
             </div>
             <div class="mt-3">
-              <div *ngIf="showEditQnr && questionAnswers">
+              <div *ngIf="showEditQnr">
                 <app-questionnaire [questionnaireList]="ivrQuestionnaire" [source]="'ivr'"
-                  [questionAnswers]="questionAnswers" (returnAnswers)="getQuestionAnswers($event)" [type]="'details'"
+                  [questionAnswers]="questionAnswers" (returnAnswers)="getQuestionAnswers($event)"
                   [mode]="'edit'">
                 </app-questionnaire>
                 <div>

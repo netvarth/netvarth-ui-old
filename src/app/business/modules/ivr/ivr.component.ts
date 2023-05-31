@@ -648,6 +648,8 @@ export class IvrComponent implements OnInit {
     });
   }
 
-
+  viewAllSchedules() {
+    this.router.navigate(['provider', 'settings', 'ivrmanager', 'schedules']);
+  }
 
 }
