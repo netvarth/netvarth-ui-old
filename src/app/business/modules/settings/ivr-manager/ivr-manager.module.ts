@@ -10,6 +10,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 const routes: Routes = [
   { path: '', component: IvrManagerComponent },
+  { path: 'schedules', loadChildren: () => import('./schedules-list/schedules-list.module').then(m => m.SchedulesListModule) }
 ];
 
 @NgModule({

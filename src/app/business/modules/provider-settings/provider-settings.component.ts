@@ -951,6 +951,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       case 'ivr':
         this.routerobj.navigate(['provider', 'settings', 'ivrmanager']);
         break;
+      case 'ivrSchedules':
+        this.routerobj.navigate(['provider', 'settings', 'ivrmanager', 'schedules']);
+        break;
       case 'video':
         this.routerobj.navigate(['provider', 'settings', 'comm', 'video']);
         break;

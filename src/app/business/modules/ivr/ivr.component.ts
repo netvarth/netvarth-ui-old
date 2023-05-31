@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from './popup/popup.component';
 import { ConfirmBoxComponent } from '../../shared/confirm-box/confirm-box.component';
 import * as moment from 'moment';
+import { SchedulesComponent } from './schedules/schedules.component';
 
 @Component({
   selector: 'app-ivr',
@@ -37,6 +38,7 @@ export class IvrComponent implements OnInit {
   onGoingCall: any;
   statusDropdownClicked: any = false;
   usersDialogRef: any;
+  scheduleDialogRef: any;
   users: any;
   confirmBoxRef: any;
   voiceMailCalls: any;
@@ -355,6 +357,22 @@ export class IvrComponent implements OnInit {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
           })
       }
+    });
+  }
+
+
+  createSchedule(action) {
+    this.scheduleDialogRef = this.dialog.open(SchedulesComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        action: action
+      }
+    });
+    this.scheduleDialogRef.afterClosed().subscribe(data => {
+
     });
   }
 

@@ -1,0 +1,77 @@
+<div class="p-3">
+  <div class="my-2">
+    <div class="d-flex justify-content-between">
+      <div>
+        <span class="heading-text">{{!isUpdateSchedule ? 'Create':'Update'}} Schedule</span>
+      </div>
+      <div class="pointer-cursor">
+        <span (click)="goBack()"><i class="fa fa-times"></i></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 text-right" *ngIf="!isUpdateSchedule">
+    <a (click)="viewAllSchedules()"><u>View All Schedules</u></a>
+  </div>
+
+  <div class="schedule-form">
+    <div class="mt-4">
+      <span class="mr-3 mt-2">
+        <label for="name" class="form-title">Schedule Name</label><br>
+        <input type="text" class="mt-1" pInputText [(ngModel)]="scheduleName"  [style]="{'width':'100%'}" inputId="name" placeholder="Enter Schedule Name" />
+      </span>
+    </div>
+    <div class="mt-4">
+      <span class="mr-3 mt-2">
+        <mat-checkbox (change)="selectAllIntervals($event)" [checked]="allIntervalsSelected" class="example-margin">
+          <label class="font-weight-bold">Select All</label>
+        </mat-checkbox>
+      </span>
+    </div>
+    <div class="mt-2">
+      <span *ngFor="let interval of weeklyIntervals;let i=index" class="mr-3 mt-2">
+        <mat-checkbox (change)="intervalValues($event,interval.value,i)" [(ngModel)]="repeatIntervals[i]"
+          [checked]="repeatIntervals[i]" [value]="interval.value" class="example-margin">
+          <label>{{interval.name}}</label>
+        </mat-checkbox>
+      </span>
+    </div>
+
+    <div class="mt-4">
+      <div class="row">
+        <div class="col-md-6 col-xs-12 no-padding-small">
+          <label class="text-dark" for="changeHourStep">Start Time</label>
+          <ngb-timepicker [(ngModel)]="timeSlots['sTime']" meridian="true" #sch_start_time
+            (ngModelChange)="changetime()"></ngb-timepicker>
+        </div>
+        <div class="col-md-6 col-xs-12 no-padding-small">
+          <label for="changeHourStep">End Time</label>
+          <ngb-timepicker [(ngModel)]="timeSlots['eTime']" meridian="true" #sch_end_time
+            (ngModelChange)="changetime()"></ngb-timepicker>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <div class="row">
+        <div class="col-md-6 col-xs-6 no-padding-small">
+          <div>
+            <label for="startDate" class="form-title">Start Date</label><br>
+            <p-calendar appendTo="body" class="validDateCalendar" dataType="date" inputId="startDate" [(ngModel)]="date['start']">
+            </p-calendar>
+          </div>
+        </div>
+        <div class="col-md-6 col-xs-6 no-padding-small">
+          <label for="endDate" class="form-title">End Date</label><br>
+          <p-calendar appendTo="body" class="validDateCalendar" dataType="date" inputId="endDate" [(ngModel)]="date['end']">
+          </p-calendar>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-2 text-center mt-3">
+      <button pButton class="btn btn-primary" (click)="scheduleCreate()">{{!isUpdateSchedule ? 'Create':'Update'}} Schedule</button>
+    </div>
+
+  </div>
+</div>

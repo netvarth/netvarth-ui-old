@@ -292,6 +292,14 @@ input[type="checkbox"]:checked {
   }
 }
 
+.p-button-primary {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 3px !important;
+}
+
 
 
 /* Normal Desktop Styles or Tab Styles  */

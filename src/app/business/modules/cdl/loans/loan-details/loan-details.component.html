@@ -24,8 +24,10 @@
             </ng-template>
             <ng-template pTemplate="content" class="text-center timelinetext" let-event>
              <span>{{event.displayName}}</span><br>
-            <span class="log-text">{{getNameFromLogStatus(event.name)}} Updated</span><br>
-            <span class="log-text">{{getDateFromLogStatus(event.name) | date:'medium'}}</span>
+            <span class="log-text" *ngIf="getNameFromLogStatus(event.name) !=''">{{getNameFromLogStatus(event.name)}} Updated</span><br>
+            <span class="log-text" *ngIf="getNameFromLogStatus(event.name) ==''">
+              Not Yet Updated<br></span>
+            <span class="log-text" *ngIf="getDateFromLogStatus(event.name) !=''">{{getDateFromLogStatus(event.name) | date:'medium'}}</span>
             </ng-template>
           </p-timeline>
         </div>

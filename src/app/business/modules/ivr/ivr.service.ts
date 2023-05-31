@@ -101,6 +101,21 @@ export class IvrService {
     return this.servicemeta.httpPut(url, null);
   }
 
+  createSchedule(data) {
+    const url = 'provider/schedule';
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  updateSchedule(data) {
+    const url = 'provider/schedule';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  getScheduleById(id) {
+    const url = 'provider/schedule/' + id;
+    return this.servicemeta.httpGet(url, null);
+  }
+
   getUser(providerid) {
     const url = 'provider/user/' + providerid;
     return this.servicemeta.httpGet(url);

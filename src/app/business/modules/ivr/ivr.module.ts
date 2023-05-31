@@ -14,6 +14,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { TabViewModule } from 'primeng/tabview';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SchedulesModule } from './schedules/schedules.module';
 
 const routes: Routes = [
   { path: '', component: IvrComponent },
@@ -42,6 +43,7 @@ const routes: Routes = [
     RippleModule,
     MatMenuModule,
     TabViewModule,
+    SchedulesModule,
     [RoundProgressModule],
     [RouterModule.forChild(routes)]
   ]

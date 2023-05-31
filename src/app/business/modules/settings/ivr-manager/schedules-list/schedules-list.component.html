@@ -1,0 +1,115 @@
+<div>
+  <section class="card">
+    <div class="pointer-cursor">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex align-items-center">
+          <div> <i class="fa fa-arrow-left mr-2" aria-hidden="true" (click)="goBack()"></i></div>
+          <div class="text-primary heading" class="back-btn">Schedules</div>
+        </div>
+
+        <div class="d-flex">
+          <!-- <div *ngIf="filterConfig && filterConfig.length>0">
+            <app-filter [position]="'right'" (filterEvent)="applyFilters($event)"
+              [filterConfig]="filterConfig"></app-filter>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- <section *ngIf="loading">
+    <div>
+      <app-skeleton-loading></app-skeleton-loading>
+    </div>
+  </section> -->
+
+  <div>
+    <div class="card">
+      <p-table #schedulesTable [value]="schedules" [lazy]="true" (onLazyLoad)="loadSchedules($event)"
+        dataKey="id" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [rows]="10"
+        [totalRecords]="totalSchedulesCount" [loading]="loading" responsiveLayout="stack" scrollHeight="flex"
+        [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']"
+        styleClass="p-datatable-customers p-datatable-gridlines"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+        <!-- <ng-template pTemplate="caption">
+          <div class="row">
+            <div class="col-md-4 no-padding-small">
+            </div>
+            <div class="col-md-4 no-padding-small">
+              <div class="full-width">
+                <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="title"
+                  selectedItemsLabel="{0} columns selected" [style]="{'min-width': '200px','width': '100%'}"
+                  placeholder="Choose Columns"></p-multiSelect>
+              </div>
+            </div>
+            <div class="col-md-4 no-padding-small text-right">
+              <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="loanStatus"
+                (onChange)="statusChange($event)" [(ngModel)]="statusDisplayName" optionLabel="displayName"
+                dataKey="name">
+              </p-dropdown>
+            </div>
+          </div>
+        </ng-template> -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Name</th>
+            <th>Days</th>
+            <th>Start Time - End Time</th>
+            <th>Start Date - End Date</th>
+            <th>Status</th>
+            <th>More Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-schedule>
+          <tr>
+            <td>
+              <span class="d-lg-none d-md-none font-weight-bold">Name : </span>
+              <span class="table-column-data" *ngIf="schedule.name">{{schedule.name}}</span>
+            </td>
+            <td>
+              <span class="d-lg-none d-md-none font-weight-bold">Days : </span>
+              <span class="table-column-data" *ngIf="schedule.scheduleTime && schedule.scheduleTime.repeatIntervals">{{getDaysFromIntervals(schedule.scheduleTime.repeatIntervals)}}</span>
+            </td>
+            <td>
+              <span class="d-lg-none d-md-none font-weight-bold">Start Time - End Time : </span>
+              <span class="table-column-data"
+                *ngIf="schedule && schedule.scheduleTime && schedule.scheduleTime.timeSlots && schedule.scheduleTime.timeSlots[0]
+                && schedule.scheduleTime.timeSlots[0].sTime">{{schedule.scheduleTime.timeSlots[0].sTime}}</span>&nbsp;-&nbsp;
+              <span class="table-column-data" *ngIf="schedule && schedule.scheduleTime && schedule.scheduleTime.timeSlots && schedule.scheduleTime.timeSlots[0]
+                              && schedule.scheduleTime.timeSlots[0].eTime">{{schedule.scheduleTime.timeSlots[0].eTime}}</span>
+            </td>
+            <td>
+              <span class="d-lg-none d-md-none font-weight-bold">Start Date - End Date : </span>
+              <span class="table-column-data"
+                *ngIf="schedule && schedule.scheduleTime && schedule.scheduleTime.startDate">{{schedule.scheduleTime.startDate}}</span>&nbsp;-&nbsp;
+              <span class="table-column-data"
+                *ngIf="schedule && schedule.scheduleTime && schedule.scheduleTime.terminator && schedule.scheduleTime.terminator.endDate">{{schedule.scheduleTime.terminator.endDate}}</span>
+            </td>
+            <td *ngIf="schedule && schedule.scheduleState">
+              <span class="d-lg-none d-md-none font-weight-bold">Status : </span>
+              <mat-slide-toggle (change)="scheduleStatusChange(schedule.id,$event.checked)"
+                [checked]="schedule.scheduleState=='ENABLED' ? 'true':'false'">
+                {{schedule.status}}
+              </mat-slide-toggle>
+            </td>
+            <td>
+              <div class="text-center">
+                <div class="d-flex">
+                  <button pButton pRipple type="button"
+                    class="btn btn-primary mr-2" (click)="updateSchedule(schedule.id,'update')">Update</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <br class="d-lg-none d-md-none">
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="7">No Schedules found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

@@ -1354,6 +1354,15 @@ export class ProviderServices {
   getProviderSchedulesbyDate(date) {
     return this.servicemeta.httpGet('provider/appointment/schedule/date/' + date);
   }
+  getSchedules(filter = {}) {
+    return this.servicemeta.httpGet('provider/schedule', null, filter);
+  }
+  changeScheduleStatus(id, status) {
+    return this.servicemeta.httpPut('provider/schedule/' + status + '/' + id, null);
+  }
+  getCountofSchedules(filter = {}) {
+    return this.servicemeta.httpGet('provider/schedule/count', null, filter);
+  }
   readConsumerMessages(consumerId, messageIds, providerId) {
     const url = 'provider/communications/readMessages/' + consumerId + '/' + messageIds + '/' + providerId;
     return this.servicemeta.httpPut(url);
@@ -2950,7 +2959,7 @@ export class ProviderServices {
   getBranchesByFilter(filter) {
     const url = 'provider/branchmaster';
     return this.servicemeta.httpGet(url, null, filter);
-  } 
+  }
 
   saveBranch(data) {
     const url = 'provider/branchmaster';
