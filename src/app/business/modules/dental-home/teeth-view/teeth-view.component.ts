@@ -316,6 +316,8 @@ export class TeethViewComponent {
         action: 'edit',
         teethId: this.selectedTeethDetails.toothId,
         type: this.state,
+        bookingType : this.bookingType,
+        bookingId : this.bookingId
       }
     };
     this.router.navigate(['provider', 'dental', 'teeth', this.selectedTeethDetails.toothId], navigationExtras);

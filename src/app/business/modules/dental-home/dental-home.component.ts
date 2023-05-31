@@ -318,6 +318,8 @@ export class DentalHomeComponent implements OnInit {
         action: 'edit',
         teethId : teeth.toothId,
         type: this.type,
+        bookingType : this.bookingType,
+        bookingId : this.bookingId
       }
     };
     this.router.navigate(['provider','dental','teeth',teeth.toothId],navigationExtras);
@@ -336,7 +338,9 @@ export class DentalHomeComponent implements OnInit {
             mrid: this.mrid,
             type: this.type,
             action: 'edit',
-            teethIndex : index
+            teethIndex : index,
+            bookingType : this.bookingType,
+            bookingId : this.bookingId
           }
         };
         this.router.navigate(['provider','dental','teeth',index],navigationExtras);
@@ -348,7 +352,9 @@ export class DentalHomeComponent implements OnInit {
           queryParams: {
             patientId: this.customerId,
             type: this.type,
-            teethIndex : index
+            teethIndex : index,
+            bookingType : this.bookingType,
+            bookingId : this.bookingId
           }
         };
         this.router.navigate(['provider','dental','teeth',index],navigationExtras);
@@ -377,7 +383,9 @@ export class DentalHomeComponent implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         patientId: this.customerId,
-        mrid: this.mrid
+        mrid: this.mrid,
+        bookingType : this.bookingType,
+        bookingId : this.bookingId
       }
     };
     this.router.navigate(['provider','dental','teeth','id','view'],navigationExtras);

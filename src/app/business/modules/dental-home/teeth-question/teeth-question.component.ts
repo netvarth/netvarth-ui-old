@@ -49,6 +49,8 @@ export class TeethQuestionComponent implements OnInit {
   surfaceClicked= false;
   surfaceSelected: any;
   isFileUploading = false;
+  bookingType: any;
+  bookingId: any;
   constructor(
     private createTeethFormBuilder: UntypedFormBuilder,
     private location: Location,
@@ -77,6 +79,12 @@ export class TeethQuestionComponent implements OnInit {
       }
       if (params['teethIndex']) {
         this.teethIndex = params['teethIndex'];
+      }
+      if (params['bookingType']) {
+        this.bookingType = params['bookingType'];
+      }
+      if (params['bookingId']) {
+        this.bookingId = params['bookingId'];
       }
       this.customerId = params['patientId'];
       this.dentalType = params['type'];
@@ -563,7 +571,9 @@ export class TeethQuestionComponent implements OnInit {
         const navigationExtras: NavigationExtras = {
           queryParams: {
             mrid: this.mrid,
-            custId: this.customerId
+            custId: this.customerId,
+            bookingType : this.bookingType,
+            bookingId : this.bookingId
           }
         };
         this.router.navigate(['provider', 'dental'], navigationExtras);
@@ -578,7 +588,9 @@ export class TeethQuestionComponent implements OnInit {
           const navigationExtras: NavigationExtras = {
             queryParams: {
               mrid: this.mrid,
-              custId: this.customerId
+              custId: this.customerId,
+              bookingType : this.bookingType,
+              bookingId : this.bookingId
             }
           };
           this.router.navigate(['provider', 'dental'], navigationExtras);
@@ -595,7 +607,9 @@ export class TeethQuestionComponent implements OnInit {
           const navigationExtras: NavigationExtras = {
             queryParams: {
               mrid: this.mrid,
-              custId: this.customerId
+              custId: this.customerId,
+              bookingType : this.bookingType,
+              bookingId : this.bookingId
             }
           };
           this.router.navigate(['provider', 'dental'], navigationExtras);
