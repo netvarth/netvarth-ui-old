@@ -115,8 +115,8 @@
           </div>
         </div>
         <!---clinical noptes end-->
-        <div class="clinicalOuter2" (click)="openDentalChart()" *ngIf="(subdomain === 'Dentist / Dental Clinic'||subdomain === 'Dental Hospital')">
-          <div>
+        <div class="clinicalOuter2" (click)="openDentalChart()" *ngIf=" clinicalOuter" >
+          <div *ngIf="(subdomain === 'Dentist / Dental Clinic'||subdomain === 'Dental Hospital')" > 
             <img class="imageSize" src="./assets/images/medicalReportIcon/AddClinicalNote.png" />
           </div>
           <div class="nameClrOther">
@@ -566,5 +566,26 @@
         </div>
       </div>
     </div>
+    <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 no-padding" *ngIf="(subdomain === 'Dentist / Dental Clinic'||subdomain === 'Dental Hospital')">
+      <div *ngIf="medicalInfo.dentalChart && medicalInfo.dentalChart.teeth &&  medicalInfo.dentalChart.teeth.length === 0 ">
+        <div>
+         
+          <ng-container >
+            <div class=" card mgn-bt-10 mgn-up-10 clinicalOuter1"
+              >
+              <div class="clinical  pointer-cursor" (click)="openDentalChart()">
+                <div>
+                  <img class="imageSize" src="./assets/images/medicalReportIcon/AddClinicalNote.png"  />
+                </div>
+                <div class="nameClrOther2nd">
+                  Add Dental Chart
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          
+        </div>
+      </div>
+    </div> -->
   </div>
 </section>
