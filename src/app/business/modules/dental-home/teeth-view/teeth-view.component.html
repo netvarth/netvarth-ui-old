@@ -7,13 +7,13 @@
   <div class="d-flex justify-content-between">
     <div class="d-flex">
       <div class="mr-2 d-flex align-items-center">
-        <div *ngIf="customerDetails && customerDetails.gender === 'male'">
+        <div *ngIf="customerDetails && customerDetails.gender && customerDetails.gender === 'male'">
           <img width="45" height="45" class="imGBorderRadius" src="assets/images/mr_male.svg" />
         </div>
-        <div *ngIf="customerDetails && customerDetails.gender === 'female'">
+        <div *ngIf="customerDetails && customerDetails.gender && customerDetails.gender === 'female'">
           <img width="45" height="45" class="imGBorderRadius" src="assets/images/mr_female.svg" />
         </div>
-        <div *ngIf="customerDetails.gender != 'male' && customerDetails.gender != 'female'">
+        <div *ngIf="customerDetails && customerDetails.gender && customerDetails.gender != 'male' && customerDetails.gender != 'female'">
           <img width="45" height="45" class="imGBorderRadius" src="assets/images/undefinedUser.png" />
         </div>
         <!-- <img width="45" height="45" src="./assets/images/cdl/profile.png"> -->
