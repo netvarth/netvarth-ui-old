@@ -104,7 +104,7 @@ export class IvrComponent implements OnInit {
   getTodayCallsCount() {
     let api_filter = {}
     let date = new Date();
-    let todayDate = moment(date).format("DD-MM-YYYY");
+    let todayDate = moment(date).format("YYYY-MM-DD");
     api_filter['createdDate-eq'] = todayDate;
     api_filter['callStatus-eq'] = "connected";
     this.getIvrCallsCount(api_filter).then((data) => {
