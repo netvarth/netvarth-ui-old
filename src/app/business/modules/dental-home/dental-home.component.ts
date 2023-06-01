@@ -234,60 +234,67 @@ export class DentalHomeComponent implements OnInit {
       this.selectedTeeth = this.teethDetails.teeth;
       let dentalState  = this.teethDetails.dentalState;
       this.teeth_loading = false;
+if(this.teethDetails && this.teethDetails.teeth && this.teethDetails.teeth.length>0){
+  this.selectedTeeth.forEach((item) => {
+    switch (dentalState) {
+      case "PERMANENT":
+        this.type = 'adult';
+        this.isAdult = true;
+        this.isChild = false;
+        let index1 = this.adultTeethArrayUpper.findIndex(x => x.index === item.toothId);
+    if (index1 !== -1) {
+      this.adultTeethArrayUpper.splice(index1, 1, { index: item.toothId, isSelected: true });
+    }
 
-      this.selectedTeeth.forEach((item) => {
-        switch (dentalState) {
-          case "PERMANENT":
-            this.type = 'adult';
-            let index1 = this.adultTeethArrayUpper.findIndex(x => x.index === item.toothId);
-        if (index1 !== -1) {
-          this.adultTeethArrayUpper.splice(index1, 1, { index: item.toothId, isSelected: true });
-        }
-
-        let index2 = this.adultTeethArrayLower.findIndex(x => x.index === item.toothId);
-        if (index2 !== -1) {
-          this.adultTeethArrayLower.splice(index2, 1, { index: item.toothId, isSelected: true });
-        }
-            break;
-        case "TEMPORARY":
-          this.type = 'child';
-          let index3 = this.childTeethArrayUpper.findIndex(x => x.index === item.toothId);
-        if (index3 !== -1) {
-          this.childTeethArrayUpper.splice(index3, 1, { index: item.toothId, isSelected: true });
-        }
-
-        let index4 = this.childTeethArrayLower.findIndex(x => x.index === item.toothId);
-        if (index4 !== -1) {
-          this.childTeethArrayLower.splice(index4, 1, { index: item.toothId, isSelected: true });
-        }
+    let index2 = this.adultTeethArrayLower.findIndex(x => x.index === item.toothId);
+    if (index2 !== -1) {
+      this.adultTeethArrayLower.splice(index2, 1, { index: item.toothId, isSelected: true });
+    }
         break;
-        case "MIXED":
-          this.type = 'mixed';
-          let index5 = this.mixedTeethArrayUpper1.findIndex(x => x.index === item.toothId);
-        if (index5 !== -1) {
-          this.mixedTeethArrayUpper1.splice(index5, 1, { index: item.toothId, isSelected: true });
-        }
+    case "TEMPORARY":
+      this.type = 'child';
+      this.isChild = true;
+      this.isAdult = false;
+      let index3 = this.childTeethArrayUpper.findIndex(x => x.index === item.toothId);
+    if (index3 !== -1) {
+      this.childTeethArrayUpper.splice(index3, 1, { index: item.toothId, isSelected: true });
+    }
 
-        let index6 = this.mixedTeethArrayUpper2.findIndex(x => x.index === item.toothId);
-        if (index6 !== -1) {
-          this.mixedTeethArrayUpper2.splice(index6, 1, { index: item.toothId, isSelected: true });
-        }
-        let index7 = this.mixedTeethArrayLower1.findIndex(x => x.index === item.toothId);
-        if (index7 !== -1) {
-          this.mixedTeethArrayLower1.splice(index7, 1, { index: item.toothId, isSelected: true });
-        }
+    let index4 = this.childTeethArrayLower.findIndex(x => x.index === item.toothId);
+    if (index4 !== -1) {
+      this.childTeethArrayLower.splice(index4, 1, { index: item.toothId, isSelected: true });
+    }
+    break;
+    case "MIXED":
+      this.type = 'mixed';
+      this.isMixed = true;
+      let index5 = this.mixedTeethArrayUpper1.findIndex(x => x.index === item.toothId);
+    if (index5 !== -1) {
+      this.mixedTeethArrayUpper1.splice(index5, 1, { index: item.toothId, isSelected: true });
+    }
 
-        let index8 = this.mixedTeethArrayLower2.findIndex(x => x.index === item.toothId);
-        if (index8 !== -1) {
-          this.mixedTeethArrayLower2.splice(index8, 1, { index: item.toothId, isSelected: true });
-        }
-        break
-          default:
+    let index6 = this.mixedTeethArrayUpper2.findIndex(x => x.index === item.toothId);
+    if (index6 !== -1) {
+      this.mixedTeethArrayUpper2.splice(index6, 1, { index: item.toothId, isSelected: true });
+    }
+    let index7 = this.mixedTeethArrayLower1.findIndex(x => x.index === item.toothId);
+    if (index7 !== -1) {
+      this.mixedTeethArrayLower1.splice(index7, 1, { index: item.toothId, isSelected: true });
+    }
 
-            break;
-        }
-        
-      });
+    let index8 = this.mixedTeethArrayLower2.findIndex(x => x.index === item.toothId);
+    if (index8 !== -1) {
+      this.mixedTeethArrayLower2.splice(index8, 1, { index: item.toothId, isSelected: true });
+    }
+    break
+      default:
+
+        break;
+    }
+    
+  });
+}
+     
 
     })
   }

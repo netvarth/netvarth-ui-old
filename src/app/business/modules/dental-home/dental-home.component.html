@@ -316,7 +316,7 @@
       <mat-checkbox [(ngModel)]="allApptIntStatusSelected" [ngModelOptions]="{standalone: true}"
         (change)="toggleAllApptIntStatusSelection()">Select All (Mouth)</mat-checkbox>
     </div><br/> -->
-  <div class="progress_list" *ngIf="teethDetails.teeth.length>0">
+  <div class="progress_list" *ngIf="teethDetails && teethDetails.teeth && teethDetails.teeth.length>0">
     <table class="table table-responsive">
       <tr *ngFor="let teeth of teethDetails.teeth;let i=index;">
         <td>
@@ -337,7 +337,7 @@
             </div> -->
           </div>
         </td>
-        <!-- <td class="text-right">
+        <!-- <td class="text-right web">
           <button class="btn btn-draft mr-2" (click)="toothDelete(teeth.toothId)">
            Delete
           </button>
@@ -359,7 +359,7 @@
     </table>
 
   </div>
-  <div class="mt-2" *ngIf="teethDetails.teeth.length>0">
+  <div class="mt-2" *ngIf="teethDetails && teethDetails.teeth && teethDetails.teeth.length>0">
     <div>
 
       <button class="btn btnn-primary mr-2 " (click)="goBack('cancel')">
