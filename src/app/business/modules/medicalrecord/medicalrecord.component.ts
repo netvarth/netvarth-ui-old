@@ -619,7 +619,8 @@ export class MedicalrecordComponent implements OnInit {
       this.viewVisitDetails = false;
       // console.log('this.medicalInfo',this.medicalInfo);
       // console.log('visitDetailsTableValue',this.visitDetailsTableValue)
-      this.router.navigate(['provider', 'customers']);
+     
+      this.location.back();
     }
     else {
       // alert(back_type)
