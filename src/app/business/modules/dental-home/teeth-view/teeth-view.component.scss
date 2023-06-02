@@ -211,12 +211,12 @@ border-radius: 10px!important;
   border-radius: 10px;
   border-bottom: 2px solid #F8F9FB !important;
 }
-::ng-deep .surface .mat-chip.mat-standard-chip, ::ng-deep .surface .mat-chip.mat-standard-chip:hover {
-  background-color: #fff !important;
-  color: #000 !important;
-  border-radius: 5px !important;
-  border:1px solid #ddd;
-}
+// ::ng-deep .surface .mat-chip.mat-standard-chip, ::ng-deep .surface .mat-chip.mat-standard-chip:hover {
+//   background-color: #fff !important;
+//   color: #000 !important;
+//   border-radius: 5px !important;
+//   border:1px solid #ddd;
+// }
 ::ng-deep .surface .mat-chip-list-wrapper {
   margin-bottom: 0px !important;;
 }
@@ -224,9 +224,9 @@ hr {
   margin-top: 5px !important;
   margin-bottom: 5px !important;
 }
-::ng-deep .surface .mat-chip.mat-standard-chip.selected {
-  color: #0000ff !important;
-}
+// ::ng-deep .surface .mat-chip.mat-standard-chip.selected {
+//   color: #0000ff !important;
+// }
 .flex-one {
   width: 20%;
 }

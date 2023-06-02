@@ -6,6 +6,8 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { FileService } from '../../../../shared/services/file-service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { MatDialog } from '@angular/material/dialog';
+// import { SurfaceConfirmComponent } from '../surface-confirm/surface-confirm.component';
 
 @Component({
   selector: 'app-teeth-question',
@@ -31,6 +33,12 @@ export class TeethQuestionComponent implements OnInit {
   isLingual = false;
   isIncisal = false;
   isMissing = false;
+  isMesialData = false;
+  isDistalData = false;
+  isBuccalData= false;
+  isLingualData= false;
+  isIncisalData= false;
+  isMissingData= false;
   mrId = 0;
   customerId: any;
   customerDetails: any;
@@ -46,9 +54,8 @@ export class TeethQuestionComponent implements OnInit {
   action: any;
   showChiefIssue = false
   teethIndex: any;
-  surfaceClicked= false;
-  surfaceSelected: any;
-  isFileUploading = false;
+  isMesialComplete: boolean;
+  teeth_loading = false;
   bookingType: any;
   bookingId: any;
   constructor(
@@ -57,10 +64,12 @@ export class TeethQuestionComponent implements OnInit {
     private fileService: FileService,
     private activated_route: ActivatedRoute,
     private activatedRoute: ActivatedRoute,
+    public dialog: MatDialog,
     private dental_homeservice: DentalHomeService,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private router: Router,
+    // public dialogRef: MatDialogRef<SurfaceConfirmComponent>
   ) {
     this.activated_route.queryParams.subscribe(params => {
       if (params['mrid']) {
@@ -68,7 +77,6 @@ export class TeethQuestionComponent implements OnInit {
         this.getTeethDetails()
       }
       if (params['action']) {
-        // alert(params['action'])
         this.action = params['action'];
       }
       if (params['teethId']) {
@@ -80,23 +88,21 @@ export class TeethQuestionComponent implements OnInit {
       if (params['teethIndex']) {
         this.teethIndex = params['teethIndex'];
       }
+      this.customerId = params['patientId'];
+      this.dentalType = params['type'];
       if (params['bookingType']) {
         this.bookingType = params['bookingType'];
       }
       if (params['bookingId']) {
         this.bookingId = params['bookingId'];
       }
-      this.customerId = params['patientId'];
-      this.dentalType = params['type'];
-
     });
 
   }
   ngOnInit(): void {
-   
+
     const medicalRecordCustId = this.activatedRoute.parent.snapshot.params['id'];
     this.toothId = medicalRecordCustId;
-    // else {
     this.createTeeth = this.createTeethFormBuilder.group({
       symptoms_mesial: [null],
       observations_mesial: [null],
@@ -131,16 +137,15 @@ export class TeethQuestionComponent implements OnInit {
       chiefIssue: [null],
       chiefComplaint: [null],
     });
-    // }
     if (this.action === 'edit') {
-      if( this.teethId !== undefined){
-        this.dental_homeservice.getTeethDetailsById(this.mrid, this.teethId).subscribe((data) => {
-          this.teethDetailsById = data;
-          this.setTeethValues();
-       
-        });
-      }
+      this.teeth_loading = true;
+      this.dental_homeservice.getTeethDetailsById(this.mrid, this.teethId).subscribe((data) => {
+        this.teethDetailsById = data;
+        
+        this.setTeethValues();
+        
      
+      });
 
     }
     this.dental_homeservice.getBusinessProfile().subscribe((data) => {
@@ -151,10 +156,11 @@ export class TeethQuestionComponent implements OnInit {
     })
   }
   setTeethValues() {
-    // alert('1')
+   
     console.log(this.teethDetailsById)
     if (this.teethDetailsById && this.teethDetailsById.surface) {
-      if (this.teethDetailsById.surface['mesial']) {
+      if (this.teethDetailsById.surface.mesial) {
+        this.isMesialData = true;
         this.isMesial = true;
         this.isDistal = false;
         this.isBuccal = false;
@@ -164,50 +170,57 @@ export class TeethQuestionComponent implements OnInit {
 
       }
       if (this.teethDetailsById.surface['distal']) {
-        this.isDistal = true;
+        this.isDistalData = true;
         this.isMesial = false;
+        this.isDistal = true;
         this.isBuccal = false;
         this.isLingual = false;
         this.isIncisal = false;
         this.isMissing = false;
+
        
       }
       if (this.teethDetailsById.surface['buccal']) {
-        this.isBuccal = true;
+        this.isBuccalData = true;
         this.isMesial = false;
         this.isDistal = false;
+        this.isBuccal = true;
         this.isLingual = false;
         this.isIncisal = false;
         this.isMissing = false;
+     
       }
       if (this.teethDetailsById.surface['lingual']) {
-        this.isLingual = true;
+        this.isLingualData = true;
         this.isMesial = false;
         this.isDistal = false;
         this.isBuccal = false;
+        this.isLingual = true;
         this.isIncisal = false;
         this.isMissing = false;
       }
       if (this.teethDetailsById.surface['incisal']) {
-        this.isIncisal = true;
+        this.isIncisalData = true;
         this.isMesial = false;
         this.isDistal = false;
         this.isBuccal = false;
         this.isLingual = false;
+        this.isIncisal = true;
         this.isMissing = false;
        
       }
       if (this.teethDetailsById.surface['occlusal']) {
-        this.isMissing = true;
+        this.isMissingData = true;
         this.isMesial = false;
         this.isDistal = false;
         this.isBuccal = false;
         this.isLingual = false;
         this.isIncisal = false;
-       
+        this.isMissing = true;
        
       }
     }
+    this.teeth_loading = false;
     // this.createTeeth.controls['chiefComplaint'].setValue(this.teethDetailsById.chiefComplaint);
     if (this.teethDetailsById && this.teethDetailsById.surface && this.teethDetailsById.surface.mesial && this.teethDetailsById.surface.mesial.symptoms) {
       this.createTeeth.controls['symptoms_mesial'].setValue(this.teethDetailsById.surface.mesial.symptoms);
@@ -300,7 +313,6 @@ export class TeethQuestionComponent implements OnInit {
       this.createTeeth.controls['procedure_missing'].setValue(this.teethDetailsById.surface.occlusal.procedure);
     }
     if (this.teethDetailsById && this.teethDetailsById.chiefIssue) {
-      this.showChiefIssue = true;
       this.createTeeth.controls['chiefIssue'].setValue(this.teethDetailsById.chiefIssue);
     }
     if (this.teethDetailsById && this.teethDetailsById.chiefComplaint) {
@@ -378,7 +390,7 @@ export class TeethQuestionComponent implements OnInit {
   uploadAudioVideo(data) {
     const _this = this;
     let count = 0;
-    this.isFileUploading = true;
+
     return new Promise(async function (resolve, reject) {
       for (const s3UrlObj of data) {
         console.log('_this.filesToUpload', _this.filesToUpload)
@@ -395,7 +407,6 @@ export class TeethQuestionComponent implements OnInit {
                 resolve(true);
                 console.log('_this.filesToUpload', _this.filesToUpload)
               }
-              this.isFileUploading = false;
             }
           );
         }
@@ -404,7 +415,6 @@ export class TeethQuestionComponent implements OnInit {
         }
       }
     })
-   
   }
   uploadFiles(file, url, driveId) {
     const _this = this;
@@ -451,7 +461,7 @@ export class TeethQuestionComponent implements OnInit {
     let lingual = {};
     let incisal = {};
     let occlusal = {};
-    if (this.isMesial) {
+    if (this.isMesialData) {
       mesial = {
         "description": this.createTeeth.controls['notes_mesial'].value,
         "symptoms": this.createTeeth.controls['symptoms_mesial'].value,
@@ -461,7 +471,7 @@ export class TeethQuestionComponent implements OnInit {
       }
       surface["mesial"] = mesial;
     }
-    if (this.isDistal) {
+    if (this.isDistalData) {
       distal = {
         "description": this.createTeeth.controls['notes_distal'].value,
         "symptoms": this.createTeeth.controls['symptoms_distal'].value,
@@ -471,7 +481,7 @@ export class TeethQuestionComponent implements OnInit {
       }
       surface["distal"] = distal
     }
-    if (this.isBuccal) {
+    if (this.isBuccalData) {
       buccal = {
         "description": this.createTeeth.controls['notes_buccal'].value,
         "symptoms": this.createTeeth.controls['symptoms_buccal'].value,
@@ -481,7 +491,7 @@ export class TeethQuestionComponent implements OnInit {
       }
       surface["buccal"] = buccal
     }
-    if (this.isLingual) {
+    if (this.isLingualData) {
       lingual = {
         "description": this.createTeeth.controls['notes_lingual'].value,
         "symptoms": this.createTeeth.controls['symptoms_lingual'].value,
@@ -491,7 +501,7 @@ export class TeethQuestionComponent implements OnInit {
       }
       surface["lingual"] = lingual
     }
-    if (this.isIncisal) {
+    if (this.isIncisalData) {
       incisal = {
         "description": this.createTeeth.controls['notes_incisal'].value,
         "symptoms": this.createTeeth.controls['symptoms_incisal'].value,
@@ -501,7 +511,7 @@ export class TeethQuestionComponent implements OnInit {
       }
       surface["incisal"] = incisal
     }
-    if (this.isMissing) {
+    if (this.isMissingData) {
       occlusal = {
         "description": this.createTeeth.controls['notes_missing'].value,
         "symptoms": this.createTeeth.controls['symptoms_missing'].value,
@@ -520,14 +530,6 @@ export class TeethQuestionComponent implements OnInit {
       }
 
     }
-    // if(symptoms.length>0){
-    //   this.newData= {
-    //     'attachments':symptoms
-    //   }
-    //   // payload.splice(payload.findIndex(e => e.type === "photo"),1);
-    //   // payload.push(this.newData)
-    // }
-
     if (this.teethDetails?.teeth) {
       payload = {
         "dentalState": this.dentalState,
@@ -577,7 +579,6 @@ export class TeethQuestionComponent implements OnInit {
           }
         };
         this.router.navigate(['provider', 'dental'], navigationExtras);
-        // this.routingService.handleRoute('', navigationExtras);
         this.goBack()
       })
     }
@@ -594,13 +595,10 @@ export class TeethQuestionComponent implements OnInit {
             }
           };
           this.router.navigate(['provider', 'dental'], navigationExtras);
-          // this.routingService.handleRoute('', navigationExtras);
           this.goBack()
         })
-
       }
       else {
-
         this.dental_homeservice.createMedicalRecordForFollowUp(this.customerId, payload).subscribe((data) => {
           this.mrid = data;
 
@@ -613,73 +611,221 @@ export class TeethQuestionComponent implements OnInit {
             }
           };
           this.router.navigate(['provider', 'dental'], navigationExtras);
-          // this.routingService.handleRoute('', navigationExtras);
-          // this.goBack()
         })
-
       }
-
     }
-
-    // this.dental_homeservice.createMR('dental', payload).then((res: any) => {
-    //   this.mrId = res;
-    //   console.log('this.mrId::', this.mrId)
-    //   this.snackbarService.openSnackBar('Dental Chart Created Successfully');
-    //   this.routingService.handleRoute(patientId + '/' + bookingType + '/' + bookingId + '/medicalrecord/' + this.mrId + '/dental-chart', null);
-    // })
   }
-  surfaceClick(surfaceCheck) {
-    this.surfaceSelected = surfaceCheck;
-    if(this.surfaceSelected === 'mesial'){
+  mesialClick() {
+ 
+   
       this.isMesial = true;
       this.isDistal = false;
       this.isBuccal = false;
       this.isLingual = false;
       this.isIncisal = false;
       this.isMissing = false;
-    }
-    else if(this.surfaceSelected === 'distal'){
+      this.isMesialData = true;
+      // if(!this.isMesialData){
+      //   const dialogref = this.dialog.open(SurfaceConfirmComponent, {
+      //     width: "30%",
+      //     panelClass: [
+      //       "popup-class",
+      //       "commonpopupmainclass",
+      //       "confirmationmainclass"
+      //     ],
+      //     disableClose: true,
+      //     data: {
+      //     }
+      //   });
+      //   dialogref.afterClosed().subscribe(result => {
+        
+      //     if(result === 'not'){
+      //       this.isMesialData = true;
+      //     }
+      //     else if(result === 'same'){
+      //       this.isMesialData = false;
+      //       // this.amForm.reset();
+      //       this.createTeeth.controls['notes_mesial'].reset();
+      //       this.createTeeth.controls['symptoms_mesial'].reset();
+      //       this.createTeeth.controls['observations_mesial'].reset();
+      //       this.createTeeth.controls['diagnosis_mesial'].reset();
+      //       this.createTeeth.controls['procedure_mesial'].reset();
+           
+      //     }
+      //   });
+      // }
+    
+    
+  }
+  distalClick() {
+   
+  
       this.isMesial = false;
       this.isDistal = true;
       this.isBuccal = false;
       this.isLingual = false;
       this.isIncisal = false;
       this.isMissing = false;
-    }
-    else if(this.surfaceSelected === 'buccal'){
-      this.isMesial = false;
-      this.isDistal = false;
-      this.isBuccal = true;
-      this.isLingual = false;
-      this.isIncisal = false;
-      this.isMissing = false;
-    }
-    else if(this.surfaceSelected === 'lingual'){
-      this.isMesial = false;
-      this.isDistal = false;
-      this.isBuccal = false;
-      this.isLingual = true;
-      this.isIncisal = false;
-      this.isMissing = false;
-    }
-    else if(this.surfaceSelected === 'incisal'){
-      this.isMesial = false;
-      this.isDistal = false;
-      this.isBuccal = false;
-      this.isLingual = false;
-      this.isIncisal = true;
-      this.isMissing = false;
-    }
-    else if(this.surfaceSelected === 'occlusal'){
-      this.isMesial = false;
-      this.isDistal = false;
-      this.isBuccal = false;
-      this.isLingual = false;
-      this.isIncisal = false;
-      this.isMissing = true;
-    }
+      this.isDistalData = true;
+      // if(!this.isDistalData){
+      //   const dialogref = this.dialog.open(SurfaceConfirmComponent, {
+      //     width: "30%",
+      //     panelClass: [
+      //       "popup-class",
+      //       "commonpopupmainclass",
+      //       "confirmationmainclass"
+      //     ],
+      //     disableClose: true,
+      //     data: {
+      //     }
+      //   });
+      //   dialogref.afterClosed().subscribe(result => {
+        
+      //     if(result === 'not'){
+      //       this.isDistalData = true;
+      //     }
+      //     else if(result === 'same'){
+      //       this.isDistalData = false;
+      //       this.createTeeth.controls['notes_distal'].reset();
+      //       this.createTeeth.controls['symptoms_distal'].reset();
+      //       this.createTeeth.controls['observations_distal'].reset();
+      //       this.createTeeth.controls['diagnosis_distal'].reset();
+      //       this.createTeeth.controls['procedure_distal'].reset();
+           
+      //     }
+      //   });
+      // }
+    
+    
   }
+  buccalClick() {
+    
+    this.isMesial = false;
+    this.isDistal = false;
+    this.isBuccal = true;
+    this.isLingual = false;
+    this.isIncisal = false;
+    this.isMissing = false;
+    this.isBuccalData = true;
+  //   if(!this.isBuccalData){
+  //     const dialogref = this.dialog.open(SurfaceConfirmComponent, {
+  //       width: "30%",
+  //       panelClass: [
+  //         "popup-class",
+  //         "commonpopupmainclass",
+  //         "confirmationmainclass"
+  //       ],
+  //       disableClose: true,
+  //       data: {
+  //       }
+  //     });
+  //     dialogref.afterClosed().subscribe(result => {
+       
+  //       if(result === 'not'){
+  //         this.isBuccalData = true;
+  //       }
+  //       else if(result === 'same'){
+  //         this.isBuccalData = false;
+  //         this.createTeeth.controls['notes_buccal'].reset();
+  //         this.createTeeth.controls['symptoms_buccal'].reset();
+  //         this.createTeeth.controls['observations_buccal'].reset();
+  //         this.createTeeth.controls['diagnosis_buccal'].reset();
+  //         this.createTeeth.controls['procedure_buccal'].reset();
+         
+  //       }
+  //     });
+    
+  // }
+  }
+  lingualClick() {
+    
+    this.isMesial = false;
+    this.isDistal = false;
+    this.isBuccal = false;
+    this.isLingual = true;
+    this.isIncisal = false;
+    this.isMissing = false;
+    this.isLingualData = true;
+    // if(!this.isLingualData){
+    //   const dialogref = this.dialog.open(SurfaceConfirmComponent, {
+    //     width: "30%",
+    //     panelClass: [
+    //       "popup-class",
+    //       "commonpopupmainclass",
+    //       "confirmationmainclass"
+    //     ],
+    //     disableClose: true,
+    //     data: {
+    //     }
+    //   });
+    //   dialogref.afterClosed().subscribe(result => {
+      
+    //     if(result === 'not'){
+    //       this.isLingualData = true;
+    //     }
+    //     else if(result === 'same'){
+    //       this.isLingualData = false;
+    //       this.createTeeth.controls['notes_lingual'].reset();
+    //       this.createTeeth.controls['symptoms_lingual'].reset();
+    //       this.createTeeth.controls['observations_lingual'].reset();
+    //       this.createTeeth.controls['diagnosis_lingual'].reset();
+    //       this.createTeeth.controls['procedure_lingual'].reset();
+         
+    //     }
+    //   });
+    // }
   
+  }
+  incisalClick() {
+   
+    this.isMesial = false;
+    this.isDistal = false;
+    this.isBuccal = false;
+    this.isLingual = false;
+    this.isIncisal = true;
+    this.isMissing = false;
+    this.isIncisalData = true;
+    // if(!this.isIncisalData){
+    //   const dialogref = this.dialog.open(SurfaceConfirmComponent, {
+    //     width: "30%",
+    //     panelClass: [
+    //       "popup-class",
+    //       "commonpopupmainclass",
+    //       "confirmationmainclass"
+    //     ],
+    //     disableClose: true,
+    //     data: {
+    //     }
+    //   });
+    //   dialogref.afterClosed().subscribe(result => {
+     
+    //     if(result === 'not'){
+    //       this.isIncisalData = true;
+    //     }
+    //     else if(result === 'same'){
+    //       this.isIncisalData = false;
+    //       this.createTeeth.controls['notes_incisal'].reset();
+    //       this.createTeeth.controls['symptoms_incisal'].reset();
+    //       this.createTeeth.controls['observations_incisal'].reset();
+    //       this.createTeeth.controls['diagnosis_incisal'].reset();
+    //       this.createTeeth.controls['procedure_incisal'].reset();
+         
+    //     }
+    //   });
+    // }
+  
+  }
+  misingClick() {
+   
+    this.isMesial = false;
+    this.isDistal = false;
+    this.isBuccal = false;
+    this.isLingual = false;
+    this.isIncisal = false;
+    this.isMissing = true;
+    this.isMissingData = true;
+  
+  }
   resetErrors() {
 
   }
@@ -741,4 +887,7 @@ export class TeethQuestionComponent implements OnInit {
     this.selectedFiles[type].base64.splice(i, 1);
     this.selectedFiles[type].caption.splice(i, 1);
   }
+  // closeDialog() {
+  //   this.dialogRef.close();
+  // }
 }

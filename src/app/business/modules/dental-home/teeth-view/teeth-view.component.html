@@ -13,9 +13,9 @@
         <div *ngIf="customerDetails && customerDetails.gender && customerDetails.gender === 'female'">
           <img width="45" height="45" class="imGBorderRadius" src="assets/images/mr_female.svg" />
         </div>
-        <div *ngIf="customerDetails && customerDetails.gender && customerDetails.gender != 'male' && customerDetails.gender != 'female'">
+        <!-- <div *ngIf="customerDetails && customerDetails.gender && customerDetails.gender != 'male' && customerDetails.gender != 'female'">
           <img width="45" height="45" class="imGBorderRadius" src="assets/images/undefinedUser.png" />
-        </div>
+        </div> -->
         <!-- <img width="45" height="45" src="./assets/images/cdl/profile.png"> -->
       </div>
       <div class="d-flex align-items-center">
@@ -136,8 +136,8 @@
         <div class="flex-two-head">
           <div>
             <h6 class="font-weight-bold">Tooth {{selectedTeethDetails.toothId}}</h6>
-            <i class="fa fa-edit pull-right" style="color: #3670e2;" (click)="toothEdit(selectedTeethDetails.toothId)"
-              #tooltip="matTooltip" matTooltip="Edit the Questionnaire"></i>
+            <i class="fa fa-edit pull-right" style="color: #3670e2;" (click)="toothEdit()"
+              #tooltip="matTooltip" matTooltip="Edit the Details"></i>
           </div>
           <div class="font-medium" *ngIf="state">
             <span>{{state}} Tooth</span>
@@ -147,64 +147,85 @@
           <div>
             <h6 class="font-weight-bold">Details</h6>
           </div>
-          <mat-chip-list *ngIf="selectedTeethDetails.surface" class="surface">
+          <!-- <mat-chip-list *ngIf="selectedTeethDetails.surface" class="surface">
             <mat-chip class="pointer-cursor" *ngFor="let surfaceItem of selectedTeethDetails.surface | keyvalue"
               [ngClass]="{'selected':(surfaceItem.key === selectedSurface.key)}">
               <span> <img class="teeth" src="./assets/images/dental/Union.png" height="20px" width="20px">
                 &nbsp;&nbsp;</span>{{surfaceConstants[surfaceItem.key]}}
             </mat-chip>
+          </mat-chip-list> -->
+          <mat-chip-list class="surface" *ngIf="selectedTeethDetails.surface">
+            <mat-chip class="pointer-cursor" (click)="mesialClick()" *ngIf="selectedTeethDetails.surface.mesial">
+              <span>  <img class="teeth" src="./assets/images/dental/Union.png" height="20px" width="20px"> &nbsp;&nbsp;</span>Mesial
+            </mat-chip> &nbsp;
+            <mat-chip class="pointer-cursor" (click)="distalClick()" *ngIf="selectedTeethDetails.surface.distal" >
+              <span>  <img class="teeth" src="./assets/images/dental/Union.png" height="20px" width="20px"> &nbsp;&nbsp;</span>Distal
+            </mat-chip> &nbsp;
+            <mat-chip class="pointer-cursor" (click)="buccalClick()" *ngIf="selectedTeethDetails.surface.buccal" >
+              <span>  <img class="teeth" src="./assets/images/dental/Union.png" height="20px" width="20px"> &nbsp;&nbsp;</span>Buccal
+            </mat-chip> &nbsp;
+            <mat-chip class="pointer-cursor" (click)="lingualClick()" *ngIf="selectedTeethDetails.surface.lingual">
+              <span>  <img class="teeth" src="./assets/images/dental/Union.png" height="20px" width="20px"> &nbsp;&nbsp;</span>Lingual
+            </mat-chip> &nbsp;
+            <mat-chip class="pointer-cursor" (click)="incisalClick()" *ngIf="selectedTeethDetails.surface.incisal" >
+              <span>  <img class="teeth" src="./assets/images/dental/Union.png" height="20px" width="20px"> &nbsp;&nbsp;</span>Incisal
+            </mat-chip> &nbsp;
+            <mat-chip class="pointer-cursor" (click)="misingClick()" *ngIf="selectedTeethDetails.surface.occlusal" >
+              <span>  <img class="teeth" src="./assets/images/dental/Union.png" height="20px" width="20px"> &nbsp;&nbsp;</span>Occlusal
+            </mat-chip> &nbsp;
+           
           </mat-chip-list>
           <hr />
-          <ng-container *ngIf="selectedTeethDetails.surface.mesial">
+          <ng-container *ngIf="isMesial">
             <div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="tab1">
               <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.chiefIssue">
                 <div class="mrNumber1">Chief Complaint</div>
                 <div class="dateClr">{{selectedTeethDetails.chiefIssue}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.mesial.symptoms">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.mesial && selectedTeethDetails.surface.mesial.symptoms">
                 <div class="mrNumber1">Symptoms</div>
                 <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.mesial.symptoms}}
                 </div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.mesial.observations">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface  && selectedTeethDetails.surface.mesial && selectedTeethDetails.surface.mesial.observations">
                 <div class="mrNumber1">Observations</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.mesial.observations}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.mesial.diagnosis">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.mesial &&   selectedTeethDetails.surface.mesial.diagnosis">
                 <div class="mrNumber1">Diagnosis</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.mesial.diagnosis}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.mesial.description">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.mesial && selectedTeethDetails.surface.mesial.description">
                 <div class="mrNumber1">Notes</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.mesial.description}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.mesial.procedure">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.mesial && selectedTeethDetails.surface.mesial.procedure">
                 <div class="mrNumber1">Procedure</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.mesial.procedure}}</div>
               </div>
             </div>
           </ng-container>
-          <ng-container *ngIf="selectedTeethDetails.surface.distal">
+          <ng-container *ngIf="isDistal">
             <div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="tab1">
               <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.chiefIssue">
                 <div class="mrNumber1">Chief Complaint</div>
                 <div class="dateClr">{{selectedTeethDetails.chiefIssue}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.distal.symptoms">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.distal && selectedTeethDetails.surface.distal.symptoms">
                 <div class="mrNumber1">Symptoms</div>
                 <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.distal.symptoms}}
                 </div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.distal.observations">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.distal && selectedTeethDetails.surface.distal.observations">
                 <div class="mrNumber1">Observations</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.distal.observations}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.distal.diagnosis">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.distal && selectedTeethDetails.surface.distal.diagnosis">
                 <div class="mrNumber1">Diagnosis</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.distal.diagnosis}}</div>
@@ -214,139 +235,139 @@
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.distal.description}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.distal.procedure">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.distal && selectedTeethDetails.surface.distal.procedure">
                 <div class="mrNumber1">Procedure</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.distal.procedure}}</div>
               </div>
             </div>
           </ng-container>
-          <ng-container *ngIf="selectedTeethDetails.surface.buccal">
+          <ng-container *ngIf="isBuccal">
             <div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="tab1">
               <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.chiefIssue">
                 <div class="mrNumber1">Chief Complaint</div>
                 <div class="dateClr">{{selectedTeethDetails.chiefIssue}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.buccal.symptoms">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.buccal && selectedTeethDetails.surface.buccal.symptoms">
                 <div class="mrNumber1">Symptoms</div>
                 <div class="dateClr"><i class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.buccal.symptoms}}
                 </div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.buccal.observations">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.buccal &&  selectedTeethDetails.surface.buccal.observations">
                 <div class="mrNumber1">Observations</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.buccal.observations}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.buccal.diagnosis">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.buccal && selectedTeethDetails.surface.buccal.diagnosis">
                 <div class="mrNumber1">Diagnosis</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.buccal.diagnosis}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.buccal.description">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.buccal &&  selectedTeethDetails.surface.buccal.description">
                 <div class="mrNumber1">Notes</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.buccal.description}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.buccal.procedure">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.buccal &&  selectedTeethDetails.surface.buccal.procedure">
                 <div class="mrNumber1">Procedure</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.buccal.procedure}}</div>
               </div>
             </div>
           </ng-container>
-          <ng-container *ngIf="selectedTeethDetails.surface.lingual">
+          <ng-container *ngIf="isLingual">
             <div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="tab1">
               <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.chiefIssue">
                 <div class="mrNumber1">Chief Complaint</div>
                 <div class="dateClr">{{selectedTeethDetails.chiefIssue}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.lingual.symptoms">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.lingual &&  selectedTeethDetails.surface.lingual.symptoms">
                 <div class="mrNumber1">Symptoms</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.lingual.symptoms}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.lingual.observations">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.lingual &&  selectedTeethDetails.surface.lingual.observations">
                 <div class="mrNumber1">Observations</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.lingual.observations}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.lingual.diagnosis">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.lingual &&  selectedTeethDetails.surface.lingual.diagnosis">
                 <div class="mrNumber1">Diagnosis</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.lingual.diagnosis}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.lingual.description">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.lingual &&  selectedTeethDetails.surface.lingual.description">
                 <div class="mrNumber1">Notes</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.lingual.description}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.lingual.procedure">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.lingual &&  selectedTeethDetails.surface.lingual.procedure">
                 <div class="mrNumber1">Procedure</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.lingual.procedure}}</div>
               </div>
             </div>
           </ng-container>
-          <ng-container *ngIf="selectedTeethDetails.surface.incisal">
+          <ng-container *ngIf="isIncisal">
             <div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="tab1">
               <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.chiefIssue">
                 <div class="mrNumber1">Chief Complaint</div>
                 <div class="dateClr">{{selectedTeethDetails.chiefIssue}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.incisal.symptoms">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.incisal && selectedTeethDetails.surface.incisal.symptoms">
                 <div class="mrNumber1">Symptoms</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.incisal.symptoms}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.incisal.observations">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.incisal && selectedTeethDetails.surface.incisal.observations">
                 <div class="mrNumber1">Observations</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.incisal.observations}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.incisal.diagnosis">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.incisal && selectedTeethDetails.surface.incisal.diagnosis">
                 <div class="mrNumber1">Diagnosis</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.incisal.diagnosis}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.incisal.description">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.incisal && selectedTeethDetails.surface.incisal.description">
                 <div class="mrNumber1">Notes</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.incisal.description}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.incisal.procedure">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.incisal && selectedTeethDetails.surface.incisal.procedure">
                 <div class="mrNumber1">Procedure</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.incisal.procedure}}</div>
               </div>
             </div>
           </ng-container>
-          <ng-container *ngIf="selectedTeethDetails.surface.occlusal">
+          <ng-container *ngIf="isOcclusal">
             <div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="tab1">
               <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.chiefIssue">
                 <div class="mrNumber1">Chief Complaint</div>
                 <div class="dateClr">{{selectedTeethDetails.chiefIssue}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.occlusal.symptoms">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.occlusal && selectedTeethDetails.surface.occlusal.symptoms">
                 <div class="mrNumber1">Symptoms</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.occlusal.symptoms}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.occlusal.observations">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.occlusal && selectedTeethDetails.surface.occlusal.observations">
                 <div class="mrNumber1">Observations</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.occlusal.observations}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.occlusal.diagnosis">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.occlusal && selectedTeethDetails.surface.occlusal.diagnosis">
                 <div class="mrNumber1">Diagnosis</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.occlusal.diagnosis}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.occlusal.description">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.occlusal && selectedTeethDetails.surface.occlusal.description">
                 <div class="mrNumber1">Notes</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.occlusal.description}}</div>
               </div>
-              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails.surface.occlusal.procedure">
+              <div class="dateCreate mgn-bt-10" *ngIf="selectedTeethDetails && selectedTeethDetails.surface && selectedTeethDetails.surface.occlusal && selectedTeethDetails.surface.occlusal.procedure">
                 <div class="mrNumber1">Procedure</div>
                 <div class="dateClr"><i
                     class="fas fa-calendar-day"></i>{{selectedTeethDetails.surface.occlusal.procedure}}</div>

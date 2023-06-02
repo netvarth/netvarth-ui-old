@@ -56,7 +56,12 @@ export class TeethViewComponent {
   state: string;
   bookingType: any;
   bookingId: any;
-  ; z
+  isMesial = true;
+  isDistal=false;
+  isBuccal=false;
+  isLingual=false;
+  isIncisal= false;
+  isOcclusal=false;
   constructor(
     private location: Location,
     private fileService: FileService,
@@ -308,7 +313,7 @@ export class TeethViewComponent {
   onSelect(teeth) {
     this.selectedTeethDetails = teeth;
   }
-  toothEdit(teeth) {
+  toothEdit() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         // patientId: this.customerId,
@@ -335,6 +340,54 @@ export class TeethViewComponent {
       }
     };
     this.router.navigate(['provider', 'dental'], navigationExtras);
+  }
+  mesialClick(){
+    this.isMesial = true;
+    this.isDistal = false;
+    this.isBuccal = false;
+    this.isLingual = false;
+    this.isIncisal = false;
+    this.isOcclusal = false;
+  }
+  distalClick(){
+    this.isMesial = false;
+    this.isDistal = true;
+    this.isBuccal = false;
+    this.isLingual = false;
+    this.isIncisal = false;
+    this.isOcclusal = false;
+  }
+  buccalClick(){
+    this.isMesial = false;
+    this.isDistal = false;
+    this.isBuccal = true;
+    this.isLingual = false;
+    this.isIncisal = false;
+    this.isOcclusal = false;
+  }
+  lingualClick(){
+    this.isMesial = false;
+    this.isDistal = false;
+    this.isBuccal = false;
+    this.isLingual = true;
+    this.isIncisal = false;
+    this.isOcclusal = false;
+  }
+  incisalClick(){
+    this.isMesial = false;
+    this.isDistal = false;
+    this.isBuccal = false;
+    this.isLingual = false;
+    this.isIncisal = true;
+    this.isOcclusal = false;
+  }
+  misingClick(){
+    this.isMesial = false;
+    this.isDistal = false;
+    this.isBuccal = false;
+    this.isLingual = false;
+    this.isIncisal = false;
+    this.isOcclusal = true;
   }
 }
 

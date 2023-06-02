@@ -22,51 +22,91 @@
     </div>
   </div>
   <br />
-  <form [formGroup]="createTeeth" enctype="multipart/form-data" [ngClass]="{'surface_select_one':surfaceClicked===true}" >
-  
-    <div class="row tab-content mt-3 tab-pane active">
-      <div class="col-md-7">
+  <form [formGroup]="createTeeth" enctype="multipart/form-data">
+  <div class="row tab-content mt-3 tab-pane active">
+    <div class="col-md-7">
+      <div class="bggrey my-2">
+        <mat-checkbox class="mgright25 example-margin d-flex" formControlName="chiefComplaint"
+          (change)="changeChiefComplaint($event)">
+          <div class="form-title">Chief Complaints</div>
+        </mat-checkbox>
+      </div>
+      <div *ngIf="showChiefIssue">
         <div class="bggrey my-2">
-          <mat-checkbox class="mgright25 example-margin d-flex" formControlName="chiefComplaint"
-            (change)="changeChiefComplaint($event)">
-            <div class="form-title">Chief Complaint</div>
-          </mat-checkbox>
-        </div>
-        <div *ngIf="showChiefIssue">
-          <div class="bggrey my-2">
-            <div class="d-flex">
-              <div class="form-title">Chief Issues</div>
-            </div>
-            <div class="fieldPadding">
-              <input (keyup)="resetErrors()" type="text" formControlName="chiefIssue" placeholder=""
-                class="form-control" autocomplete="off" />
-            </div>
+          <div class="d-flex">
+            <div class="form-title">Please fill the chief complaint</div>
+          </div>
+          <div class="fieldPadding">
+            <input (keyup)="resetErrors()" type="text" formControlName="chiefIssue" placeholder=""
+              class="form-control" autocomplete="off" />
           </div>
         </div>
       </div>
-    </div>  <div class="d-flex">
-    <div class="form-title">Surface</div>
+    </div>
   </div>
-  <div class="scroller ">
+  <div class="row">
+    <div class="col-md-7">
+      <div class="bggrey my-2">
+        <div class="d-flex">
+          <div class="form-title">Upload Files</div>
+        </div>
+        <div class="fieldPadding photo-border">
+          <div class='file file--upload'>
+            <label for='photoAttach' (click)="photoAttach.click()">
+              Add image
+            </label>
+            <input #photoAttach type='file' (change)="filesSelected($event,'photo')"
+              accept="image/*;capture=camera" />
+          </div>
+        </div>
+        <div class="img-section clearfix"
+          *ngIf="selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0">
+          <ul class="galul">
+            <li *ngFor="let file of selectedFiles['photo'].files;let i = index ">
+              <div class="galimg_outer">
+                <div class="gal_img pointer-cursor">
+                  <img [src]="getImage(selectedFiles['photo'].base64[i], file)"
+                    *ngIf="selectedFiles['photo'].base64[i]" width="100px" height="100px">
+                  <a [href]="file.s3path" target="_blank">
+                    <img [src]="getImagefromUrl(file.s3path,file)"
+                      *ngIf="!selectedFiles['photo'].base64[i] && file.s3path" width="100px" height="100px">
+                  </a>
+                </div>
+                <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)">
+                  <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="row tab-content mt-3 tab-pane active surface"> 
 
-   
-    <mat-chip-list class="surfaces">
-      <mat-chip class="pointer-cursor" (click)="surfaceClick('mesial')" [ngClass]="{'td_select': isMesial===true}">
+  
+  <div class="d-flex">
+    <div class="form-title"><h5>Surface</h5></div>
+  </div>
+  <div>
+    <mat-chip-list class="surfaces"  *ngIf="!teeth_loading">
+      <mat-chip class="pointer-cursor" (click)="mesialClick()" [ngClass]="{'td_select': isMesialData}">
         <span>  <img class="teeth" src="./assets/images/dental/teeth.svg" height="20px" width="20px"> &nbsp;&nbsp;</span>Mesial
       </mat-chip> &nbsp;
-      <mat-chip class="pointer-cursor" (click)="surfaceClick('distal')" [ngClass]="{'td_select': isDistal===true}">
+      <mat-chip class="pointer-cursor" (click)="distalClick()" [ngClass]="{'td_select': isDistalData}">
         <span>  <img class="teeth" src="./assets/images/dental/teeth.svg" height="20px" width="20px"> &nbsp;&nbsp;</span>Distal
       </mat-chip> &nbsp;
-      <mat-chip class="pointer-cursor" (click)="surfaceClick('buccal')" [ngClass]="{'td_select': isBuccal===true}">
+      <mat-chip class="pointer-cursor" (click)="buccalClick()" [ngClass]="{'td_select': isBuccalData}">
         <span>  <img class="teeth" src="./assets/images/dental/teeth.svg" height="20px" width="20px"> &nbsp;&nbsp;</span>Buccal
       </mat-chip> &nbsp;
-      <mat-chip class="pointer-cursor" (click)="surfaceClick('lingual')" [ngClass]="{'td_select': isLingual===true}">
+      <mat-chip class="pointer-cursor" (click)="lingualClick()" [ngClass]="{'td_select': isLingualData}">
         <span>  <img class="teeth" src="./assets/images/dental/teeth.svg" height="20px" width="20px"> &nbsp;&nbsp;</span>Lingual
       </mat-chip> &nbsp;
-      <mat-chip class="pointer-cursor" (click)="surfaceClick('incisal')" [ngClass]="{'td_select': isIncisal===true}">
+      <mat-chip class="pointer-cursor" (click)="incisalClick()" [ngClass]="{'td_select': isIncisalData}">
         <span>  <img class="teeth" src="./assets/images/dental/teeth.svg" height="20px" width="20px"> &nbsp;&nbsp;</span>Incisal
       </mat-chip> &nbsp;
-      <mat-chip class="pointer-cursor" (click)="surfaceClick('occlusal')" [ngClass]="{'td_select': isMissing===true}">
+      <mat-chip class="pointer-cursor" (click)="misingClick()" [ngClass]="{'td_select': isMissingData}">
         <span>  <img class="teeth" src="./assets/images/dental/teeth.svg" height="20px" width="20px"> &nbsp;&nbsp;</span>Occlusal
       </mat-chip> &nbsp;
      
@@ -74,12 +114,10 @@
    
   </div>
   
-    
-   
     <div class="row tab-content mt-3 tab-pane active" *ngIf="isMesial">
       <div class="col-md-7">
         <br>
-        <div class="form-title">Questionnaire about Mesial</div>
+        <div class="form-title" style="font-size: 15px;">Fill the deatils about Mesial</div>
         <br>
         <div class="bggrey my-2">
           <div class="d-flex">
@@ -136,7 +174,7 @@
     <div class="row tab-content mt-3 tab-pane active" *ngIf="isDistal">
       <div class="col-md-7">
         <br>
-        <div class="form-title">Questionnaire about Distal</div>
+        <div class="form-title" style="font-size: 15px;">Fill the deatils about Distal</div>
         <br>
         <div class="bggrey my-2">
           <div class="d-flex">
@@ -193,7 +231,7 @@
     <div class="row tab-content mt-3 tab-pane active" *ngIf="isBuccal">
       <div class="col-md-7">
         <br>
-        <div class="form-title">Questionnaire about Buccal</div>
+        <div class="form-title" style="font-size: 15px;">Fill the deatils about Buccal</div>
         <br>
         <div class="bggrey my-2">
           <div class="d-flex">
@@ -252,7 +290,7 @@
     <div class="row tab-content mt-3 tab-pane active" *ngIf="isLingual">
       <div class="col-md-7">
         <br>
-        <div class="form-title">Questionnaire about Lingual</div>
+        <div class="form-title" style="font-size: 15px;">Fill the deatils about Lingual</div>
         <br>
         <div class="bggrey my-2">
           <div class="d-flex">
@@ -311,7 +349,7 @@
     <div class="row tab-content mt-3 tab-pane active" *ngIf="isIncisal">
       <div class="col-md-7">
         <br>
-        <div class="form-title">Questionnaire about Incisal</div>
+        <div class="form-title" style="font-size: 15px;">Fill the deatils about Incisal</div>
         <br>
         <div class="bggrey my-2">
           <div class="d-flex">
@@ -370,7 +408,7 @@
     <div class="row tab-content mt-3 tab-pane active" *ngIf="isMissing">
       <div class="col-md-7">
         <br>
-        <div class="form-title">Questionnaire about Occlusal</div>
+        <div class="form-title" style="font-size: 15px;">Fill the deatils about Occlusal</div>
         <br>
         <div class="bggrey my-2">
           <div class="d-flex">
@@ -426,45 +464,8 @@
         </div>
       </div>
     </div>
-  
-    <div class="row">
-      <div class="col-md-7">
-        <div class="bggrey my-2">
-          <div class="d-flex">
-            <div class="form-title">Upload Files</div>
-          </div>
-          <div class="fieldPadding photo-border">
-            <div class='file file--upload'>
-              <label for='photoAttach' (click)="photoAttach.click()">
-                Add image
-              </label>
-              <input #photoAttach type='file' (change)="filesSelected($event,'photo')"
-                accept="image/*;capture=camera" />
-            </div>
-          </div>
-          <div class="img-section clearfix"
-            *ngIf="selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0">
-            <ul class="galul">
-              <li *ngFor="let file of selectedFiles['photo'].files;let i = index ">
-                <div class="galimg_outer">
-                  <div class="gal_img pointer-cursor">
-                    <img [src]="getImage(selectedFiles['photo'].base64[i], file)"
-                      *ngIf="selectedFiles['photo'].base64[i]" width="100px" height="100px">
-                    <a [href]="file.s3path" target="_blank">
-                      <img [src]="getImagefromUrl(file.s3path,file)"
-                        *ngIf="!selectedFiles['photo'].base64[i] && file.s3path" width="100px" height="100px">
-                    </a>
-                  </div>
-                  <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)">
-                    <i class=" fa fa-times-circle" aria-hidden="true"></i>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+   
+  </div>
     <br />
   </form>
   <div class="mt-2">
@@ -474,6 +475,5 @@
     <button class="btn btn-draftt mr-2" (click)="saveTeeth()" [disabled]="apiloading">
       Save
     </button>
-    
   </div>
 </div>
