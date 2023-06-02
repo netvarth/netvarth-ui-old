@@ -13,9 +13,9 @@
         <div *ngIf="customerDetails && customerDetails.gender && customerDetails.gender === 'female'">
           <img width="45" height="45" class="imGBorderRadius" src="assets/images/mr_female.svg" />
         </div>
-        <!-- <div *ngIf="customerDetails && customerDetails.gender && customerDetails.gender != 'male' && customerDetails.gender != 'female'">
+        <div *ngIf="customerDetails  && customerDetails.gender != 'male' && customerDetails.gender != 'female'">
           <img width="45" height="45" class="imGBorderRadius" src="assets/images/undefinedUser.png" />
-        </div> -->
+        </div>
         <!-- <img width="45" height="45" src="./assets/images/cdl/profile.png"> -->
       </div>
       <div class="d-flex align-items-center">
