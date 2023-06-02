@@ -330,6 +330,26 @@ export class TeethViewComponent {
   // }
   onSelect(teeth) {
     this.selectedTeethDetails = teeth;
+    console.log('this.selectedTeethDetails', this.selectedTeethDetails)
+    let keys = Object.keys(this.selectedTeethDetails.surface);
+    if (keys[0]=== 'distal') {
+      this.distalClick()
+    }
+    else if (keys[0] === 'mesial') {
+      this.mesialClick()
+    }
+    else if (keys[0] === 'buccal') {
+      this.buccalClick()
+    }
+    else if (keys[0] === 'lingual') {
+      this.lingualClick()
+    }
+    else if (keys[0] === 'incisal') {
+      this.incisalClick()
+    }
+    else if (keys[0] === 'occlusal') {
+      this.misingClick()
+    }
   }
   toothEdit() {
     const navigationExtras: NavigationExtras = {
