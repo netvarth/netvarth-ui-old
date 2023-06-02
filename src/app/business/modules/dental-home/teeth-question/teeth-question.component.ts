@@ -827,7 +827,25 @@ export class TeethQuestionComponent implements OnInit {
   
   }
   resetErrors() {
+    if ((this.createTeeth.controls['notes_incisal'].value === '') && (this.createTeeth.controls['symptoms_incisal'].value === '') && (this.createTeeth.controls['procedure_incisal'].value === '') && (this.createTeeth.controls['diagnosis_incisal'].value === '') && (this.createTeeth.controls['observations_incisal'].value === '')) {
+      this.isIncisalData = false;
+    }
+    if ((this.createTeeth.controls['notes_mesial'].value === '') && (this.createTeeth.controls['symptoms_mesial'].value === '') && (this.createTeeth.controls['observations_mesial'].value === '') && (this.createTeeth.controls['diagnosis_mesial'].value === '') && (this.createTeeth.controls['procedure_mesial'].value === '')) {
+      this.isMesialData = false;
+    }
+   if ((this.createTeeth.controls['notes_distal'].value === '') && (this.createTeeth.controls['symptoms_distal'].value === '') && (this.createTeeth.controls['observations_distal'].value === '') && (this.createTeeth.controls['diagnosis_distal'].value === '') && (this.createTeeth.controls['procedure_distal'].value === '')) {
+      this.isDistalData = false;
+    }
 
+   if ((this.createTeeth.controls['notes_buccal'].value === '') && (this.createTeeth.controls['symptoms_buccal'].value === '') && (this.createTeeth.controls['observations_buccal'].value === '') && (this.createTeeth.controls['diagnosis_buccal'].value === '') && (this.createTeeth.controls['procedure_buccal'].value === '')) {
+      this.isBuccalData = false;
+    }
+    if ((this.createTeeth.controls['notes_lingual'].value === '') && (this.createTeeth.controls['symptoms_lingual'].value === '') && (this.createTeeth.controls['observations_lingual'].value === '') && (this.createTeeth.controls['diagnosis_lingual'].value === '') && (this.createTeeth.controls['procedure_lingual'].value === '')) {
+      this.isLingualData = false;
+    }
+    if ((this.createTeeth.controls['notes_missing'].value === '') && (this.createTeeth.controls['symptoms_missing'].value === '') && (this.createTeeth.controls['observations_missing'].value === '') && (this.createTeeth.controls['diagnosis_missing'].value === '') && (this.createTeeth.controls['procedure_missing'].value === '')) {
+      this.isMissingData = false;
+    }
   }
   getImagefromUrl(url, file) {
     if (file.fileType == 'pdf') {
