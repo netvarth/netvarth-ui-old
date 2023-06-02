@@ -56,12 +56,12 @@ export class TeethViewComponent {
   state: string;
   bookingType: any;
   bookingId: any;
-  isMesial = true;
-  isDistal=false;
-  isBuccal=false;
-  isLingual=false;
-  isIncisal= false;
-  isOcclusal=false;
+  isMesial = false;
+  isDistal = false;
+  isBuccal = false;
+  isLingual = false;
+  isIncisal = false;
+  isOcclusal = false;
   constructor(
     private location: Location,
     private fileService: FileService,
@@ -169,10 +169,28 @@ export class TeethViewComponent {
       this.teeth_loading = false;
 
       this.selectedTeethDetails = this.teethDetails.teeth[0];
-
+      // if(this.selectedTeethDetails.)
       let keys = Object.keys(this.selectedTeethDetails.surface);
 
       this.selectedSurface = this.selectedTeethDetails.surface[keys[0]];
+      if (keys[0]=== 'distal') {
+        this.distalClick()
+      }
+      else if (keys[0] === 'mesial') {
+        this.mesialClick()
+      }
+      else if (keys[0] === 'buccal') {
+        this.buccalClick()
+      }
+      else if (keys[0] === 'lingual') {
+        this.lingualClick()
+      }
+      else if (keys[0] === 'incisal') {
+        this.incisalClick()
+      }
+      else if (keys[0] === 'occlusal') {
+        this.misingClick()
+      }
       this.selectedSurface['key'] = keys[0];
 
       console.log(this.selectedTeethDetails)
@@ -321,8 +339,8 @@ export class TeethViewComponent {
         action: 'edit',
         teethId: this.selectedTeethDetails.toothId,
         type: this.state,
-        bookingType : this.bookingType,
-        bookingId : this.bookingId
+        bookingType: this.bookingType,
+        bookingId: this.bookingId
       }
     };
     this.router.navigate(['provider', 'dental', 'teeth', this.selectedTeethDetails.toothId], navigationExtras);
@@ -335,13 +353,13 @@ export class TeethViewComponent {
       queryParams: {
         mrid: this.mrid,
         custId: this.patientId,
-        bookingType : this.bookingType,
-          bookingId : this.bookingId
+        bookingType: this.bookingType,
+        bookingId: this.bookingId
       }
     };
     this.router.navigate(['provider', 'dental'], navigationExtras);
   }
-  mesialClick(){
+  mesialClick() {
     this.isMesial = true;
     this.isDistal = false;
     this.isBuccal = false;
@@ -349,7 +367,7 @@ export class TeethViewComponent {
     this.isIncisal = false;
     this.isOcclusal = false;
   }
-  distalClick(){
+  distalClick() {
     this.isMesial = false;
     this.isDistal = true;
     this.isBuccal = false;
@@ -357,7 +375,7 @@ export class TeethViewComponent {
     this.isIncisal = false;
     this.isOcclusal = false;
   }
-  buccalClick(){
+  buccalClick() {
     this.isMesial = false;
     this.isDistal = false;
     this.isBuccal = true;
@@ -365,7 +383,7 @@ export class TeethViewComponent {
     this.isIncisal = false;
     this.isOcclusal = false;
   }
-  lingualClick(){
+  lingualClick() {
     this.isMesial = false;
     this.isDistal = false;
     this.isBuccal = false;
@@ -373,7 +391,7 @@ export class TeethViewComponent {
     this.isIncisal = false;
     this.isOcclusal = false;
   }
-  incisalClick(){
+  incisalClick() {
     this.isMesial = false;
     this.isDistal = false;
     this.isBuccal = false;
@@ -381,7 +399,7 @@ export class TeethViewComponent {
     this.isIncisal = true;
     this.isOcclusal = false;
   }
-  misingClick(){
+  misingClick() {
     this.isMesial = false;
     this.isDistal = false;
     this.isBuccal = false;
