@@ -1,6 +1,6 @@
 <section>
   <div class="card">
-    <span class="pointer-cursor" (click)="goBack('medical')"><i class="fa fa-angle-left"></i>&nbsp;Back</span>
+    <span class="pointer-cursor" (click)="goBack('medical_dental')"><i class="fa fa-angle-left"></i>&nbsp;Back</span>
   </div>
 </section>
 
@@ -43,7 +43,7 @@
           <span><b>Select Teeth</b></span>
         </span>
       </div>
-    </div><br>
+    </div>
     <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-10" >
       <mat-chip-list>
         <mat-chip class="pointer-cursor" (click)="handleTeethSelectionType('adult')" [ngClass]="{'td_select': isAdult === true}" [selected]="type === 'adult'">
@@ -205,7 +205,7 @@
         <span><b>Select Teeth</b></span>
       </span>
     </div>
-  </div><br>
+  </div>
   <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-10">
     <mat-chip-list>
       <mat-chip class="pointer-cursor" (click)="handleTeethSelectionType('adult')" [selected]="type === 'adult'" *ngIf="teethDetails && teethDetails.dentalState && teethDetails.dentalState === 'PERMANENT'">

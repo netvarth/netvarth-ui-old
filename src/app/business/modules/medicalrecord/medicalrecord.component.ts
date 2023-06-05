@@ -144,6 +144,7 @@ export class MedicalrecordComponent implements OnInit {
   small_device_display = false;
   mrecordId: any;
   subdomain: any;
+  calledfrom: any;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -164,7 +165,14 @@ export class MedicalrecordComponent implements OnInit {
         this.calledForm = queryParams['calledfrom']//this.medicalService.setCalledFrom(queryParams['calledfrom']);
       }
     });
+    this.activated_route.queryParams.subscribe(params => {
+      if (params['calledfrom']) {
 
+        this.calledfrom = params['calledfrom'];
+
+      }
+
+    });
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
@@ -606,21 +614,28 @@ export class MedicalrecordComponent implements OnInit {
         'mrId': this.mrId
       }
     });
-
   }
   goback(type_from) {
     this.getCustomerbyId(this.customerDetails.id)
     const back_type = this.medicalService.getReturnTo();
-    // console.log('back_type',back_type)
-    // console.log('type_from',type_from)
     if (type_from === 'medical') {
+      if(this.calledfrom === 'patient'){
+        this.router.navigate(['provider', 'customers']);
+          }
+      else if(this.calledfrom === 'appt'){
+        this.router.navigate(['provider', 'appointments']);
+      }
+      else if(this.calledfrom === 'waitlist'){
+        this.router.navigate(['provider', 'check-ins']);
+      }
+      else{
+        this.location.back();
+      }
       // alert(type_from)
       this.medicalService.viewVisitDetails = false;
       this.viewVisitDetails = false;
       // console.log('this.medicalInfo',this.medicalInfo);
       // console.log('visitDetailsTableValue',this.visitDetailsTableValue)
-     
-      this.location.back();
     }
     else {
       // alert(back_type)
@@ -1238,7 +1253,8 @@ export class MedicalrecordComponent implements OnInit {
           patientId: this.patientId,
           mrid: this.mrecordId,
           bookingType : this.bookingType,
-          bookingId : this.bookingId
+          bookingId : this.bookingId,
+          calledfrom : this.calledfrom
         }
       };
       this.router.navigate(['provider', 'dental'], navigationExtras);
@@ -1252,7 +1268,8 @@ export class MedicalrecordComponent implements OnInit {
           patientId: this.patientId,
           mrid: this.mrId,
           bookingType : this.bookingType,
-          bookingId : this.bookingId
+          bookingId : this.bookingId,
+          calledfrom : this.calledfrom
         }
       };
       this.router.navigate(['provider', 'dental'], navigationExtras);

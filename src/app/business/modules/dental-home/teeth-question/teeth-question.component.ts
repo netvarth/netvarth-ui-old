@@ -58,6 +58,7 @@ export class TeethQuestionComponent implements OnInit {
   teeth_loading = false;
   bookingType: any;
   bookingId: any;
+  calledfrom: any;
   constructor(
     private createTeethFormBuilder: UntypedFormBuilder,
     private location: Location,
@@ -95,6 +96,9 @@ export class TeethQuestionComponent implements OnInit {
       }
       if (params['bookingId']) {
         this.bookingId = params['bookingId'];
+      }
+      if (params['calledfrom']) {
+        this.calledfrom = params['calledfrom'];
       }
     });
 
@@ -575,7 +579,8 @@ export class TeethQuestionComponent implements OnInit {
             mrid: this.mrid,
             custId: this.customerId,
             bookingType : this.bookingType,
-            bookingId : this.bookingId
+            bookingId : this.bookingId,
+            calledfrom : this.calledfrom
           }
         };
         this.router.navigate(['provider', 'dental'], navigationExtras);
@@ -591,7 +596,8 @@ export class TeethQuestionComponent implements OnInit {
               mrid: this.mrid,
               custId: this.customerId,
               bookingType : this.bookingType,
-              bookingId : this.bookingId
+              bookingId : this.bookingId,
+              calledfrom : this.calledfrom
             }
           };
           this.router.navigate(['provider', 'dental'], navigationExtras);
@@ -607,7 +613,8 @@ export class TeethQuestionComponent implements OnInit {
               mrid: this.mrid,
               custId: this.customerId,
               bookingType : this.bookingType,
-              bookingId : this.bookingId
+              bookingId : this.bookingId,
+              calledfrom : this.calledfrom
             }
           };
           this.router.navigate(['provider', 'dental'], navigationExtras);

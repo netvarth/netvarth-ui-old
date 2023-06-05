@@ -62,6 +62,7 @@ export class TeethViewComponent {
   isLingual = false;
   isIncisal = false;
   isOcclusal = false;
+  calledfrom: any;
   constructor(
     private location: Location,
     private fileService: FileService,
@@ -89,6 +90,9 @@ export class TeethViewComponent {
       }
       if (params['bookingId']) {
         this.bookingId = params['bookingId'];
+      }
+      if (params['calledfrom']) {
+        this.calledfrom = params['calledfrom'];
       }
     });
   }
@@ -360,7 +364,8 @@ export class TeethViewComponent {
         teethId: this.selectedTeethDetails.toothId,
         type: this.state,
         bookingType: this.bookingType,
-        bookingId: this.bookingId
+        bookingId: this.bookingId,
+        calledfrom : this.calledfrom
       }
     };
     this.router.navigate(['provider', 'dental', 'teeth', this.selectedTeethDetails.toothId], navigationExtras);
@@ -374,7 +379,8 @@ export class TeethViewComponent {
         mrid: this.mrid,
         custId: this.patientId,
         bookingType: this.bookingType,
-        bookingId: this.bookingId
+        bookingId: this.bookingId,
+        calledfrom : this.calledfrom
       }
     };
     this.router.navigate(['provider', 'dental'], navigationExtras);

@@ -154,6 +154,7 @@ export class DentalHomeComponent implements OnInit {
   indexSelection: any;
   bookingType: any;
   bookingId: any;
+  calledfrom: any;
   constructor(
     private router: Router,
     // private routingService: RoutingService,
@@ -181,6 +182,10 @@ export class DentalHomeComponent implements OnInit {
       if (params['bookingId']) {
         this.bookingId = params['bookingId'];
       }
+      if (params['calledfrom']) {
+        this.calledfrom = params['calledfrom'];
+      }
+      
     });
   }
   ngOnInit(): void {
@@ -326,7 +331,8 @@ if(this.teethDetails && this.teethDetails.teeth && this.teethDetails.teeth.lengt
         teethId : teeth.toothId,
         type: this.type,
         bookingType : this.bookingType,
-        bookingId : this.bookingId
+        bookingId : this.bookingId,
+        calledfrom : this.calledfrom
       }
     };
     this.router.navigate(['provider','dental','teeth',teeth.toothId],navigationExtras);
@@ -347,7 +353,8 @@ if(this.teethDetails && this.teethDetails.teeth && this.teethDetails.teeth.lengt
             action: 'edit',
             teethIndex : index,
             bookingType : this.bookingType,
-            bookingId : this.bookingId
+            bookingId : this.bookingId,
+            calledfrom : this.calledfrom
           }
         };
         this.router.navigate(['provider','dental','teeth',index],navigationExtras);
@@ -360,8 +367,10 @@ if(this.teethDetails && this.teethDetails.teeth && this.teethDetails.teeth.lengt
             patientId: this.customerId,
             type: this.type,
             teethIndex : index,
+            calledfrom : this.calledfrom,
             bookingType : this.bookingType,
-            bookingId : this.bookingId
+            bookingId : this.bookingId,
+          
           }
         };
         this.router.navigate(['provider','dental','teeth',index],navigationExtras);
@@ -378,8 +387,14 @@ if(this.teethDetails && this.teethDetails.teeth && this.teethDetails.teeth.lengt
 
   }
   goBack(backFrom) {
-    if(backFrom === 'medical'){
-      this.router.navigate(['provider', 'customers', this.customerId , this.bookingType, this.bookingId, 'medicalrecord',this.mrid,'clinicalnotes']);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        backFrom: 'medical_dental',
+        calledfrom : this.calledfrom
+      }
+    };
+    if(backFrom === 'medical_dental'){
+      this.router.navigate(['provider', 'customers', this.customerId , this.bookingType, this.bookingId, 'medicalrecord',this.mrid,'clinicalnotes'],navigationExtras);
     } else{
       this.location.back();
     }
@@ -392,7 +407,8 @@ if(this.teethDetails && this.teethDetails.teeth && this.teethDetails.teeth.lengt
         patientId: this.customerId,
         mrid: this.mrid,
         bookingType : this.bookingType,
-        bookingId : this.bookingId
+        bookingId : this.bookingId,
+        calledfrom : this.calledfrom
       }
     };
     this.router.navigate(['provider','dental','teeth','id','view'],navigationExtras);
