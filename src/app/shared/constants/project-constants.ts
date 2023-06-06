@@ -882,7 +882,7 @@ export const projectConstantsLocal = {
 
   ],
   CDL_STATUS_LIST: [
-    { displayName: 'Unconverged', value: 'Unconverged' },
+    { displayName: 'Unconverged', value: 'UnConverged' },
     { displayName: 'Converged', value: 'Converged' },
 
   ],

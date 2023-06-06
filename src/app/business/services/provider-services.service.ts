@@ -2762,6 +2762,12 @@ export class ProviderServices {
     const url = 'provider/questionnaire/order/submission/' + catId + '/' + channel;
     return this.servicemeta.httpGet(url);
   }
+
+  resendMfaOtp(data) {
+    const url = 'provider/login/resendotp';
+    return this.servicemeta.httpPost(url, data);
+  }
+
   getAccountSetting() {
     const url = 'provider/account/settings';
     return this.servicemeta.httpGet(url);

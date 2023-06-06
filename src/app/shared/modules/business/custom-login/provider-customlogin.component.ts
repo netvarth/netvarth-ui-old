@@ -107,7 +107,7 @@ export class ProviderCustomLoginComponent implements OnInit {
           }
           this.shared_services.updateProviderMUniqueId(request).subscribe(
             () => {
-              
+
             }
           )
         }
@@ -384,8 +384,18 @@ export class ProviderCustomLoginComponent implements OnInit {
   }
 
   resendMfaOTP() {
-    this.onSubmit(this.otpPageData[0])
-    this.snackbarService.openSnackBar("Otp Resend Successfully");
+    let data = {
+      countryCode: this.selectedCountryCode,
+      loginId: this.otpPageData[0] && this.otpPageData[0].emailId
+    }
+    this.providerServices.resendMfaOtp(data).subscribe(
+      (response: any) => {
+        if (response) {
+          this.snackbarService.openSnackBar("Otp Resend Successfully");
+        }
+      }, (error: any) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
   }
 
   onOtpChange(otp) {
