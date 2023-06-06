@@ -434,7 +434,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
           }
         }
         else {
-          if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
+          if (!this.sms && !this.email && !this.pushnotify && !this.telegram && !this.whatsApp) {
             this.api_error = 'share message via options are not selected';
             this.disableButton = false;
             setTimeout(() => {
@@ -447,7 +447,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 email: this.email,
                 sms: this.sms,
                 pushNotification: this.pushnotify,
-                telegram: this.telegram
+                telegram: this.telegram,
+                whatsApp: this.whatsApp
               },
               communicationMessage: form_data.message,
               uuid: this.uuid
@@ -657,7 +658,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 email: this.email,
                 sms: this.sms,
                 pushNotification: this.pushnotify,
-                telegram: this.telegram
+                telegram: this.telegram,
+                whatsApp: this.whatsApp
               },
               communicationMessage: form_data.message,
               uuid: [this.uuid]
@@ -727,7 +729,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
           email: this.email,
           sms: this.sms,
           pushNotification: this.pushnotify,
-          telegram: this.telegram
+          telegram: this.telegram,
+          whatsApp: this.whatsApp
         },
         communicationMessage: post_data.communicationMessage,
         uuid: foruuid
