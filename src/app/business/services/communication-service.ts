@@ -118,7 +118,13 @@ export class CommunicationService {
                 }
                 name = fname + ' ' + lname;
                 email = waitlist[0].providerConsumer.email;
-                phone = waitlist[0].providerConsumer.phoneNo;
+                if(waitlist[0].providerConsumer){
+                    phone = waitlist[0].providerConsumer.phoneNo;
+                }
+               else if(waitlist[0].consumer){
+               
+                phone = waitlist[0].consumer.phoneNo;
+               }
                 countryCode = waitlist[0].countryCode;
                 if (waitlist[0].consumer) {
                     jaldeeConsumer = 'true';
@@ -152,7 +158,12 @@ export class CommunicationService {
                 }
                 name = fname + ' ' + lname;
                 email = waitlist[0].waitlistingFor[0].email;
-                phone = waitlist[0].waitlistingFor[0].phoneNo;
+                if(waitlist[0].waitlistingFor[0].phoneNo){
+                    phone = waitlist[0].waitlistingFor[0].phoneNo;
+                }
+               else if(waitlist[0].consumer){
+                phone = waitlist[0].consumer.phoneNo;
+               }
                 countryCode = waitlist[0].countryCode;
                 phone_history = waitlist[0].waitlistPhoneNumber;
                 if (waitlist[0].jaldeeConsumer) {
