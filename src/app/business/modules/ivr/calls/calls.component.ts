@@ -201,7 +201,7 @@ export class CallsComponent implements OnInit {
   }
 
   getUsers() {
-    this.ivrService.getUsers().subscribe((data: any) => {
+    this.ivrService.getIvrUsers().subscribe((data: any) => {
       this.users = data;
     },
       (error) => {

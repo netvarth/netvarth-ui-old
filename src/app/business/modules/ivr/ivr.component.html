@@ -30,9 +30,11 @@
           <div class="mr-2"><img width="20" height="20" src="./assets/images/ivr/dashboard-icon.png"></div>
           <div class="font-weight-bold pt-1"><span>Available For Calls</span></div>
         </div>
+
         <div>
-          <input type="checkbox" (change)="onAvailableChange($event)"
-            [checked]="userDetails && userDetails.userAvailable == 'Online' ? true : false">
+          <!-- <input type="checkbox"
+            [checked]=""> -->
+            <mat-slide-toggle [(ngModel)]="userAvailabilityStatus" (change)="onAvailableChange($event)"></mat-slide-toggle>
         </div>
       </div>
     </div>

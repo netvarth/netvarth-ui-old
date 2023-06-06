@@ -15,6 +15,7 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { TabViewModule } from 'primeng/tabview';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SchedulesModule } from './schedules/schedules.module';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 const routes: Routes = [
   { path: '', component: IvrComponent },
@@ -44,6 +45,7 @@ const routes: Routes = [
     MatMenuModule,
     TabViewModule,
     SchedulesModule,
+    MatSlideToggleModule,
     [RoundProgressModule],
     [RouterModule.forChild(routes)]
   ]

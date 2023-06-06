@@ -71,6 +71,12 @@ export class IvrService {
     return this.servicemeta.httpGet(url, null);
   }
 
+
+  getIvrUsers() {
+    const url = 'provider/ivr/user/settings';
+    return this.servicemeta.httpGet(url, null);
+  }
+
   getChartData(data) {
     const url = 'provider/ivr/graph';
     return this.servicemeta.httpPut(url, data);
@@ -96,8 +102,13 @@ export class IvrService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  getUserAvialability() {
+    const url = 'provider/ivr/user/availability';
+    return this.servicemeta.httpGet(url, null);
+  }
+
   changeAvialabilityStatus(id, status) {
-    const url = 'provider/user/' + id + '/available/' + status;
+    const url = 'provider/ivr/users/' + id + '/' + status;
     return this.servicemeta.httpPut(url, null);
   }
 
@@ -114,6 +125,11 @@ export class IvrService {
   getScheduleById(id) {
     const url = 'provider/schedule/' + id;
     return this.servicemeta.httpGet(url, null);
+  }
+
+  getScheduleCount(filter = {}) {
+    const url = 'provider/schedule/count';
+    return this.servicemeta.httpGet(url, null, filter);
   }
 
   getUser(providerid) {

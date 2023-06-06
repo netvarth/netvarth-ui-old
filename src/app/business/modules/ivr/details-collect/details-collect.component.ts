@@ -239,11 +239,11 @@ export class DetailsCollectComponent implements OnInit {
   }
 
   getUsers() {
-    this.ivrService.getUsers().subscribe((data: any) => {
+    this.ivrService.getIvrUsers().subscribe((data: any) => {
       this.users = data;
     },
       (error) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
 

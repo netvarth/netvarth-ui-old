@@ -49,11 +49,13 @@ export class IvrComponent implements OnInit {
   assignedCallsCount: any;
   callBackCallsCount: any;
   userDetails: any;
+  userAvailability: any;
   todayCallsCount: any = {
     "connectedCalls": 0,
     "allCalls": 0
   };
   historyCallsCount: any;
+  userAvailabilityStatus: any;
   constructor(
     private groupService: GroupStorageService,
     private ivrService: IvrService,
@@ -89,6 +91,7 @@ export class IvrComponent implements OnInit {
     });
     this.getOngoingCall();
     this.getUsers();
+    this.getUserAvailability();
     this.primengConfig.ripple = true;
   }
 
@@ -129,19 +132,54 @@ export class IvrComponent implements OnInit {
       });
   }
 
+  getUserAvailability() {
+    this.ivrService.getUserAvialability().subscribe(data => {
+      if (data) {
+        this.userAvailability = data;
+        this.userAvailabilityStatus = this.userAvailability == 'Available' ? true : false
+      }
+    },
+      error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+
   onAvailableChange(event) {
-    let status = event.target.checked;
+    let status = event.checked;
+    console.log(event)
     if (status) {
-      this.changeAvailability('Online');
+      this.checkSchedules().then(() => {
+        this.changeAvailability('Available');
+      }).catch(() => {
+        this.createSchedule('add');
+        this.snackbarService.openSnackBar("No Active Schedules Found.Please create a schedule");
+      });
     }
     else {
-      this.changeAvailability('NotAvailable');
+      this.changeAvailability('Unavailable');
     }
+  }
+
+  checkSchedules() {
+    return new Promise((resolve, reject) => {
+      this.ivrService.getScheduleCount({ "state-eq": "ENABLED" }).subscribe((data: any) => {
+        if (data && data > 0) {
+          resolve(true);
+        }
+        else {
+          reject(true);
+        }
+      },
+        (error: any) => {
+          reject(false);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+    })
   }
 
 
   getIvrVoiceMailCalls() {
-    let api_filter = {}
+    let api_filter = {};
     api_filter['callStatus-eq'] = "voicemail";
     this.getIvrCallsbyFilter(api_filter).then((data) => {
       this.voiceMailCalls = data;
@@ -294,7 +332,7 @@ export class IvrComponent implements OnInit {
   }
 
   getUsers() {
-    this.ivrService.getUsers().subscribe((data: any) => {
+    this.ivrService.getIvrUsers().subscribe((data: any) => {
       this.users = data;
     },
       (error) => {
@@ -372,7 +410,7 @@ export class IvrComponent implements OnInit {
       }
     });
     this.scheduleDialogRef.afterClosed().subscribe(data => {
-
+      this.getUserAvailability();
     });
   }
 

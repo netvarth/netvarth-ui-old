@@ -59,6 +59,7 @@ export class SchedulesComponent implements OnInit {
         if (this.scheduleData && this.scheduleData.scheduleTime && this.scheduleData.scheduleTime.timeSlots && this.scheduleData.scheduleTime.timeSlots[0]) {
           this.timeSlots['sTime'] = { hour: parseInt(moment(this.scheduleData.scheduleTime.timeSlots[0]['sTime'], ['h:mm A']).format('HH'), 10), minute: parseInt(moment(this.scheduleData.scheduleTime.timeSlots[0]['sTime'], ['h:mm A']).format('mm'), 10) };
           this.timeSlots['eTime'] = { hour: parseInt(moment(this.scheduleData.scheduleTime.timeSlots[0]['eTime'], ['h:mm A']).format('HH'), 10), minute: parseInt(moment(this.scheduleData.scheduleTime.timeSlots[0]['eTime'], ['h:mm A']).format('mm'), 10) };
+          this.changetime();
         }
         if (this.scheduleData && this.scheduleData.scheduleTime && this.scheduleData.scheduleTime.startDate) {
           this.date["start"] = new Date(this.scheduleData.scheduleTime.startDate);
@@ -79,8 +80,10 @@ export class SchedulesComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
-    this.timeSlots['sTime'] = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
-    this.timeSlots['eTime'] = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
+    if (!this.isUpdateSchedule) {
+      this.timeSlots['sTime'] = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
+      this.timeSlots['eTime'] = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
+    }
     this.changetime();
   }
 
@@ -104,11 +107,11 @@ export class SchedulesComponent implements OnInit {
 
   changetime() {
     const curdate = new Date();
-    curdate.setHours(this.timeSlots['sTime'].hour);
-    curdate.setMinutes(this.timeSlots['sTime'].minute);
+    curdate.setHours(this.timeSlots['sTime'] && this.timeSlots['sTime'].hour);
+    curdate.setMinutes(this.timeSlots['sTime'] && this.timeSlots['sTime'].minute);
     const enddate = new Date();
-    enddate.setHours(this.timeSlots['eTime'].hour);
-    enddate.setMinutes(this.timeSlots['eTime'].minute);
+    enddate.setHours(this.timeSlots['eTime'] && this.timeSlots['eTime'].hour);
+    enddate.setMinutes(this.timeSlots['eTime'] && this.timeSlots['eTime'].minute);
     const startTime = moment(curdate).format('hh:mm A') || null;
     const endTime = moment(enddate).format('hh:mm A') || null;
     this.convertedTimeSlots = [startTime, endTime];
