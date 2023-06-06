@@ -1083,6 +1083,10 @@ export class ProviderServices {
     const url = 'provider/account/settings/smsCount';
     return this.servicemeta.httpGet(url);
   }
+  getWhatsappCredits() {
+    const url = 'provider/account/settings/whatsAppCount';
+    return this.servicemeta.httpGet(url);
+  }
   getUserConsumerNotificationSettings(id) {
     // const url = 'provider/consumerNotification/settings/' + id;
     // return this.servicemeta.httpGet(url);
@@ -1932,6 +1936,10 @@ export class ProviderServices {
   deleteUplodedprescription(name, id) {
     return this.servicemeta.httpDelete('provider/mr/prescription/' + id + '/' + name);
   }
+  deleteUplodedprescriptionNew(id,data) {
+    const url = 'provider/mr/prescriptionAttachment/' + id;
+    return this.servicemeta.httpDelete(url, data);
+  }
   getPatientVisitListCount(patientId) {
     const url = 'provider/mr/patientPreviousVisit/count/' + patientId;
     return this.servicemeta.httpGet(url);
@@ -1942,7 +1950,7 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url, null, filter);
   }
   shareRx(id, data) {
-    const url = 'provider/mr/sharePrescription/' + id;
+    const url = 'provider/mr/sharePrescriptionDetails/' + id;
     return this.servicemeta.httpPost(url, data);
   }
   shareRxforThirdparty(id, data) {
@@ -2762,12 +2770,6 @@ export class ProviderServices {
     const url = 'provider/questionnaire/order/submission/' + catId + '/' + channel;
     return this.servicemeta.httpGet(url);
   }
-
-  resendMfaOtp(data) {
-    const url = 'provider/login/resendotp';
-    return this.servicemeta.httpPost(url, data);
-  }
-
   getAccountSetting() {
     const url = 'provider/account/settings';
     return this.servicemeta.httpGet(url);
@@ -3080,5 +3082,12 @@ export class ProviderServices {
     return api_filter;
   }
 
-
+  createMedicalRecordPrescription(bookingId, data) {
+    const url = 'provider/mr/' + bookingId;
+    return this.servicemeta.httpPut(url, data);
+  }
+  resendMfaOtp(data) {
+    const url = 'provider/login/resendotp';
+    return this.servicemeta.httpPost(url, data);
+  }
 }

@@ -35,6 +35,7 @@ export class NotificationsComponent implements OnInit {
     isCorp = false;
     isMultilevel = false;
     sub_domain;
+    whatsappCredits;
 
     constructor(
         private router: Router,
@@ -57,6 +58,7 @@ export class NotificationsComponent implements OnInit {
         this.getSMSglobalSettings();
         this.getWhatsappglobalSettings();
         this.getSMSCredits();
+        this.getWhatsappCredits();
         this.getDomainSubdomainSettings();
         this.genrl_notification_cap = Messages.GENRL_NOTIFICATION_MSG.replace('[provider]', this.provider_label);
         this.frm_cust_notification_cap = Messages.FRM_LEVEL_CUST_NOTIFICATION_MSG.replace('[customer]', this.customer_label);
@@ -84,6 +86,11 @@ export class NotificationsComponent implements OnInit {
     getSMSCredits() {
         this.provider_services.getSMSCredits().subscribe(data => {
             this.smsCredits = data;
+        });
+    }
+    getWhatsappCredits() {
+        this.provider_services.getWhatsappCredits().subscribe(data => {
+            this.whatsappCredits = data;
         });
     }
     getSMSglobalSettings() {

@@ -33,16 +33,18 @@
                     </label>
                 </div>
             </div>
+           
             <div class="col-md-12 col-xs-12 col-sm-12 no-padding" style="padding-bottom: 10px;">
                 <label style="display: flex">Remaining SMS Credits: <span class="bold">
-                        &nbsp;{{smsCredits}}</span> </label>
+                    &nbsp;{{smsCredits}}</span> </label>
+                <label style="display: flex">Remaining Whatsapp Credits: <span class="bold">
+                        &nbsp;{{whatsappCredits}}</span> </label>
                 <ul *ngIf="isadminPrivilege" class="info-lst serviceadd-info">
                     <li>{{genrl_notification_cap}} <a class="pointlist" matTooltip="Go to Add-ons"
                             routerLink="/provider/license/addons">Jaldee Messaging ADD-ON.</a>
                     </li>
                 </ul>
             </div>
-           
             <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 no-padding">
                 <span class="act-btn mgn-rt-10" (click)="gotoProvider()">
                     {{provdr_domain_name | capitalizeFirst}}

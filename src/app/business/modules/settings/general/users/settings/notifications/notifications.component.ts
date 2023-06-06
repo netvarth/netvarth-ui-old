@@ -19,6 +19,7 @@ export class NotificationsUserComponent implements OnInit {
     notificationStatusEnable;
     domain;
     smsCredits;
+    whatsappCredits;
     genrl_notification_cap = '';
     frm_cust_notification_cap = '';
     cust_domain_name = '';
@@ -57,6 +58,7 @@ export class NotificationsUserComponent implements OnInit {
         this.getSMSglobalSettings();
         this.getWhatsappglobalSettings();
         this.getSMSCredits();
+        this.getWhatsappCredits();
         this.genrl_notification_cap = Messages.GENRL_NOTIFICATION_MSG.replace('[provider]', this.provider_label);
         this.frm_cust_notification_cap = Messages.FRM_LEVEL_CUST_NOTIFICATION_MSG.replace('[customer]', this.customer_label);
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
@@ -74,6 +76,12 @@ export class NotificationsUserComponent implements OnInit {
             this.smsCredits = data;
         });
     }
+    getWhatsappCredits() {
+        this.provider_services.getWhatsappCredits().subscribe(data => {
+            this.whatsappCredits = data;
+        });
+    }
+    
     getSMSglobalSettings() {
         this.provider_services.getAccountSettings().then(data => {
             this.smsGlobalStatus = data['enableSms'];
