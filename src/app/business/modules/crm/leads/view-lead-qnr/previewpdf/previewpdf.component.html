@@ -2,7 +2,7 @@
   <div class="header mat-dialog-title">
     <div style="display:flex;gap:5px">
       <div>
-        <img class="imgType" [src]="getImageType(data.data.fileType)" />
+        <img class="imgType" [src]="getImageType(data.data.type)" />
       </div>
       <div class="headerText">File Preview</div>
     </div>
@@ -19,7 +19,7 @@
 </mat-dialog-content>
 </section>
 
-<section *ngIf="dialogTYpe==='priviewFilePrescription' && data.data.type !=='.pdf' ">
+<section *ngIf="dialogTYpe==='priviewFilePrescription' && data.data.type !=='pdf' ">
   <!-- {{data.data | json}} -->
   <div class="header mat-dialog-title">
     <div style="display:flex;gap:5px">
@@ -43,7 +43,7 @@
     <i class="fa fa-download" aria-hidden="true"></i><span class="ml">Download</span></button>
 </div>
 </section>
-<section *ngIf="dialogTYpe==='priviewFilePrescription' && data.data.type ==='.pdf' ">
+<section *ngIf="dialogTYpe==='priviewFilePrescription' && data.data.type ==='pdf' ">
   <div >
     <div>
       <div class="flexClass">

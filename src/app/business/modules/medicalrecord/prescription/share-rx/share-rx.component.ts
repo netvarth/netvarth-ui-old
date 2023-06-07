@@ -221,6 +221,7 @@ export class ShareRxComponent implements OnInit {
           const response = data;
           // console.log(response);
           this.customerDetail = response[0];
+          console.log('this.customerDetail',this.customerDetail)
           // console.log(this.customerDetail)
           if (this.customerDetail.email) {
             this.email_id = this.customerDetail.email;
@@ -263,10 +264,10 @@ export class ShareRxComponent implements OnInit {
     if (document && document.getElementById('sharerxview')) {
       vwofrx = document.getElementById('sharerxview');
     }
-    let sahrePdfVia;
-    if (document && document.getElementById('sharePdf')) {
-      sahrePdfVia = document.getElementById('sharePdf');
-    }
+    // let sahrePdfVia;
+    // if (document && document.getElementById('sharePdf')) {
+    //   sahrePdfVia = document.getElementById('sharePdf');
+    // }
     let thirdPartyHtml;
     if (document.getElementById('thirdParty')) {
       thirdPartyHtml = document.getElementById('thirdParty')
@@ -350,7 +351,7 @@ export class ShareRxComponent implements OnInit {
       if (this.sharewith !== 0) {
         const passData = {
           'message': this.amForm.controls.message.value,
-          'html': vwofrx.innerHTML,
+          // 'html': vwofrx.innerHTML,
           'shareThirdParty': {
             'phone': this.thirdpartyphone,
             'email': this.thirdpartyemail
@@ -359,7 +360,6 @@ export class ShareRxComponent implements OnInit {
         if (this.thirdpartyphone !== '') {
           passData['shareThirdParty']['countryCode'] = '+91';
         }
-        // alert('1stThirdParty')
         this.provider_services.shareRxforThirdparty(this.mrId, passData)
           .subscribe((data) => {
             this.snackbarService.openSnackBar('Prescription shared successfully');
@@ -372,10 +372,9 @@ export class ShareRxComponent implements OnInit {
           });
 
       } else if (this.sharewith === 0) {
-        // alert('1st')
         const passData = {
           'message': this.amForm.controls.message.value,
-          'html': vwofrx.innerHTML,
+          // 'html': vwofrx.innerHTML,
           'medium': {
             'email': this.email,
             'sms': this.sms,
@@ -398,7 +397,6 @@ export class ShareRxComponent implements OnInit {
     }
     else {
       if (this.sharewith !== 0) {
-        // alert(this.data.file.type);
         let passData;
         if (this.data && this.data.file && (this.data.file.type === '.jpeg' || this.data.file.type === '.bmp' ||
           this.data.file.type === '.png' || this.data.file.type === '.jpg')) {
@@ -414,7 +412,7 @@ export class ShareRxComponent implements OnInit {
         else {
           passData = {
             'message': this.amForm.controls.message.value,
-            'html': vwofrx.innerHTML,
+            // 'html': vwofrx.innerHTML,
             'shareThirdParty': {
               'phone': this.thirdpartyphone,
               'email': this.thirdpartyemail
@@ -424,8 +422,6 @@ export class ShareRxComponent implements OnInit {
         if (this.thirdpartyphone !== '') {
           passData['shareThirdParty']['countryCode'] = '+91';
         }
-        // alert('2ndThirdParty')
-        // console.log('passData',passData)
         this.provider_services.shareRxforThirdparty(this.mrId, passData)
           .subscribe((data) => {
             this.snackbarService.openSnackBar('Prescription shared successfully');
@@ -438,13 +434,11 @@ export class ShareRxComponent implements OnInit {
           });
 
       } else if (this.sharewith === 0) {
-        // alert('2nd')
         let passData: any;
         if (this.data.file.type === '.pdf') {
-          // alert('.pdf')
           passData = {
             'message': this.amForm.controls.message.value,
-            'html': sahrePdfVia.innerHTML, //vwofrx.innerHTML,
+            // 'html': sahrePdfVia.innerHTML, 
             'medium': {
               'email': this.email,
               'sms': this.sms,
@@ -455,10 +449,9 @@ export class ShareRxComponent implements OnInit {
           };
         }
         else {
-          // alert('notpdf')
           passData = {
             'message': this.amForm.controls.message.value,
-            'html': vwofrx.innerHTML,
+            // 'html': vwofrx.innerHTML,
             'medium': {
               'email': this.email,
               'sms': this.sms,
@@ -482,6 +475,7 @@ export class ShareRxComponent implements OnInit {
     }
   }
   onUserSelect(event) {
+  console.log(event)
     this.resetApiErrors();
     this.customid = '';
     if (event.value !== 0) {

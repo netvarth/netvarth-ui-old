@@ -1954,7 +1954,7 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url, data);
   }
   shareRxforThirdparty(id, data) {
-    const url = 'provider/mr/sharePrescription/thirdParty/' + id;
+    const url = 'provider/mr/sharePrescriptionDeails/thirdParty/' + id;
     return this.servicemeta.httpPost(url, data);
   }
   updateMR(data, mrId) {

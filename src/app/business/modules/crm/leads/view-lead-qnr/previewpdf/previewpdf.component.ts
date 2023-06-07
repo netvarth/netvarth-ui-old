@@ -61,7 +61,7 @@ export class PreviewpdfComponent implements OnInit {
       if(type==='image/png' || type ==='.png'){
         return './assets/images/ImgeFileIcon/png.png'
       }
-      else if(type==='application/pdf' || type==='.pdf'){
+      else if(type==='application/pdf' || type==='pdf'){
         return './assets/images/ImgeFileIcon/pdf.png'
       }
       else if(type==='image/bmp' || type==='.bmp'){

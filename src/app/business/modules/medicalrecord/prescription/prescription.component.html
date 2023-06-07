@@ -146,15 +146,15 @@
                     <div class="borderClass">
                       <div class="allfileNameDetails">
                         <div class="allfileName">
-                          <div class="fileType" *ngIf="file && file.type ">
-                            <img height="35px" width="35px" [src]="getFileType(file.type)" />
+                          <div class="fileType" *ngIf="file && file.fileType ">
+                            <img height="35px" width="35px" [src]="getFileType(file.fileType)" />
                           </div>
                           <div>
-                            <div class="fileName" *ngIf="file && file.originalName">
-                              {{originalFilename(file.originalName)}}
+                            <div class="fileName" *ngIf="file && file.fileName">
+                              {{originalFilename(file.fileName)}}
                             </div>
-                            <div *ngIf="file && file.imageSize" class="fileSize">
-                              {{bytesToSize(file.imageSize)}}
+                            <div *ngIf="file && file.fileSize" class="fileSize">
+                              {{bytesToSize(file.fileSize)}}
                             </div>
                           </div>
                         </div>
@@ -164,7 +164,7 @@
                               matTooltip="Download" [matTooltipPosition]="'below'" />
                           </div>
                           <div>
-                            <div class="Share pointer-cursor" *ngIf="file && !(file.type ==='.pdf')"
+                            <div class="Share pointer-cursor" *ngIf="file && !(file.fileType ==='.pdf')"
                               (click)="print('printableArea',manualSignInfo)">
                               <img class="fileView" src="/assets/images/medicalReportIcon/print.png"
                                 #tooltip="matTooltip" matTooltip="Print" [matTooltipPosition]="'below'" />
@@ -209,7 +209,7 @@
                               <th data-title="Instructions">Instructions</th>
                               <th data-title="Edit"></th>
                               <th (click)="print('printableArea',manualSignInfo)" class="pointer-cursor"
-                                #tooltip="matTooltip" matTooltip="Print" [matTooltipPosition]="'below'">
+                                #tooltip="matTooltip" matTooltip="3" [matTooltipPosition]="'below'">
                                 <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
                               </th>
                               <th data-title="Delete"></th>
@@ -362,13 +362,13 @@
                 <div class="borderClass">
                   <div class="allfileNameDetails">
                     <div class="allfileName">
-                      <div class="fileType" *ngIf="file && file.type ">
-                        <img height="35px" width="35px" [src]="getFileType(file.type)" />
+                      <div class="fileType" *ngIf="file && file.fileType ">
+                        <img height="35px" width="35px" [src]="getFileType(file.fileType)" />
                       </div>
                       <div>
-                        <div class="fileName" *ngIf="file && file.originalName">{{originalFilename(file.originalName)}}
+                        <div class="fileName" *ngIf="file && file.fileName">{{originalFilename(file.fileName)}}
                         </div>
-                        <div *ngIf="file && file.imageSize" class="fileSize" style="margin-top:3px">
+                        <div *ngIf="file && file.fileSize" class="fileSize" style="margin-top:3px">
                           {{bytesToSize(file.imageSize)}}
                         </div>
                         <div *ngIf="file && file.caption" class="fileSize">
@@ -381,10 +381,10 @@
                     </div>
                     <div class="imageClas">
                       <div (click)="dialogImgView(file)">
-                        <img *ngIf="file.type !=='.pdf'" class="fileView"
+                        <img *ngIf="file.fileType !=='.pdf'" class="fileView"
                           src="./assets/images/ImgeFileIcon/fileView.png" #tooltip="matTooltip"
                           matTooltip="{{downloadText}}" [matTooltipPosition]="'below'" />
-                        <img *ngIf="file.type ==='.pdf'" class="fileView"
+                        <img *ngIf="file.fileType ==='.pdf'" class="fileView"
                           src="./assets/images/ImgeFileIcon/pdfDwnld.png" #tooltip="matTooltip"
                           matTooltip="{{downloadText}}" [matTooltipPosition]="'below'" />
                       </div>
@@ -392,16 +392,16 @@
                         <img class="fileView" src="/assets/images/medicalReportIcon/delete.png" #tooltip="matTooltip"
                           matTooltip="Remove" [matTooltipPosition]="'below'" />
                       </div>
-                      <div>
+                      <!-- <div>
                         <div class="Share pointer-cursor" *ngIf="file " (click)="printSecond(file)">
-                          <img *ngIf="file.type !=='.pdf'" class="fileView"
-                            src="/assets/images/medicalReportIcon/print.png" #tooltip="matTooltip" matTooltip="Print"
+                          <img *ngIf="file.fileType !=='.pdf'" class="fileView"
+                            src="/assets/images/medicalReportIcon/print.png" #tooltip="matTooltip" matTooltip="Print1"
                             [matTooltipPosition]="'below'" />
-                          <img *ngIf="file.type ==='.pdf'" class="fileView"
+                          <img *ngIf="file.fileType ==='.pdf'" class="fileView"
                             src="./assets/images/ImgeFileIcon/fileView.png" #tooltip="matTooltip" matTooltip="View"
                             [matTooltipPosition]="'below'" />
                         </div>
-                      </div>
+                      </div> -->
                       <div>
                         <div class="Share pointer-cursor"
                           (click)="shareManualRx('uploadrx',bookingType,bookingId,file)">
@@ -417,9 +417,9 @@
                       <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="dialogImgView(file)" class="gap">
                           <div>
-                            <img *ngIf="file.type !=='.pdf'" class="fileView"
+                            <img *ngIf="file.fileType !=='.pdf'" class="fileView"
                               src="./assets/images/ImgeFileIcon/fileView.png" />
-                            <img *ngIf="file.type ==='.pdf'" class="fileView"
+                            <img *ngIf="file.fileType ==='.pdf'" class="fileView"
                               src="./assets/images/ImgeFileIcon/pdfDwnld.png" />
                           </div>
                           <div *ngIf="downloadText">{{downloadText}}</div>
