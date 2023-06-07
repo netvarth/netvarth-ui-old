@@ -493,26 +493,34 @@ export class ShareRxComponent implements OnInit {
     if (this.mrId) {
       this.provider_services.getMRprescription(this.mrId)
         .subscribe((data) => {
-          // console.log('datagetMRprescription',data)
-          this.mrPrescriptionDetails = data['prescriptionsList'];
-          if (Object.keys(data).length !== 0 && data.constructor === Object) {
-            if (data['prescriptionsList'] && data['prescriptionsList'][0].keyName) {
-              this.signature_loading = false;
+          console.log('datagetMRprescription',data)
+          if(data['prescriptionAttachements'][0]){
+            this.mrPrescriptionDetails = data['prescriptionAttachements'];
+            this.signature_loading = false;
               this.getDigitalSign();
-            } else {
-              // if(this.data.length=== data['prescriptionsList'].length){
-              //   this.drugList = data['prescriptionsList'];
-              // }
-              // else{
-              //   this.drugList = this.data
-              // }
-              this.drugList = data['prescriptionsList'];
-              this.note = data['notes'];
-              this.signature_loading = false;
-              this.getDigitalSign();
-            }
-            this.getProviderLogo();
           }
+          else if(data['prescriptionsList']){
+            this.mrPrescriptionDetails = data['prescriptionsList'];
+            if (Object.keys(data).length !== 0 && data.constructor === Object) {
+              if (data['prescriptionsList'] && data['prescriptionsList'][0].keyName) {
+                this.signature_loading = false;
+                this.getDigitalSign();
+              } else {
+                // if(this.data.length=== data['prescriptionsList'].length){
+                //   this.drugList = data['prescriptionsList'];
+                // }
+                // else{
+                //   this.drugList = this.data
+                // }
+                this.drugList = data['prescriptionsList'];
+                this.note = data['notes'];
+                this.signature_loading = false;
+                this.getDigitalSign();
+              }
+              this.getProviderLogo();
+            }
+          }
+         
         },
           error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
