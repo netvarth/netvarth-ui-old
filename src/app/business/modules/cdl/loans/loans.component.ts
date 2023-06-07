@@ -213,6 +213,24 @@ export class LoansComponent implements OnInit {
     console.log("event", event)
     let api_filter = event;
     this.filters = api_filter;
+    if (this.statusDropdownClicked) {
+      if (this.statusDisplayName && this.statusDisplayName.name) {
+        if (this.statusDisplayName.name != 'All' && this.statusDisplayName.name != 'rejected') {
+          if (this.statusDisplayName.name == 'Rejected') {
+            // api_filter['applicationStatus-eq'] = 'Rejected';
+            api_filter['isRejected-eq'] = true;
+          }
+          else if (this.statusDisplayName.name == 'Redirected') {
+            api_filter['isRejected-eq'] = false;
+            api_filter['isActionRequired-eq'] = true;
+          }
+          else {
+            api_filter['isRejected-eq'] = false;
+            api_filter['spInternalStatus-eq'] = this.statusDisplayName.name;
+          }
+        }
+      }
+    }
     if (api_filter) {
       this.getTotalLoansCount(api_filter)
       this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {

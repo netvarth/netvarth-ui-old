@@ -107,6 +107,22 @@ export class DealerComponent implements OnInit {
   applyFilters(event) {
     console.log("event", event)
     let api_filter = event;
+    if (this.statusDropdownClicked || this.spInternalStatus) {
+      if (this.statusDisplayName && this.statusDisplayName.name) {
+        if (this.statusDisplayName.name != 'All' && this.statusDisplayName.name != 'rejected') {
+          if (this.statusDisplayName.name == 'Rejected') {
+            api_filter['isRejected-eq'] = true;
+          }
+          else if (this.statusDisplayName.name == 'Redirected') {
+            api_filter['isRejected-eq'] = false;
+            api_filter['isActionRequired-eq'] = true;
+          }
+          else {
+            api_filter['spInternalStatus-eq'] = this.statusDisplayName.name;
+          }
+        }
+      }
+    }
     if (api_filter) {
       this.getTotalDealersCount(api_filter)
       this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
