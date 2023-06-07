@@ -369,7 +369,7 @@
                         <div class="fileName" *ngIf="file && file.fileName">{{originalFilename(file.fileName)}}
                         </div>
                         <div *ngIf="file && file.fileSize" class="fileSize" style="margin-top:3px">
-                          {{bytesToSize(file.imageSize)}}
+                          {{bytesToSize(file.fileSize)}}
                         </div>
                         <div *ngIf="file && file.caption" class="fileSize">
                           {{file.caption}}
