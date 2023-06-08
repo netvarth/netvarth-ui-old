@@ -366,7 +366,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     // this.disable = true;
     if (this.small_device_display) {
       this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
-        width: '100%',
+       
         panelClass: ['popup-class'],
         disableClose: true,
         data: {
@@ -396,7 +396,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     }
     else {
       this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
-        width: '30%',
+      
         panelClass: ['popup-class'],
         disableClose: true,
         data: {
@@ -1252,7 +1252,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     if (this.small_device_display) {
 
       this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
-        width: '100%',
+     
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
@@ -1275,7 +1275,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     else {
 
       this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
-        width: '50%',
+       
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {

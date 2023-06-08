@@ -1,6 +1,10 @@
+
+
 <div class="mat-expansion-panel-content " *ngIf="isLoaded && showClinicalNotesDetails!=='true'"
   style="margin-top: 10px;">
-  <div class="w-dta">
+  <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="apiloading">
+  </app-common-innerloading-spinner>
+  <div class="w-dta" *ngIf="!apiloading">
     <div class="card">
       <div>
         <span class="table-heading"><b>Clinical Notes</b></span>

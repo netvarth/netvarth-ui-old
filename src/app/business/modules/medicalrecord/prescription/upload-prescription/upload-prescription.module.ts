@@ -12,6 +12,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { RouterModule, Routes } from "@angular/router";
 import { CapitalizeFirstPipeModule } from "../../../../../shared/pipes/capitalize.module";
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { LoadingSpinnerModule } from "../../../../../../../src/app/shared/modules/loading-spinner/loading-spinner.module";
 const routes: Routes = [
     { path: '', component: UploadPrescriptionComponent}
 ]
@@ -26,6 +27,7 @@ const routes: Routes = [
         ShareRxModule,
         ConfirmBoxModule,
         CapitalizeFirstPipeModule,
+        LoadingSpinnerModule,
         MatTooltipModule,
         [RouterModule.forChild(routes)],
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),

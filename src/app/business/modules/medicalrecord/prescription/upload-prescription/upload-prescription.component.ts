@@ -346,6 +346,7 @@ export class UploadPrescriptionComponent implements OnInit {
     });
   }
   filesSelected(event, type) {
+    this.apiloading = true;
     const input = event.target.files;
 
     let fileUploadtoS3 = [];

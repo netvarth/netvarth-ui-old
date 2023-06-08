@@ -330,7 +330,6 @@ export class MedicalrecordComponent implements OnInit {
 
       },
         error => {
-          // alert('getWaitlistDetails')
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
@@ -366,7 +365,6 @@ export class MedicalrecordComponent implements OnInit {
           this.medicalService.setPatientDetails(this.customerDetails);
         },
         error => {
-          // alert('getPatientDetails')
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
@@ -631,14 +629,12 @@ export class MedicalrecordComponent implements OnInit {
       else{
         this.location.back();
       }
-      // alert(type_from)
       this.medicalService.viewVisitDetails = false;
       this.viewVisitDetails = false;
       // console.log('this.medicalInfo',this.medicalInfo);
       // console.log('visitDetailsTableValue',this.visitDetailsTableValue)
     }
     else {
-      // alert(back_type)
       if (back_type === 'waitlist') {
         this.router.navigate(['provider', 'check-ins']);
       } else if (back_type === 'appt') {
@@ -722,7 +718,7 @@ export class MedicalrecordComponent implements OnInit {
     if (this.small_device_display) {
 
       this.uploadfiledialogRef = this.dialog.open(UploadPrescriptionComponent, {
-        width: '100%',
+       
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
@@ -742,7 +738,7 @@ export class MedicalrecordComponent implements OnInit {
     else {
 
       this.uploadfiledialogRef = this.dialog.open(UploadPrescriptionComponent, {
-        width: '50%',
+       
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
@@ -858,7 +854,6 @@ export class MedicalrecordComponent implements OnInit {
     this.visitDetailsTableValue = visitDetails;
     // this.selectedRowIndex = visitDetails.mrId;
     if (visitDetails.waitlist) {
-      // alert('1')
       // showHideActivityTYpe
       if (visitDetails.mrCreated) {
         this.showHideActivityTYpe = false;
@@ -882,7 +877,6 @@ export class MedicalrecordComponent implements OnInit {
 
       }
       else {
-        // alert('token')
         this.showHideActivityTYpe = true;
         this.showHidepreviousDetails = false;
         this.clinicalOuter = false;
@@ -891,7 +885,6 @@ export class MedicalrecordComponent implements OnInit {
       }
     }
     else if (visitDetails.appointmnet) {
-      // alert('2')
       if (visitDetails.mrCreated) {
         let mrId = 0;
         if (visitDetails.appointmnet.mrId) {
@@ -911,7 +904,6 @@ export class MedicalrecordComponent implements OnInit {
 
       }
       else {
-        // alert('appt')
         this.showHideActivityTYpe = true;
         this.showHidepreviousDetails = false;
         this.clinicalOuter = false;
@@ -923,7 +915,6 @@ export class MedicalrecordComponent implements OnInit {
 
     }
     else {
-      // alert('3')
       const mrId = visitDetails.mrId;
       const customerDetails = visitDetails.providerConsumer;
       // console.log('customerDetailFOLLOWUP::', this.customerDetails)
@@ -931,14 +922,11 @@ export class MedicalrecordComponent implements OnInit {
       const bookingId = 0;
       const bookingType = 'FOLLOWUP';
       if (visitDetails.mrCreated) {
-        // console.log('1st');
-        // alert('1stt::')
         this.medicalService.viewVisitDetails = true;
         this.viewVisitDetails = this.medicalService.viewVisitDetails
         this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription']);
       }
       else {
-        // console.log('2nd');
         this.showHideActivityTYpe = true;
         this.showHidepreviousDetails = false;
         this.clinicalOuter = false;
@@ -967,8 +955,6 @@ export class MedicalrecordComponent implements OnInit {
   addPrescriptionAndClinical(data, text) {
     // console.log('add');
     if (text === 'createPrescription') {
-      // alert('prescription')
-      // console.log('mrId',this.medicalRecordID)
       if (this.mrId === 0) {
         // if(this.calledForm==='appt'){
         //   let routerId='prescription';
@@ -978,7 +964,7 @@ export class MedicalrecordComponent implements OnInit {
         //   };
         //   this.router.navigate(['provider', 'customers',  this.patientId, 'FOLLOWUP', 0, 'medicalrecord', this.mrId,routerId],navigationExtras);
         // }
-        // alert('if1st prescription')
+       
         // const mRId=0;
         // const routerId='prescription';
         // this.router.navigate(['provider', 'customers', this.patientId, 'FOLLOWUP',0, 'medicalrecord', mRId,routerId])
@@ -988,7 +974,7 @@ export class MedicalrecordComponent implements OnInit {
         this.showHideActivityTYpe = false;
       }
       else {
-        // alert('2nd else prescription')
+       
         const mRId = 0;
         const routerId = 'prescription';
         this.router.navigate(['provider', 'customers', this.patientId, 'FOLLOWUP', 0, 'medicalrecord', mRId, routerId])
@@ -1002,7 +988,6 @@ export class MedicalrecordComponent implements OnInit {
 
     }
     else if (text === 'craeteClinicalnotes') {
-      // alert('clinical')
       if (this.mrId === 0) {
         this.showHidepreviousDetails = false;
         this.showHideAddPrescription = false;
@@ -1010,7 +995,6 @@ export class MedicalrecordComponent implements OnInit {
         this.showHideActivityTYpe = false;
       }
       else {
-        // alert(';2nd clicnical')
         const mRId = 0;
         const routerId = 'clinicalnotes';
         this.router.navigate(['provider', 'customers', this.patientId, 'FOLLOWUP', 0, 'medicalrecord', mRId, routerId])
@@ -1229,7 +1213,6 @@ export class MedicalrecordComponent implements OnInit {
             this.getMedicalRecordUsingId(this.mrId);
           },
             error => {
-              // alert('deleteFile')
               // this.reloadComponent()
               this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
