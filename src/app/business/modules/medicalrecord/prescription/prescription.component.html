@@ -153,9 +153,13 @@
                             <div class="fileName" *ngIf="file && file.fileName">
                               {{originalFilename(file.fileName)}}
                             </div>
-                            <div *ngIf="file && file.fileSize" class="fileSize">
-                              {{bytesToSize(file.fileSize)}}
+                            <div *ngIf="file && file.fileSize  && file.fileSize>=1" class="fileSize">
+                              {{getFileSize(file.fileSize)}} MB
                             </div>
+                            <div *ngIf="file && file.fileSize  && file.fileSize<1" class="fileSize">
+                              {{getFileSize(file.fileSize*1024)}} KB
+                            </div>
+                            
                           </div>
                         </div>
                         <div class="imageClas">
@@ -368,8 +372,12 @@
                       <div>
                         <div class="fileName" *ngIf="file && file.fileName">{{originalFilename(file.fileName)}}
                         </div>
-                        <div *ngIf="file && file.fileSize" class="fileSize" style="margin-top:3px">
-                          {{bytesToSize(file.fileSize)}}
+                    
+                        <div *ngIf="file && file.fileSize && file.fileSize>=1" class="fileSize" style="margin-top:3px">
+                          {{getFileSize(file.fileSize)}} MB
+                        </div>
+                        <div *ngIf="file  && file.fileSize && file.fileSize<1" class="fileSize" style="margin-top:3px">
+                          {{getFileSize(file.fileSize*1024)}} KB
                         </div>
                         <div *ngIf="file && file.caption" class="fileSize">
                           {{file.caption}}

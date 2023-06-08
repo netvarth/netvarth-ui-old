@@ -1551,6 +1551,9 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     var totalSizeMb: any = sizeInMB + 'KB';
     return totalSizeMb;
   }
+  getFileSize(fileSize) {
+    return Math.round(fileSize);
+  }
   deletePrescriptionFile(fileDetails, index) {
     console.log('fileDetails', fileDetails);
     fileDetails["action"] = "remove";
