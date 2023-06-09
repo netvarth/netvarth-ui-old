@@ -195,6 +195,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   ins: any;
   dur: any;
   manual_upload: any;
+  medicineLIst = [];
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -1536,6 +1537,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     this.api_error = '';
   }
   saveAndAddOther(form_data) {
+    
+    this.medicineLIst.push(form_data)
     this.med = form_data.medicine_name;
     this.fre = form_data.frequency;
     this.dos = form_data.dosage;

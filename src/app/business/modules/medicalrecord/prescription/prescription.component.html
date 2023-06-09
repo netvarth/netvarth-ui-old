@@ -212,10 +212,10 @@
                               <th data-title="Frequency">Frequency</th>
                               <th data-title="Instructions">Instructions</th>
                               <th data-title="Edit"></th>
-                              <th (click)="print('printableArea',manualSignInfo)" class="pointer-cursor"
+                              <!-- <th (click)="print('printableArea',manualSignInfo)" class="pointer-cursor"
                                 #tooltip="matTooltip" matTooltip="3" [matTooltipPosition]="'below'">
                                 <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
-                              </th>
+                              </th> -->
                               <th data-title="Delete"></th>
                             </tr>
                           </thead>
@@ -282,7 +282,7 @@
         </span>
         <span (click)="dialogImgmanualView()" class=" pointer-cursor" #tooltip="matTooltip"
           matTooltip="Download" [matTooltipPosition]="'below'">
-          <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
+          <img style="height:17px;width:17px" src="./assets/images/medicalReportIcon/download.png"/>
         </span>
         <!-- <span click)="dialogImgmanualView()" class=" pointer-cursor" #tooltip="matTooltip"
           matTooltip="Download" [matTooltipPosition]="'below'">
@@ -304,11 +304,11 @@
             </div>
             <div>Share</div>
           </button>
-          <button mat-menu-item class="gap" (click)="print('printableArea',manualSignInfo)">
+          <button mat-menu-item class="gap" (click)="dialogImgmanualView()">
             <div class="Share pointer-cursor">
-              <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
+              <img style="height:17px;width:17px" src="./assets/images/medicalReportIcon/download.png"/>
             </div>
-            <div>Print</div>
+            <div>Download</div>
           </button>
           <button mat-menu-item (click)="updateEditPrescription(drugList)" class="gap">
             <div class="Share pointer-cursor">
@@ -561,22 +561,22 @@
           </thead>
           <tbody>
             <tr>
-            <tr>
+            <tr *ngFor="let drug of medicineLIst; let i = index;">
               <td
                 style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;overflow-wrap: break-word;white-space: break-spaces;">
-                {{med}}</td>
+                {{drug.medicine_name}}</td>
               <td
                 style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;text-align: center;overflow-wrap: break-word;white-space: break-spaces;"
-                class="centeralign">{{fre}}</td>
+                class="centeralign">{{drug.duration}}</td>
               <td
                 style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;text-align: center;overflow-wrap: break-word;white-space: break-spaces;"
-                class="centeralign">{{dos}}</td>
+                class="centeralign">{{drug.dosage}}</td>
               <td
                 style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;text-align: center;overflow-wrap: break-word;white-space: break-spaces;"
-                class="centeralign">{{ins}}</td>
+                class="centeralign">{{drug.frequency}}</td>
               <td
                 style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;overflow-wrap: break-word;white-space: break-spaces;">
-                {{dur}}</td>
+                {{drug.instructions}}</td>
             </tr>
           </tbody>
         </table><br>
