@@ -194,6 +194,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   dos: any;
   ins: any;
   dur: any;
+  manual_upload: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -435,6 +436,11 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     this.provider_services.getDigitalSign(this.provider_user_Id)
       .subscribe((data: any) => {
         // console.log('digitalSign',data);
+        if(data.url){
+          this.signurl = data.url;
+         
+        }
+       
         this.manualSignInfo = data;
         this.digitalSign = true;
       },
@@ -922,31 +928,37 @@ export class PrescriptionComponent implements OnInit, OnChanges {
             // this.prescList = true;
             this.uploadFiles = data.mrVideoAudio;
             // console.log('this.uploadFiles',this.uploadFiles)
-          } 
+          }
           else {
             console.log(data['prescriptionsList'])
-            if(data['prescriptionAttachements'][0]){
-              this.uploadlist = data['prescriptionAttachements'];
-              console.log('this.uploadlist', this.uploadlist)
-              if (this.uploadlist[0].fileType === '.pdf') {
-                this.downloadText = 'Download';
+            if (data['prescriptionAttachements'][0]) {
+
+              if (data['prescriptionsList'] && data['prescriptionsList'][0]) {
+                this.manual_upload = data['prescriptionAttachements'][0].s3path
+                this.drugList = data['prescriptionsList'];
+
+                console.log(this.tempIndex);
+                this.addPrescription = true;
+                this.newRowIndex++;
+
+                if (this.afterEdit === 'afterUpdate') {
+                  this.addPrescription = true;
+                  const qparams = { 'prescription': 'prescription' };
+                  const navigationExtras: NavigationExtras = {
+                    queryParams: qparams
+                  };
+                  console.log('navigationExtras', navigationExtras);
+                }
+                else {
+                  this.drugList = data['prescriptionsList'];
+                  console.log('this.drugList:', this.drugList);
+                }
+                this.note = data['notes'];
+                this.getDigitalSign();
               }
               else {
-                this.downloadText = 'View';
-              }
-            }
-            else if (data['prescriptionsList'] && data['prescriptionsList'][0] && data['prescriptionsList'][0].keyName) {
-              this.uploadlist = data['prescriptionsList'];
-              // this.prescList = false;
-              this.image_list_popup = [];
-              if (this.uploadlist && this.uploadlist[0] && this.uploadlist[0].url) {
-                const imgobj = new Image(0,
-                  { // modal
-                    img: this.uploadlist[0].url,
-                    description: this.uploadlist[0].caption || ''
-                  });
-                this.image_list_popup.push(imgobj);
-                // console.log('this.uploadlist::',this.uploadlist)
+                this.uploadlist = data['prescriptionAttachements'];
+                console.log('this.uploadlist', this.uploadlist)
                 if (this.uploadlist[0].fileType === '.pdf') {
                   this.downloadText = 'Download';
                 }
@@ -955,54 +967,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
                 }
               }
 
-
-            
-          
-
-
-            } else {
-              this.drugList = data['prescriptionsList'];
-              // console.log('this.drugList:',this.drugList)
-              console.log(this.tempIndex);
-              this.addPrescription = true;
-              this.newRowIndex++;
-              // if(this.tempIndex >=0){
-              // this.drugList.splice(this.tempIndex, 1);
-              // }
-              if (this.afterEdit === 'afterUpdate') {
-                this.addPrescription = true;
-                const qparams = { 'prescription': 'prescription' };
-                const navigationExtras: NavigationExtras = {
-                  queryParams: qparams
-                };
-                console.log('navigationExtras', navigationExtras);
-              }
-              else {
-                this.drugList = data['prescriptionsList'];
-                console.log('this.drugList:', this.drugList);
-                // console.log('this.tempTextDelete',this.tempTextDelete)
-                // if (this.tempTextDelete === 'TempDelete') {
-               
-                // if (this.drugList && this.drugList.length < 2) {
-              
-                // // this.reloadComponent();
-                // // this.location.back()
-                // }
-                // else {
-              
-                // this.reloadComponent();
-                // }
-                // }
-                // else {
-               
-                // // this.reloadComponent()
-                // }
-              }
-
-              // this.prescList = false;
-              this.note = data['notes'];
-              this.getDigitalSign();
             }
+
             this.loading = false;
           }
         }
@@ -1813,6 +1779,9 @@ export class PrescriptionComponent implements OnInit, OnChanges {
         }
       }
     }
+  }
+  dialogImgmanualView(){
+    window.open(this.manual_upload);
   }
   downloadPdf(pdfUrl: string) {
     window.location.assign(pdfUrl);
