@@ -143,13 +143,16 @@ export class TeethQuestionComponent implements OnInit {
     });
     if (this.action === 'edit') {
       this.teeth_loading = true;
-      this.dental_homeservice.getTeethDetailsById(this.mrid, this.teethId).subscribe((data) => {
-        this.teethDetailsById = data;
-        
-        this.setTeethValues();
-        
-     
-      });
+      if(this.teethId){
+        this.dental_homeservice.getTeethDetailsById(this.mrid, this.teethId).subscribe((data) => {
+          this.teethDetailsById = data;
+          
+          this.setTeethValues();
+          
+       
+        });
+      }
+    
 
     }
     this.dental_homeservice.getBusinessProfile().subscribe((data) => {
