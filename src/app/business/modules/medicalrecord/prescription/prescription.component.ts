@@ -174,6 +174,26 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   bname: any;
   address: any;
   filesToUpload: any = [];
+  blogo: any;
+  customerDetail: any;
+  email_id = ''
+  countryCode;
+  countryCod;
+  phone = '';
+  phon = '';
+  chatId: any;
+  IsTelegramDisable = true;
+  signurl = '';
+  curDate = new Date();
+  accountType: any;
+  userbname: any;
+  userdata: any;
+   profimg_exists = false;
+  med: any;
+  fre: any;
+  dos: any;
+  ins: any;
+  dur: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -187,6 +207,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     private groupService: GroupStorageService,
     private location: Location,
     private fb: UntypedFormBuilder,
+    private shared_functions: SharedFunctions,
     public fed_service: FormMessageDisplayService,
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -231,6 +252,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     // this. onReSize()
   }
   ngOnInit() {
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.accountType = user.accountType;
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     this.mrId = parseInt(medicalrecordId, 0);
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];
@@ -256,6 +279,73 @@ export class PrescriptionComponent implements OnInit, OnChanges {
       this.afterEdit = 'afterUpdate';
     }
     this.getBussinessProfileApi()
+    this.getBusinessdetFromLocalstorage();
+    this.getPatientDetails(this.patientId);
+    if (this.accountType === 'BRANCH') {
+      this.getBusinessProfile();
+    }
+  }
+  getBusinessProfile() {
+    if (this.provider_user_Id) {
+      this.provider_services.getUserBussinessProfile(this.provider_user_Id)
+        .subscribe((data: any) => {
+          this.userdata = data;
+          this.userbname = this.userdata.businessName;
+        },
+        );
+    }
+  }
+  getBusinessdetFromLocalstorage() {
+    const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
+    if (bdetails && bdetails.logo) {
+          this.blogo = bdetails.logo;
+        } 
+        else {
+          this.blogo = '../../../assets/images/img-null.svg';
+        }
+  }
+  getPatientDetails(uid) {
+    const filter = { 'id-eq': uid };
+    this.provider_services.getCustomer(filter)
+      .subscribe(
+        (data: any) => {
+          const response = data;
+          // console.log(response);
+          this.customerDetail = response[0];
+          console.log('this.customerDetail',this.customerDetail)
+          // console.log(this.customerDetail)
+          if (this.customerDetail.email) {
+            this.email_id = this.customerDetail.email;
+          }
+          if (this.customerDetail.phoneNo) {
+            this.countryCode = this.customerDetail.countryCode;
+            this.phone = this.customerDetail.phoneNo;
+            this.phon = this.phone.replace(/\s/g, "");
+            if (this.countryCode.startsWith('+')) {
+              this.countryCod = this.countryCode.substring(1);
+            }
+            if (this.phon) {
+              this.provider_services.telegramChat(this.countryCod, this.phone)
+                .subscribe(
+                  data => {
+                    this.chatId = data;
+                    if (this.chatId === null) {
+                      this.IsTelegramDisable = true;
+                    }
+                    else {
+                      this.IsTelegramDisable = false;
+                    }
+
+                  },
+                  (error) => {
+
+                  }
+                );
+            }
+
+          }
+
+        });
   }
   getBussinessProfileApi() {
     this.provider_services.getBussinessProfile()
@@ -486,6 +576,11 @@ export class PrescriptionComponent implements OnInit, OnChanges {
         const printWindow = window.open('', '', params);
         const _this = this;
         let checkin_html = '';
+       if (this.blogo) {
+          checkin_html += '<div style="font-size:18px;font-weight:bold;padding-right:150px; margin-top:150px;">' + this.blogo;
+          checkin_html += '</div>'
+
+        }
         if (this.bname) {
           checkin_html += '<div style="font-size:18px;font-weight:bold;padding-right:150px; margin-top:150px;">' + this.bname;
           checkin_html += '</div>'
@@ -958,10 +1053,15 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   saveRx(result) {
+    let vwofrx;
+    if (document && document.getElementById('sharerxview')) {
+      vwofrx = document.getElementById('sharerxview');
+    }
     this.loading = true;
     let passdata = {
       "prescriptionsList": result,
-      "notes": this.note
+      "notes": this.note,
+      'html': vwofrx.innerHTML,
     }
     if (this.mrId) {
       console.log('passdata', passdata);
@@ -1010,6 +1110,11 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     this.router.navigate([currentUrl]);
   }
   addNote() {
+    
+    let vwofrx;
+    if (document && document.getElementById('sharerxview')) {
+      vwofrx = document.getElementById('sharerxview');
+    }
     const addnotedialogRef = this.dialog.open(AddNoteComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -1025,7 +1130,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
         this.loading = true;
         let passdata = {
           "prescriptionsList": this.drugList,
-          "notes": result1.message
+          "notes": result1.message,
+          'html': vwofrx.innerHTML,
         }
         this.provider_services.updateMRprescription(passdata, this.mrId).
           subscribe(res => {
@@ -1067,7 +1173,10 @@ export class PrescriptionComponent implements OnInit, OnChanges {
 
   }
   saveClose(value) {
-
+    let vwofrx;
+    if (document && document.getElementById('sharerxview')) {
+      vwofrx = document.getElementById('sharerxview');
+    }
     this.saveTemplateRef = this.dialog.open(SaveTemplateComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -1101,7 +1210,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
             // this.snackbarService.openSnackBar('Template Data Saved Succesfully');
             let passdata = {
               "prescriptionsList": this.drugList,
-              "notes": this.note
+              "notes": this.note,
+              'html': vwofrx.innerHTML,
             }
             this.medicalrecord_service.createMR('prescriptions', passdata)
               .then((data: number) => {
@@ -1128,7 +1238,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
           console.log('this.drugList', this.drugList)
           let passdata = {
             "prescriptionsList": this.drugList,
-            "notes": this.note
+            "notes": this.note,
+            'html': vwofrx.innerHTML,
           }
           if (this.drugList === undefined) {
             this.api_error = '';
@@ -1140,7 +1251,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
               this.drugList.push(value);
               let passdata = {
                 "prescriptionsList": this.drugList,
-                "notes": this.note
+                "notes": this.note,
+                'html': vwofrx.innerHTML,
               }
               this.api_loading = true;
               this.medicalrecord_service.createMR('prescriptions', passdata)
@@ -1168,7 +1280,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
                 this.drugList.push(value);
                 let passdata = {
                   "prescriptionsList": this.drugList,
-                  "notes": this.note
+                  "notes": this.note,
+                  'html': vwofrx.innerHTML,
                 }
                 this.provider_services.updateMRprescription(passdata, this.mrId).subscribe((res) => {
                   this.router.navigate(['provider', 'customers', this.patientId, this.bookingType,
@@ -1212,7 +1325,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
             }
             let passdata = {
               "prescriptionsList": this.drugList,
-              "notes": this.note
+              "notes": this.note,
+              'html': vwofrx.innerHTML,
             }
             this.api_loading = true;
             this.medicalrecord_service.createMR('prescriptions', passdata)
@@ -1450,6 +1564,11 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     this.api_error = '';
   }
   saveAndAddOther(form_data) {
+    this.med = form_data.medicine_name;
+    this.fre = form_data.frequency;
+    this.dos = form_data.dosage;
+    this.ins = form_data.instructions;
+    this.dur = form_data.duration;
     // this.api_loading=true;
     console.log("this.afterEdit", this.afterEdit);
     this.api_error = '';
@@ -1739,5 +1858,39 @@ export class PrescriptionComponent implements OnInit, OnChanges {
       }
 
     });
+  }
+  signurlFile(url) {
+    // console.log('url',url)
+    if (url) {
+      let logourl = '';
+      if (url) {
+        logourl = url
+      }
+      return this.shared_functions.showlogoicon(logourl);
+    }
+  }
+  showdigitalsign(signurl?) {
+    if (signurl) {
+      let logourl = '';
+      if (signurl) {
+        logourl = (signurl) ? signurl : '';
+      }
+      return this.shared_functions.showlogoicon(logourl);
+    }
+    let logourl = '';
+    if (this.signurl) {
+      logourl = (this.signurl) ? this.signurl : '';
+    }
+    return this.shared_functions.showlogoicon(logourl);
+
+  }
+  showimg() {
+    let logourl = '';
+    this.profimg_exists = false;
+    if (this.blogo[0]) {
+      this.profimg_exists = true;
+      logourl = (this.blogo[0].url) ? this.blogo[0].url : '';
+    }
+    return this.shared_functions.showlogoicon(logourl);
   }
 }
