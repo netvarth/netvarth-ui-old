@@ -9,6 +9,9 @@ import { ViewChild } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedServices } from '../../../../shared/services/shared-services';
 // import { } from 'googlemaps';
+import { Loader } from "@googlemaps/js-api-loader"
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+
 
 @Component({
   selector: 'app-google-map',
@@ -53,8 +56,7 @@ export class GoogleMapComponent implements OnInit {
   ngOnInit() {
     // if ((this.data.passloc.lat === '' && this.data.passloc.lon === '') || (this.data.passloc.lat === undefined && this.data.passloc.lon === undefined)) {
     if (this.data.latitude && this.data.longitude) {
-      this.setLocationtoMap();
-      this.getAddressonDragorClick('edit');
+      this.setLocationtoMap().then(() => { this.getAddressonDragorClick('edit') });
     } else {
       this.getCurrentLocation();
     }
@@ -80,8 +82,13 @@ export class GoogleMapComponent implements OnInit {
 
       }
     };
-    this.marker.addListener('dragend', getLatLng.bind(this));
-    this.map.addListener('click', getLatLng.bind(this));
+    // this.getCurrentLocation('userAction');
+    if (this.marker) {
+      this.marker.addListener('dragend', getLatLng.bind(this));
+    }
+    if (this.map) {
+      this.map.addListener('click', getLatLng.bind(this));
+    }
     const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
     });
     // this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(this.searchElementRef.nativeElement);
@@ -173,33 +180,43 @@ export class GoogleMapComponent implements OnInit {
       navigator.geolocation.getCurrentPosition(pos => {
         this.lat_lng.longitude = +pos.coords.longitude;
         this.lat_lng.latitude = +pos.coords.latitude;
-        this.setLocationtoMap();
-        this.getAddressonDragorClick();
+        this.setLocationtoMap().then(() => { this.getAddressonDragorClick(); });
       },
         error => {
           if (action) {
             this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
           } else {
-            this.setLocationtoMap();
-            this.getAddressonDragorClick();
+            this.setLocationtoMap().then(() => { this.getAddressonDragorClick(); });
           }
         });
     }
   }
   setLocationtoMap() {
-    const mapProp = {
-      center: new google.maps.LatLng(this.lat_lng.latitude, this.lat_lng.longitude),
-      zoom: projectConstants.MAP_ZOOM,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      mapTypeControl: false
-    };
-    const center = { lat: this.lat_lng.latitude, lng: this.lat_lng.longitude };
-    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-    this.marker = new google.maps.Marker({
-      position: center,
-      map: this.map,
-      draggable: true
-    });
+    return new Promise((resolve, reject) => {
+      const loader = new Loader({
+        apiKey: projectConstantsLocal.GOOGLEAPIKEY,
+        version: "weekly",
+        libraries: ["places"]
+      });
+
+      loader.load().then(() => {
+        const mapProp = {
+          center: new google.maps.LatLng(this.lat_lng.latitude, this.lat_lng.longitude),
+          zoom: projectConstants.MAP_ZOOM,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          mapTypeControl: false
+        };
+        const center = { lat: this.lat_lng.latitude, lng: this.lat_lng.longitude };
+        this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+        this.marker = new google.maps.Marker({
+          position: center,
+          map: this.map,
+          draggable: true
+        });
+        resolve(true);
+      });
+    })
+
   }
   getAddressfromLatLong() {
     this.shared_service.getAddressfromLatLong(this.lat_lng).subscribe(data => {
