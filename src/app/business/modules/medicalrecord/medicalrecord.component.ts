@@ -466,7 +466,7 @@ export class MedicalrecordComponent implements OnInit {
     };
     if (this.mrId === 0) {
 
-      this.medicalService.createMR('consultationMode', event).then(res => {
+      this.medicalService.createMR('consultationMode', event , null).then(res => {
         this.getMedicalRecordUsingId(res);
 
       },

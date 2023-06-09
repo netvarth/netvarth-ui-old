@@ -76,11 +76,13 @@ export class MedicalrecordService {
   getDepartmentName() {
     return this.department;
   }
-  createMR(key, value) {
+  createMR(key, value, innerHTML) {
     if (key !== 'clinicalNotes') {
       delete this.mr_payload_new['clinicalNotes'];
+      this.mr_payload_new['html'] = innerHTML;
     } if (key !== 'prescriptions') {
       delete this.mr_payload_new['prescriptions'];
+      this.mr_payload_new['html'] = innerHTML;
     }
 
     let mrObject = {};

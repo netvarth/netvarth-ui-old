@@ -299,6 +299,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (bdetails && bdetails.logo) {
           this.blogo = bdetails.logo;
+
         } 
         else {
           this.blogo = '../../../assets/images/img-null.svg';
@@ -1058,11 +1059,12 @@ export class PrescriptionComponent implements OnInit, OnChanges {
       vwofrx = document.getElementById('sharerxview');
     }
     this.loading = true;
+    
     let passdata = {
       "prescriptionsList": result,
       "notes": this.note,
-      'html': vwofrx.innerHTML,
     }
+    
     if (this.mrId) {
       console.log('passdata', passdata);
       this.api_loading = true;
@@ -1086,7 +1088,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     else {
       console.log('createMR', passdata);
       this.api_loading = true;
-      this.medicalrecord_service.createMR('prescriptions', passdata)
+      this.medicalrecord_service.createMR('prescriptions', passdata, vwofrx.innerHTML)
         .then((data: number) => {
           // console.log('datacreateMR',data)
           this.mrId = data;
@@ -1111,10 +1113,10 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
   addNote() {
     
-    let vwofrx;
-    if (document && document.getElementById('sharerxview')) {
-      vwofrx = document.getElementById('sharerxview');
-    }
+    // let vwofrx;
+    // if (document && document.getElementById('sharerxview')) {
+    //   vwofrx = document.getElementById('sharerxview');
+    // }
     const addnotedialogRef = this.dialog.open(AddNoteComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -1131,8 +1133,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
         let passdata = {
           "prescriptionsList": this.drugList,
           "notes": result1.message,
-          'html': vwofrx.innerHTML,
         }
+      
         this.provider_services.updateMRprescription(passdata, this.mrId).
           subscribe(res => {
             this.snackbarService.openSnackBar('Prescription update Successfully');
@@ -1211,9 +1213,9 @@ export class PrescriptionComponent implements OnInit, OnChanges {
             let passdata = {
               "prescriptionsList": this.drugList,
               "notes": this.note,
-              'html': vwofrx.innerHTML,
             }
-            this.medicalrecord_service.createMR('prescriptions', passdata)
+           
+            this.medicalrecord_service.createMR('prescriptions', passdata, vwofrx.innerHTML)
               .then((data: number) => {
                 this.mrId = data;
                 this.snackbarService.openSnackBar('Template and Prescription Saved Successfully');
@@ -1239,8 +1241,9 @@ export class PrescriptionComponent implements OnInit, OnChanges {
           let passdata = {
             "prescriptionsList": this.drugList,
             "notes": this.note,
-            'html': vwofrx.innerHTML,
+            
           }
+         
           if (this.drugList === undefined) {
             this.api_error = '';
             if (value.medicine_name === '' && value.frequency === '' && value.dosage === '' && value.instructions === '' && value.duration === '') {
@@ -1252,10 +1255,11 @@ export class PrescriptionComponent implements OnInit, OnChanges {
               let passdata = {
                 "prescriptionsList": this.drugList,
                 "notes": this.note,
-                'html': vwofrx.innerHTML,
+              
               }
+            
               this.api_loading = true;
-              this.medicalrecord_service.createMR('prescriptions', passdata)
+              this.medicalrecord_service.createMR('prescriptions', passdata, vwofrx.innerHTML)
                 .then((data: number) => {
                   this.mrId = data;
                   this.snackbarService.openSnackBar('Prescription Saved Successfully');
@@ -1281,8 +1285,9 @@ export class PrescriptionComponent implements OnInit, OnChanges {
                 let passdata = {
                   "prescriptionsList": this.drugList,
                   "notes": this.note,
-                  'html': vwofrx.innerHTML,
+                 
                 }
+               
                 this.provider_services.updateMRprescription(passdata, this.mrId).subscribe((res) => {
                   this.router.navigate(['provider', 'customers', this.patientId, this.bookingType,
                     this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
@@ -1326,10 +1331,11 @@ export class PrescriptionComponent implements OnInit, OnChanges {
             let passdata = {
               "prescriptionsList": this.drugList,
               "notes": this.note,
-              'html': vwofrx.innerHTML,
+             
             }
+           
             this.api_loading = true;
-            this.medicalrecord_service.createMR('prescriptions', passdata)
+            this.medicalrecord_service.createMR('prescriptions', passdata, vwofrx.innerHTML)
               .then((data: number) => {
                 // console.log('datacreateMR',data)
                 this.mrId = data;

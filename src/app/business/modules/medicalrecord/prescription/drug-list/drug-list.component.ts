@@ -271,7 +271,7 @@ export class DrugListComponent implements OnInit {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     } else {
-      this.medicalrecord_service.createMR('prescriptions', passdata)
+      this.medicalrecord_service.createMR('prescriptions', passdata, null)
         .then((data: number) => {
           this.mrId = data;
 

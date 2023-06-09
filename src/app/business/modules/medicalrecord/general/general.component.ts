@@ -102,7 +102,7 @@ export class GeneralComponent implements OnInit {
     };
     if (this.mrId === 0) {
       console.log("Entered into medical record")
-      this.medicalrecordService.createMR('clinicalNotes', payloadObject).then(res => {
+      this.medicalrecordService.createMR('clinicalNotes', payloadObject , null).then(res => {
         this.mrId = res;
         this.snackbarService.openSnackBar('Medical Record Created Successfully');
         this.dialogref.close(this.mrId)

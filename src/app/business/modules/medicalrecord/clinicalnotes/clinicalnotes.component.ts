@@ -111,7 +111,7 @@ selectedFiles = {
   filteredComplaints: Observable<string[]>;
 
 
-  clinicalNotesTypeSymptoms: string[];
+  clinicalNotesTypeSymptoms: any = [];
   clinicalNotesTypeObservations: string[];
   clinicalNotesNotes: string[];
   clinicalNotesAllergies: string[];
@@ -119,7 +119,9 @@ selectedFiles = {
   clinicalNotesComplaints: string[];
   clinicalNotesTypeDiagnosis: string[];
   apiloading: any = false;
-  
+
+  clinicalNotesTypeSymptoms1: any;
+
   @ViewChild('symptomsInput') symptomsInput: ElementRef<HTMLInputElement>;
   @ViewChild('observationsInput') observationsInput: ElementRef<HTMLInputElement>;
   @ViewChild('diagnosisInput') diagnosisInput: ElementRef<HTMLInputElement>;
@@ -136,10 +138,13 @@ selectedFiles = {
   Vaccination: any;
 
   addSymptoms(event: MatChipInputEvent): void {
+    // alert('1')
     const value = (event.value || '').trim();
+    console.log(value);
     // Add our fruit
     if (value) {
-      this.clinicalNotesTypeSymptoms.push(value);
+      console.log(value);
+      // this.clinicalNotesTypeSymptoms.push(value);
       this.sign = false;
       console.log(this.clinicalNotesTypeSymptoms);
     }
@@ -148,6 +153,7 @@ selectedFiles = {
     this.symptomsCtrl.setValue(null);
   }
   addObservations(event: MatChipInputEvent): void {
+    // alert('2')
     const value = (event.value || '').trim();
     // Add our fruit
     if (value) {
@@ -162,6 +168,7 @@ selectedFiles = {
 
 
   addDiagnosis(event: MatChipInputEvent): void {
+    // alert("3")
     const value = (event.value || '').trim();
     // Add our fruit
     if (value) {
@@ -279,6 +286,9 @@ selectedFiles = {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
+    console.log(this.clinicalNotesTypeSymptoms);
+    console.log(event.option.viewValue)
+    // alert("fffff")
     this.clinicalNotesTypeSymptoms.push(event.option.viewValue);
     this.symptomsInput.nativeElement.value = '';
     this.symptomsCtrl.setValue(null);
@@ -422,7 +432,7 @@ selectedFiles = {
         this.clinical_constant[i].value = '';
       }
       this.clinicalNotes = this.clinical_constant;
-
+// alert(this.clinicalNotes)
 
     } else if (this.mrId !== 0) {
       for (let i = 0; i < this.clinical_constant.length; i++) {
@@ -578,7 +588,8 @@ selectedFiles = {
   handleClinicalNotes(data, type) {
   }
   saveClinicalNotes(symtopData, observationData, DiagnosisData, NotesData, AllergiesData, ComplaintsData, VaccinationData) {
-   
+   console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    console.log(symtopData.toString())
       this.api_loading = true;
      
     let symptoms=[];
@@ -621,7 +632,7 @@ selectedFiles = {
       payload = [
         {
           'type': 'Symptoms',
-          'clinicalNotes': symtopData
+          'clinicalNotes': symtopData.toString()
         },
         {
           'type': 'Observations',
@@ -651,7 +662,7 @@ selectedFiles = {
 if(symptoms.length>0){
   let newData= {
     'type': 'Symptoms',
-    'clinicalNotes': symtopData,
+    'clinicalNotes': symtopData.toString(),
     'attachments':symptoms
   }
   payload.splice(payload.findIndex(e => e.type === "Symptoms"),1);
@@ -741,7 +752,7 @@ if(vaccination.length>0){
       }
       else if (this.medicalInfo === undefined && this.mrId === 0) {
       
-        this.medicalrecordService.createMR('clinicalNotes', payload).then((res: any) => {
+        this.medicalrecordService.createMR('clinicalNotes', payload, null).then((res: any) => {
           this.mrId = res;
           console.log('this.mrId::', this.mrId)
           this.snackbarService.openSnackBar('Clinical Notes Created Successfully');
@@ -798,7 +809,7 @@ if(vaccination.length>0){
     payload = [
       {
         'type': 'Symptoms',
-        'clinicalNotes': symtopData
+        'clinicalNotes': symtopData.toString()
       },
       {
         'type': 'Observations',
@@ -828,7 +839,7 @@ if(vaccination.length>0){
     if(symptoms.length>0){
       let newData= {
         'type': 'Symptoms',
-        'clinicalNotes': symtopData,
+        'clinicalNotes': symtopData.toString(),
         'attachments':symptoms
       }
       payload.splice(payload.findIndex(e => e.type === "Symptoms"),1);
