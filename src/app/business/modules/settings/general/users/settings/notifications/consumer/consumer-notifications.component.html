@@ -290,6 +290,9 @@
                           <mat-checkbox [checked]="firstAPPTNotificationSettings.pushNotification"
                             (change)="showSubmit('FIRST_APPT', 'pushNotification', $event)" class="mgn-rt-20">
                             Via App</mat-checkbox>
+                            <mat-checkbox [checked]="firstAPPTNotificationSettings.whatsApp"
+                              (change)="showSubmit('FIRST_APPT', 'whatsApp', $event)" class="mgn-rt-20">
+                              Whatsapp</mat-checkbox>
                           <span *ngIf="showButton['FIRST_APPT'] && !small_device_display"
                             (click)="changeNotificationSettings('FIRST_APPT')" class="notify-ok-btn">OK</span>
                           <div class="mgn-up-10" *ngIf="showButton['FIRST_APPT'] && small_device_display">
@@ -354,6 +357,9 @@
                           <mat-checkbox [checked]="secondAPPTNotificationSettings.pushNotification"
                             (change)="showSubmit('SECOND_APPT', 'pushNotification', $event)" class="mgn-rt-20">
                             Via App</mat-checkbox>
+                            <mat-checkbox [checked]="secondAPPTNotificationSettings.whatsApp" (change)="showSubmit('SECOND_APPT', 'whatsApp', $event)"
+                              class="mgn-rt-20">
+                              Whatsapp</mat-checkbox>
                           <span *ngIf="showButton['SECOND_APPT'] && !small_device_display"
                             (click)="changeNotificationSettings('SECOND_APPT')" class="notify-ok-btn">OK</span>
                           <div class="mgn-up-10" *ngIf="showButton['SECOND_APPT'] && small_device_display">
@@ -417,6 +423,9 @@
                           <mat-checkbox [checked]="thirdAPPTNotificationSettings.pushNotification"
                             (change)="showSubmit('THIRD_APPT', 'pushNotification', $event)" class="mgn-rt-20">
                             Via App</mat-checkbox>
+                            <mat-checkbox [checked]="thirdAPPTNotificationSettings.whatsApp" (change)="showSubmit('THIRD_APPT', 'whatsApp', $event)"
+                              class="mgn-rt-20">
+                              Whatsapp</mat-checkbox>
                           <span *ngIf="showButton['THIRD_APPT'] && !small_device_display"
                             (click)="changeNotificationSettings('THIRD_APPT')" class="notify-ok-btn">OK</span>
                           <div class="mgn-up-10" *ngIf="showButton['THIRD_APPT'] && small_device_display">
@@ -481,6 +490,9 @@
                           <mat-checkbox [checked]="fourthAPPTNotificationSettings.pushNotification"
                             (change)="showSubmit('FOURTH_APPT', 'pushNotification', $event)" class="mgn-rt-20">
                             Via App</mat-checkbox>
+                            <mat-checkbox [checked]="fourthAPPTNotificationSettings.whatsApp" (change)="showSubmit('FOURTH_APPT', 'whatsApp', $event)"
+                              class="mgn-rt-20">
+                              Whatsapp</mat-checkbox>
                           <span *ngIf="showButton['FOURTH_APPT'] && !small_device_display"
                             (click)="changeNotificationSettings('FOURTH_APPT')" class="notify-ok-btn">OK</span>
                           <div class="mgn-up-10" *ngIf="showButton['FOURTH_APPT'] && small_device_display">
