@@ -580,7 +580,6 @@ export class MedicalrecordComponent implements OnInit {
       data: {
         patientId: this.patientId,
         customerDetail: this.customerDetails
-
       }
     });
     this.selectPrescriptiondialogRef.afterClosed().subscribe(result => {
@@ -718,7 +717,7 @@ export class MedicalrecordComponent implements OnInit {
     if (this.small_device_display) {
 
       this.uploadfiledialogRef = this.dialog.open(UploadPrescriptionComponent, {
-       
+
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
@@ -738,7 +737,7 @@ export class MedicalrecordComponent implements OnInit {
     else {
 
       this.uploadfiledialogRef = this.dialog.open(UploadPrescriptionComponent, {
-       
+
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
@@ -964,7 +963,7 @@ export class MedicalrecordComponent implements OnInit {
         //   };
         //   this.router.navigate(['provider', 'customers',  this.patientId, 'FOLLOWUP', 0, 'medicalrecord', this.mrId,routerId],navigationExtras);
         // }
-       
+
         // const mRId=0;
         // const routerId='prescription';
         // this.router.navigate(['provider', 'customers', this.patientId, 'FOLLOWUP',0, 'medicalrecord', mRId,routerId])
@@ -974,7 +973,7 @@ export class MedicalrecordComponent implements OnInit {
         this.showHideActivityTYpe = false;
       }
       else {
-       
+
         const mRId = 0;
         const routerId = 'prescription';
         this.router.navigate(['provider', 'customers', this.patientId, 'FOLLOWUP', 0, 'medicalrecord', mRId, routerId])

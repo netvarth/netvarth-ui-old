@@ -61,7 +61,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     caption: []
   };
   uploadlist: any = [];
-  downloadText: any;
+  downloadText: any = "Download";
   loading = true;
   dateFormatSp = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   disable = false;
@@ -289,6 +289,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
       this.getBusinessProfile();
     }
     this.getDigitalSign().then(() => { });;
+    this.onReSize();
   }
   getBusinessProfile() {
     if (this.provider_user_Id) {
@@ -936,10 +937,10 @@ export class PrescriptionComponent implements OnInit, OnChanges {
           else {
             console.log(data['prescriptionsList'])
             if (data['prescriptionAttachements'][0]) {
-
               if (data['prescriptionsList'] && data['prescriptionsList'][0]) {
                 this.manual_upload = data['prescriptionAttachements'][0].s3path
                 this.drugList = data['prescriptionsList'];
+                console.log("this.afterEdit", this.afterEdit)
 
                 console.log(this.tempIndex);
                 this.addPrescription = true;
@@ -1190,7 +1191,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
         if (document && document.getElementById('sharerxview')) {
           vwofrx = document.getElementById('sharerxview');
         }
-        console.log("vwofrx", vwofrx);
+        console.log("medicineLIst", this.medicineLIst);
         if (data && data.type == 'close') {
           this.loading = false;
         }
