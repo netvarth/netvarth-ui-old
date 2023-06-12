@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { UntypedFormBuilder, Validators, UntypedFormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../services/provider-services.service';
@@ -12,12 +11,6 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { AddproviderAddonComponent } from '../../../add-provider-addons/add-provider-addons.component';
-import { UploadDigitalSignatureComponent } from '../upload-digital-signature/upload-digital-signature.component';
-import { UploadSignatureComponent } from '../upload-digital-signature/uploadsignature/upload-signature.component';
-import { ManualSignatureComponent } from '../upload-digital-signature/manualsignature/manual-signature.component';
-import { ImagesviewComponent } from '../imagesview/imagesview.component';
-import { ConfirmBoxComponent } from '../../../../shared/confirm-box/confirm-box.component';
-// import { Router } from '@angular/router';
 
 
 
@@ -76,7 +69,6 @@ export class ShareRxComponent implements OnInit {
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   drugList: any = [];
   blogo: any = [];
-  profimg_exists = false;
   cacheavoider = '';
   signurl = '';
   imagedetails: any;
@@ -131,7 +123,6 @@ export class ShareRxComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
-    private shared_functions: SharedFunctions,
     private fb: UntypedFormBuilder,
     public provider_services: ProviderServices,
     private provider_servicesobj: ProviderServices,
@@ -188,6 +179,10 @@ export class ShareRxComponent implements OnInit {
     // window.oncontextmenu = function() {return false;} // for disable right click
   }
 
+
+
+
+
   @HostListener('window:resize', ['$event'])
   onReSize() {
     if (window && window.innerWidth) {
@@ -221,7 +216,7 @@ export class ShareRxComponent implements OnInit {
           const response = data;
           // console.log(response);
           this.customerDetail = response[0];
-          console.log('this.customerDetail',this.customerDetail)
+          console.log('this.customerDetail', this.customerDetail)
           // console.log(this.customerDetail)
           if (this.customerDetail.email) {
             this.email_id = this.customerDetail.email;
@@ -438,7 +433,7 @@ export class ShareRxComponent implements OnInit {
         if (this.data.file.type === '.pdf') {
           passData = {
             'message': this.amForm.controls.message.value,
-            // 'html': sahrePdfVia.innerHTML, 
+            // 'html': sahrePdfVia.innerHTML,
             'medium': {
               'email': this.email,
               'sms': this.sms,
@@ -475,7 +470,7 @@ export class ShareRxComponent implements OnInit {
     }
   }
   onUserSelect(event) {
-  console.log(event)
+    console.log(event)
     this.resetApiErrors();
     this.customid = '';
     if (event.value !== 0) {
@@ -493,18 +488,16 @@ export class ShareRxComponent implements OnInit {
     if (this.mrId) {
       this.provider_services.getMRprescription(this.mrId)
         .subscribe((data) => {
-          console.log('datagetMRprescription',data)
-          if(data['prescriptionAttachements'][0]){
+          console.log('datagetMRprescription', data)
+          if (data['prescriptionAttachements'][0]) {
             this.mrPrescriptionDetails = data['prescriptionAttachements'];
             this.signature_loading = false;
-              this.getDigitalSign();
           }
-          else if(data['prescriptionsList']){
+          else if (data['prescriptionsList']) {
             this.mrPrescriptionDetails = data['prescriptionsList'];
             if (Object.keys(data).length !== 0 && data.constructor === Object) {
               if (data['prescriptionsList'] && data['prescriptionsList'][0].keyName) {
                 this.signature_loading = false;
-                this.getDigitalSign();
               } else {
                 // if(this.data.length=== data['prescriptionsList'].length){
                 //   this.drugList = data['prescriptionsList'];
@@ -515,250 +508,20 @@ export class ShareRxComponent implements OnInit {
                 this.drugList = data['prescriptionsList'];
                 this.note = data['notes'];
                 this.signature_loading = false;
-                this.getDigitalSign();
               }
-              this.getProviderLogo();
             }
           }
-         
+
         },
           error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
   }
-  getProviderLogo() {
-    this.provider_services.getProviderLogo()
-      .subscribe(
-        data => {
-          this.blogo = data;
-        },
-        () => {
-        }
-      );
-  }
-  getDigitalSign() {
-    if (this.provider_user_Id) {
-      this.provider_services.getDigitalSign(this.provider_user_Id)
-        .subscribe((data: any) => {
-          this.imagedetails = data;
-          // console.log('imagedetails:::',this.imagedetails)
-          this.signurl = this.imagedetails.url;
-          this.digitalSign = true;
-          if (data && data !== null) {
-            this.selectedMessage.files.push(data);
-          }
-        },
-          error => {
-            this.digitalSign = false;
-          });
-    }
-  }
-  signurlFile(url) {
-    // console.log('url',url)
-    if (url) {
-      let logourl = '';
-      if (url) {
-        logourl = url
-      }
-      return this.shared_functions.showlogoicon(logourl);
-    }
-  }
-  uploadSign() {
-    const uploadsignRef = this.dialog.open(UploadDigitalSignatureComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        mrid: this.mrId,
-        patientid: this.patientId,
-        bookingid: this.bookingId,
-        bookingtype: this.bookingType
-      }
-    });
-    uploadsignRef.afterClosed().subscribe(() => {
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-        this.ngOnInit();
-      }, 100);
-    }
-    );
-  }
-  filesSelected(event) {
-    this.signUploading = true;
-    const input = event.target.files;
-    if (input) {
-      for (const file of input) {
-        if (projectConstantsLocal.IMAGE_FORMATS.indexOf(file.type) === -1) {
-          this.signUploading = false;
-          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        } else if (file.size > projectConstantsLocal.IMAGE_MAX_SIZE) {
-          this.signUploading = false;
-          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
-        } else {
-          this.selectedMessage.files.push(file);
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.selectedMessage.base64.push(e.target['result']);
-          };
-          reader.readAsDataURL(file);
-          this.saveDigitalSignImages();
-        }
-      }
-    }
-  }
-  saveDigitalSignImages() {
-    const submit_data: FormData = new FormData();
-    const propertiesDetob = {};
-    let i = 0;
-    for (const pic of this.selectedMessage.files) {
-      submit_data.append('files', pic, pic['name']);
-      const properties = {
-        'caption': this.selectedMessage.caption[i] || ''
-      };
-      propertiesDetob[i] = properties;
-      i++;
-    }
-    const propertiesDet = {
-      'propertiesMap': propertiesDetob
-    };
-    const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-    submit_data.append('properties', blobPropdata);
-    if (this.provider_user_Id) {
-      this.uploadMrDigitalsign(this.provider_user_Id, submit_data);
-    }
-  }
-  uploadMrDigitalsign(id, submit_data) {
-    this.provider_services.uploadMrDigitalsign(id, submit_data)
-      .subscribe((data: any) => {
-        console.log('data', data);
-        this.selectedMessage.files = []
-        this.selectedMessage.files.push(data);
-        this.signUploading = false;
-        // this.snackbarService.openSnackBar('Digital sign uploaded successfully');
-        const error: string = 'Digital sign uploaded successfully'
-        this.snackbarService.openSnackBar((error));
-        this.digitalSign = true;
-        // this.selectedMessage.files.push(data)
-        // this.dialog.closeAll()
-        // this.uploadsignatureRef.close()
-        // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
-      },
-        error => {
-          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        });
-  }
-  uploadSignature() {
-    const uploadsignatureRef = this.dialog.open(UploadSignatureComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        mrid: this.mrId,
-        patientid: this.patientId,
-        bookingid: this.bookingId,
-        bookingtype: this.bookingType,
-        providerid: this.provider_user_Id
-      }
-    });
-    uploadsignatureRef.afterClosed().subscribe(() => {
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-        this.ngOnInit();
-      }, 100);
-    }
-    );
-  }
-  manualSignature() {
-    const height: any = this.ScreenHeight;
-    const uploadmanualsignatureRef = this.dialog.open(ManualSignatureComponent, {
-      width: this.screenWidth,
-      height: height,//this.ScreenHeight,
-      panelClass: ['popup-class'],
-      disableClose: true,
-      data: {
-        mrid: this.mrId,
-        patientid: this.patientId,
-        bookingid: this.bookingId,
-        bookingtype: this.bookingType,
-        providerid: this.provider_user_Id
-      }
-    });
-    uploadmanualsignatureRef.afterClosed().subscribe((res) => {
-      this.loading = true;
-      // console.log(res)
-      setTimeout(() => {
-        this.loading = false;
-        this.getMrprescription();
-        // this.ngOnInit();
-      }, 100);
-    }
-    );
-  }
-  showimgPopup(file) {
-    file.title = 'Your digital signature';
-    const signatureviewdialogRef = this.dialog.open(ImagesviewComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: file,
-    });
-    signatureviewdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-      }
-    });
-  }
-  deleteTempImagefrmdb(img, index) {
-    const removedsigndialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'message': 'Do you really want to remove the digital signature?',
-        'type': 'digitalSignature'
-      }
-    });
-    removedsigndialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.provider_services.deleteUplodedsign(img.keyName, this.provider_user_Id)
-          .subscribe((data) => {
-            this.selectedMessage.files.splice(index, 1);
-            this.getDigitalSign();
-            const error = 'Digital signature removed successfully'
-            this.snackbarService.openSnackBar(error);
-          },
-            error => {
-              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-            });
-      }
-    });
-  }
-  showdigitalsign(signurl?) {
-    if (signurl) {
-      let logourl = '';
-      if (signurl) {
-        logourl = (signurl) ? signurl : '';
-      }
-      return this.shared_functions.showlogoicon(logourl);
-    }
-    let logourl = '';
-    if (this.signurl) {
-      logourl = (this.signurl) ? this.signurl : '';
-    }
-    return this.shared_functions.showlogoicon(logourl);
 
-  }
-  showimg() {
-    let logourl = '';
-    this.profimg_exists = false;
-    if (this.blogo[0]) {
-      this.profimg_exists = true;
-      logourl = (this.blogo[0].url) ? this.blogo[0].url : '';
-    }
-    return this.shared_functions.showlogoicon(logourl);
-  }
+
+
+
   getBusinessProfile() {
     if (this.provider_user_Id) {
       this.provider_services.getUserBussinessProfile(this.provider_user_Id)

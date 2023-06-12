@@ -1,0 +1,186 @@
+.difitalSigText {
+  color: #FF9900;
+}
+
+.mobileDevice {
+  display: none;
+}
+
+.spaanOr {
+  height: 150px;
+  width: 25px;
+  display: inline-block;
+  text-align: center;
+  color: #E6E8EB;
+}
+
+.spaanOr:before {
+  border-left: 1px solid black;
+  content: "";
+  display: block;
+  height: 65px;
+  left: 34px;
+  transform: translateX(10px);
+  top: 30px;
+  width: 1px;
+  z-index: 0;
+  background: #E6E8EB;
+  border: 1.32184px solid #E6E8EB;
+}
+
+.spaanOr:after {
+  border-left: 1px solid black;
+  content: "";
+  display: block;
+  height: 65px;
+  left: 32px;
+  transform: translateX(10px);
+  top: 140px;
+  width: 1px;
+  z-index: 0;
+  background: #E6E8EB;
+  border: 1.32184px solid #E6E8EB;
+}
+
+.prescriptionNotes {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flexClassSig {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #CDCAC6;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 10px;
+  background: #FFFFFF;
+  width: 50%;
+  height: 50px;
+}
+
+.fileUpload {
+  display: flex;
+  padding: 30px;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  background: #FCFCFC;
+  border: 1.20589px dashed #C9C9C9;
+  border-radius: 13.2647px;
+}
+
+.fileUplaodMob {
+  display: none;
+}
+
+.btn-primary {
+  background-color: #1e4079 !important;
+  color: #fff !important;
+  border-color: #1e4079 !important;
+}
+
+.manualSignBtn {
+  background: #FF9900;
+  border-radius: 7.80557px;
+  border-radius: 5.8939px;
+  padding: 6px 12px;
+  font-weight: 500 !important;
+  font-size: 12px;
+  color: #FFFFFF;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  height: 3rem;
+}
+
+.shareTxt {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.shareBtn {
+  background: #FFFFFF;
+  border: 1.47792px solid #FFA012;
+  border-radius: 5.8939px;
+  padding: 6px 12px;
+  font-weight: 500 !important;
+  font-size: 12px;
+  color: #FFA012;
+  cursor: pointer;
+}
+
+@media(max-width: 800px) {
+  .spaanOr {
+    display: none;
+  }
+
+  .mobileDevice {
+    display: block;
+    width: 100%;
+    height: 13px;
+    border-bottom: 2px solid #E6E8EB;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    /* background: #F9F9F9 !important; */
+  }
+
+  .prescriptionNotes {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .flexClassSig {
+    width: 100% !important;
+  }
+
+  .fileUpload {
+    justify-content: center !important;
+    padding: 15px;
+    margin-top: 10px !important;
+  }
+
+  .mobileOr {
+    font-size: 12px;
+    padding: 0 10px;
+    background: #F9F9F9 !important;
+    color: slategrey;
+    border: 1px solid #E6E8EB;
+    border-radius: 20%;
+  }
+
+  .fileUpload {
+    display: none !important;
+  }
+
+  .fileUplaodMob {
+    display: block !important;
+    margin-top: 10px;
+  }
+
+  .difitalSigText {
+    color: rgba(0, 0, 0, 0.84);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .manualSignBtn {
+    height: 100% !important;
+    width: 100% !important;
+  }
+
+  .shareTxt {
+    display: none;
+  }
+
+  .resClass {
+    font-size: 12px;
+  }
+
+}

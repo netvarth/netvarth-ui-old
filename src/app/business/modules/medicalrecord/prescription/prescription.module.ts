@@ -21,6 +21,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from "@angular/material/icon";
 import { PdfViewerModule } from 'ng2-pdf-viewer'; // <- import PdfViewerModule
 import { SaveTemplateModule } from "./prescription-select/save-template/save-template.module";
+import { DigitalSignatureModule } from "./digital-signature/digital-signature.module";
 
 
 const routes: Routes = [
@@ -45,6 +46,7 @@ const routes: Routes = [
     MatIconModule,
     PdfViewerModule,
     SaveTemplateModule,
+    DigitalSignatureModule,
     [RouterModule.forChild(routes)],
     ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true })
   ],

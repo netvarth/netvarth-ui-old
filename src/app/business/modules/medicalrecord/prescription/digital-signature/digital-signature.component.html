@@ -1,0 +1,90 @@
+<div class="m-3">
+  <!-- <div class="text-center px-2 py-2 d-flex justify-content-end font-large">
+    <div (click)="close()">
+      <span class="font-weight-bold">Digital Signature</span>
+    </div>
+    <div class="pointer-cursor pr-2" (click)="close()">
+      <i class="fa fa-times"></i>
+    </div>
+  </div> -->
+  <div style="margin-top: 10px;">
+    <div class="difitalSigText" *ngIf="!digitalSign && selectedMessage && selectedMessage.files
+                && selectedMessage.files.length === 0">Add digital signature</div>
+    <!-- <div class="difitalSigText" *ngIf="digitalSign && selectedMessage.files && selectedMessage.files.length > 0">View digital signature</div> -->
+    <div>
+      <div>
+        <app-common-innerloading-spinner *ngIf="signUploading"></app-common-innerloading-spinner>
+        <div *ngIf="!digitalSign && selectedMessage && selectedMessage.files && selectedMessage.files.length === 0">
+          <div class=" prescriptionNotes">
+            <div>
+              <div class="fileUpload">
+                <!-- <a class="mt-1 btn btn-primary" (click)="uploadSignature()">Upload Image</a> -->
+                <div>
+                  <img style="height:30px;width:30px" src="/assets/images/medicalReportIcon/download.png" />
+                </div>
+                <div>
+                  <div class="fileTextClr"> Select a file</div>
+                  <div class="fileTextClrType">JPG, PNG file size no more than 5MB</div>
+                </div>
+                <div>
+                  <button class="shareBtn">
+                    <a class="pointer-cursor" style="color: #FF9900;" (click)="imagefile.click()"><input #imagefile
+                        type="file" accept="/*;capture=camera" style="display:none;"
+                        (change)="filesSelected($event)">Upload Sign</a>
+                  </button>
+                </div>
+              </div>
+              <div class="fileUplaodMob">
+                <div>
+                  <button class="shareBtn">
+                    <div class="pointer-cursor" style="color: #FF9900;" (click)="imagefile.click()"><input #imagefile
+                        type="file" accept="/*;capture=camera" style="display:none;"
+                        (change)="filesSelected($event)">Upload your Digital Signature File</div>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <span class="spaanOr"
+              *ngIf="!digitalSign && selectedMessage && selectedMessage.files && selectedMessage.files.length == 0">OR</span>
+            <div class="mobileDevice"
+              *ngIf="!digitalSign &&selectedMessage &&  selectedMessage.files && selectedMessage.files.length == 0">
+              <span class="mobileOr">OR</span>
+            </div>
+            <div>
+              <div>
+                <button class="manualSignBtn" (click)="manualSignature()">Create Digital Signature Manually</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="digitalSign && selectedMessage && selectedMessage.files && selectedMessage.files.length > 0">
+          <ng-container class="attachment">
+            <div style="color: #FF9900;">Uploaded Digital Signature</div>
+            <div class="flexClassSig" *ngFor="let item of selectedMessage.files; let i = index">
+              <div *ngIf="item.originalName || item.name">
+                <div *ngIf="item.originalName">
+                  <span class="pointlist resClass" (click)="showimgPopup(item)" style="color: #706969;">
+                    <img src="/assets/images/medicalReportIcon/uplaodFile.png" />
+                    {{item.originalName}}</span>
+                </div>
+                <div *ngIf="item.name">
+                  <span class=" pointlist resClass" (click)="showimgPopup(item)" style="color: #706969;">
+                    <img src="/assets/images/medicalReportIcon/uplaodFile.png" />{{item.name}}</span>
+                </div>
+              </div>
+              <div (click)="deleteTempImagefrmdb(item,i)" class="pointer-cursor" #tooltip="matTooltip"
+                matTooltip="Remove" [matTooltipPosition]="'below'">
+                <img src="/assets/images/medicalReportIcon/delete.png" />
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="text-center my-2">
+      <div class="btn btn-primary" (click)="close()">Ok & Close</div>
+    </div>
+  </div>
+</div>
