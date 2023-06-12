@@ -1041,13 +1041,23 @@ export class PrescriptionComponent implements OnInit, OnChanges {
       this.api_loading = true;
       this.provider_services.updateMRprescription(passdata, this.mrId).
         subscribe(res => {
-          // console.log('resupdateMRprescription',res)
-          this.snackbarService.openSnackBar('Prescription update Successfully');
-          this.getMrprescription(this.mrId);
-          this.clearAll()
-          // this.afterSave=true;
           if (this.afterEdit === 'afterUpdate') {
             this.tempList = this.drugList
+            this.medicalrecord_service.createMR('prescriptions', passdata, vwofrx.innerHTML)
+              .then((data: number) => {
+                // console.log('datacreateMR',data)
+                this.mrId = data;
+                this.snackbarService.openSnackBar('Prescription update Successfully');
+                this.getMrprescription(this.mrId);
+                this.clearAll()
+                // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+                // this.afterSave=true;
+              },
+                error => {
+                  this.api_loading = false;
+                  this.loading = false;
+                  this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                });
           }
         },
           error => {
@@ -1299,6 +1309,18 @@ export class PrescriptionComponent implements OnInit, OnChanges {
                 this.provider_services.updateMRprescription(passdata, this.mrId).subscribe((res) => {
                   if (this.mrId !== 0) {
                     if (this.afterEdit === 'afterUpdate') {
+                      this.medicalrecord_service.createMR('prescriptions', passdata, vwofrx.innerHTML)
+                        .then((data: number) => {
+                          this.mrId = data;
+                          this.snackbarService.openSnackBar('Template and Prescription Saved Successfully');
+                          this.router.navigate(['provider', 'customers', this.patientId, this.bookingType,
+                            this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+                        },
+                          error => {
+                            this.api_loading = false;
+                            this.loading = false;
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                          });
                       this.reloadComponent()
                     }
                     else {
@@ -1742,19 +1764,33 @@ export class PrescriptionComponent implements OnInit, OnChanges {
         }
         // console.log('this.mrId', this.mrId);
         // console.log('newlyCretedMrIdforUpdate',this.mrId)
+        let vwofrx;
+        if (document && document.getElementById('sharerxview')) {
+          vwofrx = document.getElementById('sharerxview');
+        }
+
         if (this.mrId) {
           this.api_loading = true;
           // this.drugList.splice(index,1);
           this.provider_services.updateMRprescription(passdata, this.mrId).
             subscribe(res => {
               // console.log('resupdateMRprescription', res);
-              this.tempTextDelete = 'TempDelete';
-              this.snackbarService.openSnackBar('Prescription deleted Successfully');
-              if (this.mrId) {
-                this.getMrprescription(this.mrId);
-              }
-              // this.getMrprescription(this.mrId);
-              this.tempText = '';
+              this.medicalrecord_service.createMR('prescriptions', passdata, vwofrx.innerHTML)
+                .then((data: number) => {
+                  this.mrId = data;
+                  this.tempTextDelete = 'TempDelete';
+                  this.snackbarService.openSnackBar('Prescription deleted Successfully');
+                  if (this.mrId) {
+                    this.getMrprescription(this.mrId);
+                  }
+                  // this.getMrprescription(this.mrId);
+                  this.tempText = '';
+                },
+                  error => {
+                    this.api_loading = false;
+                    this.loading = false;
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                  });
 
             },
               error => {
