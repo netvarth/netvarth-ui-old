@@ -1025,6 +1025,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   saveRx(result) {
+    console.log('drugList in saverx', this.drugList);
+
     let vwofrx;
     if (document && document.getElementById('sharerxview')) {
       vwofrx = document.getElementById('sharerxview');
@@ -1041,24 +1043,21 @@ export class PrescriptionComponent implements OnInit, OnChanges {
       this.api_loading = true;
       this.provider_services.updateMRprescription(passdata, this.mrId).
         subscribe(res => {
-          if (this.afterEdit === 'afterUpdate') {
-            this.tempList = this.drugList
-            this.medicalrecord_service.createMR('prescriptions', passdata, vwofrx.innerHTML)
-              .then((data: number) => {
-                // console.log('datacreateMR',data)
-                this.mrId = data;
-                this.snackbarService.openSnackBar('Prescription update Successfully');
-                this.getMrprescription(this.mrId);
-                this.clearAll()
-                // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
-                // this.afterSave=true;
-              },
-                error => {
-                  this.api_loading = false;
-                  this.loading = false;
-                  this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                });
-          }
+          this.medicalrecord_service.createMR('prescriptions', passdata, vwofrx.innerHTML)
+            .then((data: number) => {
+              // console.log('datacreateMR',data)
+              this.mrId = data;
+              this.snackbarService.openSnackBar('Prescription update Successfully');
+              this.getMrprescription(this.mrId);
+              this.clearAll()
+              // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+              // this.afterSave=true;
+            },
+              error => {
+                this.api_loading = false;
+                this.loading = false;
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+              });
         },
           error => {
             this.loading = false;
@@ -1181,6 +1180,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   addDigitalSignature(value, data) {
+    console.log("data1", data);
 
     this.digitalSignRef = this.dialog.open(DigitalSignatureComponent, {
       width: '50%',
@@ -1196,12 +1196,13 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     });
     this.digitalSignRef.afterClosed().subscribe((signData) => {
       this.getDigitalSign().then(() => {
-
         let vwofrx;
         if (document && document.getElementById('sharerxview')) {
           vwofrx = document.getElementById('sharerxview');
         }
         console.log("medicineLIst", this.medicineLIst);
+        console.log("drugList", this.drugList);
+        console.log("data2", data);
         if (data && data.type == 'close') {
           this.loading = false;
         }
@@ -1244,6 +1245,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
 
         }
         else {
+          console.log('this.mrIdinaddprescription', this.mrId)
           if (this.mrId !== 0) {
             console.log('this.drugList', this.drugList)
             let passdata = {
@@ -1307,6 +1309,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
               }
               else {
                 this.provider_services.updateMRprescription(passdata, this.mrId).subscribe((res) => {
+                  console.log("afterEdit", this.afterEdit);
+                  console.log("this.mrid", this.mrId)
                   if (this.mrId !== 0) {
                     if (this.afterEdit === 'afterUpdate') {
                       this.medicalrecord_service.createMR('prescriptions', passdata, vwofrx.innerHTML)
@@ -1324,6 +1328,10 @@ export class PrescriptionComponent implements OnInit, OnChanges {
                       this.reloadComponent()
                     }
                     else {
+                      this.medicalrecord_service.createMR('prescriptions', passdata, vwofrx.innerHTML)
+                        .then((data: number) => {
+                          this.mrId = data;
+                        });
                       this.router.navigate(['provider', 'customers', this.patientId, this.bookingType,
                         this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
                     }
