@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
+import { AuthGuardHome } from './shared/guard/auth.guard';
 const routes: Routes = [
   { path: 'admin/login/:accountId/:userId', loadChildren: () => import('./shared/components/admin/login/login.module').then(m => m.AdminLoginModule) },
-  {
-    path: 'provider', loadChildren: () => import('./business/business.module').then(m => m.BusinessModule),
-    canActivate: [AuthGuardProvider]
-  },
+  // {
+  //   path: 'provider', loadChildren: () => import('./business/business.module').then(m => m.BusinessModule),
+  //   canActivate: [AuthGuardProvider]
+  // },
   {
     path: 'consumer', loadChildren: () => import('./ynw_consumer/consumer.module').then(m => m.ConsumerModule)
   },
