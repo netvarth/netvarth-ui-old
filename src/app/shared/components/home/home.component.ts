@@ -215,7 +215,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   doSignuppage() {
-    this.routerobj.navigate(['/business']);
+    // this.routerobj.navigate(['/business']);
+    // window.open('https://scale.jaldee.com/business/signup');
+
+    window.open(projectConstantsLocal.PATH + 'business/signup',"_self");
   }
   checkProvider(type) {
     return (type === 'consumer') ? 'false' : 'true';
@@ -224,7 +227,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.routerobj.navigate(['status/new']);
   }
   providerLinkClicked() {
-    this.routerobj.navigate(['/business/login']);
+    // this.routerobj.navigate(['/business/login']);
+    window.open(projectConstantsLocal.PATH + 'business/login', "_self");
+    // window.open('https://scale.jaldee.com/business/login');
   }
   openVivoCampPage() {
     // console.log('Click')

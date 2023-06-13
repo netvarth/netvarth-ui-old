@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../shared/functions/shared-functions';
-import { ProviderWaitlistCheckInCancelPopupComponent } from '../modules/check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
+// import { ProviderWaitlistCheckInCancelPopupComponent } from '../modules/check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { CommonDataStorageService } from '../../shared/services/common-datastorage.service';
 import { SnackbarService } from '../../shared/services/snackbar.service';
 import { WordProcessor } from '../../shared/services/word-processor.service';
@@ -262,27 +262,27 @@ export class ProviderSharedFuctions {
     }
   }
 
-  changeWaitlistStatus(ob, waitlist, action, appt?) {
-    if (action === 'CANCEL' || action === 'Cancelled') {
-      const dialogRef = this.dialog.open(ProviderWaitlistCheckInCancelPopupComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
-        data: {
-          waitlist: waitlist,
-          appt: appt
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result && result.cancelReason || result.rejectReason) {
-          ob.changeWaitlistStatusApi(waitlist, action, result);
-        }
-      });
+  // changeWaitlistStatus(ob, waitlist, action, appt?) {
+  //   if (action === 'CANCEL' || action === 'Cancelled') {
+  //     const dialogRef = this.dialog.open(ProviderWaitlistCheckInCancelPopupComponent, {
+  //       width: '50%',
+  //       panelClass: ['popup-class', 'commonpopupmainclass'],
+  //       disableClose: true,
+  //       data: {
+  //         waitlist: waitlist,
+  //         appt: appt
+  //       }
+  //     });
+  //     dialogRef.afterClosed().subscribe(result => {
+  //       if (result && result.cancelReason || result.rejectReason) {
+  //         ob.changeWaitlistStatusApi(waitlist, action, result);
+  //       }
+  //     });
 
-    } else {
-      ob.changeWaitlistStatusApi(waitlist, action);
-    }
-  }
+  //   } else {
+  //     ob.changeWaitlistStatusApi(waitlist, action);
+  //   }
+  // }
   changeWaitlistinternalStatus(ob, waitlist, action){
     ob.changeWaitlistInternalStatusApi(waitlist, action);
   }
