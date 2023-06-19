@@ -148,6 +148,7 @@ export class QnrDialogComponent implements OnInit {
   isCheckedoption: boolean = false;
   isEdit: any;
   editableItem: any;
+  sec = false;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<QnrDialogComponent>,
     private sharedService: SharedServices,
@@ -649,7 +650,6 @@ export class QnrDialogComponent implements OnInit {
       let itemPrice;
       this.selectedType = value;
       if (question.fieldDataType !== 'dataGrid') {
-        console.log("AnswersQnr:", this.answersQnr);
         if (Object.keys(this.answersQnr).length === 0) {
           itemPrice = this.getValue(value);
           if (itemPrice !== undefined) {
@@ -882,10 +882,10 @@ export class QnrDialogComponent implements OnInit {
 
 
             let item = answDataGridListColumnArray.find(x => x.columnId === column.columnId);
-            console.log("item", item)
+           
             if (item) {
               let itemList = item["column"]["list"]
-              console.log("itemList", itemList)
+             
               for (let listItem of itemList) {
                 if (listItem === value) {
 
@@ -1426,9 +1426,16 @@ export class QnrDialogComponent implements OnInit {
     this.updatedGridIndex[question.labelName] = null;
   }
   saveDataGridColumn() {
-    console.log("Called saveDataGridColumn");
+   
+   
+    if(this.questions && this.questions.data && this.questions.data.dataGridListProperties && this.questions.data.dataGridListProperties.dataGridListColumns[1]){
+      this.sec = true;
+    } else{
+      this.sec = false;
+    }
+  
+  
     if (!this.selectFirst) {
-
       setTimeout(() => {
         this.isCheckedoption = false;
         this.derror = 'Please select an item';
@@ -1436,7 +1443,8 @@ export class QnrDialogComponent implements OnInit {
 
 
       this.isSecondcase = false;
-    } else {
+    } else if(this.selectFirst && this.sec){
+      this.isSecondcase = true;
       this.selectFirst = true;
 
       this.derror = '';
@@ -1454,7 +1462,10 @@ export class QnrDialogComponent implements OnInit {
         }
 
       }
-      this.isSecondcase = true;
+    }
+    else {
+    this.closeDialog();
+      
     }
 
 
@@ -1465,7 +1476,6 @@ export class QnrDialogComponent implements OnInit {
       'answerLine': [this.answersQnr],
       'totalPrice': this.totalPrice
     }
-    console.log(this.postData)
     this.dialogRef.close({ data: this.postData });
   }
   closeDialogg() {
@@ -1609,7 +1619,6 @@ export class QnrDialogComponent implements OnInit {
   }
   changesApplied(ev, question, column?) {
     this.inputChange = true;
-    console.log("column", column)
     if (column.order && column.order === 2) {
       let itemPrice;
 
