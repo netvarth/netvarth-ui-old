@@ -121,16 +121,22 @@ export class QuestionnaireLinkComponent implements OnInit {
 
   }
   getDetails() {
+    
     this.isBusinessOwner = this.localStorage.getitemfromLocalStorage('isBusinessOwner');
     this.isBusinessOwner = JSON.parse(this.isBusinessOwner);
+  
     if (!this.isBusinessOwner) {
       let bookingType = this.qParams.uid.split('_')[1];
+      let ivr = this.qParams.uid.startsWith('ivr');
       if (bookingType === 'appt') {
         this.source = 'consAppt';
         this.getApptDetails();
       } else if (bookingType === 'wl') {
         this.source = 'consCheckin';
         this.getCheckinDetails();
+      } else if (ivr) {
+        this.source = 'ivr';
+        this.getivrDetails();
       } else {
         this.source = 'consOrder';
         this.getOrderDetails();
@@ -139,12 +145,17 @@ export class QuestionnaireLinkComponent implements OnInit {
       this.type = 'qnrLinkProvider';
       this.userType = "provider";
       let bookingType = this.qParams.uid.split('_')[1];
+      let ivr = this.qParams.uid.startsWith('ivr');
       if (bookingType === 'appt') {
         this.source = 'consAppt';
         this.getProviderApptDetails();
       } else if (bookingType === 'wl') {
         this.source = 'consCheckin';
         this.getProviderWaitlistDetail();
+      } else if (ivr) {
+       
+        this.source = 'ivr';
+        this.getivrDetails();
       } else {
         this.source = 'consOrder';
         this.getProviderOrderDetail();
@@ -241,6 +252,20 @@ export class QuestionnaireLinkComponent implements OnInit {
       }
     );
   }
+  getivrDetails() {
+    this.sharedServices.getivrByConsumerUUID(this.qParams.uid, this.qParams.accountId).subscribe(
+      (data) => {
+        this.waitlist = data;
+        this.waitlistStatus = this.waitlist.waitlistStatus.toLowerCase();
+        this.getIvrReleasedQnrs();
+      },
+      error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.loading = false;
+        this.isPermitted = false;
+      }
+    );
+  }
   getApptDetails() {
     this.sharedServices.getAppointmentByConsumerUUID(this.qParams.uid, this.qParams.accountId).subscribe(
       (data) => {
@@ -257,6 +282,20 @@ export class QuestionnaireLinkComponent implements OnInit {
   }
   getWaitlistReleasedQnrs() {
     this.sharedServices.getWaitlistQuestionnaireByUid(this.qParams.uid, this.qParams.accountId)
+      .subscribe(
+        (data: any) => {
+          this.getReleasedQnrs(data);
+          this.loading = false;
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.loading = false;
+          this.isPermitted = false;
+        }
+      );
+  }
+  getIvrReleasedQnrs() {
+    this.sharedServices.getIvrQuestionnaireByUid(this.qParams.uid, this.qParams.accountId)
       .subscribe(
         (data: any) => {
           this.getReleasedQnrs(data);

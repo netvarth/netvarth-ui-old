@@ -284,6 +284,10 @@ export class SharedServices {
     const url = 'consumer/waitlist/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
+  getivrByConsumerUUID(uuid, accountid) {
+    const url = 'consumer/ivr/' + uuid + '?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
   addProviderCheckin(postData) {
     return this.servicemeta.httpPost('provider/waitlist', postData);
   }
@@ -1291,6 +1295,10 @@ export class SharedServices {
   }
   getWaitlistQuestionnaireByUid(uid, accountId) {
     const url = 'consumer/waitlist/questionnaire/' + uid + '?account=' + accountId;
+    return this.servicemeta.httpGet(url);
+  }
+  getIvrQuestionnaireByUid(uid, accountId) {
+    const url = 'consumer/ivr/questionnaire/' + uid + '?account=' + accountId;
     return this.servicemeta.httpGet(url);
   }
   getApptQuestionnaireByUid(uid, accountId) {
