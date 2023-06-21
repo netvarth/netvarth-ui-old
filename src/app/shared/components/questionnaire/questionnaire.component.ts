@@ -194,7 +194,12 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         this.questions = this.questionnaireList.labels;
         this.groupQuestionsBySection();
       } else if (this.source === 'qnrView' || this.source === 'ivr') {
+        if(this.params.customId){
+          this.questions = this.questionnaireList[0].labels;
+        }
+       else{
         this.questions = this.questionnaireList.labels;
+       }
         this.groupQuestionsBySection();
 
       }
@@ -226,8 +231,15 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         this.getAnswers(this.questionAnswers.answers.answerLine, 'init');
       }
       if (this.source == 'ivr') {
-        this.getAnswers(this.questionAnswers, 'get');
+        if(this.params.customId){
+          this.getAnswers(this.questionAnswers, 'get');
+        }
+        else{
+          this.getAnswers(this.questionAnswers, 'get');
+        }
+     
       }
+     
     }
     if (this.donationDetails && this.donationDetails.questionnaire) {
       this.questionnaireList = this.donationDetails.questionnaire;
@@ -630,10 +642,10 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     });
 
     Object.keys(this.answers).forEach(key => {
-
       this.apiError[key] = [];
       let newMap = {};
       let question = this.questions.filter(quest => this.getQuestion(quest).labelName === key);
+    
       if (this.source === 'customer-create' || this.source === 'qnrDetails' || this.source === 'onetime') {
         question = question[0];
       } else {
@@ -1206,7 +1218,6 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     }
   }
   openAttachmentGallery(question, document) {
-    // alert('kk')
     this.image_list_popup = [];
     let count = 0;
     let imagePath;

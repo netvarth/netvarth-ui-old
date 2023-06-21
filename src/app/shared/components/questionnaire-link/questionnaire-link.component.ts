@@ -34,6 +34,7 @@ export class QuestionnaireLinkComponent implements OnInit {
   customId: any;
   accountConfig: any;
   accountId: any;
+  getAfterqnr: boolean;
   constructor(public sharedFunctionobj: SharedFunctions,
     private sharedServices: SharedServices,
     private activated_route: ActivatedRoute,
@@ -121,11 +122,12 @@ export class QuestionnaireLinkComponent implements OnInit {
 
   }
   getDetails() {
-    
+   
     this.isBusinessOwner = this.localStorage.getitemfromLocalStorage('isBusinessOwner');
     this.isBusinessOwner = JSON.parse(this.isBusinessOwner);
   
     if (!this.isBusinessOwner) {
+   
       let bookingType = this.qParams.uid.split('_')[1];
       let ivr = this.qParams.uid.startsWith('ivr');
       if (bookingType === 'appt') {
@@ -135,6 +137,7 @@ export class QuestionnaireLinkComponent implements OnInit {
         this.source = 'consCheckin';
         this.getCheckinDetails();
       } else if (ivr) {
+       
         this.source = 'ivr';
         this.getivrDetails();
       } else {
@@ -256,7 +259,7 @@ export class QuestionnaireLinkComponent implements OnInit {
     this.sharedServices.getivrByConsumerUUID(this.qParams.uid, this.qParams.accountId).subscribe(
       (data) => {
         this.waitlist = data;
-        this.waitlistStatus = this.waitlist.waitlistStatus.toLowerCase();
+        this.waitlistStatus = this.waitlist.tokenStatus.toLowerCase();
         this.getIvrReleasedQnrs();
       },
       error => {
@@ -298,7 +301,10 @@ export class QuestionnaireLinkComponent implements OnInit {
     this.sharedServices.getIvrQuestionnaireByUid(this.qParams.uid, this.qParams.accountId)
       .subscribe(
         (data: any) => {
-          this.getReleasedQnrs(data);
+          this.questionnaire = data.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
+          this.getAfterqnr = true;
+          // this.getReleasedQnrs(data);
+          console.log('dfdf', this.questionnaire)
           this.loading = false;
         },
         error => {

@@ -133,4 +133,28 @@
             </div>
         </div>
     </div>
+    <div class="comn-cls m0 p0">
+        <div class="panel-default mgn-up-50">
+           
+           
+           
+            <div class="panel-body no-padding"
+                *ngIf="getAfterqnr">
+                <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 card mgn-up-20">
+                   
+                    <div class="" *ngIf="getAfterqnr">
+                        <app-questionnaire [questionnaireList]="questionnaire" [source]="source" [uuid]="qParams.uid"
+                        [accountId]="qParams.accountId" [type]="type" [mode]="'edit'"
+                        [waitlistStatus]="(source == 'consCheckin') ? waitlist.waitlistStatus : ((source == 'consOrder') ? waitlist.orderStatus:waitlist.apptStatus)"
+                        (returnAnswers)="getQuestionAnswers($event)">
+                    </app-questionnaire>
+                    </div>
+                </div>
+            </div>
+           
+            
+            
+        </div>
+    </div>
+    
 </section>
