@@ -270,26 +270,29 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                 });
     }
     getCoupons(){
-       
-        this.sharedServices.getCheckinCoupons(this.checkin.serviceData.id,this.checkin.location.id)
-            .subscribe(
-                (res: any) => {
-                  this.results = res; 
-                  if(this.results && this.results.jaldeeCoupons){
-                    this.couponList.JC = this.results.jaldeeCoupons;
-                   
-                  }
-                  if(this.results && this.results.providerCoupons){
-                    this.couponList.OWN = this.results.providerCoupons;
-                  }
-                
-                },
-                error => {
-                  this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                  
-                }
-            );
-    
+       let checkinServiceId = this.checkin && this.checkin.serviceData && this.checkin.serviceData.id;
+       let checkinLocationId = this.checkin && this.checkin.location && this.checkin.location.id;
+       if(checkinServiceId && checkinLocationId)
+       {
+        this.sharedServices.getCheckinCoupons(checkinServiceId,checkinLocationId)
+        .subscribe(
+            (res: any) => {
+              this.results = res; 
+              if(this.results && this.results.jaldeeCoupons){
+                this.couponList.JC = this.results.jaldeeCoupons;
+               
+              }
+              if(this.results && this.results.providerCoupons){
+                this.couponList.OWN = this.results.providerCoupons;
+              }
+            
+            },
+            error => {
+              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+              
+            }
+        );
+       }
     }
     getBillDateandTime() {
         if (this.bill_data.hasOwnProperty('createdDate')) {
@@ -404,7 +407,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
      * To Get Payment Modes
      */
     getPaymentModes() {
-
+console.log("coming to payment modes")
         this.sharedServices.getPaymentModesofProvider(this.accountId, 0, 'billPayment')
             .subscribe(
                 data => {
