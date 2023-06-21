@@ -166,6 +166,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     }
 
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    console.log("this.questions",this.questions)
 
     if (this.questionnaireList) {
       if (this.source === 'customer-create' || this.source === 'onetime') {
@@ -190,13 +191,13 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       else if (this.source === 'qnrpaper') {
         this.questions = this.questionnaireList[0].labels;
         this.groupQuestionsBySection();
-      } else if (!this.uuid) {
+      } else if (!this.uuid && this.questionnaireList.labels) {
         this.questions = this.questionnaireList.labels;
         this.groupQuestionsBySection();
-      } else if (this.source === 'qnrView' || this.source === 'ivr') {
+      }
+       else if ((this.source === 'qnrView' || this.source === 'ivr') && this.questionnaireList.labels) {
         this.questions = this.questionnaireList.labels;
         this.groupQuestionsBySection();
-
       }
 
     }
@@ -237,6 +238,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         this.getAnswers(this.questions, 'get');
       }
     }
+
     if (this.uuid) {
       if (this.questionnaireList.questionAnswers) {
         this.questions = this.questionnaireList.questionAnswers;
@@ -257,6 +259,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         this.getAnswers(this.questions, 'get');
       }
     }
+
     this.disableField()
   }
 
