@@ -35,7 +35,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
   @Output() fileChanged = new EventEmitter<any>();
   @Output() returnAnswers = new EventEmitter<any>();
   @Input() tempType;
-
+  @Input() bookingType;
   answers: any = {};
   showDataGrid: any = {};
   selectedMessage: any = [];
@@ -133,6 +133,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       }
       if (this.params.uuid) {
         this.uuid = this.params.uuid;
+        // alert(this.uuid)
       }
     });
     this.subscription = this.sharedFunctionobj.getMessage().subscribe(message => {
@@ -226,7 +227,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       if (this.questionAnswers.answers) {
         this.getAnswers(this.questionAnswers.answers.answerLine, 'init');
       }
-      if (this.source == 'ivr') {
+      if (this.source == 'ivr' ) {
         this.getAnswers(this.questionAnswers, 'get');
       }
     }
@@ -677,7 +678,16 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         'answerLine': this.finalObjectList
       }
     }
+    else if (this.source === 'ivr' && this.params.customId) {
+      console.log('fffffffffffffffffffff',this.questionnaireList)
+      postData = {
+        'questionnaireId': (this.questionnaireList[0].id) ? this.questionnaireList[0].id : this.questionnaireList[0].questionnaireId,
+        'answerLine': data
+      }
+    }
     else {
+      // alert('ddd')
+      console.log('questionnaireList',this.questionnaireList)
       postData = {
         'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
         'answerLine': data
@@ -803,13 +813,19 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     }
   }
   submitQuestionnaire(passData) {
+    console.log('fdff', passData)
     const dataToSend: FormData = new FormData();
     const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.buttonDisable = true;
     if (this.source === 'consCheckin' || this.source === 'consAppt' || this.source === 'consOrder' || this.source === 'consDonationDetails') {
       this.validateConsumerQuestionnaireResubmit(passData.answers, dataToSend);
-    } else {
+    } 
+    else if(this.source === 'ivr' && this.params.customId){
+
+      this.validateConsumerIvrQuestionnaire(passData.answers,this.bookingType);
+    }
+    else {
       this.validateProviderQuestionnaireResubmit(passData.answers, dataToSend);
     }
   }
@@ -1058,6 +1074,37 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     } else {
       return question.question;
     }
+  }
+  validateQuestionnaire(src?) {
+    if (!this.questionAnswers) {
+      this.questionAnswers = {
+        answers: {
+          answerLine: [],
+          questionnaireId: (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
+        }
+      }
+    }
+    // if (this.questionAnswers.answers) {
+    //   this.providerService.validateConsumerQuestionnaire(src).subscribe((data: any) => {
+    //     if (data.length === 0) {
+    //       this.validateConsumerIvrQuestionnaire(this.questionAnswers.answers, this.bookingType);
+    //     }
+    //     else {
+    //       this.snackbarService.openSnackBar("Please Fill All Required Fields", { 'panelClass': 'snackbarerror' });
+    //     }
+    //     // this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
+    //   }, (error) => {
+    //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //   });
+    // }
+  }
+  validateConsumerIvrQuestionnaire(answers, bookingType) {
+    this.providerService.validateConsumerIvrQuestionnaire(answers,bookingType).subscribe((data: any) => {
+      this.snackbarService.openSnackBar("Details Saved Successfully");
+     
+    }, (error) => {
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    });
   }
   validateProviderQuestionnaireResubmit(answers, dataToSend) {
     this.providerService.validateProviderQuestionnaireResbmit(answers).subscribe((data: any) => {

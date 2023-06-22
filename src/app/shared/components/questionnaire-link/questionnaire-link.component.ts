@@ -35,6 +35,7 @@ export class QuestionnaireLinkComponent implements OnInit {
   accountConfig: any;
   accountId: any;
   getAfterqnr: boolean;
+  bookingType: any;
   constructor(public sharedFunctionobj: SharedFunctions,
     private sharedServices: SharedServices,
     private activated_route: ActivatedRoute,
@@ -127,8 +128,9 @@ export class QuestionnaireLinkComponent implements OnInit {
     this.isBusinessOwner = JSON.parse(this.isBusinessOwner);
   
     if (!this.isBusinessOwner) {
-   
+      this.bookingType =  this.qParams.uid
       let bookingType = this.qParams.uid.split('_')[1];
+
       let ivr = this.qParams.uid.startsWith('ivr');
       if (bookingType === 'appt') {
         this.source = 'consAppt';

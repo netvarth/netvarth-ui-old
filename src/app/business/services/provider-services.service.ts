@@ -2373,6 +2373,15 @@ export class ProviderServices {
     const url = 'provider/questionnaire/resubmit/validate';
     return this.servicemeta.httpPut(url, body);
   }
+  validateConsumerIvrQuestionnaire(body,id) {
+    const url = 'consumer/ivr/questionnaire/submit/' + id;
+    // const url = 'consumer/questionnaire/resubmit/validate';
+    return this.servicemeta.httpPost(url, body);
+  }
+  validateConsumerQuestionnaire(body) {
+    // const url = 'consumer/questionnaire/validate' + '?account=' + accountId;
+    // return this.servicemeta.httpPut(url, body);
+  }
   getAllQuestionnaire() {
     const url = 'provider/questionnaire';
     return this.servicemeta.httpGet(url);
