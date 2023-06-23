@@ -135,6 +135,118 @@
     </div>
     <div class="comn-cls m0 p0">
         <div class="panel-default mgn-up-50">
+            <div class="panel-body no-padding"
+                *ngIf="loggedIn && !loading">
+                <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 card mgn-up-20">
+                    <div class="details-pad" *ngIf="waitlist">
+                        <div class="">
+                            <div class="customer-details-head">
+                                <div>
+                                    <h2 *ngIf="waitlist.providerAccount">{{waitlist.providerAccount?.businessName}}
+                                    </h2>
+                                    <h2 *ngIf="waitlist.provider">
+                                        {{(waitlist.provider.businessName) ? waitlist.provider.businessName
+                                        : waitlist.provider.firstName +
+                                        ' ' + waitlist.provider.lastName}}, {{waitlist.providerAccount?.businessName}}
+                                    </h2>
+                                    <!-- <h5 *ngIf="questionnaire[0] && questionnaire[0].questionnaireId">
+                                        {{questionnaire[0].questionnaireId}}
+                                    </h5> -->
+                                </div>
+                            </div>
+                            <div class="customer-details mgn-up-20">
+                                <h5
+                                    *ngIf="source == 'consCheckin' && (waitlist.waitlistingFor[0].firstName || waitlist.waitlistingFor[0].lastName)">
+                                    {{waitlist.waitlistingFor[0].firstName}}
+                                    {{waitlist.waitlistingFor[0].lastName}}
+                                </h5>
+                               
+                                <div class="email" *ngIf="waitlist.token">
+                                    <span class="value">Token: {{waitlist.token}}</span>
+                                </div>
+                                <div class="contact-no" *ngIf="waitlist.service">
+                                    <i class="fa fa-cogs icon"></i>
+                                    <span class="value">{{waitlist.service.name}}</span>
+                                </div>
+                                <div class="contact-no" *ngIf="source == 'consCheckin' && waitlist.waitlistPhoneNumber">
+                                    <i class="fa fa-mobile icon"></i>
+                                    <span class="value">{{waitlist.countryCode}} {{waitlist.waitlistPhoneNumber}}</span>
+                                </div>
+                                <div class="contact-no"
+                                    *ngIf="(source == 'consAppt' || source == 'consOrder') && waitlist.phoneNumber">
+                                    <i class="fa fa-mobile icon"></i>
+                                    <span class="value">{{waitlist.countryCode}} {{waitlist.phoneNumber}}</span>
+                                </div>
+                                <div class="email" *ngIf="source == 'consCheckin' && waitlist.waitlistingFor[0].email">
+                                    <i class="fa fa-envelope icon"></i>
+                                    <span class="value">{{waitlist.waitlistingFor[0].email}}</span>
+                                </div>
+                                <div class="email" *ngIf="source == 'consAppt' && waitlist.providerConsumer.email">
+                                    <i class="fa fa-envelope icon"></i>
+                                    <span class="value">{{waitlist.providerConsumer.email}}</span>
+                                </div>
+                                <div class="email" *ngIf="source == 'consOrder' && waitlist.email">
+                                    <i class="fa fa-envelope icon"></i>
+                                    <span class="value">{{waitlist.email}}</span>
+                                </div>
+                                <div class="email" *ngIf="source == 'consCheckin'">
+                                    <i class="fa fa-calendar-o icon"></i>
+                                    <span class="value">{{waitlist.date | date: newDateFormat }},
+                                        {{waitlist.queue.queueStartTime}} -
+                                        {{waitlist.queue.queueEndTime}}</span>
+                                </div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <div class="" *ngIf="getAfterqnr">
+                        <app-questionnaire [questionnaireList]="questionnaire" [source]="source" [uuid]="qParams.uid" [bookingType]="bookingType"
+                        [accountId]="qParams.accountId" [type]="type" [mode]="'edit'"
+                        [waitlistStatus]="(source == 'consCheckin') ? waitlist.waitlistStatus : ((source == 'consOrder') ? waitlist.orderStatus:waitlist.apptStatus)"
+                        (returnAnswers)="getQuestionAnswers($event)">
+                    </app-questionnaire>
+                    </div>
+                </div>
+            </div>
+            <div class="success-sec"
+                *ngIf="loggedIn && isPermitted && (!loading && !isBusinessOwner && (qnrStatus == 'submitted' || qParams.type))">
+                <i class="fa fa-check-circle greenc" aria-hidden="true"></i>
+                <div class="success-head mgn-bt-5">
+                    Your response has been submitted
+                </div>
+                <div class="success-desc">
+                    You have successfully submitted your entries. For any related queries contact your provider directly.
+                </div>
+                <div class="mgn-up-20">
+                    <button mat-button (click)="gotoActiveHome()">Ok</button>
+                </div>
+            </div>
+            <div class="success-sec"
+                *ngIf="loggedIn && (!loading && !isBusinessOwner && (qnrStatus == 'unReleased' || waitlistStatus == 'cancelled'))">
+                <i class="fa fa-ban red" aria-hidden="true"></i>
+                <div class="success-desc">
+                    You do not seem to have access to open the link. Contact {{waitlist.providerAccount.businessName}}
+                    directly for any concerns.
+                </div>
+                <div class="mgn-up-20">
+                    <button mat-button (click)="gotoActiveHome()">Ok</button>
+                </div>
+            </div>
+            <div class="success-sec" *ngIf="loggedIn && !isPermitted ">
+                <i class="fa fa-ban red" aria-hidden="true"></i>
+                <div class="success-desc">
+                    You do not seem to have access to open the link. Contact directly for any concerns.
+                </div>
+                <div class="mgn-up-20">
+                    <button mat-button (click)="gotoActiveHome()">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <div class="comn-cls m0 p0">
+        <div class="panel-default mgn-up-50">
            
            
            
@@ -156,5 +268,5 @@
             
         </div>
     </div>
-    
+     -->
 </section>

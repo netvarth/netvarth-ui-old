@@ -261,7 +261,10 @@ export class QuestionnaireLinkComponent implements OnInit {
     this.sharedServices.getivrByConsumerUUID(this.qParams.uid, this.qParams.accountId).subscribe(
       (data) => {
         this.waitlist = data;
-        this.waitlistStatus = this.waitlist.tokenStatus.toLowerCase();
+        if(this.waitlist.tokenStatus){
+          this.waitlistStatus = this.waitlist.tokenStatus.toLowerCase();
+        }
+       
         this.getIvrReleasedQnrs();
       },
       error => {
