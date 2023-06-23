@@ -36,6 +36,7 @@ export class QuestionnaireLinkComponent implements OnInit {
   accountId: any;
   getAfterqnr: boolean;
   bookingType: any;
+  callStatus: any;
   constructor(public sharedFunctionobj: SharedFunctions,
     private sharedServices: SharedServices,
     private activated_route: ActivatedRoute,
@@ -261,6 +262,9 @@ export class QuestionnaireLinkComponent implements OnInit {
     this.sharedServices.getivrByConsumerUUID(this.qParams.uid, this.qParams.accountId).subscribe(
       (data) => {
         this.waitlist = data;
+        if(this.waitlist.callStatus){
+          this.callStatus = this.waitlist.callStatus;
+        }
         if(this.waitlist.tokenStatus){
           this.waitlistStatus = this.waitlist.tokenStatus.toLowerCase();
         }

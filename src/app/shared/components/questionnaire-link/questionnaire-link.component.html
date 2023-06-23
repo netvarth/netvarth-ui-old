@@ -136,7 +136,7 @@
     <div class="comn-cls m0 p0">
         <div class="panel-default mgn-up-50">
             <div class="panel-body no-padding"
-                *ngIf="loggedIn && !loading">
+                *ngIf="loggedIn && !loading && getAfterqnr && questionnaire.length>0">
                 <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 card mgn-up-20">
                     <div class="details-pad" *ngIf="waitlist">
                         <div class="">
@@ -199,7 +199,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="" *ngIf="getAfterqnr">
+                    <div class="" *ngIf="getAfterqnr && questionnaire.length>0">
                         <app-questionnaire [questionnaireList]="questionnaire" [source]="source" [uuid]="qParams.uid" [bookingType]="bookingType"
                         [accountId]="qParams.accountId" [type]="type" [mode]="'edit'"
                         [waitlistStatus]="(source == 'consCheckin') ? waitlist.waitlistStatus : ((source == 'consOrder') ? waitlist.orderStatus:waitlist.apptStatus)"
@@ -209,7 +209,7 @@
                 </div>
             </div>
             <div class="success-sec"
-                *ngIf="loggedIn && isPermitted && (!loading && !isBusinessOwner && (qnrStatus == 'submitted' || qParams.type))">
+                *ngIf="loggedIn && isPermitted && (!loading && !isBusinessOwner && (callStatus == 'callCompleted' || qParams.type))">
                 <i class="fa fa-check-circle greenc" aria-hidden="true"></i>
                 <div class="success-head mgn-bt-5">
                     Your response has been submitted
