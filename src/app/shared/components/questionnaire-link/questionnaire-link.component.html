@@ -217,9 +217,9 @@
                 <div class="success-desc">
                     You have successfully submitted your entries. For any related queries contact your provider directly.
                 </div>
-                <div class="mgn-up-20">
+                <!-- <div class="mgn-up-20">
                     <button mat-button (click)="gotoActiveHome()">Ok</button>
-                </div>
+                </div> -->
             </div>
             <div class="success-sec"
                 *ngIf="loggedIn && (!loading && !isBusinessOwner && (qnrStatus == 'unReleased' || waitlistStatus == 'cancelled'))">
@@ -228,18 +228,18 @@
                     You do not seem to have access to open the link. Contact {{waitlist.providerAccount.businessName}}
                     directly for any concerns.
                 </div>
-                <div class="mgn-up-20">
+                <!-- <div class="mgn-up-20">
                     <button mat-button (click)="gotoActiveHome()">Ok</button>
-                </div>
+                </div> -->
             </div>
             <div class="success-sec" *ngIf="loggedIn && !isPermitted ">
                 <i class="fa fa-ban red" aria-hidden="true"></i>
                 <div class="success-desc">
                     You do not seem to have access to open the link. Contact directly for any concerns.
                 </div>
-                <div class="mgn-up-20">
+                <!-- <div class="mgn-up-20">
                     <button mat-button (click)="gotoActiveHome()">Ok</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
