@@ -55,6 +55,9 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   googleLogin: boolean;
   googleIntegration: boolean;
   isPartner: boolean = false;
+  loginResponse;
+  notifyEmail = false;
+  emailError: string;
   constructor(private sharedServices: SharedServices,
     private authService: AuthService,
     private lStorageService: LocalStorageService,
@@ -85,6 +88,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     };
   }
   ngOnInit(): void {
+    this.getLoginStatus();
     console.log(this.accountConfig);
     this.lStorageService.setitemonLocalStorage('login', true);
     if ((this.accountConfig && this.accountConfig['googleIntegration'] === false) || this.partnerParentId) {
@@ -95,7 +99,19 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     }
     this.loading = false;
   }
+  getLoginStatus(){
+    this.authService.getEmailStatus(this.accountId).subscribe(
+      (data) => {
+        
+        this.loginResponse = data;
+        if(this.loginResponse && this.loginResponse.email && this.loginResponse.email === true){
+          this.notifyEmail = true;
+        }
+        console.log("loginResponse",this.loginResponse)
+      }
+    )
 
+  }
   loadGoogleJS() {
     const self = this;
     const url = "https://accounts.google.com/gsi/client";
@@ -111,31 +127,67 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   /**
    * Phone Number Collection for Account Existencen
    */
-  sendOTP(mode?) {
+   sendOTP(mode?) {
     this.phoneError = null;
+    this.emailError = null;
     this.btnClicked = true;
     this.lStorageService.removeitemfromLocalStorage('authorizationToken');
     this.lStorageService.removeitemfromLocalStorage('googleToken');
-    if (this.phoneNumber && this.phoneNumber.dialCode === '+91') {
-      this.dialCode = this.phoneNumber.dialCode;
-      const pN = this.phoneNumber.e164Number.trim();
-      let loginId = pN;
-      if (pN.startsWith(this.dialCode)) {
-        loginId = pN.split(this.dialCode)[1];
-        if (loginId.startsWith('55')) {
-          this.config.length = 5;
+    // this.lStorageService.removeitemfromLocalStorage('authToken');
+    // this.lStorageService.removeitemfromLocalStorage('authorization');
+    // this.lStorageService.removeitemfromLocalStorage('c_authorizationToken');
+    // this.lStorageService.removeitemfromLocalStorage('googleToken');
+    if(this.notifyEmail){
+      if (this.phoneNumber && this.phoneNumber.dialCode === '+91' && this.emailId) {
+        this.dialCode = this.phoneNumber.dialCode;
+        const pN = this.phoneNumber.e164Number.trim();
+        let loginId = pN;
+        if (pN.startsWith(this.dialCode)) {
+          loginId = pN.split(this.dialCode)[1];
+          if (loginId.startsWith('55')) {
+            this.config.length = 5;
+          }
         }
+        this.performSendOTP(loginId, this.emailId, mode);
+      } else if (this.phoneNumber && this.phoneNumber.dialCode !== '+91' && this.emailId) {
+        this.dialCode = this.phoneNumber.dialCode;
+        const pN = this.phoneNumber.e164Number.trim();
+        let loginId = pN.split(this.dialCode)[1];
+        this.performSendOTP(loginId, this.emailId, mode);
+      } 
+      else if(this.emailId === undefined) {
+        this.emailError = 'Email ID required';
+        this.btnClicked = false;
       }
-      this.performSendOTP(loginId, null, mode);
-    } else if (this.phoneNumber.dialCode !== '+91') {
-      this.dialCode = this.phoneNumber.dialCode;
-      const pN = this.phoneNumber.e164Number.trim();
-      let loginId = pN.split(this.dialCode)[1];
-      this.performSendOTP(loginId, this.emailId, mode);
-    } else {
-      this.phoneError = 'Mobile number required';
-      this.btnClicked = false;
+      else {
+        this.phoneError = 'Mobile number required';
+        this.btnClicked = false;
+      }
     }
+    else{
+      if (this.phoneNumber && this.phoneNumber.dialCode === '+91') {
+        this.dialCode = this.phoneNumber.dialCode;
+        const pN = this.phoneNumber.e164Number.trim();
+        let loginId = pN;
+        if (pN.startsWith(this.dialCode)) {
+          loginId = pN.split(this.dialCode)[1];
+          if (loginId.startsWith('55')) {
+            this.config.length = 5;
+          }
+        }
+        this.performSendOTP(loginId, null, mode);
+      } else if (this.phoneNumber && this.phoneNumber.dialCode !== '+91') {
+        this.dialCode = this.phoneNumber.dialCode;
+        const pN = this.phoneNumber.e164Number.trim();
+        let loginId = pN.split(this.dialCode)[1];
+        this.performSendOTP(loginId, this.emailId, mode);
+      } 
+      else {
+        this.phoneError = 'Mobile number required';
+        this.btnClicked = false;
+      }
+    }
+  
   }
   performSendOTP(loginId, emailId?, mode?) {
     let credentials = {
@@ -164,6 +216,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   }
   resetApiErrors() {
     this.phoneError = null;
+    this.emailError = null;
   }
   clearPhoneExists() {
     this.phoneExists = false;
@@ -177,6 +230,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   signUpConsumer() {
     const _this = this;
     _this.phoneError = '';
+    _this.emailError = '';
     if (_this.phoneNumber) {
       _this.dialCode = _this.phoneNumber.dialCode;
       const pN = _this.phoneNumber.e164Number.trim();
