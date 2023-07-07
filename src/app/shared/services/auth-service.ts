@@ -532,5 +532,8 @@ export class AuthService {
       })
     });
   }
-
+  getEmailStatus(accountId) {
+    const url = 'provider/consumerNotification/settings/account/' + accountId + '/loginotpconfig';
+    return this.serviceMeta.httpGet(url);
+}
 }
