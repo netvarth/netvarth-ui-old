@@ -58,6 +58,9 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   loginResponse;
   notifyEmail = false;
   emailError: string;
+  isSmsEmail: boolean;
+  isSms: boolean;
+  isEmail: boolean;
   constructor(private sharedServices: SharedServices,
     private authService: AuthService,
     private lStorageService: LocalStorageService,
@@ -106,6 +109,15 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         this.loginResponse = data;
         if(this.loginResponse && this.loginResponse.email && this.loginResponse.email === true){
           this.notifyEmail = true;
+        }
+        if(this.loginResponse.email === true && this.loginResponse.sms === true){
+          this.isSmsEmail = true;
+        }
+        else if(this.loginResponse.sms === true){
+          this.isSms = true;
+        }
+        else if(this.loginResponse.email === true){
+          this.isEmail = true;
         }
         console.log("loginResponse",this.loginResponse)
       }
