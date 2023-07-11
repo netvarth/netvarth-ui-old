@@ -24,7 +24,8 @@
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                     </app-common-innerloading-spinner>
                 </button>
-                <div class="centeralign mgn-bt-20 mgn-up-30 color-grey" *ngIf="googleIntegration">----------------OR-----------------</div>
+                <div class="centeralign mgn-bt-20 mgn-up-30 color-grey" *ngIf="googleIntegration">
+                    ----------------OR-----------------</div>
                 <!-- <div class="form-group mobile-no mgn-up-30" *ngIf="googleIntegration">
                     <div id="buttonDiv" class="g-container" #googleBtn></div>
                 </div> -->
@@ -41,17 +42,19 @@
                     verification code sent to {{emailId}}</label>
                 <!-- <label *ngIf="isSmsEmail" for="phone" class="mgn-bt-20">Please type the
                         verification code sent to {{phoneNumber.e164Number}} or {{emailId}}</label> -->
-              
-                <ng-otp-input class="bkgclr" (onInputChange)="!btnClicked && onOtpChange($event)" [config]="config"></ng-otp-input>
+
+                <ng-otp-input class="bkgclr" (onInputChange)="!btnClicked && onOtpChange($event)"
+                    [config]="config"></ng-otp-input>
                 <button class="cust-logpg-submt mgn-up-20 mat-button continue-button" type="button"
                     [disabled]="api_loading" (click)="!btnClicked && verifyOTP()">
                     <span class="continue" *ngIf="!api_loading">Next</span>
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                     </app-common-innerloading-spinner>
-                </button>                    
-                <p class="mgn-up-20">Not received yet! <a class="pointer-cursor link" (click)="!btnClicked && sendOTP('resent')">Resend OTP</a>
+                </button>
+                <p class="mgn-up-20">Not received yet! <a class="pointer-cursor link"
+                        (click)="!btnClicked && sendOTP('resent')">Resend OTP</a>
                 </p>
-                <p class="mgn-up-20" *ngIf="googleIntegration">If you are not getting OTP via SMS, Use Google Login
+                <p class="mgn-up-20 font-weight-bold" *ngIf="googleIntegration">If you are not getting OTP via SMS, Use Google Login
                 </p>
             </div>
         </div>
@@ -112,13 +115,8 @@
                 <span *ngIf="!api_loading">Skip for now</span>
             </div>
         </div>
-        <div class="check-mobile-exist text-center" *ngIf="googleIntegration">
-           
-            <div class="form-group mobile-no mgn-up-50 ">
-                <div class="form-group mobile-no mgn-up-30" *ngIf="googleIntegration">
-                    <div id="buttonDiv" class="g-container" #googleBtn></div>
-                </div>
-            </div>
+        <div class="form-group mobile-no d-flex justify-content-center" *ngIf="googleIntegration">
+            <div id="buttonDiv" #googleBtn></div>
         </div>
     </div>
 </div>
