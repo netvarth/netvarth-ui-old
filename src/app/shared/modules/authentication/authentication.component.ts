@@ -139,67 +139,89 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   /**
    * Phone Number Collection for Account Existencen
    */
-   sendOTP(mode?) {
+  //  sendOTP(mode?) {
+  //   this.phoneError = null;
+  //   this.emailError = null;
+  //   this.btnClicked = true;
+  //   this.lStorageService.removeitemfromLocalStorage('authorizationToken');
+  //   this.lStorageService.removeitemfromLocalStorage('googleToken');
+  //   if(this.notifyEmail){
+  //     if (this.phoneNumber && this.phoneNumber.dialCode === '+91' && this.emailId) {
+  //       this.dialCode = this.phoneNumber.dialCode;
+  //       const pN = this.phoneNumber.e164Number.trim();
+  //       let loginId = pN;
+  //       if (pN.startsWith(this.dialCode)) {
+  //         loginId = pN.split(this.dialCode)[1];
+  //         if (loginId.startsWith('55')) {
+  //           this.config.length = 5;
+  //         }
+  //       }
+  //       this.performSendOTP(loginId, this.emailId, mode);
+  //     } else if (this.phoneNumber && this.phoneNumber.dialCode !== '+91' && this.emailId) {
+  //       this.dialCode = this.phoneNumber.dialCode;
+  //       const pN = this.phoneNumber.e164Number.trim();
+  //       let loginId = pN.split(this.dialCode)[1];
+  //       this.performSendOTP(loginId, this.emailId, mode);
+  //     } 
+  //     else if(this.emailId === undefined) {
+  //       this.emailError = 'Email ID required';
+  //       this.btnClicked = false;
+  //     }
+  //     else {
+  //       this.phoneError = 'Mobile number required';
+  //       this.btnClicked = false;
+  //     }
+  //   }
+  //   else{
+  //     if (this.phoneNumber && this.phoneNumber.dialCode === '+91') {
+  //       this.dialCode = this.phoneNumber.dialCode;
+  //       const pN = this.phoneNumber.e164Number.trim();
+  //       let loginId = pN;
+  //       if (pN.startsWith(this.dialCode)) {
+  //         loginId = pN.split(this.dialCode)[1];
+  //         if (loginId.startsWith('55')) {
+  //           this.config.length = 5;
+  //         }
+  //       }
+  //       this.performSendOTP(loginId, null, mode);
+  //     } else if (this.phoneNumber && this.phoneNumber.dialCode !== '+91') {
+  //       this.dialCode = this.phoneNumber.dialCode;
+  //       const pN = this.phoneNumber.e164Number.trim();
+  //       let loginId = pN.split(this.dialCode)[1];
+  //       this.performSendOTP(loginId, this.emailId, mode);
+  //     } 
+  //     else {
+  //       this.phoneError = 'Mobile number required';
+  //       this.btnClicked = false;
+  //     }
+  //   }
+  
+  // }
+  sendOTP(mode?) {
     this.phoneError = null;
-    this.emailError = null;
     this.btnClicked = true;
     this.lStorageService.removeitemfromLocalStorage('authorizationToken');
     this.lStorageService.removeitemfromLocalStorage('googleToken');
-    // this.lStorageService.removeitemfromLocalStorage('authToken');
-    // this.lStorageService.removeitemfromLocalStorage('authorization');
-    // this.lStorageService.removeitemfromLocalStorage('c_authorizationToken');
-    // this.lStorageService.removeitemfromLocalStorage('googleToken');
-    if(this.notifyEmail){
-      if (this.phoneNumber && this.phoneNumber.dialCode === '+91' && this.emailId) {
-        this.dialCode = this.phoneNumber.dialCode;
-        const pN = this.phoneNumber.e164Number.trim();
-        let loginId = pN;
-        if (pN.startsWith(this.dialCode)) {
-          loginId = pN.split(this.dialCode)[1];
-          if (loginId.startsWith('55')) {
-            this.config.length = 5;
-          }
+    if (this.phoneNumber && this.phoneNumber.dialCode === '+91') {
+      this.dialCode = this.phoneNumber.dialCode;
+      const pN = this.phoneNumber.e164Number.trim();
+      let loginId = pN;
+      if (pN.startsWith(this.dialCode)) {
+        loginId = pN.split(this.dialCode)[1];
+        if (loginId.startsWith('55')) {
+          this.config.length = 5;
         }
-        this.performSendOTP(loginId, this.emailId, mode);
-      } else if (this.phoneNumber && this.phoneNumber.dialCode !== '+91' && this.emailId) {
-        this.dialCode = this.phoneNumber.dialCode;
-        const pN = this.phoneNumber.e164Number.trim();
-        let loginId = pN.split(this.dialCode)[1];
-        this.performSendOTP(loginId, this.emailId, mode);
-      } 
-      else if(this.emailId === undefined) {
-        this.emailError = 'Email ID required';
-        this.btnClicked = false;
       }
-      else {
-        this.phoneError = 'Mobile number required';
-        this.btnClicked = false;
-      }
+      this.performSendOTP(loginId, null, mode);
+    } else if (this.phoneNumber.dialCode !== '+91') {
+      this.dialCode = this.phoneNumber.dialCode;
+      const pN = this.phoneNumber.e164Number.trim();
+      let loginId = pN.split(this.dialCode)[1];
+      this.performSendOTP(loginId, this.emailId, mode);
+    } else {
+      this.phoneError = 'Mobile number required';
+      this.btnClicked = false;
     }
-    else{
-      if (this.phoneNumber && this.phoneNumber.dialCode === '+91') {
-        this.dialCode = this.phoneNumber.dialCode;
-        const pN = this.phoneNumber.e164Number.trim();
-        let loginId = pN;
-        if (pN.startsWith(this.dialCode)) {
-          loginId = pN.split(this.dialCode)[1];
-          if (loginId.startsWith('55')) {
-            this.config.length = 5;
-          }
-        }
-        this.performSendOTP(loginId, null, mode);
-      } else if (this.phoneNumber && this.phoneNumber.dialCode !== '+91') {
-        this.dialCode = this.phoneNumber.dialCode;
-        const pN = this.phoneNumber.e164Number.trim();
-        let loginId = pN.split(this.dialCode)[1];
-        this.performSendOTP(loginId, this.emailId, mode);
-      } 
-      else {
-        this.phoneError = 'Mobile number required';
-        this.btnClicked = false;
-      }
-    }
-  
   }
   performSendOTP(loginId, emailId?, mode?) {
     let credentials = {
