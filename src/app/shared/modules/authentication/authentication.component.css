@@ -35,7 +35,7 @@
 }
 
 ::ng-deep .authentication .custom {
-  background: #FFFFFF !important;
+  background: #ddd !important;
   border: 1.39032px solid #E1E2E3 !important;
   border-radius: 11.1225px !important;
   padding: 25px;
