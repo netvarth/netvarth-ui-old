@@ -209,7 +209,7 @@
                 </div>
             </div>
             <div class="success-sec"
-                *ngIf="loggedIn && isPermitted && (!loading && !isBusinessOwner && (callStatus == 'callCompleted' || qParams.type))">
+                *ngIf="loggedIn && isPermitted && (!loading && !isBusinessOwner && ((callStatus == 'callCompleted' && waitlist.qnrList && waitlist.qnrList[qParams.id] == 'submitted')|| qParams.type))">
                 <i class="fa fa-check-circle greenc" aria-hidden="true"></i>
                 <div class="success-head mgn-bt-5">
                     Your response has been submitted
