@@ -167,7 +167,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     }
 
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    console.log("this.questions",this.questions)
+    console.log("this.questions", this.questions)
 
     if (this.questionnaireList) {
       if (this.source === 'customer-create' || this.source === 'onetime') {
@@ -196,7 +196,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         this.questions = this.questionnaireList.labels;
         this.groupQuestionsBySection();
       }
-       else if ((this.source === 'qnrView' || this.source === 'ivr') && this.questionnaireList.labels) {
+      else if ((this.source === 'qnrView' || this.source === 'ivr') && this.questionnaireList.labels) {
         this.questions = this.questionnaireList.labels;
         this.groupQuestionsBySection();
       }
@@ -227,7 +227,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       if (this.questionAnswers.answers) {
         this.getAnswers(this.questionAnswers.answers.answerLine, 'init');
       }
-      if (this.source == 'ivr' ) {
+      if (this.source == 'ivr') {
         this.getAnswers(this.questionAnswers, 'get');
       }
     }
@@ -245,13 +245,12 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         this.questions = this.questionnaireList.questionAnswers;
         this.qnrStatus = 'submitted';
         this.groupQuestionsBySection();
-      } else if(this.questionnaireList.labels) {
+      } else if (this.questionnaireList.labels) {
         this.questions = this.questionnaireList.labels;
         this.qnrStatus = 'released';
         this.groupQuestionsBySection();
       }
-      else if(this.questionnaireList[0] && this.questionnaireList[0].labels)
-      {
+      else if (this.questionnaireList[0] && this.questionnaireList[0].labels) {
         this.questions = this.questionnaireList[0].labels;
         this.qnrStatus = 'released';
         this.groupQuestionsBySection();
@@ -679,7 +678,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       }
     }
     else if (this.source === 'ivr' && this.params.customId) {
-      console.log('fffffffffffffffffffff',this.questionnaireList)
+      console.log('fffffffffffffffffffff', this.questionnaireList)
       postData = {
         'questionnaireId': (this.questionnaireList[0].id) ? this.questionnaireList[0].id : this.questionnaireList[0].questionnaireId,
         'answerLine': data
@@ -687,7 +686,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     }
     else {
       // alert('ddd')
-      console.log('questionnaireList',this.questionnaireList)
+      console.log('questionnaireList', this.questionnaireList)
       postData = {
         'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
         'answerLine': data
@@ -820,10 +819,10 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     this.buttonDisable = true;
     if (this.source === 'consCheckin' || this.source === 'consAppt' || this.source === 'consOrder' || this.source === 'consDonationDetails') {
       this.validateConsumerQuestionnaireResubmit(passData.answers, dataToSend);
-    } 
-    else if(this.source === 'ivr' && this.params.customId){
+    }
+    else if (this.source === 'ivr' && this.params.customId) {
 
-      this.validateConsumerIvrQuestionnaire(passData.answers,this.bookingType);
+      this.validateConsumerIvrQuestionnaire(passData.answers, this.bookingType);
     }
     else {
       this.validateProviderQuestionnaireResubmit(passData.answers, dataToSend);
@@ -1099,9 +1098,9 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     // }
   }
   validateConsumerIvrQuestionnaire(answers, bookingType) {
-    this.providerService.validateConsumerIvrQuestionnaire(answers,bookingType).subscribe((data: any) => {
-      this.snackbarService.openSnackBar("Details Saved Successfully");
-     
+    this.providerService.validateConsumerIvrQuestionnaire(answers, bookingType).subscribe((data: any) => {
+      this.snackbarService.openSnackBar("Response Submitted Successfully");
+
     }, (error) => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     });
