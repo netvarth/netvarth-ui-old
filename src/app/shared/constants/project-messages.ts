@@ -327,6 +327,7 @@ export const Messages = {
   'DONE_BTN': 'Complete',
   'SAVE_MEMBER_BTN': 'Save Member',
   'RESEND_BTN': 'Resend',
+  'CONFIRM_BTN': 'Confirm',
   // Consumer Constants
 //Item group created or updated...
 'ITEM_GROUP_CREATED': 'Item group created successfully',

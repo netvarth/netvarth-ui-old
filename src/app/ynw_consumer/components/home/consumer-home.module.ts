@@ -24,21 +24,27 @@ import { AttachmentPopupModule } from "../../../shared/components/attachment-pop
 import { CouponsModule } from "../../../shared/components/coupons/coupons.module";
 const routes: Routes = [
     { path: '', component: ConsumerHomeComponent }
-    
+
 ];
-import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { projectConstantsLocal } from "../../../shared/constants/project-constants";
 import { SubmissionsModule } from "./submissions/submissions.module";
 import { AuthenticationModule } from "../../../shared/modules/authentication/authentication.module";
 import { ConsumerJoinModule } from "../consumer-join/join.component.module";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatSelectModule } from "@angular/material/select";
+import { MatOptionModule } from "@angular/material/core";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
 export function homeHttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'assets/i18n/home/', '.json');
+    return new TranslateHttpLoader(http, projectConstantsLocal.PATH + 'assets/i18n/home/', '.json');
 }
 @NgModule({
     imports: [
         CommonModule,
+        FormsModule,
         HeaderModule,
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
@@ -56,6 +62,12 @@ export function homeHttpLoaderFactory(http: HttpClient) {
         RateServiceModule,
         MeetingDetailsModule,
         ViewRxModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatFormFieldModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatInputModule,
         NotificationListBoxModule,
         AttachmentPopupModule,
         CouponsModule,
@@ -65,16 +77,16 @@ export function homeHttpLoaderFactory(http: HttpClient) {
         [RouterModule.forChild(routes)],
         HttpClientModule,
         TranslateModule.forChild({
-          loader: {
-              provide: TranslateLoader,
-              useFactory: homeHttpLoaderFactory,
-              deps: [HttpClient]
-          },
-      })
+            loader: {
+                provide: TranslateLoader,
+                useFactory: homeHttpLoaderFactory,
+                deps: [HttpClient]
+            },
+        })
     ],
     exports: [ConsumerHomeComponent],
     declarations: [
         ConsumerHomeComponent
     ]
 })
-export class ConsumerHomeModule {}
+export class ConsumerHomeModule { }

@@ -1,43 +1,86 @@
-<h1 mat-dialog-title></h1>
-<div mat-dialog-content>
-  <p> {{data.message}} </p>
-  <div *ngIf="data.cancelPolicy">
-    <div>
-      <ul>
-        <b>Cancellation Policies</b>
-        <li>
-            You can cancel your {{data.book}} any time till <span *ngIf="data.wtlist.date">{{data.wtlist.date| date: newDateFormat}}</span><span *ngIf="data.wtlist.appmtDate">{{data.wtlist.appmtDate| date: newDateFormat}}</span><span *ngIf="data.wtlist.orderDate">{{data.wtlist.orderDate| date: newDateFormat}}</span>. You have to contact your provider, {{data.wtlist.providerAccount.businessName}} when system doesn’t permit cancellation for any reason.
-        </li>
-        <li>Your provider may cancel your {{data.book}} for their own reasons any time. Jaldee tries its best to update you about it through timely notifications.
-        </li>
-    </ul>
-    <ul> <b>Refund Policies[for advance payments only]</b>
-        <li>
-            When a cancellation is made by you, a 3%  will be deducted on the refund of the advance payment made.
-        </li>
-        <li>
-            For cancellations made on <span *ngIf="data.wtlist.date">{{data.wtlist.date| date: newDateFormat}}</span><span *ngIf="data.wtlist.appmtDate">{{data.wtlist.appmtDate| date: newDateFormat}}</span><span *ngIf="data.wtlist.orderDate">{{data.wtlist.orderDate| date: newDateFormat}}</span> contact your provider, {{data.wtlist.providerAccount.businessName}} for refund.
-        </li>
-        <li>
-          Contact {{data.wtlist.providerAccount.businessName}}, for refunds related to any other payments made for this {{data.book}}.
-      </li>
-    </ul>
+<form [formGroup]="amForm" [ngClass]="this.data.theme" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)">
+  <h1 mat-dialog-title></h1>
+  <div mat-dialog-content>
+    <p class="head mgn-bt-20"> {{data.message}} </p>
+    <div *ngIf="data.cancelPolicy" class="policies">
+      <p-accordion [multiple]="true">
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <h4>Cancellation Policies</h4>
+          </ng-template>
+          <p>You can cancel your {{data.book}} any time till <span *ngIf="data.wtlist.date">{{data.wtlist.date| date:
+              newDateFormat}}</span><span *ngIf="data.wtlist.appmtDate">{{data.wtlist.appmtDate| date:
+              newDateFormat}}</span><span *ngIf="data.wtlist.orderDate">{{data.wtlist.orderDate| date:
+              newDateFormat}}</span>. You have to contact your provider, {{data.wtlist.providerAccount.businessName}}
+            when system doesn’t permit cancellation for any reason.</p>
+          <p>Your provider may cancel your {{data.book}} for their own reasons any time. Jaldee tries its best to
+            update you about it through timely notifications.
+          </p>
+        </p-accordionTab>
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <h4>Refund Policies[for advance payments only]</h4>
+          </ng-template>
+          <p>
+            When a cancellation is made by you, a 3% will be deducted on the refund of the advance payment made.
+          </p>
+          <p>
+            For cancellations made on <span *ngIf="data.wtlist.date">{{data.wtlist.date| date:
+              newDateFormat}}</span><span *ngIf="data.wtlist.appmtDate">{{data.wtlist.appmtDate| date:
+              newDateFormat}}</span><span *ngIf="data.wtlist.orderDate">{{data.wtlist.orderDate| date:
+              newDateFormat}}</span> contact your provider, {{data.wtlist.providerAccount.businessName}} for refund.
+          </p>
+          <p>
+            Contact {{data.wtlist.providerAccount.businessName}}, for refunds related to any other payments made for
+            this {{data.book}}.
+          </p>
+        </p-accordionTab>
+      </p-accordion>
+      <p class="head mgn-up-20"> Are you sure you want to cancel this {{data.book}}? </p>
     </div>
-    <p> Are you sure you want to cancel this {{data.book}}? </p>
+    <div *ngIf="data.book !== 'Order'">
+      <mat-dialog-content >
+        <div class="form-group">
+          <label class="col-form-label" for="displayName">{{select_reason_cap}}*</label>
+          <mat-chip-list>
+            <mat-chip *ngFor="let cancel_reason of cancel_reasons"
+              color="{{(cancel_reason.value === amForm.get('reason').value) ? 'primary' : ''}}"
+              selected="{{(cancel_reason.value === amForm.get('reason').value) ? true : false}}"
+              (click)="selectReason(cancel_reason)">
+              {{cancel_reason.title}}
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+        <div class="form-group ">
+          <mat-checkbox formControlName="send_message">{{send_message_cap}} {{rep_username}}</mat-checkbox>
+        </div>
+        <div class="form-group reason-area" *ngIf="amForm.get('send_message').value">
+          <!-- <label class="col-form-label mgn-bt-20" *ngIf="cancel_reason_key == 'other'">{{messgae_cap}}</label> -->
+          <mat-form-field>
+            <textarea matInput class="form-control" id="message" placeholder="Message" formControlName="message">
+              </textarea>
+          </mat-form-field>
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
+            errorMsg="Please enter a message.">
+          </app-field-error-display>
+        </div>
+      </mat-dialog-content>    
+    </div>
+  </div>  
+  <div mat-dialog-actions *ngIf="data.book !== 'Order'" class="mgn-bt-10">
+    <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+      <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
+      <button type="submit" mat-button [disabled]="!amForm.valid" class="cs-btn bt1">{{ok_btn_cap}}</button>
+    </div>
   </div>
-</div>
-<div *ngIf="data.filterByDept" class="col-md-12 col-sm-12 col-xs-12">
-  <div class="col-md-6 col-sm-6 dept-input"> 
-  <input type="text" class="form-control" id="mobile_number" placeholder="Department name *" [(ngModel)]="deptName"
-    autocomplete="off">
+  <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+  <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+  </app-form-success-display>
+  <div mat-dialog-actions class="paddingtop" *ngIf="data.book == 'Order'">
+    <button tabindex="-1" (click)="onClick(0)" class="cs-btn bt2">{{cancel_btn_cap}}</button>
+    <button tabindex="2" (click)="onClick(1)"
+      class="cs-btn bt1 reddelete checkavailabilitybutton">{{ok_btn_cap}}</button>
   </div>
-</div>
-<div mat-dialog-content *ngIf="data.message1">
-  <p> {{data.message1}}</p>
-</div>
-<div mat-dialog-actions class="paddingtop">
-  <button tabindex="-1" (click)="onClick(0)" class="cs-btn bt2">{{cancel_btn_cap}}</button>
-  <button tabindex="2" (click)="onClick(1)" class="cs-btn bt1 reddelete">{{ok_btn_cap}}</button>
-</div>
-<app-field-error-display [displayError]="true" *ngIf="showError" errorMsg="Department name is required">
-</app-field-error-display>
+  <app-field-error-display [displayError]="true" *ngIf="showError" errorMsg="Department name is required">
+  </app-field-error-display>
+</form>

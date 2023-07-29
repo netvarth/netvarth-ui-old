@@ -612,11 +612,11 @@ export class SharedServices {
     }
     return url;
   }
-  deleteWaitlist(id, params, type) {
+  deleteWaitlist(id, params, type, result?) {
     if (type === 'checkin') {
-      return this.servicemeta.httpDelete('consumer/waitlist/' + id + '?account=' + params['account']);
+      return this.servicemeta.httpPut('consumer/waitlist/cancel/' + id + '?account=' + params['account'],result);
     } else if (type === 'appointment') {
-      return this.servicemeta.httpPut('consumer/appointment/cancel/' + id + '?account=' + params['account']);
+      return this.servicemeta.httpPut('consumer/appointment/cancel/' + id + '?account=' + params['account'],result);
     } else if (type === 'order') {
       return this.servicemeta.httpPut('consumer/orders/' + id + '?account=' + params['account']);
     }

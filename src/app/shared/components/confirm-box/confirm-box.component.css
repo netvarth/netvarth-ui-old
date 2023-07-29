@@ -1,3 +1,91 @@
 .mat-dialog-actions button{
     padding: 10px 25px 10px 25px !important;
 }
+h4 {
+    margin: 0 !important;
+    font-size: 14px !important;
+    font-weight: 600;
+}
+.mat-dialog-actions button{
+    padding: 10px 25px 10px 25px !important;
+  }
+  .mat-dialog-title {
+    /* background: transparent; */
+    color: #222223;
+    background: #183e79;
+    height: 50px !important;
+  }
+  .mat-dialog-title {
+    margin: 0;
+    padding: 15px 20px;
+  }
+  .head {
+    margin: 0;
+    font-size: 1rem !important;
+    text-align: center;
+  }
+  p {
+    font-size: 12px !important;
+  }
+  ul {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  .paddingtop {
+    padding-top: 20px;
+  }
+  .mat-dialog-actions {
+    display: flex;
+    justify-content: center;
+    border: none;
+  }
+  .mat-dialog-actions:last-child {
+    margin: 0;
+    padding: 20px;
+  }
+  .mat-dialog-actions {
+    box-shadow: 0 0 30px rgb(0 0 0 / 10%);
+    position: relative;
+    z-index: 99;
+  }
+  .bt1 {
+    margin-left: 10px;
+  }
+  .reddelete {
+    background: #08b363;
+  }
+  .cs-btn {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    border: none;
+    white-space: nowrap;
+    outline: 0;
+    padding: 10px 40px;
+    font-size: inherit;
+    line-height: 1.4;
+    z-index: 2;
+  }
+  .bt1,
+  .bt2 {
+    border-radius: 3px;
+  }
+  .mat-dialog-content>.ng-star-inserted {
+    margin-bottom: 20px;
+  }
+  ul {
+    padding-left: 40px;
+  }
+  
+  .reddelete {
+    background: #183e79;
+  }
+  ::ng-deep .policies .p-accordion p-accordiontab .p-accordion-header .p-accordion-header-link {
+    text-decoration: none !important;
+    box-shadow: none !important;
+  }
+ 

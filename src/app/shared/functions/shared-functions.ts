@@ -696,7 +696,7 @@ export class SharedFunctions {
       });
 
       cthis.canceldialogRef.afterClosed().subscribe(result => {
-        if (result) {
+        if (result && (result.cancelReason || result.rejectReason) || result) {
           let id;
           if (type === 'checkin') {
             id = waitlist.ynwUuid;
@@ -705,7 +705,7 @@ export class SharedFunctions {
           } else if (type === 'order') {
             id = waitlist.uid;
           }
-          this.cancelWaitlist(id, waitlist.providerAccount.id, type)
+          this.cancelWaitlist(id, waitlist.providerAccount.id, type, result)
             .then(
               data => {
                 resolve(data);
@@ -720,12 +720,12 @@ export class SharedFunctions {
       });
     });
   }
-  cancelWaitlist(id, provider_id, type) {
+  cancelWaitlist(id, provider_id, type, result?) {
     return new Promise((resolve, reject) => {
       const params = {
         'account': provider_id
       };
-      this.shared_service.deleteWaitlist(id, params, type)
+      this.shared_service.deleteWaitlist(id, params, type, result)
         .subscribe(
           data => {
             resolve('reloadlist');
