@@ -96,10 +96,10 @@
                       </span>
                     </td>
                   </tr>
-                  <tr *ngIf="(type=='appt' || type=='wl' || type=='order') && statusInfo.phoneNumber">
+                  <tr *ngIf="(type=='appt' || type=='wl' || type=='order') && statusInfo.phoneNumber && statusInfo.countryCode">
                     <td width="48%" align="right">Phone Number </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
-                    <td>{{statusInfo.phoneNumber}}</td>
+                    <td>{{statusInfo.countryCode}} {{statusInfo.phoneNumber}}</td>
                   </tr>
                   <tr *ngIf="type=='order'">
                     <td width="48%" align="right">Order For </td>
