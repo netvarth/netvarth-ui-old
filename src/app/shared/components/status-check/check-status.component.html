@@ -96,10 +96,25 @@
                       </span>
                     </td>
                   </tr>
-                  <tr *ngIf="(type=='appt' || type=='wl' || type=='order') && statusInfo.phoneNumber && statusInfo.countryCode">
+                  <tr *ngIf="type=='appt' && statusInfo.phoneNumber && statusInfo.countryCode">
                     <td width="48%" align="right">Phone Number </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
-                    <td>{{statusInfo.countryCode}} {{statusInfo.phoneNumber}}</td>
+                    <td>{{statusInfo.countryCode}}{{statusInfo.phoneNumber}}</td>
+                  </tr>
+                  <tr *ngIf="type=='appt' && statusInfo.virtualService && statusInfo.virtualService.WhatsApp">
+                    <td width="48%" align="right">WhatsApp </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>{{statusInfo.virtualService.WhatsApp}}</td>
+                  </tr>
+                  <tr *ngIf="type=='wl' && statusInfo.countryCode && statusInfo.waitlistPhoneNumber">
+                    <td width="48%" align="right">Phone Number </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>{{statusInfo.countryCode}}{{statusInfo.waitlistPhoneNumber}}</td>
+                  </tr>
+                  <tr *ngIf="type=='wl' && statusInfo.virtualService && statusInfo.virtualService.WhatsApp">
+                    <td width="48%" align="right">WhatsApp </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>{{statusInfo.virtualService.WhatsApp}}</td>
                   </tr>
                   <tr *ngIf="type=='order'">
                     <td width="48%" align="right">Order For </td>
@@ -110,6 +125,11 @@
                         capitalizeFirst}}
                       </span>
                     </td>
+                  </tr>
+                  <tr *ngIf=" type=='order' && statusInfo.phoneNumber && statusInfo.countryCode">
+                    <td width="48%" align="right">Phone Number </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>{{statusInfo.countryCode}}{{statusInfo.phoneNumber}}</td>
                   </tr>
                   <tr *ngIf="type=='order'">
                     <td width="48%" align="right">Order Id</td>
