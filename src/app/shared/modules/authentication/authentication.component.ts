@@ -91,7 +91,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     };
   }
   ngOnInit(): void {
-    this.getLoginStatus();
+    // this.getLoginStatus();
     console.log(this.accountConfig);
     this.lStorageService.setitemonLocalStorage('login', true);
     if ((this.accountConfig && this.accountConfig['googleIntegration'] === false) || this.partnerParentId) {
@@ -102,28 +102,28 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     }
     this.loading = false;
   }
-  getLoginStatus(){
-    this.authService.getEmailStatus(this.accountId).subscribe(
-      (data) => {
+  // getLoginStatus(){
+  //   this.authService.getEmailStatus(this.accountId).subscribe(
+  //     (data) => {
         
-        this.loginResponse = data;
-        if(this.loginResponse && this.loginResponse.email && this.loginResponse.email === true){
-          this.notifyEmail = true;
-        }
-        if(this.loginResponse.email === true && this.loginResponse.sms === true){
-          this.isSmsEmail = true;
-        }
-        else if(this.loginResponse.sms === true){
-          this.isSms = true;
-        }
-        else if(this.loginResponse.email === true){
-          this.isEmail = true;
-        }
-        console.log("loginResponse",this.loginResponse)
-      }
-    )
+  //       this.loginResponse = data;
+  //       if(this.loginResponse && this.loginResponse.email && this.loginResponse.email === true){
+  //         this.notifyEmail = true;
+  //       }
+  //       if(this.loginResponse.email === true && this.loginResponse.sms === true){
+  //         this.isSmsEmail = true;
+  //       }
+  //       else if(this.loginResponse.sms === true){
+  //         this.isSms = true;
+  //       }
+  //       else if(this.loginResponse.email === true){
+  //         this.isEmail = true;
+  //       }
+  //       console.log("loginResponse",this.loginResponse)
+  //     }
+  //   )
 
-  }
+  // }
   loadGoogleJS() {
     const self = this;
     const url = "https://accounts.google.com/gsi/client";
