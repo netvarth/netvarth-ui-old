@@ -1390,7 +1390,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     // this.getBookStep('profile');
     console.log("Before Validation", this.oneTimeInfo);
-    if (this.oneTimeInfo.answers) {
+    if (this.oneTimeInfo && this.oneTimeInfo.answers) {
       const questions = this.oneTimeInfo.answers.answerLine.map(function (a) { return a.labelName; })
       const dataToSend: FormData = new FormData();
       const answer = new Blob([JSON.stringify(this.oneTimeInfo.answers)], { type: 'application/json' });
@@ -1488,7 +1488,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
       }
     }
-    if (this.questionAnswers.answers) {
+    if (this.questionAnswers && this.questionAnswers.answers) {
       this.sharedServices.validateConsumerQuestionnaire(this.questionAnswers.answers, this.accountId).subscribe((data: any) => {
         if (data.length === 0) {
           if (this.selectedService.consumerNoteMandatory && this.consumerNote == '') {
@@ -2828,10 +2828,13 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
   submitserviceOptionQuestionnaire(uuid) {
 
     const _this = this;
-    this.groupedQnr = this.serviceOPtionInfo.answers.answerLine.reduce(function (rv, x) {
-      (rv[x.sequenceId] = rv[x.sequenceId] || []).push(x);
-      return rv;
-    }, {});
+    if(this.serviceOPtionInfo && this.serviceOPtionInfo.answers){
+      this.groupedQnr = this.serviceOPtionInfo.answers.answerLine.reduce(function (rv, x) {
+        (rv[x.sequenceId] = rv[x.sequenceId] || []).push(x);
+        return rv;
+      }, {});
+    }
+  
 
     let finalList = [];
     let finalSubList = [];
@@ -2885,7 +2888,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
   getserviceOptionQuestionAnswers(event) {
     this.serviceOPtionInfo = event;
     console.log(JSON.stringify(this.serviceOPtionInfo))
-    if (this.serviceOPtionInfo.answers.answerLine === '') {
+    if (this.serviceOPtionInfo && this.serviceOPtionInfo.answers.answerLine === '') {
       console.log(this.showNext)
       this.showNext = false;
     }

@@ -512,7 +512,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getserviceOptionQuestionAnswers(event) {
         this.serviceOPtionInfo = event;
-        if (this.serviceOPtionInfo.answers.answerLine === '') {
+        if (this.serviceOPtionInfo && this.serviceOPtionInfo.answers.answerLine === '') {
             console.log(this.showNext)
             this.showNext = false;
         }
@@ -1234,10 +1234,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
 
         const _this = this;
-        this.groupedQnr = this.serviceOPtionInfo.answers.answerLine.reduce(function (rv, x) {
-            (rv[x.sequenceId] = rv[x.sequenceId] || []).push(x);
-            return rv;
-        }, {});
+        if(this.serviceOPtionInfo && this.serviceOPtionInfo.answers){
+            this.groupedQnr = this.serviceOPtionInfo.answers.answerLine.reduce(function (rv, x) {
+                (rv[x.sequenceId] = rv[x.sequenceId] || []).push(x);
+                return rv;
+            }, {});
+        }
+        
         console.log(JSON.stringify(this.groupedQnr));
         console.log('*********************************');
         let finalList = [];
@@ -2404,7 +2407,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
             }
         }
-        if (this.questionAnswers.answers) {
+        if (this.questionAnswers && this.questionAnswers.answers) {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 // step1 submit questionnaire answers!
                 //this.submitQuestionnaireAnswers(this.questionAnswers);
@@ -2924,7 +2927,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         // this.getBookStep('profile');
         console.log("Before Validation", this.oneTimeInfo);
-        if (this.oneTimeInfo.answers) {
+        if (this.oneTimeInfo && this.oneTimeInfo.answers) {
             const questions = this.oneTimeInfo.answers.answerLine.map(function (a) { return a.labelName; })
             const dataToSend: FormData = new FormData();
             const answer = new Blob([JSON.stringify(this.oneTimeInfo.answers)], { type: 'application/json' });
